@@ -1,6 +1,8 @@
 const Sidebar = () => {
     return (
-        <></>
+        <>
+            <p>Sidebar here</p>
+        </>
     )
 }
 
