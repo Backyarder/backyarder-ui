@@ -1,6 +1,10 @@
+import './Detail.css';
+
 const Detail = () => {
     return (
-        <></>
+        <>
+            <p>Details here</p>
+        </>
     )
 }
 

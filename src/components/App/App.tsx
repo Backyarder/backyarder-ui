@@ -1,11 +1,20 @@
 import './App.css';
+import Header from '../Header/Header'
+import Main from '../Main/Main'
+import Detail from '../Detail/Detail'
+import { Routes, Route } from 'react-router-dom'
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      hello
-    </div>
+    <>
+      <Header />
+      <Routes>
+        <Route path='/' element={<Main />} ></ Route >
+          <Route path='/plants' element={<Detail />} ></ Route >
+      </Routes>
+    </>
   );
 }
 
 export default App;
+
