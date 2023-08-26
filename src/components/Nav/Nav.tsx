@@ -8,7 +8,7 @@ const Nav = () => {
       <Button />
       <Button />
     </nav>
-  )
+  );
 }
 
 export default Nav;
