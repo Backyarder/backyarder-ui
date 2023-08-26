@@ -1,7 +1,9 @@
+import './Nav.scss';
+
 const Nav = () => {
-    return (
-        <></>
-    )
+  return (
+    <></>
+  )
 }
 
-export default Nav
+export default Nav;
