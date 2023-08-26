@@ -1,0 +1,8 @@
+#grid {
+    display: grid;
+    grid-template-columns: repeat(10, 10%);
+    background-color: #beab95;
+    height: 750px;
+    width: 750px;
+    border-radius: 15px;
+}
