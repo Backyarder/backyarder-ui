@@ -6,7 +6,7 @@ type GridCell = {
 }
 
 const Cell = ({id}: GridCell) => {
-    const [isDisabled, setIsDisabled] = useState(false)
+    const [isDisabled, setIsDisabled] = useState<boolean>(false)
 
     const handleClick = (e: React.MouseEvent) => {
         setIsDisabled(!isDisabled)
