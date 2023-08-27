@@ -1,40 +1,23 @@
 const plantDetails = {
   "id": 1,
+  "image": "https://perenual.com/storage/species_image/1_abies_alba/og/1536px-Abies_alba_SkalitC3A9.jpg",
   "common_name": "European Silver Fir",
   "scientific_name": [
     "Abies alba"
+  ],
+  "type": "tree",
+  "leaf_color": [
+    "green"
   ],
   "cycle": "Perennial",
   "watering": "Frequent",
   "sunlight": [
     "full sun"
   ],
-  "image": "https://perenual.com/storage/species_image/1_abies_alba/og/1536px-Abies_alba_SkalitC3A9.jpg",
-  "type": "tree",
-  "pruning_month": [
-    "March",
-    "April"
-  ],
-  "attracts": [
-    "bees",
-    "birds",
-    "rabbits"
-  ],
   "hardiness": {
     "min": "7",
     "max": "7"
   },
-  "flowers": true,
-  "flowering_season": "Spring",
-  "edible_fruit": false,
-  "leaf_color": [
-    "green"
-  ],
-  "maintenance": "Low",
-  "poisonous_to_pets": false,
-  "drought_tolerant": false,
-  "invasive": false,
-  "indoor": false,
   "section": [
     {
       "id": 1,
@@ -46,7 +29,24 @@ const plantDetails = {
       "type": "watering",
       "description": "Watering European silver fir trees is essential for them to stay healthy. It is important to provide them with regular watering, especially during their first growing season, as they need to establish a good root system. A weekly deep watering is all they need, but they should be more frequently watered during periods of drought and heat. The soil should always be kept moist but never soggy.\n\nIf they are planted in a container, they should be watered more frequently as they can dry out quickly in containers. The soil should be kept moist but never overly wet. Overwatering can lead to root rot, so be sure not to overwater. When watering a container grown European Silver Fir, wait for the top 1-2 inches of soil to dry out before watering again.\n\nMulching around a European silver fir is a great way to help with water retention and help the soil stay moist. An organic mulch, such as wood chips or shredded bark, can help to keep the soil from drying out and also help reduce the amount of time spent watering. It also helps suppress weeds and keeps the roots protected from extreme temperatures.\n\nOverall, regular and consistent watering is important for young European silver fir trees to help them grow and thrive."
     }
-  ]
+  ],
+  "pruning_month": [
+    "March",
+    "April"
+  ],
+  "attracts": [
+    "bees",
+    "birds",
+    "rabbits"
+  ],
+  "flowers": true,
+  "flowering_season": "Spring",
+  "edible_fruit": false,
+  "maintenance": "Low",
+  "poisonous_to_pets": false,
+  "drought_tolerant": false,
+  "invasive": false,
+  "indoor": false,
 }
 export default plantDetails
 

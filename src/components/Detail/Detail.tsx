@@ -1,5 +1,5 @@
 import './Detail.css';
-// import { Sunny } from '@material-ui/icons'
+
 
 const Detail = () => {
     return (
@@ -14,6 +14,16 @@ const Detail = () => {
                 <p><span className="material-symbols-rounded">calendar_month</span>perennial or annual</p>
                 <p><span className="material-symbols-rounded">water_drop</span>watering frequency</p>
                 <p><span className="material-symbols-rounded">location_on</span>hardiness zones</p>
+            </div>
+            <div className='Descriptions'>
+                <h2>Light Description</h2>
+                <p>desciption goes here</p>
+                <h2>Watering Description</h2>
+                <p>desciption goes here</p>
+            </div>
+            <div className='more-info'>
+                <h2>More Information</h2>
+                
             </div>
         </div>
     )
