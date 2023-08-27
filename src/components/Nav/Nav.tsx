@@ -1,12 +1,22 @@
-import Button from '../Button/Button';
+// import Button from '../Button/Button';
+// import { NavLink } from 'react-router-dom';
 import './Nav.scss';
 
-const Nav = () => {
+type NavProps = {
+  isGardenView: boolean;
+  setIsGardenView: Function;
+}
+
+const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
+  const toggleView = () => {
+    setIsGardenView(!isGardenView)
+  }
+
   return (
     <nav>
-      <Button />
-      <Button />
-      <Button />
+      <button onClick={toggleView} >LIST OF GARDEN PLANTS</button>
+      <button onClick={toggleView} >GARDEN VIEW</button>
+      <button>CLEAR GARDEN</button>
     </nav>
   );
 }
