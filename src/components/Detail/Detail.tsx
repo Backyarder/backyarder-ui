@@ -1,5 +1,5 @@
 import './Detail.css';
-
+import InfoItem from '../InfoItem/InfoItem'
 
 const Detail = () => {
     return (
@@ -23,7 +23,15 @@ const Detail = () => {
             </div>
             <div className='more-info'>
                 <h2>More Information</h2>
-                
+                <InfoItem />
+                <InfoItem />
+                <InfoItem />
+                <InfoItem />
+                <InfoItem />
+                <InfoItem />
+                <InfoItem />
+                <InfoItem />
+                <InfoItem />
             </div>
         </div>
     )

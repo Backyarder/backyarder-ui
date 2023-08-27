@@ -1,6 +1,6 @@
-import './InfoList.css';
+import './InfoItem.css';
 
-const InfoList = () => {
+const InfoItem = () => {
     return (
       <>
         <img />
@@ -12,4 +12,4 @@ const InfoList = () => {
     )
 }
 
-export default InfoList
+export default InfoItem
