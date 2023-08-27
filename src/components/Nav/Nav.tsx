@@ -9,7 +9,7 @@ type NavProps = {
 
 const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
   const toggleView = () => {
-    setIsGardenView(!isGardenView)
+    setIsGardenView(!isGardenView);
   }
 
   return (
