@@ -1,0 +1,14 @@
+#plants {
+    height: calc(100vh - 100px);
+    width: 260px;
+    flex-shrink: 0;
+    background-color: #beab95;
+    margin: 0 20px 0 20px;
+    overflow: scroll;
+    border-radius: 15px;
+}
+
+#plants h2 {
+    color: white;
+    margin-left: 10px;
+}
