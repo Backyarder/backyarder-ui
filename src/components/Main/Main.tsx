@@ -4,7 +4,7 @@ import Grid from '../Grid/Grid';
 import Nav from '../Nav/Nav';
 import List from '../List/List';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 const Main = () => {
   const [isGardenView, setIsGardenView] = useState<boolean>(true);
