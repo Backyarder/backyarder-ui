@@ -22,7 +22,7 @@ const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
   const handleDelete = () : void => {
     // Delete logic goes here.
     setPopUp(false);
-    alert('Garden cleared.')
+    alert('Garden cleared.');
   }
 
   const handleCancel = () : void => {
