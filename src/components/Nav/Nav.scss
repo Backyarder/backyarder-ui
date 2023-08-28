@@ -1,4 +1,26 @@
 nav {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+}
+
+.nav-button, .clear-button {
+  border: none;
+  font-weight: bold;
+  border-radius: 25px;
+  height: 5vh;
+  width: 15vw;
+  cursor: pointer;
+}
+
+.nav-button {
+  background-color: #beab95;
+  color: #483c3c;
+}
+
+.clear-button {
+  background-color: #af2268;
+  color: #f4f4f4;
 }

@@ -14,9 +14,9 @@ const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
 
   return (
     <nav>
-      <button onClick={toggleView} >LIST OF GARDEN PLANTS</button>
-      <button onClick={toggleView} >GARDEN VIEW</button>
-      <button>CLEAR GARDEN</button>
+      <button className='nav-button' onClick={toggleView} >LIST OF GARDEN PLANTS</button>
+      <button className='nav-button' onClick={toggleView} >GARDEN VIEW</button>
+      <button className='clear-button' >CLEAR GARDEN</button>
     </nav>
   );
 }

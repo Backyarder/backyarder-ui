@@ -14,7 +14,7 @@ const Main = () => {
       <Sidebar />
       {isGardenView ? <Grid /> : <List />}
       <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} />
-      <Link to='/plants'>See Plant Details Page</Link>
+      {/* <Link to='/plants'>See Plant Details Page</Link> */}
     </main>
   );
 }
