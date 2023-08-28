@@ -1,4 +1,5 @@
 import { listMockData } from './listMockData';
+import { NavLink } from 'react-router-dom';
 import './List.scss';
 
 type Plant = {
@@ -28,7 +29,9 @@ const List = () => {
     return (
       <div key={plant['plant_id']} className='plant-element' >
         <p>{plant['plant_name']} x{findQuantity(listMockData, plant['plant_id'])}</p>
-        <button>VIEW PLANT DETAILS</button>
+        <NavLink to={`/plants/${plant['plant_id']}`} >
+          <button>VIEW PLANT DETAILS</button>
+        </NavLink>
       </div>
     );
   });
