@@ -26,7 +26,7 @@ const List = () => {
 
   const plantElements: JSX.Element[] = uniquePlants.map(plant => {
     return (
-      <div className='plant-element' >
+      <div key={plant['plant_id']} className='plant-element' >
         <p>{plant['plant_name']} x{findQuantity(listMockData, plant['plant_id'])}</p>
         <button>VIEW PLANT DETAILS</button>
       </div>
