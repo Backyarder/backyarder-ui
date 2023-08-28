@@ -4,7 +4,8 @@ import './List.scss';
 
 type Plant = {
   'plant_name': string,
-  'plant_id': number
+  'plant_id': number,
+  'image': string
 };
 
 const List = () => {
@@ -28,16 +29,19 @@ const List = () => {
   const plantElements: JSX.Element[] = uniquePlants.map(plant => {
     return (
       <div key={plant['plant_id']} className='plant-element' >
-        <p>{plant['plant_name']} x{findQuantity(listMockData, plant['plant_id'])}</p>
+        <div className='plant-info-container' >
+          <img src={plant.image} className='plant-image' />
+          <p>{plant['plant_name'].toUpperCase()} x{findQuantity(listMockData, plant['plant_id'])}</p>
+        </div>
         <NavLink to={`/plants/${plant['plant_id']}`} >
-          <button>VIEW PLANT DETAILS</button>
+          <button className='detail-button' >VIEW PLANT DETAILS</button>
         </NavLink>
       </div>
     );
   });
 
   return (
-    <section>
+    <section className='list-container'>
       {plantElements}
     </section>
   );
