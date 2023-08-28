@@ -1,11 +1,11 @@
 import './Detail.css';
 
 const Detail = () => {
-    return (
-        <>
-            <p>Details here</p>
-        </>
-    )
+  return (
+    <>
+      <p>Details here</p>
+    </>
+  );
 }
 
-export default Detail
+export default Detail;
