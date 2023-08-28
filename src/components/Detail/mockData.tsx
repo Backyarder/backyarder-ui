@@ -7,7 +7,7 @@ const plantDetails = {
   ],
   "type": "tree",
   "leaf_color": [
-    "green"
+    "green",
   ],
   "cycle": "Perennial",
   "watering": "Frequent",
