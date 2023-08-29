@@ -1,13 +1,15 @@
 // import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import './Nav.scss';
+import { clearGardenMockData } from './clearGardenMockData';
 
 type NavProps = {
   isGardenView: boolean;
   setIsGardenView: Function;
+  clearGarden: Function;
 }
 
-const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
+const Nav = ({ isGardenView, setIsGardenView, clearGarden }: NavProps) => {
   const [popUp, setPopUp] = useState<boolean>(false);
 
   const toggleView = () : void => {
@@ -20,7 +22,7 @@ const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
   }
 
   const handleDelete = () : void => {
-    // Delete logic goes here.
+    // clearGarden(clearGardenMockData);
     setPopUp(false);
     alert('Garden cleared.');
   }
