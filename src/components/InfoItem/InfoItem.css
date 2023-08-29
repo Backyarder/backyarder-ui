@@ -1,0 +1,8 @@
+.checkbox{
+  width: 3em;
+  height: 3em;
+}
+
+.more-info{
+  display: flex
+}
