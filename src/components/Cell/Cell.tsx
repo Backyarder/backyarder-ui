@@ -29,9 +29,11 @@ const Cell = ({id}: GridCell) => {
     })
 
     const handleClick = (e: React.MouseEvent) => {
-        setIsDisabled(!isDisabled)
-        const target = e.target as Element
-        !isDisabled ? target.classList.add('disabled') : target.classList.remove('disabled')
+        if(!cellContents) {
+            setIsDisabled(!isDisabled)
+            const target = e.target as Element
+            !isDisabled ? target.classList.add('disabled') : target.classList.remove('disabled')
+        }
     }
 
     const divStyle = {
