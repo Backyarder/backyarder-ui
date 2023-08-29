@@ -8,17 +8,10 @@ type Props = {
 }
 
 const InfoItem = ({data, name}: Props) => {
-    const checkIfTrue = (data: string) => {
-      if (data){
-        return checkedImg
-      } else {
-        return uncheckedImg
-      }
-    }
 
     return (
       <>
-        <img src={checkIfTrue(data)}/>
+        <img src={data ? checkedImg : uncheckedImg}/>
         <div>
           <h3>{name}</h3>
           <p></p>
