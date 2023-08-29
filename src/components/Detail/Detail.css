@@ -1,7 +1,11 @@
 .detail-page{
   color: #F4F4F4;
   background: #BEAB96;
+}
 
+.header-container{
+  display: flex;
+  justify-content: space-between;
 }
 
 .top-of-page{
@@ -21,6 +25,9 @@
   border-radius: 0.8em;
   width: 67.2%;
   padding: 0.4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .common{
@@ -41,4 +48,8 @@
 
 .descriptions{
   width: 60%;
+}
+
+.quick-glance-details{
+  display: flex;
 }

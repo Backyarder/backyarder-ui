@@ -33,11 +33,15 @@ const Detail = () => {
                         <p className="color">{plantDetails["leaf_color"].map(color => captalizeWord(color)).join(", ")}</p>
                     </div>
                 </div>
-                <div>
-                    <p className="sun"><span className="material-symbols-rounded">sunny</span>{plantDetails.sunlight.map(condition => captalizeWord(condition)).join(", ")}</p>
-                    <p className="cycle"><span className="material-symbols-rounded">calendar_month</span>{plantDetails.cycle}</p>
-                    <p className="water"><span className="material-symbols-rounded">water_drop</span>{plantDetails.watering}</p>
-                    <p className="location"><span className="material-symbols-rounded">location_on</span>{determineHardinessString(plantDetails.hardiness)}</p>
+                <div className="quick-glance-details">
+                    <div>
+                        <p className="sun"><span className="material-symbols-rounded">sunny</span>{plantDetails.sunlight.map(condition => captalizeWord(condition)).join(", ")}</p>
+                        <p className="cycle"><span className="material-symbols-rounded">calendar_month</span>{plantDetails.cycle}</p>
+                    </div>
+                    <div>
+                        <p className="water"><span className="material-symbols-rounded">water_drop</span>{plantDetails.watering}</p>
+                        <p className="location"><span className="material-symbols-rounded">location_on</span>Zone {determineHardinessString(plantDetails.hardiness)}</p>
+                    </div>
                 </div>
             </div>
             </div>
