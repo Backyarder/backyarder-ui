@@ -12,6 +12,7 @@ const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
 
   const toggleView = () : void => {
     setIsGardenView(!isGardenView);
+    setPopUp(false);
   }
 
   const handlePopUp = () : void => {
