@@ -12,10 +12,13 @@
   display: flex;
   border: 1em solid #BEAB96;
   justify-content: space-between;
+  height: 280px;
 }
 
 .plant-img{
   width: 30%;
+  /* height: 280px; */
+  object-fit: cover;
   border-radius: 0.8em;
 }
 
