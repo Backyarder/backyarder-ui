@@ -7,13 +7,13 @@ import { useState } from 'react';
 // import { patchGarden } from '../../apiCalls';
 // import { Link } from 'react-router-dom';
 
-type GardenKeys = {
-  id: string,
-  'plant_name': string,
-  status: number,
-  'plant_id': number,
-  image: string
-}[];
+// type GardenKeys = {
+//   id: string,
+//   'plant_name': string,
+//   status: number,
+//   'plant_id': number,
+//   image: string
+// }[];
 
 const Main = () => {
   // const [garden, setGarden] = useState<GardenKeys>([]);
