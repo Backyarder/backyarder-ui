@@ -19,3 +19,45 @@
     margin: 0;
     color: #af2268;
 }
+
+.card-icons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-icon {
+    font-size: 30px;
+    position: relative;
+}
+
+.card-icons {
+    display: flex;
+    align-items: center;
+}
+
+.left-icon-text {
+    left: 0;
+}
+
+.hardiness-text {
+    right: 0;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    font-size: small;
+    font-family: 'Arial';
+    width: fit-content;
+    top: 100%;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+}
+
+.card-icon:hover .tooltip-text {
+    visibility: visible;
+}
