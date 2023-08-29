@@ -15,5 +15,6 @@
 //     }
 //   });
 // }
+const patchGarden = () => {}
 
-// export { patchGarden }
+export { patchGarden }
