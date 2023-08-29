@@ -4,13 +4,23 @@
 
 }
 
+.top-of-page{
+  display: flex;
+  border: 1em solid #BEAB96;
+  justify-content: space-between;
+}
+
 .plant-img{
-  width: 20em
+  width: 30%;
+  border-radius: 0.8em;
 }
 
 .at-a-glance{
   background: #F4F4F4;
-  color: #483C3C
+  color: #483C3C;
+  border-radius: 0.8em;
+  width: 67.2%;
+  padding: 0.4em;
 }
 
 .common{
@@ -20,4 +30,15 @@
 .header{
   background: #F4F4F4;
   color: #AF2268;
+  border-radius: 1em;
+  padding: 0.35em;
+}
+
+.descriptions-and-more-info{
+  display: flex;
+  justify-content: space-around;
+}
+
+.descriptions{
+  width: 60%;
 }

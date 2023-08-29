@@ -20,6 +20,7 @@ const Detail = () => {
 
     return (
         <div className='detail-page'>
+            <div className="top-of-page">
             <img className="plant-img" src={plantDetails.image}/>
             <div className='at-a-glance'>
                 <div className="header-container">
@@ -39,23 +40,26 @@ const Detail = () => {
                     <p className="location"><span className="material-symbols-rounded">location_on</span>{determineHardinessString(plantDetails.hardiness)}</p>
                 </div>
             </div>
-            <div className='Descriptions'>
-                <h2 className="header">Light Description</h2>
-                <p className="description">{plantDetails.section[0].description}</p>
-                <h2 className="header">Watering Description</h2>
-                <p className="description">{plantDetails.section[1].description}</p>
             </div>
-            <div className='more-info-section'>
-                <h2 className="header">More Information</h2>
-                <InfoItem data={plantDetails["attracts"]} name="Attracts Wildlife"/>
-                <InfoItem data={plantDetails["flowering_season"]} name="Flowering"/>
-                <InfoItem data={plantDetails["pruning_month"]} name="Needs to be Pruned"/>
-                <InfoItem data={plantDetails["drought_tolerant"]} name="Drought Tolerant"/>
-                <InfoItem data={!plantDetails["poisonous_to_pets"]} name="Pet Safe"/>
-                <InfoItem data={plantDetails["indoor"]} name="Grown Indoors"/>
-                <InfoItem data={plantDetails["edible_fruit"]} name="Edible"/>
-                <InfoItem data={plantDetails["maintenance"] === "Low" ? true : false} name="Low Maintenance"/>
-                <InfoItem data={plantDetails["invasive"] ? false : true} name="Non-Invasive Species"/>
+            <div className="descriptions-and-more-info">
+                <div className='descriptions'>
+                    <h2 className="header">Light Description</h2>
+                    <p className="description">{plantDetails.section[0].description}</p>
+                    <h2 className="header">Watering Description</h2>
+                    <p className="description">{plantDetails.section[1].description}</p>
+                </div>
+                <div className='more-info-section'>
+                    <h2 className="header">More Information</h2>
+                    <InfoItem data={plantDetails["attracts"]} name="Attracts Wildlife"/>
+                    <InfoItem data={plantDetails["flowering_season"]} name="Flowering"/>
+                    <InfoItem data={plantDetails["pruning_month"]} name="Needs to be Pruned"/>
+                    <InfoItem data={plantDetails["drought_tolerant"]} name="Drought Tolerant"/>
+                    <InfoItem data={!plantDetails["poisonous_to_pets"]} name="Pet Safe"/>
+                    <InfoItem data={plantDetails["indoor"]} name="Grown Indoors"/>
+                    <InfoItem data={plantDetails["edible_fruit"]} name="Edible"/>
+                    <InfoItem data={plantDetails["maintenance"] === "Low" ? true : false} name="Low Maintenance"/>
+                    <InfoItem data={plantDetails["invasive"] ? false : true} name="Non-Invasive Species"/>
+                </div>
             </div>
         </div>
     )
