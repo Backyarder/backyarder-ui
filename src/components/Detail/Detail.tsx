@@ -20,25 +20,33 @@ const Detail = () => {
 
     return (
         <div className='detail-page'>
-            <img src={plantDetails.image}/>
+            <img className="plant-img" src={plantDetails.image}/>
             <div className='at-a-glance'>
-                <h1>{plantDetails["common_name"]}</h1>
-                <h2>{plantDetails["scientific_name"].join(", ")}</h2>
-                <p>{captalizeWord(plantDetails.type)}</p>
-                <p>{plantDetails["leaf_color"].map(color => captalizeWord(color)).join(", ")}</p>
-                <p><span className="material-symbols-rounded">sunny</span>{plantDetails.sunlight.map(condition => captalizeWord(condition)).join(", ")}</p>
-                <p><span className="material-symbols-rounded">calendar_month</span>{plantDetails.cycle}</p>
-                <p><span className="material-symbols-rounded">water_drop</span>{plantDetails.watering}</p>
-                <p><span className="material-symbols-rounded">location_on</span>{determineHardinessString(plantDetails.hardiness)}</p>
+                <div className="header-container">
+                    <div className="names">
+                        <h1 className="common">{plantDetails["common_name"]}</h1>
+                        <h2 className="scientific">{plantDetails["scientific_name"].join(", ")}</h2>
+                    </div>
+                    <div className="type-and-color">
+                        <p className="type">{captalizeWord(plantDetails.type)}</p>
+                        <p className="color">{plantDetails["leaf_color"].map(color => captalizeWord(color)).join(", ")}</p>
+                    </div>
+                </div>
+                <div>
+                    <p className="sun"><span className="material-symbols-rounded">sunny</span>{plantDetails.sunlight.map(condition => captalizeWord(condition)).join(", ")}</p>
+                    <p className="cycle"><span className="material-symbols-rounded">calendar_month</span>{plantDetails.cycle}</p>
+                    <p className="water"><span className="material-symbols-rounded">water_drop</span>{plantDetails.watering}</p>
+                    <p className="location"><span className="material-symbols-rounded">location_on</span>{determineHardinessString(plantDetails.hardiness)}</p>
+                </div>
             </div>
             <div className='Descriptions'>
-                <h2>Light Description</h2>
-                <p>{plantDetails.section[0].description}</p>
-                <h2>Watering Description</h2>
-                <p>{plantDetails.section[1].description}</p>
+                <h2 className="header">Light Description</h2>
+                <p className="description">{plantDetails.section[0].description}</p>
+                <h2 className="header">Watering Description</h2>
+                <p className="description">{plantDetails.section[1].description}</p>
             </div>
             <div className='more-info-section'>
-                <h2>More Information</h2>
+                <h2 className="header">More Information</h2>
                 <InfoItem data={plantDetails["attracts"]} name="Attracts Wildlife"/>
                 <InfoItem data={plantDetails["flowering_season"]} name="Flowering"/>
                 <InfoItem data={plantDetails["pruning_month"]} name="Needs to be Pruned"/>

@@ -14,7 +14,7 @@ const InfoItem = ({data, name}: Props) => {
         <img className="checkbox" src={data ? checkedImg : uncheckedImg} alt={data ? "checked-box" : "uncehcked-box"}/>
         <div>
           <h3>{name}</h3>
-          <p>{Array.isArray(data) ? `🌱 ${data.join(", ")}` : "🌱"}</p>
+          <p>{Array.isArray(data) ? `${data.join(", ")}` : ""}</p>
         </div>
       </div>
     )
