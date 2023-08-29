@@ -3,7 +3,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import Grid from '../Grid/Grid';
 import Nav from '../Nav/Nav';
 import List from '../List/List';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 // import { patchGarden } from '../../apiCalls';
 // import { Link } from 'react-router-dom';
 
@@ -16,9 +16,9 @@ type GardenKeys = {
 }[];
 
 const Main = () => {
-  const [garden, setGarden] = useState<GardenKeys>([]);
+  // const [garden, setGarden] = useState<GardenKeys>([]);
   const [isGardenView, setIsGardenView] = useState<boolean>(true);
-  const [error, setError] = useState<string>('');
+  // const [error, setError] = useState<string>('');
 
   // useEffect(() => {
   //   if (garden) {
@@ -37,15 +37,15 @@ const Main = () => {
   //   }
   // }, [garden]);
 
-  const clearGarden = (garden: GardenKeys) : void => {
-    setGarden(garden);
-  };
+  // const clearGarden = (garden: GardenKeys) : void => {
+  //   setGarden(garden);
+  // };
 
   return (
     <main>
       <Sidebar />
       {isGardenView ? <Grid /> : <List />}
-      <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} clearGarden={clearGarden} />
+      <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} />
       {/* <Link to='/plants'>See Plant Details Page</Link> */}
     </main>
   );

@@ -1,15 +1,15 @@
 // import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import './Nav.scss';
-import { clearGardenMockData } from './clearGardenMockData';
+// import { clearGardenMockData } from './clearGardenMockData';
 
 type NavProps = {
   isGardenView: boolean;
   setIsGardenView: Function;
-  clearGarden: Function;
+  // clearGarden: Function;
 }
 
-const Nav = ({ isGardenView, setIsGardenView, clearGarden }: NavProps) => {
+const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
   const [popUp, setPopUp] = useState<boolean>(false);
 
   const toggleView = () : void => {
