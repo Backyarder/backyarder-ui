@@ -21,7 +21,7 @@ const Detail = () => {
     return (
         <div className='detail-page'>
             <div className="top-of-page">
-            <img className="plant-img" src={plantDetails.image} alt={`Image showing a ${plantDetails["common_name"]}`}/>
+            <img className="plant-img" src={plantDetails.image} alt={`A ${plantDetails["common_name"]}`}/>
             <div className='at-a-glance'>
                 <div className="header-container">
                     <div className="names">
