@@ -2,12 +2,12 @@ import './InfoItem.css';
 import checkedImg from './checkboxImages/checked_backyarder.png'
 import uncheckedImg from './checkboxImages/unchecked_backyarder.png'
 
-type Props = {
+type InfoItemProps = {
   data: string | [] | {} | boolean,
   name: string
 }
 
-const InfoItem = ({data, name}: Props) => {
+const InfoItem = ({data, name}: InfoItemProps) => {
 
     return (
       <div className="more-info">
