@@ -1,3 +1,4 @@
+import { useDrag } from 'react-dnd'
 import './Card.scss'
 
 type CardProps = {
@@ -25,9 +26,16 @@ const iconMap: { [key: string]: any } = {
 }
 
 const Card = ({plant}: CardProps) => {
+    const [{ isDragging }, dragRef] = useDrag({
+        type: 'plant',
+        item: { plant },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging()
+        })
+    })
 
     return (
-        <div className='card'>
+        <div className='card' ref={dragRef}>
             <img src={plant.image} alt={`${plant.name}`} />
             <p className='plant-name'>{plant.name.toUpperCase()}</p>
             <div className='card-icons-container'>
