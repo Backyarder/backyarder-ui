@@ -1,0 +1,63 @@
+.card {
+    background-color: white;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.card > img {
+    width: 220px;
+    height: 115px;
+    object-fit: cover;
+}
+
+.plant-name {
+    text-align: left;
+    font-weight: 700;
+    margin: 0;
+    color: #af2268;
+}
+
+.card-icons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-icon {
+    font-size: 30px;
+    position: relative;
+}
+
+.card-icons {
+    display: flex;
+    align-items: center;
+}
+
+.left-icon-text {
+    left: 0;
+}
+
+.hardiness-text {
+    right: 0;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    font-size: small;
+    font-family: 'Arial';
+    width: fit-content;
+    top: 100%;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+}
+
+.card-icon:hover .tooltip-text {
+    visibility: visible;
+}

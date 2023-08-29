@@ -2,7 +2,8 @@
     display: grid;
     grid-template-columns: repeat(10, 10%);
     background-color: #beab95;
-    height: 750px;
-    width: 750px;
+    height: calc(100vh - 125px);
+    width: calc(100vh - 125px);
     border-radius: 15px;
+    flex-shrink: 0;
 }

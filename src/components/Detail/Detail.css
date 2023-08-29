@@ -1,0 +1,57 @@
+.detail-page{
+  color: #F4F4F4;
+  background: #BEAB96;
+}
+
+.header-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.top-of-page{
+  display: flex;
+  border: 1em solid #BEAB96;
+  justify-content: space-between;
+  height: 280px;
+}
+
+.plant-img{
+  width: 30%;
+  object-fit: cover;
+  border-radius: 0.8em;
+}
+
+.at-a-glance{
+  background: #F4F4F4;
+  color: #483C3C;
+  border-radius: 0.8em;
+  width: 67.2%;
+  padding: 0.4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.common{
+  color: #AF2268;
+}
+
+.header{
+  background: #F4F4F4;
+  color: #AF2268;
+  border-radius: 1em;
+  padding: 0.35em;
+}
+
+.descriptions-and-more-info{
+  display: flex;
+  justify-content: space-around;
+}
+
+.descriptions{
+  width: 60%;
+}
+
+.quick-glance-details{
+  display: flex;
+}
