@@ -37,9 +37,17 @@ const Detail = () => {
                 <h2>Watering Description</h2>
                 <p>{plantDetails.section[1].description}</p>
             </div>
-            <div className='more-info'>
+            <div className='more-info-section'>
                 <h2>More Information</h2>
-                <InfoItem data={plantDetails["flowering_season"]} name={"Flowering"}/>
+                <InfoItem data={plantDetails["attracts"]} name="Attracts Wildlife"/>
+                <InfoItem data={plantDetails["flowering_season"]} name="Flowering"/>
+                <InfoItem data={plantDetails["pruning_month"]} name="Needs to be Pruned"/>
+                <InfoItem data={plantDetails["drought_tolerant"]} name="Drought Tolerant"/>
+                <InfoItem data={!plantDetails["poisonous_to_pets"]} name="Pet Safe"/>
+                <InfoItem data={plantDetails["indoor"]} name="Grown Indoors"/>
+                <InfoItem data={plantDetails["edible_fruit"]} name="Edible"/>
+                <InfoItem data={plantDetails["maintenance"] === "Low" ? true : false} name="Low Maintenance"/>
+                <InfoItem data={plantDetails["invasive"] ? false : true} name="Non-Invasive Species"/>
             </div>
         </div>
     )

@@ -39,8 +39,7 @@ const plantDetails = {
     "birds",
     "rabbits"
   ],
-  "flowers": true,
-  "flowering_season": "Spring",
+  "flowering_season":["Spring"],
   "edible_fruit": false,
   "maintenance": "Low",
   "poisonous_to_pets": false,
