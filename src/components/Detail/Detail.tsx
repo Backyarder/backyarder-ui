@@ -39,15 +39,7 @@ const Detail = () => {
             </div>
             <div className='more-info'>
                 <h2>More Information</h2>
-                <InfoItem />
-                <InfoItem />
-                <InfoItem />
-                <InfoItem />
-                <InfoItem />
-                <InfoItem />
-                <InfoItem />
-                <InfoItem />
-                <InfoItem />
+                <InfoItem data={plantDetails["flowering_season"]} name={"Flowering"}/>
             </div>
         </div>
     )
