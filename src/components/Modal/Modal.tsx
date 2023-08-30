@@ -1,15 +1,15 @@
 import './Modal.scss';
 
 type ModalProps = {
-  closeModal: () => void;
+  toggleModal: () => void;
 }
 
-const Modal = ({ closeModal }: ModalProps) => {
+const Modal = ({ toggleModal }: ModalProps) => {
   return (
     <div className='modal-overlay' >
       <div className='modal' >
         <p>Sorry! Cell is unavailable for planting.</p>
-        <button className='modal-button' onClick={closeModal} >Close</button>
+        <button className='modal-button' onClick={toggleModal} >Close</button>
       </div>
     </div>
   );
