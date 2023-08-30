@@ -37,7 +37,10 @@ const Cell = ({id, toggleModal}: GridCell) => {
         }
     }
 
-    const hoverStyle = isOver && !isDisabled && {transform: 'scale(1.3)'}
+    const hoverStyle = isOver && !isDisabled && {
+        transform: 'scale(1.3)',
+        backgroundColor: 'LawnGreen'
+    }
 
     const divStyle = {
         backgroundImage: `url(${cellContents?.plant.image})`,
