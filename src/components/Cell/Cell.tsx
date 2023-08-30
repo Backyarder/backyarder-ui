@@ -46,7 +46,7 @@ const Cell = ({id, toggleModal}: GridCell) => {
     };
 
     return (
-        <div id={id} className='cell' style={Object.assign(divStyle, hoverStyle)} onClick={handleClick} ref={dropRef}></div>
+        <div id={id} className='cell' style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}></div>
     )
 }
 
