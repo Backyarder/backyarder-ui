@@ -7,10 +7,16 @@
     padding: 10px;
 }
 
-.card > img {
+.drag-ref {
+    display: flex;
+    flex-direction: column;
+}
+
+.drag-ref > img {
     width: 220px;
     height: 115px;
     object-fit: cover;
+    border-radius: 15px;
 }
 
 .plant-name {

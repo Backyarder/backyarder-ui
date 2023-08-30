@@ -37,6 +37,11 @@ const Cell = ({id, toggleModal}: GridCell) => {
         }
     }
 
+    const hoverStyle = isOver && !isDisabled && {
+        transform: 'scale(1.3)',
+        backgroundColor: 'LawnGreen'
+    }
+
     const divStyle = {
         backgroundImage: `url(${cellContents?.plant.image})`,
         backgroundPosition: 'center',
@@ -44,7 +49,7 @@ const Cell = ({id, toggleModal}: GridCell) => {
     };
 
     return (
-        <div id={id} className='cell' style={divStyle} onClick={handleClick} ref={dropRef}></div>
+        <div id={id} className='cell' style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}></div>
     )
 }
 
