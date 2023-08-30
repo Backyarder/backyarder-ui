@@ -4,6 +4,7 @@ import './Cell.scss'
 
 type GridCell = {
     id: string;
+    toggleModal: () => void;
 }
 
 type CardProps = {
@@ -17,12 +18,12 @@ type CardProps = {
     }
 }
 
-const Cell = ({id}: GridCell) => {
+const Cell = ({id, toggleModal}: GridCell) => {
     const [isDisabled, setIsDisabled] = useState<boolean>(false)
     const [cellContents, setCellContents] = useState<CardProps>()
     const [{ isOver }, dropRef] = useDrop({
         accept: 'plant',
-        drop: (plant: CardProps) => isDisabled ? console.log('fail') : setCellContents(plant),
+        drop: (plant: CardProps) => isDisabled ? toggleModal() : setCellContents(plant),
         collect: (monitor) => ({
             isOver: monitor.isOver()
         })
