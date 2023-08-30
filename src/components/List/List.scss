@@ -16,6 +16,7 @@
 
 .plant-image {
   border: 6px solid #93a854;
+  border-radius: 10px;
   height: 60px;
   width: 55px;
   object-fit: cover;
@@ -30,12 +31,13 @@
   border-radius: 25px;
   height: 6vh;
   width: 12vw;
+  // min-width
   cursor: pointer;
 }
 
 .list-container {
   background-color: #beab95;
-  height: 750px;
-  width: 750px;
+  height: calc(100vh - 125px);
+  width: calc(100vh - 125px);
   border-radius: 15px;
 }
