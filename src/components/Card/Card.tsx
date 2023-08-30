@@ -34,8 +34,10 @@ const Card = ({plant}: CardProps) => {
         })
     })
 
+    const draggedCardStyle = isDragging && {opacity: '.4'}
+
     return (
-        <div className='card' ref={dragRef}>
+        <div className='card' style={{...draggedCardStyle}} ref={dragRef}>
             <img src={plant.image} alt={`${plant.name}`} />
             <p className='plant-name'>{plant.name.toUpperCase()}</p>
             <div className='card-icons-container'>
