@@ -16,11 +16,12 @@ const Sidebar = () => {
         <section id='plants'>
             <h2>PLANTS</h2>
             <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleSearch}
-      />
+                className="search-bar"
+                type="text"
+                placeholder="Search... "
+                value={searchTerm}
+                onChange={handleSearch}
+            />
             {cards}
         </section>
     )
