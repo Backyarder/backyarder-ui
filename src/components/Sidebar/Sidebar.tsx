@@ -8,20 +8,25 @@ const Sidebar = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
 
-    const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
       };
 
     return (
         <section id='plants'>
             <h2>PLANTS</h2>
+            <div className="search">
             <input
                 className="search-bar"
                 type="text"
                 placeholder="Search... "
                 value={searchTerm}
-                onChange={handleSearch}
+                onChange={handleSearchChange}
             />
+            <button className="submit-search"><span className="material-symbols-rounded">
+search
+</span></button>
+            </div>
             {cards}
         </section>
     )

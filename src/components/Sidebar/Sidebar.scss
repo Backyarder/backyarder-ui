@@ -23,11 +23,29 @@
 
 #plants h2 {
     color: #F4F4F4;
-    margin-left: 10px;
+    font-size: 2em;
+    margin: 0.2em;
+}
+
+.search{
+    display: flex;
+    background: #f4f4f4;
+    border-radius: 1em;
+    padding: 0.3em;
+}
+
+.submit-search{
+    border: none;
+    background: #8F0D4E;
+    color: #f4f4f4;
+    border-radius: 4em;
+    padding-top: 0.33em;
 }
 
 .search-bar{
     border: none;
-    border-radius: 1em;
-
+    font-size: 1.2em;
+    color: #BEAB96;
+    background: transparent;
+    width: 80%;
 }
