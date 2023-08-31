@@ -72,7 +72,9 @@ const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
         disabled={isGardenView}
         onClick={toggleView}
       >
-        GARDEN VIEW
+        GARDEN VIEW<span className="material-symbols-rounded">
+outdoor_garden
+</span>
       </button>
       {isGardenView &&
         <>
@@ -94,7 +96,6 @@ const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
               <div className='unavailable-symbol' ></div>
               <p>UNAVAILABLE</p>
             </div>
-            <p>DOUBLE CLICK TO DELETE A PLANT</p>
           </div>
           <button className='clear-button' onClick={handleFullClear} >CLEAR GARDEN</button>
           <button className='clear-button' onClick={handlePartialClear} >REMOVE UNPLANTED ITEMS</button>
