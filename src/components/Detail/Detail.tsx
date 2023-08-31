@@ -1,4 +1,4 @@
-import './Detail.css';
+import './Detail.scss';
 import InfoItem from '../InfoItem/InfoItem'
 import plantDetails from './mockData'
 
