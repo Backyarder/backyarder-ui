@@ -1,21 +1,12 @@
 import { useState } from 'react';
 import { useDrop } from 'react-dnd';
+import CellActions from '../CellActions/CellActions';
+import { CardProps } from '../Card/Card';
 import './Cell.scss'
 
 type GridCell = {
     id: string;
     toggleModal: () => void;
-}
-
-type CardProps = {
-    plant: {
-        id: number
-        name: string
-        image: string
-        type: string
-        sunlight: string[]
-        hardiness: string
-    }
 }
 
 const Cell = ({id, toggleModal}: GridCell) => {
@@ -49,7 +40,9 @@ const Cell = ({id, toggleModal}: GridCell) => {
     };
 
     return (
-        <div id={id} className='cell' style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}></div>
+        <div id={id} className='cell' style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}>
+            {cellContents && <CellActions plant={cellContents?.plant} />}
+        </div>
     )
 }
 

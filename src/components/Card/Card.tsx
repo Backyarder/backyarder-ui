@@ -1,7 +1,7 @@
 import { useDrag, DragPreviewImage } from 'react-dnd'
 import './Card.scss'
 
-type CardProps = {
+export interface CardProps {
     plant: {
         id: number
         name: string
@@ -14,10 +14,20 @@ type CardProps = {
 
 const iconMap: { [key: string]: any } = {
     type: {
+        'flower': 'Deceased',
         'tree': 'park',
+        'fruit': 'Nutrition',
+        "Palm or Cycad": 'park',
         'Ornamental grass': 'psychiatry',
+        'Vine': 'psychiatry',
         'Deciduous shrub': 'grass',
-        'Broadleaf evergreen': 'park'
+        "Rush or Sedge": 'grass',
+        'Shrub': 'grass',
+        "Fern": 'grass',
+        "Epiphyte": 'grass',
+        'Broadleaf evergreen': 'park',
+        'Herb': 'Temp Preferences Eco',
+        'Vegetable': 'Restaurant'
     },
     sunlight: {
         'full sun': 'sunny',
