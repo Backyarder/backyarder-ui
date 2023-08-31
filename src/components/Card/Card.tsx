@@ -1,4 +1,5 @@
-import { useDrag } from 'react-dnd'
+import { useState, useEffect } from 'react'
+import { useDrag, DragPreviewImage } from 'react-dnd'
 import './Card.scss'
 
 type CardProps = {
@@ -26,7 +27,9 @@ const iconMap: { [key: string]: any } = {
 }
 
 const Card = ({plant}: CardProps) => {
-    const [{ isDragging }, dragRef] = useDrag({
+    const [dragging, setIsDragging] = useState<boolean>(false)
+
+    const [{ isDragging }, dragRef, preview] = useDrag({
         type: 'plant',
         item: { plant },
         collect: (monitor) => ({
@@ -34,34 +37,40 @@ const Card = ({plant}: CardProps) => {
         })
     })
 
+    useEffect(() => {
+        setIsDragging(!dragging)
+        // eslint-disable-next-line
+    }, [isDragging])
+
     const draggedCardStyle = isDragging ? {opacity: '.4'} : {}
 
     return (
-        <div className='card' style={draggedCardStyle}>
-            <div className='drag-ref' ref={dragRef}>
+        <>
+            <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
+            <div className='card' style={draggedCardStyle} ref={dragRef}>
                 <img src={plant.image} alt={`${plant.name}`}/>
                 <p className='plant-name'>{plant.name.toUpperCase()}</p>
-            </div>
-            <div className='card-icons-container'>
-                <div className='card-icons'>
-                    <div className="material-symbols-rounded card-icon">
-                        {iconMap.type[plant.type]}
-                        <span className="left-icon-text tooltip-text">{`${plant.type}`}</span>
+                <div className='card-icons-container'>
+                    <div className='card-icons'>
+                        <div className="material-symbols-rounded card-icon">
+                            {iconMap.type[plant.type]}
+                            <span className="left-icon-text tooltip-text">{`${plant.type}`}</span>
+                        </div>
+                        <div className="material-symbols-rounded card-icon">
+                            {iconMap.sunlight[plant.sunlight[0]]}
+                            <span className="left-icon-text tooltip-text">{`${plant.sunlight[0]}`}</span>
+                        </div>
                     </div>
-                    <div className="material-symbols-rounded card-icon">
-                        {iconMap.sunlight[plant.sunlight[0]]}
-                        <span className="left-icon-text tooltip-text">{`${plant.sunlight[0]}`}</span>
+                    <div className='card-icons'>
+                        <div className="material-symbols-rounded card-icon">
+                            location_on
+                            <span className="hardiness-text tooltip-text">hardiness zone</span>
+                        </div>
+                        <span>{plant.hardiness}</span>
                     </div>
                 </div>
-                <div className='card-icons'>
-                    <div className="material-symbols-rounded card-icon">
-                        location_on
-                        <span className="hardiness-text tooltip-text">hardiness zone</span>
-                    </div>
-                    <span>{plant.hardiness}</span>
-                </div>
             </div>
-        </div>
+        </>
     )
 }
 
