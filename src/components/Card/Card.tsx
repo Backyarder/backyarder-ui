@@ -52,7 +52,7 @@ const Card = ({plant}: CardProps) => {
                 <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
             )}
             <div className='card' style={draggedCardStyle} ref={dragRef}>
-                <img src={plant.image} alt={`${plant.name}`}/>
+                <img className='card-image' src={plant.image} alt={`${plant.name}`}/>
                 <p className='plant-name'>{plant.name.toUpperCase()}</p>
                 <div className='card-icons-container'>
                     <div className='card-icons'>

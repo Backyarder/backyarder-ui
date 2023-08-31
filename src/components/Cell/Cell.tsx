@@ -12,6 +12,7 @@ type GridCell = {
 const Cell = ({id, toggleModal}: GridCell) => {
     const [isDisabled, setIsDisabled] = useState<boolean>(false)
     const [cellContents, setCellContents] = useState<CardProps>()
+    const [isClicked, setIsClicked] = useState<boolean>(false)
     const [{ isOver }, dropRef] = useDrop({
         accept: 'plant',
         drop: (plant: CardProps) => isDisabled ? toggleModal() : setCellContents(plant),
@@ -20,11 +21,20 @@ const Cell = ({id, toggleModal}: GridCell) => {
         })
     })
 
+    const handleCloseModal = () => {
+        setIsClicked(false)
+    }
+
     const handleClick = (e: React.MouseEvent) => {
+        const target = e.target as Element
         if(!cellContents) {
             setIsDisabled(!isDisabled)
-            const target = e.target as Element
             !isDisabled ? target.classList.add('disabled') : target.classList.remove('disabled')
+        } else {
+            setIsClicked(true)
+            target.classList.add('disable-scale')
+            const parent = target.parentNode as Element
+            parent.classList.add('disable-hover')
         }
     }
 
@@ -41,7 +51,9 @@ const Cell = ({id, toggleModal}: GridCell) => {
 
     return (
         <div id={id} className='cell' style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}>
-            {cellContents && <CellActions plant={cellContents?.plant} />}
+            {isClicked && <div className='cell-modal'>
+                {cellContents && <CellActions plant={cellContents?.plant} handleCloseModal={handleCloseModal}/>}
+            </div>}
         </div>
     )
 }
