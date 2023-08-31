@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { useDrag, DragPreviewImage } from 'react-dnd'
 import './Card.scss'
 
@@ -27,8 +26,6 @@ const iconMap: { [key: string]: any } = {
 }
 
 const Card = ({plant}: CardProps) => {
-    const [dragging, setIsDragging] = useState<boolean>(false)
-
     const [{ isDragging }, dragRef, preview] = useDrag({
         type: 'plant',
         item: { plant },
@@ -37,16 +34,13 @@ const Card = ({plant}: CardProps) => {
         })
     })
 
-    useEffect(() => {
-        setIsDragging(!dragging)
-        // eslint-disable-next-line
-    }, [isDragging])
-
     const draggedCardStyle = isDragging ? {opacity: '.4'} : {}
 
     return (
         <>
-            <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
+            {!isDragging && (
+                <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
+            )}
             <div className='card' style={draggedCardStyle} ref={dragRef}>
                 <img src={plant.image} alt={`${plant.name}`}/>
                 <p className='plant-name'>{plant.name.toUpperCase()}</p>
