@@ -29,9 +29,15 @@ const CellActions = ({plant, handleCloseModal, handlePlanted, handleRemove}: Cel
             <img className='card-image' src={plant.image} alt={`${plant.name}`}/>
             <p className='plant-name'>{plant.name.toUpperCase()}</p>
             <div className='cell-actions'>
-                <button className='cell-button plant-button' onClick={handleClick}>Plant!</button>
-                <button className='cell-button remove-button' onClick={handleClick}>Remove</button>
-                <img className='close-modal' src={`${process.env.PUBLIC_URL}/images/close-modal.png`} onClick={handleClick} alt='close modal'/>
+                <button className='cell-button plant-button' onClick={handleClick}>Plant!<span className="material-symbols-rounded">
+psychiatry
+</span></button>
+                <button className='cell-button remove-button' onClick={handleClick}>Remove<span className="material-symbols-rounded">
+delete
+</span></button>
+<span className="material-symbols-rounded">
+close
+</span>
             </div>
         </div>
     )
