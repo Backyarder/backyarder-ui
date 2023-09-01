@@ -5,15 +5,17 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    border-radius: 15px;
-    padding: 15px;
+    border-radius: 1em;
+    padding: 1em;
     z-index: 1;
+    width: 12em
 }
 
 .cell-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    // border: solid blue 2px;
 }
 
 .cell-button {
@@ -22,16 +24,17 @@
     cursor: pointer;
     border: none;
     font-weight: bold;
-    border-radius: 25px;
-    height: 3vh;
-    width: 5vw;
-    margin: 2% 0 2%;
+    border-radius: 5em;
     pointer-events: auto;
+    display: flex;
+    align-items: center;
+    padding: 0.4em;
 }
 
-.close-modal {
-    height: 20px;
-    width: 20px;
-    pointer-events: auto;
-    cursor: pointer;
+.card-image{
+    border-radius: 1em;
+}
+
+.plant-icon{
+    padding-left: 0.3em
 }
