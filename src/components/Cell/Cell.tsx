@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useDrop } from 'react-dnd';
+import CellActions from '../CellActions/CellActions';
+import { CardProps } from '../Card/Card';
 import './Cell.scss'
 
 type GridCell = {
@@ -7,20 +9,11 @@ type GridCell = {
     toggleModal: () => void;
 }
 
-type CardProps = {
-    plant: {
-        id: number
-        name: string
-        image: string
-        type: string
-        sunlight: string[]
-        hardiness: string
-    }
-}
-
 const Cell = ({id, toggleModal}: GridCell) => {
     const [isDisabled, setIsDisabled] = useState<boolean>(false)
     const [cellContents, setCellContents] = useState<CardProps>()
+    const [isClicked, setIsClicked] = useState<boolean>(false)
+    const [isPlanted, setIsPlanted] = useState<boolean>(false)
     const [{ isOver }, dropRef] = useDrop({
         accept: 'plant',
         drop: (plant: CardProps) => isDisabled ? toggleModal() : setCellContents(plant),
@@ -29,11 +22,29 @@ const Cell = ({id, toggleModal}: GridCell) => {
         })
     })
 
+    const handlePlanted = () => {
+        setIsPlanted(true)
+    }
+
+    const handleRemove = () => {
+        setIsPlanted(false)
+        setCellContents(undefined)
+    }
+
+    const handleCloseModal = () => {
+        setIsClicked(false)
+    }
+
     const handleClick = (e: React.MouseEvent) => {
+        const target = e.target as Element
         if(!cellContents) {
             setIsDisabled(!isDisabled)
-            const target = e.target as Element
             !isDisabled ? target.classList.add('disabled') : target.classList.remove('disabled')
+        } else {
+            setIsClicked(true)
+            target.classList.add('disable-scale')
+            const parent = target.parentNode as Element
+            parent.classList.add('disable-hover')
         }
     }
 
@@ -42,14 +53,19 @@ const Cell = ({id, toggleModal}: GridCell) => {
         backgroundColor: 'LawnGreen'
     }
 
-    const divStyle = {
+    const divStyle = !isDisabled && {
         backgroundImage: `url(${cellContents?.plant.image})`,
         backgroundPosition: 'center',
-        backgroundSize: '100%'
+        backgroundSize: '100%',
+        border: isPlanted ? 'solid LawnGreen 3px' : 'solid white 3px'
     };
 
     return (
-        <div id={id} className='cell' style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}></div>
+        <div id={id} className='cell' style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}>
+            {isClicked && <div className='cell-modal'>
+                {cellContents && <CellActions plant={cellContents?.plant} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal}/>}
+            </div>}
+        </div>
     )
 }
 
