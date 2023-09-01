@@ -6,9 +6,10 @@ type NavProps = {
   isGardenView: boolean;
   setIsGardenView: Function;
   setBullDoze: Function;
+  setFilterGarden: Function;
 }
 
-const Nav = ({ isGardenView, setIsGardenView, setBullDoze }: NavProps) => {
+const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: NavProps) => {
   const [popUp, setPopUp] = useState<boolean>(false);
   const [fullClear, setFullClear] = useState<boolean>(false);
   const [partialClear, setPartialClear] = useState<boolean>(false);
@@ -41,8 +42,7 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze }: NavProps) => {
       setBullDoze(true);
       alert('Garden cleared.');
     } else {
-      // let filteredGarden = clearGardenMockData.filter(plant => plant.status > 1 && plant['plant_id'] > 1);
-      // clearGardenMockData(filteredGarden);
+      setFilterGarden(true);
       alert('Unplanted items removed.');
     }
     reset();

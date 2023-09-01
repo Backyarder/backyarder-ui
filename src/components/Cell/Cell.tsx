@@ -8,10 +8,12 @@ type GridCell = {
   id: string;
   bullDoze: boolean;
   setBullDoze: Function;
+  filterGarden: boolean;
+  setFilterGarden: Function;
   toggleModal: () => void;
 }
 
-const Cell = ({id, bullDoze, setBullDoze, toggleModal}: GridCell) => {
+const Cell = ({id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal}: GridCell) => {
   const [className, setClassName] = useState<string>('cell');
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isPopulated, setIsPopulated] = useState<boolean>(false);
@@ -27,6 +29,14 @@ const Cell = ({id, bullDoze, setBullDoze, toggleModal}: GridCell) => {
     }
   // eslint-disable-next-line
   }, [bullDoze])
+
+  useEffect(() => {
+    if (filterGarden) {
+      unPlantItems();
+      setFilterGarden(false);
+    }
+  // eslint-disable-next-line
+  }, [filterGarden])
 
   const [{ isOver }, dropRef] = useDrop({
     accept: 'plant',
@@ -74,6 +84,13 @@ const Cell = ({id, bullDoze, setBullDoze, toggleModal}: GridCell) => {
     setCellContents(undefined);
     setIsPopulated(false);
     setIsPlanted(false);
+  }
+
+  const unPlantItems = () : void => {
+    if (isPopulated && !isPlanted) {
+      setCellContents(undefined);
+      setIsPopulated(false);
+    }
   }
 
   const hoverStyle = isOver && !isDisabled && {
