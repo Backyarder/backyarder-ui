@@ -92,14 +92,14 @@ const Cell = ({id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleM
 
   const hoverStyle = isOver && !isDisabled && {
     transform: 'scale(1.3)',
-    backgroundColor: 'LawnGreen'
+    backgroundColor: '#9EC924'
   }
 
   const divStyle = !isDisabled && {
     backgroundImage: `url(${cellContents?.plant.image})`,
     backgroundPosition: 'center',
     backgroundSize: '100%',
-    border: isPlanted ? 'solid LawnGreen 3px' : 'solid white 3px'
+    border: isPlanted ? 'solid #9EC924 3px' : 'solid white 3px'
   };
 
   return (
