@@ -26,6 +26,11 @@ const Cell = ({id, toggleModal}: GridCell) => {
         setIsPlanted(true)
     }
 
+    const handleRemove = () => {
+        setIsPlanted(false)
+        setCellContents(undefined)
+    }
+
     const handleCloseModal = () => {
         setIsClicked(false)
     }
@@ -58,7 +63,7 @@ const Cell = ({id, toggleModal}: GridCell) => {
     return (
         <div id={id} className='cell' style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}>
             {isClicked && <div className='cell-modal'>
-                {cellContents && <CellActions plant={cellContents?.plant} handlePlanted={handlePlanted} handleCloseModal={handleCloseModal}/>}
+                {cellContents && <CellActions plant={cellContents?.plant} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal}/>}
             </div>}
         </div>
     )
