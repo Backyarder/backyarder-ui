@@ -24,6 +24,7 @@ export interface PlantAttributes {
 
 const Sidebar = () => {
     const [plantList, setPlantList] = useState<PlantData[]>([])
+    // eslint-disable-next-line
     const [apiError, setApiError] = useState<string>('')
 
     useEffect(() => {
