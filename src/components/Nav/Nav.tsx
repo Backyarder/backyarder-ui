@@ -59,9 +59,7 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: Na
         disabled={!isGardenView}
         onClick={toggleView}
       >
-        <span className="material-symbols-rounded nav-icon">
-list_alt
-</span>LIST OF GARDEN PLANTS
+        <span className="material-symbols-rounded nav-icon">list_alt</span>LIST OF GARDEN PLANTS
       </button>
       <button
         className='nav-button'
@@ -72,9 +70,7 @@ list_alt
         disabled={isGardenView}
         onClick={toggleView}
       >
-        <span className="material-symbols-rounded nav-icon">
-outdoor_garden
-</span>GARDEN VIEW
+        <span className="material-symbols-rounded nav-icon">outdoor_garden</span>GARDEN VIEW
       </button>
       {isGardenView &&
         <>
