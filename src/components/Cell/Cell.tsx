@@ -25,6 +25,7 @@ const Cell = ({id, bullDoze, setBullDoze, toggleModal}: GridCell) => {
       emptyCell();
       setBullDoze(false);
     }
+  // eslint-disable-next-line
   }, [bullDoze])
 
   const [{ isOver }, dropRef] = useDrop({
