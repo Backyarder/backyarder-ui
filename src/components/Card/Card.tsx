@@ -1,18 +1,9 @@
 import { useDrag, DragPreviewImage } from 'react-dnd'
+import { PlantAttributes } from '../Sidebar/Sidebar'
 import './Card.scss'
 
 export interface CardProps {
-    plant: {
-        plant_id: number
-        name: string
-        image: string
-        type: string
-        sunlight: string[]
-        hardiness: {
-            min: string
-            max: string
-        }
-    }
+    plant: PlantAttributes
 }
 
 const iconMap: { [key: string]: any } = {

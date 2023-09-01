@@ -10,7 +10,7 @@ interface PlantData {
     attributes: PlantAttributes
 }
 
-interface PlantAttributes {
+export interface PlantAttributes {
     hardiness: {
         min: string
         max: string
