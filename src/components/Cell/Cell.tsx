@@ -13,6 +13,7 @@ const Cell = ({id, toggleModal}: GridCell) => {
     const [isDisabled, setIsDisabled] = useState<boolean>(false)
     const [cellContents, setCellContents] = useState<CardProps>()
     const [isClicked, setIsClicked] = useState<boolean>(false)
+    const [isPlanted, setIsPlanted] = useState<boolean>(false)
     const [{ isOver }, dropRef] = useDrop({
         accept: 'plant',
         drop: (plant: CardProps) => isDisabled ? toggleModal() : setCellContents(plant),
@@ -20,6 +21,10 @@ const Cell = ({id, toggleModal}: GridCell) => {
             isOver: monitor.isOver()
         })
     })
+
+    const handlePlanted = () => {
+        setIsPlanted(true)
+    }
 
     const handleCloseModal = () => {
         setIsClicked(false)
@@ -46,13 +51,14 @@ const Cell = ({id, toggleModal}: GridCell) => {
     const divStyle = {
         backgroundImage: `url(${cellContents?.plant.image})`,
         backgroundPosition: 'center',
-        backgroundSize: '100%'
+        backgroundSize: '100%',
+        border: isPlanted ? 'solid LawnGreen 3px' : 'solid white 3px'
     };
 
     return (
         <div id={id} className='cell' style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}>
             {isClicked && <div className='cell-modal'>
-                {cellContents && <CellActions plant={cellContents?.plant} handleCloseModal={handleCloseModal}/>}
+                {cellContents && <CellActions plant={cellContents?.plant} handlePlanted={handlePlanted} handleCloseModal={handleCloseModal}/>}
             </div>}
         </div>
     )
