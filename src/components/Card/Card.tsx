@@ -3,12 +3,15 @@ import './Card.scss'
 
 export interface CardProps {
     plant: {
-        id: number
+        plant_id: number
         name: string
         image: string
         type: string
         sunlight: string[]
-        hardiness: string
+        hardiness: {
+            min: string
+            max: string
+        }
     }
 }
 
@@ -26,7 +29,7 @@ const iconMap: { [key: string]: any } = {
         "Fern": 'grass',
         "Epiphyte": 'grass',
         'Broadleaf evergreen': 'park',
-        'Herb': 'Temp Preferences Eco',
+        'Herb': 'temp_preferences_eco',
         'Vegetable': 'Restaurant'
     },
     sunlight: {
@@ -45,6 +48,10 @@ const Card = ({plant}: CardProps) => {
     })
 
     const draggedCardStyle = isDragging ? {opacity: '.4'} : {}
+
+    const hardiness = plant.hardiness.min === plant.hardiness.max
+                        ? `${plant.hardiness.min}`
+                        : `${plant.hardiness.min}-${plant.hardiness.max}`
 
     return (
         <>
@@ -70,7 +77,7 @@ const Card = ({plant}: CardProps) => {
                             location_on
                             <span className="hardiness-text tooltip-text">hardiness zone</span>
                         </div>
-                        <span>{plant.hardiness}</span>
+                        <span>{hardiness}</span>
                     </div>
                 </div>
             </div>
