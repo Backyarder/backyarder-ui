@@ -53,7 +53,7 @@ const Cell = ({id, toggleModal}: GridCell) => {
         backgroundColor: 'LawnGreen'
     }
 
-    const divStyle = {
+    const divStyle = !isDisabled && {
         backgroundImage: `url(${cellContents?.plant.image})`,
         backgroundPosition: 'center',
         backgroundSize: '100%',
