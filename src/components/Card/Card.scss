@@ -1,23 +1,22 @@
 .card {
-    background-color: white;
-    margin: 10px;
+    background-color: #f4f4f4;
+    margin-top: 0.8em;
     display: flex;
     flex-direction: column;
-    border-radius: 15px;
+    border-radius: 1em;
     padding: 10px;
 }
 
-.card-image {
-    width: 220px;
-    height: 115px;
+.card > img {
+    height: 7em;
     object-fit: cover;
-    border-radius: 15px;
+    border-radius: 1em;
 }
 
 .plant-name {
     text-align: left;
-    font-weight: 700;
-    margin: 0;
+    margin: 0.1em;
+    font-size: 1.2em;
     color: #af2268;
 }
 
@@ -27,7 +26,7 @@
 }
 
 .card-icon {
-    font-size: 30px;
+    font-size: 28px;
     position: relative;
 }
 

@@ -4,7 +4,7 @@ nav {
   justify-content: flex-start;
   align-items: center;
   width: 20%;
-  padding-top: 1%;
+  max-width: 300px
 }
 
 .nav-button, .clear-button {
@@ -13,23 +13,33 @@ nav {
   border-radius: 25px;
   height: 5vh;
   width: 15vw;
-  // min-width
-  margin-bottom: 2%;
+  margin-bottom: 0.5em;
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 1em
+}
+
+.nav-icon{
+  padding-right: 0.5em;
 }
 
 .nav-button {
   background-color: #beab95;
   color: #483c3c;
+  width: 100%;
 }
 
 .key {
-  border-radius: 10px;
+  border-radius: 1em;
   display: flex;
   flex-direction: column;
   background-color: #beab95;
   color: #483c3c;
   font-weight: bolder;
-  margin-bottom: 2%;
+  margin-bottom: 0.5em;
+  width: 100%;
 }
 
 .key-text {
@@ -43,29 +53,28 @@ nav {
 
 .empty-symbol, .ready-symbol, .planted-symbol, .unavailable-symbol {
   border: none;
-  border-radius: 5px;
+  border-radius: 0.3em;
   height: 55%;
   width: 12%;
-  background-color: white;
-  margin: 0 2% 0 2%;
+  background-color: #f4f4f4;
+  margin: 0 5%;
 }
 
 .ready-symbol, .planted-symbol {
-  background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/07/Honeycrisp-Apple.jpg');
+  background-image: url('../../../public/images/plant.png');
   background-size: cover;
-  background-position: center;
 }
 
 .empty-symbol, .ready-symbol {
-  border: 3px solid #f4f4f4;
+  border: 5px solid #f4f4f4;
 }
 
 .planted-symbol {
-  border: 3px solid #93a854;
+  border: 5px solid #93a854;
 }
 
 .unavailable-symbol {
-  border: 3px solid #786961;
+  border: 5px solid #786961;
   background-color: #786961;
 }
 
@@ -87,7 +96,6 @@ nav {
 .pop-up-button-container {
   display: flex;
   justify-content: space-around;
-  width: 100%;
 }
 
 .pop-up-button {
