@@ -74,7 +74,6 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: Na
       {isGardenView &&
         <>
           <div className='key'>
-            <p className='key-text' >KEY:</p>
             <div className='key-symbol-container' >
               <div className='empty-symbol' ></div>
               <p>EMPTY</p>
