@@ -4,7 +4,6 @@ nav {
   justify-content: flex-start;
   align-items: center;
   width: 20%;
-  padding-top: 1%;
 }
 
 .nav-button, .clear-button {
@@ -13,9 +12,16 @@ nav {
   border-radius: 25px;
   height: 5vh;
   width: 15vw;
-  // min-width
-  margin-bottom: 2%;
+  margin-bottom: 1em;
   width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 1em
+}
+
+.nav-icon{
+  padding-right: 1em;
 }
 
 .nav-button {
@@ -31,7 +37,8 @@ nav {
   background-color: #beab95;
   color: #483c3c;
   font-weight: bolder;
-  margin-bottom: 2%;
+  margin-bottom: 1em;
+  width: 100%;
 }
 
 .key-text {

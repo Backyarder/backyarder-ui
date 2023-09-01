@@ -14,9 +14,8 @@
     display: grid;
     grid-template-columns: repeat(10, 10%);
     background-color: #beab95;
-    height: 95vh;
-    width: 95vh;
-    max-width: 50%;
+    height: calc(100vh - 145px);
+    width: calc(100vh - 145px);
     border-radius: 15px;
     flex-shrink: 0;
 }

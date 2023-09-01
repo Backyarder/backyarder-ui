@@ -59,7 +59,9 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: Na
         disabled={!isGardenView}
         onClick={toggleView}
       >
-        LIST OF GARDEN PLANTS
+        <span className="material-symbols-rounded nav-icon">
+list_alt
+</span>LIST OF GARDEN PLANTS
       </button>
       <button
         className='nav-button'
@@ -70,9 +72,9 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: Na
         disabled={isGardenView}
         onClick={toggleView}
       >
-        GARDEN VIEW<span className="material-symbols-rounded">
+        <span className="material-symbols-rounded nav-icon">
 outdoor_garden
-</span>
+</span>GARDEN VIEW
       </button>
       {isGardenView &&
         <>
@@ -95,8 +97,12 @@ outdoor_garden
               <p>UNAVAILABLE</p>
             </div>
           </div>
-          <button className='clear-button' onClick={handleFullClear} >CLEAR GARDEN</button>
-          <button className='clear-button' onClick={handlePartialClear} >REMOVE UNPLANTED ITEMS</button>
+          <button className='clear-button' onClick={handleFullClear} ><span className="material-symbols-rounded nav-icon">
+bomb
+</span>CLEAR GARDEN</button>
+          <button className='clear-button' onClick={handlePartialClear} ><span className="material-symbols-rounded nav-icon">
+agriculture
+</span>REMOVE UNPLANTED ITEMS</button>
           {popUp &&
             <div className='pop-up'>
               {fullClear && <p>Are you sure you wish to clear your garden? This action cannot be undone.</p>}
