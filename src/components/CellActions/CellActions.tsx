@@ -3,11 +3,12 @@ import './CellActions.scss'
 
 interface CellProps extends CardProps {
     handleCloseModal: () => void
+    isPlanted: boolean
     handlePlanted: () => void
     handleRemove: () => void
 }
 
-const CellActions = ({plant, handleCloseModal, handlePlanted, handleRemove}: CellProps) => {
+const CellActions = ({plant, handleCloseModal, isPlanted, handlePlanted, handleRemove}: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -29,7 +30,10 @@ const CellActions = ({plant, handleCloseModal, handlePlanted, handleRemove}: Cel
             <img className='card-image' src={plant.image} alt={`${plant.name}`}/>
             <p className='plant-name'>{plant.name.toUpperCase()}</p>
             <div className='cell-actions'>
-                <button className='cell-button plant-button' onClick={handleClick}>Plant!</button>
+                {isPlanted
+                    ? <button className='cell-button plant-button' onClick={handleClick}>Water!</button>
+                    : <button className='cell-button water-button' onClick={handleClick}>Plant!</button>
+                }
                 <button className='cell-button remove-button' onClick={handleClick}>Remove</button>
                 <img className='close-modal' src={`${process.env.PUBLIC_URL}/images/close-modal.png`} onClick={handleClick} alt='close modal'/>
             </div>

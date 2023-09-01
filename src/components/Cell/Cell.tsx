@@ -107,7 +107,7 @@ const Cell = ({id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleM
       {isPopulated ? (
         <div id={id} className={className} style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}>
           {isClicked && <div className='cell-modal'>
-            {cellContents && <CellActions plant={cellContents?.plant} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal}/>}
+            {cellContents && <CellActions plant={cellContents?.plant} isPlanted={isPlanted} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal}/>}
           </div>}
         </div>
       ) : (
