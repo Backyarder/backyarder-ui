@@ -73,6 +73,7 @@ const Cell = ({id, bullDoze, setBullDoze, toggleModal}: GridCell) => {
     setIsDisabled(false);
     setCellContents(undefined);
     setIsPopulated(false);
+    setIsPlanted(false);
   }
 
   const hoverStyle = isOver && !isDisabled && {
@@ -96,7 +97,7 @@ const Cell = ({id, bullDoze, setBullDoze, toggleModal}: GridCell) => {
           </div>}
         </div>
       ) : (
-        <div id={id} className={className} style={{...hoverStyle}} onClick={handleClick} ref={dropRef}></div>
+        <div id={id} className={className} style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}></div>
       )}
     </>
   );
