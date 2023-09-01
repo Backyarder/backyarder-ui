@@ -25,6 +25,8 @@ const Sidebar = () => {
     const [plantList, setPlantList] = useState<PlantData[]>([])
     // eslint-disable-next-line
     const [apiError, setApiError] = useState<string>('')
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [loadingPlants, setLoadingPlants] = useState<boolean>(false)
 
     useEffect(() => {
         getPlantList()
@@ -41,21 +43,25 @@ const Sidebar = () => {
     let cards;
     if (plantList.length) {
         cards = plantList.map((plant: PlantData) => <Card plant={plant.attributes} key={plant.attributes.plant_id} />)
-    }
-
-
-    const [searchTerm, setSearchTerm] = useState('');
-
-    //when the user adds a search term the state will be updated
-    // when the user clicks the search button a onClick function will be fired off
-        //onClick will display a loading message in the sidebar, run a fetch call to get the search cards
-            //if response is good a cards will be updated and displayed - need to figure this one out a little more
-            // if the response is bad then the user will get a message saying that there are no plants mathcing their search OR there was an error on the server side and to try agian later
-            
+    }           
 
     const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
     };
+
+    const searchForPlants = () => {
+        //onClick will display a loading message in the sidebar, run a fetch call to get the search cards
+            //if response is good a cards will be updated and displayed - need to figure this one out a little more
+            // if the response is bad then the user will get a message saying that there are no plants mathcing their search OR there was an error on the server side and to try agian later
+    }
+
+    const loading = () => {
+        return (
+            <>
+                <p>Gathering plants from our nursery</p>
+            </>
+        )
+    }
 
     return (
         <section id='plants'>
@@ -68,11 +74,12 @@ const Sidebar = () => {
                     value={searchTerm}
                     onChange={handleSearchChange}
                 />
-                <button className="submit-search"><span className="material-symbols-rounded">
+                <button className="submit-search" onClick={searchForPlants}><span className="material-symbols-rounded">
                     search
                 </span></button>
             </div>
-            {plantList.length && cards}
+            {/* {!loadingPlants ? cards : loading} */}
+            {/* {plantList.length && cards} */}
         </section>
     )
 }
