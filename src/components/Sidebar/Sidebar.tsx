@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, ChangeEvent } from "react"
 import Card from "../Card/Card"
 import './Sidebar.scss'
-// import { plantsMockData } from "./plantsMockData"
 import { getPlantList } from "../../apiCalls"
 
 interface PlantData {
@@ -45,10 +44,27 @@ const Sidebar = () => {
     }
 
 
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+    };
+
     return (
         <section id='plants'>
             <h2>PLANTS</h2>
-            <p>SEARCH</p>
+            <div className="search">
+                <input
+                    className="search-bar"
+                    type="text"
+                    placeholder="Search... "
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+                <button className="submit-search"><span className="material-symbols-rounded">
+                    search
+                </span></button>
+            </div>
             {plantList.length && cards}
         </section>
     )
