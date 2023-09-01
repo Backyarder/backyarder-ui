@@ -99,7 +99,7 @@ const Cell = ({id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleM
     backgroundImage: `url(${cellContents?.plant.image})`,
     backgroundPosition: 'center',
     backgroundSize: '100%',
-    border: isPlanted ? 'solid #9EC924 3px' : 'solid white 3px'
+    border: isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
   };
 
   return (

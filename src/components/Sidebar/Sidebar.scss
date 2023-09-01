@@ -14,12 +14,13 @@
     width: 20%;
     background-color: #beab95;
     overflow: scroll;
+    overflow-x: hidden;
     border-radius: 1em;
     color: #483C3C;
     display: flex;
     flex-direction: column;
     padding: 0.5em;
-    height: calc(100vh - 145px);
+    height: calc(100vh - 190px);
 }
 
 #plants h2 {
