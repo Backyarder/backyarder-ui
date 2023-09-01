@@ -1,16 +1,15 @@
 // import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import './Nav.scss';
-// import { clearGardenMockData } from './clearGardenMockData';
 
 type NavProps = {
   isGardenView: boolean;
   setIsGardenView: Function;
-  // clearGarden: Function;
-  // clearPartialGarden: Function;
+  setBullDoze: Function;
+  setFilterGarden: Function;
 }
 
-const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
+const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: NavProps) => {
   const [popUp, setPopUp] = useState<boolean>(false);
   const [fullClear, setFullClear] = useState<boolean>(false);
   const [partialClear, setPartialClear] = useState<boolean>(false);
@@ -40,11 +39,10 @@ const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
 
   const handleDelete = () : void => {
     if (fullClear) {
-      // clearGarden(clearGardenMockData);
+      setBullDoze(true);
       alert('Garden cleared.');
     } else {
-      // let filteredGarden = clearGardenMockData.filter(plant => plant.status > 1 && plant['plant_id'] > 1);
-      // clearGardenMockData(filteredGarden);
+      setFilterGarden(true);
       alert('Unplanted items removed.');
     }
     reset();
@@ -94,7 +92,6 @@ const Nav = ({ isGardenView, setIsGardenView }: NavProps) => {
               <div className='unavailable-symbol' ></div>
               <p>UNAVAILABLE</p>
             </div>
-            <p>DOUBLE CLICK TO DELETE A PLANT</p>
           </div>
           <button className='clear-button' onClick={handleFullClear} >CLEAR GARDEN</button>
           <button className='clear-button' onClick={handlePartialClear} >REMOVE UNPLANTED ITEMS</button>

@@ -18,6 +18,8 @@ import { useState } from 'react';
 const Main = () => {
   // const [garden, setGarden] = useState<GardenKeys>([]);
   const [isGardenView, setIsGardenView] = useState<boolean>(true);
+  const [bullDoze, setBullDoze] = useState<boolean>(false);
+  const [filterGarden, setFilterGarden] = useState<boolean>(false);
   // const [error, setError] = useState<string>('');
 
   // useEffect(() => {
@@ -44,8 +46,8 @@ const Main = () => {
   return (
     <main>
       <Sidebar />
-      {isGardenView ? <Grid /> : <List />}
-      <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} />
+      {isGardenView ? <Grid bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List />}
+      <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
       {/* <Link to='/plants'>See Plant Details Page</Link> */}
     </main>
   );
