@@ -1,20 +1,15 @@
-// type GardenKeys = {
-//   id: string,
-//   'plant_name': string,
-//   status: number,
-//   'plant_id': number,
-//   image: string
-// }[];
+const handleError = (res: Response) => {
+    if(!res.ok) {
+      throw new Error(`HTTP Error: ${res.status} -- Please try again later`)
+    }
+    return res.json()
+  }
 
-// const patchGarden = (garden: GardenKeys) => {
-//   return fetch("", {
-//     method: 'PATCH',
-//     body: JSON.stringify(garden),
-//     headers: {
-//       'Content-Type': 'application/json'
-//     }
-//   });
-// }
-const patchGarden = () => {}
+const getPlantList = () => {
+    return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants`, {
+        cache: 'force-cache',
+    })
+        .then(res => handleError(res))
+}
 
-export { patchGarden }
+export { getPlantList }
