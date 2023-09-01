@@ -35,7 +35,7 @@ const iconMap: { [key: string]: any } = {
     }
 }
 
-const Card = ({plant}: CardProps) => {
+const Card = ({ plant }: CardProps) => {
     const [{ isDragging }, dragRef, preview] = useDrag({
         type: 'plant',
         item: { plant },
@@ -44,7 +44,7 @@ const Card = ({plant}: CardProps) => {
         })
     })
 
-    const draggedCardStyle = isDragging ? {opacity: '.4'} : {}
+    const draggedCardStyle = isDragging ? { opacity: '.4' } : {}
 
     return (
         <>
@@ -52,7 +52,7 @@ const Card = ({plant}: CardProps) => {
                 <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
             )}
             <div className='card' style={draggedCardStyle} ref={dragRef}>
-                <img className='card-image' src={plant.image} alt={`${plant.name}`}/>
+                <img className='card-image' src={plant.image} alt={`${plant.name}`} />
                 <p className='plant-name'>{plant.name.toUpperCase()}</p>
                 <div className='card-icons-container'>
                     <div className='card-icons'>

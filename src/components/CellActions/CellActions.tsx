@@ -32,16 +32,15 @@ const CellActions = ({ plant, handleCloseModal, handlePlanted, handleRemove }: C
                 <button className='cell-button plant-button' onClick={handleClick}>Plant!<span onClick={handleClick} className="material-symbols-rounded plant-icon plant-button">
                     psychiatry
                 </span></button>
-                <button className='cell-button' onClick={handleClick}><span onClick={handleClick}className="material-symbols-rounded">
+                <button className='cell-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded">
                     menu_book
                 </span></button>
                 <button className='cell-button remove-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded remove-button">
                     delete
                 </span></button>
-                {/* <img className='close-modal' src={`${process.env.PUBLIC_URL}/images/close-modal.png`} onClick={handleClick} alt='close modal' /> */}
                 <button className='close-modal cell-button' onClick={handleClick}><span className="material-symbols-rounded">
-close
-</span></button>
+                    close
+                </span></button>
             </div>
         </div>
     )
