@@ -79,7 +79,7 @@ const Cell = ({id, bullDoze, setBullDoze, toggleModal}: GridCell) => {
         <div id={id} className={className} style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}></div>
       ) : (
         <div id={id} className={className} style={{...hoverStyle}} onClick={handleClick} ref={dropRef}></div>
-      )};
+      )}
     </>
   );
 }
