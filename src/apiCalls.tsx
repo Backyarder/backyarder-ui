@@ -6,7 +6,9 @@ const handleError = (res: Response) => {
   }
 
 const getPlantList = () => {
-    return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/index`)
+    return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/index`, {
+        cache: 'force-cache',
+    })
         .then(res => handleError(res))
 }
 
