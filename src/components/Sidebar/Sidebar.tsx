@@ -1,11 +1,11 @@
 import Card from "../Card/Card"
 import './Sidebar.scss'
 import { plantsMockData } from "./plantsMockData"
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, useEffect } from 'react'
 
 const Sidebar = () => {
     const cards = plantsMockData.map(plant => <Card plant={plant} key={plant.id} />)
-
+    
     const [searchTerm, setSearchTerm] = useState('');
 
     //when the user adds a search term the state will be updated
