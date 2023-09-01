@@ -3,13 +3,10 @@ import { useDrop } from 'react-dnd';
 import CellActions from '../CellActions/CellActions';
 import { CardProps } from '../Card/Card';
 import './Cell.scss'
+import { GridProps } from '../Grid/Grid';
 
-type GridCell = {
+interface GridCell extends GridProps {
   id: string;
-  bullDoze: boolean;
-  setBullDoze: Function;
-  filterGarden: boolean;
-  setFilterGarden: Function;
   toggleModal: () => void;
 }
 

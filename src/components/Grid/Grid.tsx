@@ -4,7 +4,7 @@ import Modal from '../Modal/Modal';
 import './Grid.scss';
 import { cellsMockData } from './cellsMockData';
 
-type GridProps = {
+export interface GridProps {
   bullDoze: boolean;
   setBullDoze: Function;
   filterGarden: boolean;
