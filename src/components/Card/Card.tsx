@@ -1,7 +1,7 @@
 import { useDrag, DragPreviewImage } from 'react-dnd'
 import './Card.scss'
 
-type CardProps = {
+export interface CardProps {
     plant: {
         id: number
         name: string
@@ -14,10 +14,20 @@ type CardProps = {
 
 const iconMap: { [key: string]: any } = {
     type: {
+        'flower': 'Deceased',
         'tree': 'park',
+        'fruit': 'Nutrition',
+        "Palm or Cycad": 'park',
         'Ornamental grass': 'psychiatry',
+        'Vine': 'psychiatry',
         'Deciduous shrub': 'grass',
-        'Broadleaf evergreen': 'park'
+        "Rush or Sedge": 'grass',
+        'Shrub': 'grass',
+        "Fern": 'grass',
+        "Epiphyte": 'grass',
+        'Broadleaf evergreen': 'park',
+        'Herb': 'Temp Preferences Eco',
+        'Vegetable': 'Restaurant'
     },
     sunlight: {
         'full sun': 'sunny',
@@ -42,7 +52,7 @@ const Card = ({plant}: CardProps) => {
                 <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
             )}
             <div className='card' style={draggedCardStyle} ref={dragRef}>
-                <img src={plant.image} alt={`${plant.name}`}/>
+                <img className='card-image' src={plant.image} alt={`${plant.name}`}/>
                 <p className='plant-name'>{plant.name.toUpperCase()}</p>
                 <div className='card-icons-container'>
                     <div className='card-icons'>
