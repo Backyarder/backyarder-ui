@@ -41,9 +41,8 @@
     color: #483C3C;
     background: transparent;
     width: 80%;
+    &:focus { outline: none; }
 }
-
-.search-bar:focus { outline: none; }
 
 .loading{
     display: flex;

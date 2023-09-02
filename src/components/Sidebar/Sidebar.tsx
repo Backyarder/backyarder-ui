@@ -52,17 +52,11 @@ const Sidebar = () => {
         setSearchTerm(event.target.value);
     };
 
-    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyPress = (event: React.KeyboardEvent) => {
           if (event.key === 'Enter') {
             searchForPlants();
           }
         };
-
-    // const handleKeyPress = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    //     if (event.key === 'Enter') {
-    //         searchForPlants();
-    //     }
-    // };
 
     const searchForPlants = () => {
         setLoadingPlants(true)
