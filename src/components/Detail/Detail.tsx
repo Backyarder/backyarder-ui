@@ -95,13 +95,22 @@ const Detail = () => {
                             </div>
                         </div>
                     </div>
+
+
+
                     <div className="descriptions-and-more-info">
                         <div className='descriptions'>
-                            <h2 className="header">Light Description</h2>
-                            <p className="description">{plantDetails.section[0].description}</p>
-                            <h2 className="header">Watering Description</h2>
-                            <p className="description">{plantDetails.section[1].description}</p>
+                            {plantDetails.section.map(plant => {
+                                return (
+                                    <div className='description'>
+                                        <h2 className='header'>{plant.type.charAt(0).toUpperCase() + plant.type.slice(1)+ " Description"}</h2>
+                                        <p className="description">{plantDetails.section[1].description}</p>
+                                    </div>
+                                )
+                            })}
                         </div>
+
+
                         <div className='more-info-section'>
                             <h2 className="header">More Information</h2>
                             <InfoItem data={plantDetails["attracts"]} name="Attracts Wildlife" />
@@ -114,6 +123,8 @@ const Detail = () => {
                             <InfoItem data={plantDetails["maintenance"] === "Low" ? true : false} name="Low Maintenance" />
                             <InfoItem data={plantDetails["invasive"] ? false : true} name="Non-Invasive Species" />
                         </div>
+
+
                     </div>
                 </div> : <p>loading...</p>}
         </>
