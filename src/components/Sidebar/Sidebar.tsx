@@ -44,6 +44,8 @@ const Sidebar = () => {
     let cards;
     if (plantList.length) {
         cards = plantList.map((plant: PlantData) => <Card plant={plant.attributes} key={plant.attributes.plant_id} />)
+    } else {
+        cards = <p className="loading">There are no plants in our nursery matching your search</p>
     }
 
     const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
