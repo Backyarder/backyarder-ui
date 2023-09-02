@@ -14,10 +14,6 @@ export interface GridProps {
 const Grid = ({ bullDoze, setBullDoze, filterGarden, setFilterGarden }: GridProps) => {
   const [modal, setModal] = useState<boolean>(false);
 
-  const handleClick = () => {
-    console.log('watered')
-  }
-
   const toggleModal = (): void => {
     setModal(!modal);
   }
@@ -25,18 +21,12 @@ const Grid = ({ bullDoze, setBullDoze, filterGarden, setFilterGarden }: GridProp
   const cells = cellsMockData.map(cell => <Cell id={cell.id} key={cell.id} toggleModal={toggleModal} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} />);
 
   return (
-    <div id='middleContainer'>
-      <button id='waterAllBtn' onClick={handleClick}>
-        <span id='waterAllIcon' className="material-symbols-rounded">
-            water_drop
-        </span>
-        WATER ENTIRE GARDEN!
-      </button>
+    <>
       <section id='grid'>
         {cells}
         {modal && <Modal toggleModal={toggleModal} />}
       </section>
-    </div>
+    </>
   );
 }
 
