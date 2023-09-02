@@ -65,9 +65,20 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   }, [bullDoze])
 
   useEffect(() => {
-    if (filterGarden) {
+    if (filterGarden && !isPlanted) {
       unPlantItems();
       setFilterGarden(false);
+      setGarden((prevState: GardenKeys) => {
+        let index = prevState?.findIndex((item) => item.id === cell?.id);
+        let newState = [...prevState];
+        newState[index] = {
+          ...newState[index],
+          image: null,
+          name: null,
+          'plant_id': null
+        };
+        return newState;
+      });
     }
     // eslint-disable-next-line
   }, [filterGarden])
