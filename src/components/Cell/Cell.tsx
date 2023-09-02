@@ -1,5 +1,4 @@
 // if i FIRMLY plant a cell, its contents should update in the garden state.
-// if i remove unplanted items, my garden should still have disabled cells and planted items.
 
 import { useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
