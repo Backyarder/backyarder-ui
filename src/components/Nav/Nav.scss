@@ -80,9 +80,8 @@ nav {
 
 #wateringCan {
   margin-bottom: 0.5em;
-  position: relative;
-  text-align: center;
-  color: white;
+  width: 80%;
+  align-self: left;
   &:hover {
     transform: rotate(-25deg);
     cursor: pointer;
