@@ -1,15 +1,17 @@
 // import { CardProps } from "../Card/Card"
+import { NavLink } from 'react-router-dom'
 import './CellActions.scss'
 
 interface CellProps {
     image: string | undefined
     name: string | undefined
+    plantId: number | undefined
     handleCloseModal: () => void
     handlePlanted: () => void
     handleRemove: () => void
 }
 
-const CellActions = ({ image, name, handleCloseModal, handlePlanted, handleRemove }: CellProps) => {
+const CellActions = ({ image, name, plantId, handleCloseModal, handlePlanted, handleRemove }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -34,9 +36,9 @@ const CellActions = ({ image, name, handleCloseModal, handlePlanted, handleRemov
                 <button className='cell-button plant-button' onClick={handleClick}>Plant!<span onClick={handleClick} className="material-symbols-rounded plant-icon plant-button">
                     psychiatry
                 </span></button>
-                <button className='cell-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded">
+                <NavLink to={`/plants/${plantId}`} className='cell-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded">
                     menu_book
-                </span></button>
+                </span></NavLink>
                 <button className='cell-button remove-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded remove-button">
                     delete
                 </span></button>

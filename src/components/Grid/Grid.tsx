@@ -4,6 +4,7 @@ import Modal from '../Modal/Modal';
 // import { cellsMockData } from './cellsMockData';
 import { GardenKeys } from '../Main/Main';
 import './Grid.scss';
+import { cellIDs } from './cellIDs';
 
 export interface GridProps {
   garden: GardenKeys | undefined;

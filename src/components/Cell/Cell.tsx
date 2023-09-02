@@ -4,6 +4,7 @@ import CellActions from '../CellActions/CellActions';
 // import { CardProps } from '../Card/Card';
 import { CellKeys, GridProps } from '../Grid/Grid';
 import { GardenKeys } from '../Main/Main';
+import { patchCellContents } from '../../apiCalls';
 import './Cell.scss'
 
 interface GridCell extends GridProps {
@@ -11,7 +12,7 @@ interface GridCell extends GridProps {
   toggleModal: () => void;
 }
 
-interface CellContents {
+export interface CellContents {
   plant: CellKeys;
 }
 
@@ -23,6 +24,22 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [cellContents, setCellContents] = useState<CellContents | undefined>();
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
+  // eslint-disable-next-line
+  const [apiError, setApiError] = useState<string>('')
+
+  useEffect(() => {
+    if(cellContents) {
+      patchCellContents(cellContents, id)
+      .catch((err) => {
+          handleApiError(err)
+      })
+    }
+    // eslint-disable-next-line
+  }, [cellContents])
+
+  const handleApiError = (error: string) => {
+    setApiError(error)
+  }
 
   useEffect(() => {
     if (garden) {
@@ -178,7 +195,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       {isPopulated ? (
         <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
           {isClicked && <div className='cell-modal'>
-            {cellContents && <CellActions image={cellContents.plant.image} name={cellContents.plant.name} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal} />}
+            {cellContents && <CellActions image={cellContents.plant.image} name={cellContents.plant.name} plantId={cellContents.plant.plant_id} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal} />}
           </div>}
         </div>
       ) : (

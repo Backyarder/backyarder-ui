@@ -5,7 +5,7 @@ const Header = () => {
     return (
         <header>
             <Link to='/'>
-                <img src={`${process.env.PUBLIC_URL}/images/logo.png`} alt='backyarder logo'/>
+                <img className="header-logo" src={`${process.env.PUBLIC_URL}/images/logo.png`} alt='backyarder logo'/>
             </Link>
         </header>
     )

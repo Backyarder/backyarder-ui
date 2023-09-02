@@ -3,7 +3,7 @@ import Grid, { CellKeys } from '../Grid/Grid';
 import Nav from '../Nav/Nav';
 import List from '../List/List';
 import { useEffect, useState } from 'react';
-import { cellsMockData } from '../Grid/cellsMockData';
+import { cellIDs } from '../Grid/cellIDs';
 import './Main.scss';
 
 export type GardenKeys = CellKeys[];
@@ -15,7 +15,7 @@ const Main = () => {
   const [filterGarden, setFilterGarden] = useState<boolean>(false);
 
   useEffect(() => {
-    setGarden(cellsMockData);
+    setGarden(cellIDs);
   }, []);
 
   return (
