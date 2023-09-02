@@ -38,10 +38,12 @@
 .search-bar{
     border: none;
     font-size: 1.2em;
-    color: #BEAB96;
+    color: #483C3C;
     background: transparent;
     width: 80%;
 }
+
+.search-bar:focus { outline: none; }
 
 .loading{
     display: flex;
