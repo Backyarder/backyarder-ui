@@ -1,3 +1,6 @@
+// if i FIRMLY plant a cell, its contents should update in the garden state.
+// if i remove unplanted items, my garden should still have disabled cells and planted items.
+
 import { useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import CellActions from '../CellActions/CellActions';
@@ -20,10 +23,6 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
 
-  // if i FIRMLY plant a cell, its contents should update in the garden state.
-  // if i clear my garden, my garden should be updated.
-  // if i remove unplanted items, my garden should still have disabled cells and planted items.
-
   useEffect(() => {
     setCell(garden?.find(cell => cell.id === id))
     if (cell?.status === 1) {
@@ -41,7 +40,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         status: Number(isDisabled)
       };
       return newState;
-    })
+    });
   }, [isDisabled]);
 
   useEffect(() => {
@@ -49,6 +48,18 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       setClassName('cell');
       emptyCell();
       setBullDoze(false);
+      setGarden((prevState: GardenKeys) => {
+        let index = prevState?.findIndex((item) => item.id === cell?.id);
+        let newState = [...prevState];
+        newState[index] = {
+          ...newState[index],
+          image: null,
+          name: null,
+          'plant_id': null,
+          status: 0
+        };
+        return newState;
+      });
     }
     // eslint-disable-next-line
   }, [bullDoze])

@@ -15,7 +15,7 @@ export interface GridProps {
 }
 
 export type CellKeys = {
-  id: string;
+  id: string | undefined;
   image: string | null;
   name: string | null;
   'plant_id': number | null;
