@@ -14,6 +14,13 @@ const getPlantList = () => {
         .then(res => handleError(res))
 }
 
+const searchPlants = (searchterm: string) => {
+  return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/search/${searchterm}`, {
+    cache: 'force-cache'
+  })
+    .then(res => handleError(res))
+}
+
 const patchCellContents = ({plant}: CardProps, id: string) => {
   console.log(plant)
   console.log(id)
@@ -33,4 +40,4 @@ const patchCellContents = ({plant}: CardProps, id: string) => {
           .then(res => handleError(res))
 }
 
-export { getPlantList, patchCellContents }
+export { getPlantList, searchPlants, patchCellContents }
