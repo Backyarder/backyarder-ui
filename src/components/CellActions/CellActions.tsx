@@ -5,16 +5,19 @@ interface CellProps extends CardProps {
     handleCloseModal: () => void
     isPlanted: boolean
     handlePlanted: () => void
+    handleWatered: () => void
     handleRemove: () => void
 }
 
-const CellActions = ({ plant, handleCloseModal, isPlanted, handlePlanted, handleRemove }: CellProps) => {
+const CellActions = ({ plant, handleCloseModal, isPlanted, handlePlanted, handleWatered, handleRemove }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
         const target = e.target as Element
         if (target.classList.contains('plant-button')) {
             handlePlanted()
+        } else if (target.classList.contains('water-button')) {
+            handleWatered()
         } else if (target.classList.contains('remove-button')) {
             handleRemove()
         }

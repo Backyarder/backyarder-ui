@@ -25,8 +25,8 @@ const Grid = ({ bullDoze, setBullDoze, filterGarden, setFilterGarden }: GridProp
   const cells = cellsMockData.map(cell => <Cell id={cell.id} key={cell.id} toggleModal={toggleModal} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} />);
 
   return (
-    <div id='middleContainer' onClick={handleClick}>
-      <button id='waterAllBtn'>
+    <div id='middleContainer'>
+      <button id='waterAllBtn' onClick={handleClick}>
         <span id='waterAllIcon' className="material-symbols-rounded">
             water_drop
         </span>

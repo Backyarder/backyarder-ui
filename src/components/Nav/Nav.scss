@@ -80,25 +80,17 @@ nav {
 
 #wateringCan {
   margin-bottom: 0.5em;
-  transform: rotate(45deg);
   position: relative;
   text-align: center;
   color: white;
   &:hover {
-    transform: none;
+    transform: rotate(-25deg);
     cursor: pointer;
   }
 }
 
 #wateringCan img {
   height: 100px;
-}
-
-#wateringCanText {
-  position: absolute;
-  left: 62%;
-  top: 36%;
-  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .clear-button {
