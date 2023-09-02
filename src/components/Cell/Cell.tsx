@@ -24,13 +24,13 @@ const Cell = ({ id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggle
   useEffect(() => {
     if(cellContents) {
       patchCellContents(cellContents, id)
-      .then(data => setCellContents(data))
+      .then(data => console.log(data))
       .catch((err) => {
           handleApiError(err)
       })
     }
     // eslint-disable-next-line
-  }, [])
+  }, [cellContents])
 
   const handleApiError = (error: string) => {
     setApiError(error)
