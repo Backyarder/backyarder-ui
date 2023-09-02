@@ -39,11 +39,11 @@ const Detail = () => {
 
     const { id } = useParams()
 
-    const [plantDetails, setPlantDetails] = useState<PlantDetailsType>()
+    const [plantDetails, setPlantDetails] = useState<PlantDetailsType | undefined>()
 
     useEffect(() => {
         getPlantDetails(id)
-            .then(data => setPlantDetails(data.data))
+            .then(data => setPlantDetails(data.data.attributes))
             .catch((err) => {
                 // handleApiError(err)
             })
