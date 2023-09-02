@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Cell from '../Cell/Cell';
 import Modal from '../Modal/Modal';
 import './Grid.scss';
-import { cellsMockData } from './cellsMockData';
+import { cellIDs } from './cellIDs';
 
 export interface GridProps {
   bullDoze: boolean;
@@ -18,7 +18,7 @@ const Grid = ({ bullDoze, setBullDoze, filterGarden, setFilterGarden }: GridProp
     setModal(!modal);
   }
 
-  const cells = cellsMockData.map(cell => <Cell id={cell.id} key={cell.id} toggleModal={toggleModal} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} />);
+  const cells = cellIDs.map(cell => <Cell id={cell.id} key={cell.id} toggleModal={toggleModal} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} />);
 
   return (
     <section id='grid'>
