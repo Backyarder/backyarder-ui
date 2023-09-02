@@ -55,6 +55,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       }
       setCell(foundCell);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -67,6 +68,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       };
       return newState;
     });
+    // eslint-disable-next-line
   }, [isDisabled]);
 
   useEffect(() => {
@@ -81,6 +83,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       };
       return newState;
     });
+    // eslint-disable-next-line
   }, [isPlanted]);
 
   useEffect(() => {

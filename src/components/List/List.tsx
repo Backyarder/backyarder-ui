@@ -1,4 +1,3 @@
-import { listMockData } from './listMockData';
 import { NavLink } from 'react-router-dom';
 import './List.scss';
 import { GardenKeys } from '../Main/Main';
