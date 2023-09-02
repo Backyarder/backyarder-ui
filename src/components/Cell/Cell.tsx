@@ -1,21 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import CellActions from '../CellActions/CellActions';
-import { CardProps } from '../Card/Card';
-import './Cell.scss'
-import { GridProps } from '../Grid/Grid';
+import { CellKeys, GridProps } from '../Grid/Grid';
+import { GardenKeys } from '../Main/Main';
 import { patchCellContents } from '../../apiCalls';
+import './Cell.scss'
 
 interface GridCell extends GridProps {
   id: string;
   toggleModal: () => void;
 }
 
-const Cell = ({ id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
+export interface CellContents {
+  plant: CellKeys;
+}
+
+const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
+  const [cell, setCell] = useState<CellKeys | undefined>();
   const [className, setClassName] = useState<string>('cell');
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isPopulated, setIsPopulated] = useState<boolean>(false);
-  const [cellContents, setCellContents] = useState<CardProps | undefined>();
+  const [cellContents, setCellContents] = useState<CellContents | undefined>();
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
   // eslint-disable-next-line
@@ -36,25 +41,97 @@ const Cell = ({ id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggle
   }
 
   useEffect(() => {
+    if (garden) {
+      const foundCell = garden.find(cell => cell.id === id)
+      if (foundCell && foundCell.status === 1) {
+        setIsDisabled(true);
+        !isDisabled ? setClassName('cell disabled') : setClassName('cell');
+      }
+      if (foundCell && foundCell.plant_id) {
+        setCellContents({ plant: foundCell })
+        setIsPopulated(true);
+        setIsPlanted(true);
+      }
+      setCell(foundCell);
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  // NOTE: make sure to refactor this to only update the single cell data instead of updating the entire garden state
+  useEffect(() => {
+    setGarden((prevState: GardenKeys) => {
+      let index = prevState?.findIndex((item) => item.id === cell?.id);
+      let newState = [...prevState];
+      newState[index] = {
+        ...newState[index],
+        status: Number(isDisabled)
+      };
+      return newState;
+    });
+    // eslint-disable-next-line
+  }, [isDisabled]);
+
+  // NOTE: make sure to refactor this to only update the single cell data instead of updating the entire garden state
+  useEffect(() => {
+    setGarden((prevState: GardenKeys) => {
+      let index = prevState?.findIndex((item) => item.id === cell?.id);
+      let newState = [...prevState];
+      newState[index] = {
+        ...newState[index],
+        image: cellContents?.plant.image,
+        name: cellContents?.plant.name,
+        'plant_id': cellContents?.plant.plant_id
+      };
+      return newState;
+    });
+    // eslint-disable-next-line
+  }, [isPlanted]);
+
+  // NOTE: likely all we need to do for this one is trigger a re-render on the useEffect we run on page load. Check it out when you're hooking this functionality into the BE.
+  useEffect(() => {
     if (bullDoze) {
       setClassName('cell');
       emptyCell();
       setBullDoze(false);
+      setGarden((prevState: GardenKeys) => {
+        let index = prevState?.findIndex((item) => item.id === cell?.id);
+        let newState = [...prevState];
+        newState[index] = {
+          ...newState[index],
+          image: undefined,
+          name: undefined,
+          'plant_id': undefined,
+          status: 0
+        };
+        return newState;
+      });
     }
     // eslint-disable-next-line
   }, [bullDoze])
 
+  // NOTE: likely all we need to do for this one is trigger a re-render on the useEffect we run on page load. Check it out when you're hooking this functionality into the BE.
   useEffect(() => {
-    if (filterGarden) {
+    if (filterGarden && !isPlanted) {
       unPlantItems();
       setFilterGarden(false);
+      setGarden((prevState: GardenKeys) => {
+        let index = prevState?.findIndex((item) => item.id === cell?.id);
+        let newState = [...prevState];
+        newState[index] = {
+          ...newState[index],
+          image: undefined,
+          name: undefined,
+          'plant_id': undefined
+        };
+        return newState;
+      });
     }
     // eslint-disable-next-line
   }, [filterGarden])
 
   const [{ isOver }, dropRef] = useDrop({
     accept: 'plant',
-    drop: (plant: CardProps) => {
+    drop: (plant: CellContents) => {
       if (isDisabled) {
         toggleModal()
       } else {
@@ -124,7 +201,7 @@ const Cell = ({ id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggle
       {isPopulated ? (
         <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
           {isClicked && <div className='cell-modal'>
-            {cellContents && <CellActions plant={cellContents?.plant} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal} />}
+            {cellContents && <CellActions image={cellContents.plant.image} name={cellContents.plant.name} plantId={cellContents.plant.plant_id} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal} />}
           </div>}
         </div>
       ) : (

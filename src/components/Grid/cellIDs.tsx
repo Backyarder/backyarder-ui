@@ -1,302 +1,702 @@
 export const cellIDs = [
     {
-        id: 'A1'
+        id: 'A1',
+        status: 0,
+        image: 'https://upload.wikimedia.org/wikipedia/commons/0/07/Honeycrisp-Apple.jpg',
+        name: 'Apple',
+        'plant_id': 7
     },
     {
-        id: 'A2'
+        id: 'A2',
+        status: 0,
+        image: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg',
+        name: 'Banana',
+        'plant_id': 8
     },
     {
-        id: 'A3'
+        id: 'A3',
+        status: 0,
+        image: 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg',
+        name: 'Orange',
+        'plant_id': 9
     },
     {
-        id: 'A4'
+        id: 'A4',
+        status: 1,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'A5'
+        id: 'A5',
+        status: 1,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'A6'
+        id: 'A6',
+        status: 1,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'A7'
+        id: 'A7',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'A8'
+        id: 'A8',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'A9'
+        id: 'A9',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'A10'
+        id: 'A10',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'B1'
+        id: 'B1',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'B2'
+        id: 'B2',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'B3'
+        id: 'B3',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'B4'
+        id: 'B4',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'B5'
+        id: 'B5',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'B6'
+        id: 'B6',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'B7'
+        id: 'B7',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'B8'
+        id: 'B8',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'B9'
+        id: 'B9',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'B10'
+        id: 'B10',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'C1'
+        id: 'C1',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'C2'
+        id: 'C2',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'C3'
+        id: 'C3',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'C4'
+        id: 'C4',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'C5'
+        id: 'C5',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'C6'
+        id: 'C6',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'C7'
+        id: 'C7',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'C8'
+        id: 'C8',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'C9'
+        id: 'C9',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'C10'
+        id: 'C10',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'D1'
+        id: 'D1',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'D2'
+        id: 'D2',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'D3'
+        id: 'D3',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'D4'
+        id: 'D4',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'D5'
+        id: 'D5',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'D6'
+        id: 'D6',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'D7'
+        id: 'D7',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'D8'
+        id: 'D8',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'D9'
+        id: 'D9',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'D10'
+        id: 'D10',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'E1'
+        id: 'E1',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'E2'
+        id: 'E2',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'E3'
+        id: 'E3',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'E4'
+        id: 'E4',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'E5'
+        id: 'E5',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'E6'
+        id: 'E6',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'E7'
+        id: 'E7',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'E8'
+        id: 'E8',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'E9'
+        id: 'E9',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'E10'
+        id: 'E10',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'F1'
+        id: 'F1',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'F2'
+        id: 'F2',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'F3'
+        id: 'F3',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'F4'
+        id: 'F4',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'F5'
+        id: 'F5',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'F6'
+        id: 'F6',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'F7'
+        id: 'F7',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'F8'
+        id: 'F8',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'F9'
+        id: 'F9',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'F10'
+        id: 'F10',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'G1'
+        id: 'G1',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'G2'
+        id: 'G2',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'G3'
+        id: 'G3',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'G4'
+        id: 'G4',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'G5'
+        id: 'G5',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'G6'
+        id: 'G6',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'G7'
+        id: 'G7',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'G8'
+        id: 'G8',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'G9'
+        id: 'G9',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'G10'
+        id: 'G10',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'H1'
+        id: 'H1',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'H2'
+        id: 'H2',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'H3'
+        id: 'H3',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'H4'
+        id: 'H4',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'H5'
+        id: 'H5',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'H6'
+        id: 'H6',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'H7'
+        id: 'H7',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'H8'
+        id: 'H8',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'H9'
+        id: 'H9',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'H10'
+        id: 'H10',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'I1'
+        id: 'I1',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'I2'
+        id: 'I2',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'I3'
+        id: 'I3',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'I4'
+        id: 'I4',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'I5'
+        id: 'I5',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'I6'
+        id: 'I6',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'I7'
+        id: 'I7',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'I8'
+        id: 'I8',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'I9'
+        id: 'I9',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'I10'
+        id: 'I10',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'J1'
+        id: 'J1',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'J2'
+        id: 'J2',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'J3'
+        id: 'J3',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'J4'
+        id: 'J4',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'J5'
+        id: 'J5',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'J6'
+        id: 'J6',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'J7'
+        id: 'J7',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'J8'
+        id: 'J8',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'J9'
+        id: 'J9',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     },
     {
-        id: 'J10'
+        id: 'J10',
+        status: 0,
+        image: undefined,
+        name: undefined,
+        'plant_id': undefined
     }
 ]

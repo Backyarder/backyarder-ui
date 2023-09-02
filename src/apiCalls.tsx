@@ -1,4 +1,4 @@
-import { CardProps } from "./components/Card/Card"
+import { CellContents } from "./components/Cell/Cell"
 
 const handleError = (res: Response) => {
     if(!res.ok) {
@@ -28,7 +28,7 @@ const getPlantDetails = (id: string | undefined) => {
     .then(res => handleError(res))
 }
 
-const patchCellContents = ({plant}: CardProps, id: string) => {
+const patchCellContents = ({plant}: CellContents, id: string) => {
   return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell`, {
             method: 'PATCH',
             body: JSON.stringify({

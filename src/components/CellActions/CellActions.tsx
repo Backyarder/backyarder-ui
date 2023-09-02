@@ -1,14 +1,16 @@
-import { CardProps } from "../Card/Card"
 import { NavLink } from 'react-router-dom'
 import './CellActions.scss'
 
-interface CellProps extends CardProps {
+interface CellProps {
+    image: string | undefined
+    name: string | undefined
+    plantId: number | undefined
     handleCloseModal: () => void
     handlePlanted: () => void
     handleRemove: () => void
 }
 
-const CellActions = ({ plant, handleCloseModal, handlePlanted, handleRemove }: CellProps) => {
+const CellActions = ({ image, name, plantId, handleCloseModal, handlePlanted, handleRemove }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -27,13 +29,13 @@ const CellActions = ({ plant, handleCloseModal, handlePlanted, handleRemove }: C
 
     return (
         <div className='cell-info'>
-            <img className='card-image' src={plant.image} alt={`${plant.name}`} />
-            <p className='plant-name'>{plant.name.toUpperCase()}</p>
+            <img className='card-image' src={image} alt={`${name}`} />
+            <p className='plant-name'>{name?.toUpperCase()}</p>
             <div className='cell-actions'>
                 <button className='cell-button plant-button' onClick={handleClick}>Plant!<span onClick={handleClick} className="material-symbols-rounded plant-icon plant-button">
                     psychiatry
                 </span></button>
-                <NavLink to={`/plants/${plant.plant_id}`} className='cell-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded">
+                <NavLink to={`/plants/${plantId}`} className='cell-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded">
                     menu_book
                 </span></NavLink>
                 <button className='cell-button remove-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded remove-button">
