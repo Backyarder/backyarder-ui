@@ -22,8 +22,6 @@ const searchPlants = (searchterm: string) => {
 }
 
 const patchCellContents = ({plant}: CardProps, id: string) => {
-  console.log(plant)
-  console.log(id)
   return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell`, {
             method: 'PATCH',
             body: JSON.stringify({

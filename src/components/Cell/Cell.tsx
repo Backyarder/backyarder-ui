@@ -24,12 +24,12 @@ const Cell = ({ id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggle
   useEffect(() => {
     if(cellContents) {
       patchCellContents(cellContents, id)
-      .then(data => console.log(data))
+      .then(data => setCellContents(data))
       .catch((err) => {
           handleApiError(err)
       })
     }
-  }, [cellContents])
+  }, [])
 
   const handleApiError = (error: string) => {
     setApiError(error)

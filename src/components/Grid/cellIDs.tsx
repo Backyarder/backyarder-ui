@@ -1,302 +1,302 @@
 export const cellIDs = [
     {
-        id: 'a0'
+        id: 'A1'
     },
     {
-        id: 'a1'
+        id: 'A2'
     },
     {
-        id: 'a2'
+        id: 'A3'
     },
     {
-        id: 'a3'
+        id: 'A4'
     },
     {
-        id: 'a4'
+        id: 'A5'
     },
     {
-        id: 'a5'
+        id: 'A6'
     },
     {
-        id: 'a6'
+        id: 'A7'
     },
     {
-        id: 'a7'
+        id: 'A8'
     },
     {
-        id: 'a8'
+        id: 'A9'
     },
     {
-        id: 'a9'
+        id: 'A10'
     },
     {
-        id: 'b0'
+        id: 'B1'
     },
     {
-        id: 'b1'
+        id: 'B2'
     },
     {
-        id: 'b2'
+        id: 'B3'
     },
     {
-        id: 'b3'
+        id: 'B4'
     },
     {
-        id: 'b4'
+        id: 'B5'
     },
     {
-        id: 'b5'
+        id: 'B6'
     },
     {
-        id: 'b6'
+        id: 'B7'
     },
     {
-        id: 'b7'
+        id: 'B8'
     },
     {
-        id: 'b8'
+        id: 'B9'
     },
     {
-        id: 'b9'
+        id: 'B10'
     },
     {
-        id: 'c0'
+        id: 'C1'
     },
     {
-        id: 'c1'
+        id: 'C2'
     },
     {
-        id: 'c2'
+        id: 'C3'
     },
     {
-        id: 'c3'
+        id: 'C4'
     },
     {
-        id: 'c4'
+        id: 'C5'
     },
     {
-        id: 'c5'
+        id: 'C6'
     },
     {
-        id: 'c6'
+        id: 'C7'
     },
     {
-        id: 'c7'
+        id: 'C8'
     },
     {
-        id: 'c8'
+        id: 'C9'
     },
     {
-        id: 'c9'
+        id: 'C10'
     },
     {
-        id: 'd0'
+        id: 'D1'
     },
     {
-        id: 'd1'
+        id: 'D2'
     },
     {
-        id: 'd2'
+        id: 'D3'
     },
     {
-        id: 'd3'
+        id: 'D4'
     },
     {
-        id: 'd4'
+        id: 'D5'
     },
     {
-        id: 'd5'
+        id: 'D6'
     },
     {
-        id: 'd6'
+        id: 'D7'
     },
     {
-        id: 'd7'
+        id: 'D8'
     },
     {
-        id: 'd8'
+        id: 'D9'
     },
     {
-        id: 'd9'
+        id: 'D10'
     },
     {
-        id: 'e0'
+        id: 'E1'
     },
     {
-        id: 'e1'
+        id: 'E2'
     },
     {
-        id: 'e2'
+        id: 'E3'
     },
     {
-        id: 'e3'
+        id: 'E4'
     },
     {
-        id: 'e4'
+        id: 'E5'
     },
     {
-        id: 'e5'
+        id: 'E6'
     },
     {
-        id: 'e6'
+        id: 'E7'
     },
     {
-        id: 'e7'
+        id: 'E8'
     },
     {
-        id: 'e8'
+        id: 'E9'
     },
     {
-        id: 'e9'
+        id: 'E10'
     },
     {
-        id: 'f0'
+        id: 'F1'
     },
     {
-        id: 'f1'
+        id: 'F2'
     },
     {
-        id: 'f2'
+        id: 'F3'
     },
     {
-        id: 'f3'
+        id: 'F4'
     },
     {
-        id: 'f4'
+        id: 'F5'
     },
     {
-        id: 'f5'
+        id: 'F6'
     },
     {
-        id: 'f6'
+        id: 'F7'
     },
     {
-        id: 'f7'
+        id: 'F8'
     },
     {
-        id: 'f8'
+        id: 'F9'
     },
     {
-        id: 'f9'
+        id: 'F10'
     },
     {
-        id: 'g0'
+        id: 'G1'
     },
     {
-        id: 'g1'
+        id: 'G2'
     },
     {
-        id: 'g2'
+        id: 'G3'
     },
     {
-        id: 'g3'
+        id: 'G4'
     },
     {
-        id: 'g4'
+        id: 'G5'
     },
     {
-        id: 'g5'
+        id: 'G6'
     },
     {
-        id: 'g6'
+        id: 'G7'
     },
     {
-        id: 'g7'
+        id: 'G8'
     },
     {
-        id: 'g8'
+        id: 'G9'
     },
     {
-        id: 'g9'
+        id: 'G10'
     },
     {
-        id: 'h0'
+        id: 'H1'
     },
     {
-        id: 'h1'
+        id: 'H2'
     },
     {
-        id: 'h2'
+        id: 'H3'
     },
     {
-        id: 'h3'
+        id: 'H4'
     },
     {
-        id: 'h4'
+        id: 'H5'
     },
     {
-        id: 'h5'
+        id: 'H6'
     },
     {
-        id: 'h6'
+        id: 'H7'
     },
     {
-        id: 'h7'
+        id: 'H8'
     },
     {
-        id: 'h8'
+        id: 'H9'
     },
     {
-        id: 'h9'
+        id: 'H10'
     },
     {
-        id: 'i0'
+        id: 'I1'
     },
     {
-        id: 'i1'
+        id: 'I2'
     },
     {
-        id: 'i2'
+        id: 'I3'
     },
     {
-        id: 'i3'
+        id: 'I4'
     },
     {
-        id: 'i4'
+        id: 'I5'
     },
     {
-        id: 'i5'
+        id: 'I6'
     },
     {
-        id: 'i6'
+        id: 'I7'
     },
     {
-        id: 'i7'
+        id: 'I8'
     },
     {
-        id: 'i8'
+        id: 'I9'
     },
     {
-        id: 'i9'
+        id: 'I10'
     },
     {
-        id: 'j0'
+        id: 'J1'
     },
     {
-        id: 'j1'
+        id: 'J2'
     },
     {
-        id: 'j2'
+        id: 'J3'
     },
     {
-        id: 'j3'
+        id: 'J4'
     },
     {
-        id: 'j4'
+        id: 'J5'
     },
     {
-        id: 'j5'
+        id: 'J6'
     },
     {
-        id: 'j6'
+        id: 'J7'
     },
     {
-        id: 'j7'
+        id: 'J8'
     },
     {
-        id: 'j8'
+        id: 'J9'
     },
     {
-        id: 'j9'
+        id: 'J10'
     }
 ]
