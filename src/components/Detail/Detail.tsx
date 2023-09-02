@@ -40,6 +40,7 @@ const Detail = () => {
     const { id } = useParams()
 
     const [plantDetails, setPlantDetails] = useState<PlantDetailsType | undefined>()
+    // eslint-disable-next-line
     const [apiError, setApiError] = useState<string>('')
 
     useEffect(() => {
@@ -48,6 +49,7 @@ const Detail = () => {
             .catch((err) => {
                 handleApiError(err)
             })
+    // eslint-disable-next-line
     }, [])
 
     const handleApiError = (error: string) => {
@@ -102,9 +104,9 @@ const Detail = () => {
                     </div>
                     <div className="descriptions-and-more-info">
                         <div className='descriptions'>
-                            {plantDetails.section.map(plant => {
+                            {plantDetails.section.map((plant, i) => {
                                 return (
-                                    <div className='description'>
+                                    <div className='description' key={i}>
                                         <h2 className='header'>{plant.type.charAt(0).toUpperCase() + plant.type.slice(1) + " Description"}</h2>
                                         <p className="description">{plantDetails.section[1].description}</p>
                                     </div>
