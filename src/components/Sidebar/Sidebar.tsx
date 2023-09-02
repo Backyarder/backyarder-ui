@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent } from "react"
 import Card from "../Card/Card"
 import './Sidebar.scss'
-import { getPlantList } from "../../apiCalls"
+import { getPlantList, searchPlants } from "../../apiCalls"
 
 interface PlantData {
     id: number
@@ -25,10 +25,13 @@ const Sidebar = () => {
     const [plantList, setPlantList] = useState<PlantData[]>([])
     // eslint-disable-next-line
     const [apiError, setApiError] = useState<string>('')
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [loadingPlants, setLoadingPlants] = useState<boolean>(true)
 
     useEffect(() => {
         getPlantList()
             .then(data => setPlantList(data.data))
+            .then(() => setLoadingPlants(false))
             .catch((err) => {
                 handleApiError(err)
             })
@@ -41,14 +44,48 @@ const Sidebar = () => {
     let cards;
     if (plantList.length) {
         cards = plantList.map((plant: PlantData) => <Card plant={plant.attributes} key={plant.attributes.plant_id} />)
+    } else {
+        cards = <p className="loading">There are no plants in our nursery matching your search</p>
     }
-
-
-    const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
     };
+
+    const handleKeyPress = (event: React.KeyboardEvent) => {
+          if (event.key === 'Enter') {
+            searchForPlants();
+          }
+        };
+
+    const searchForPlants = () => {
+        setLoadingPlants(true)
+        if (searchTerm.length){
+            searchPlants(searchTerm)
+            .then(data => setPlantList(data.data))
+            .then(() => setLoadingPlants(false))
+            .catch((err) => {
+                handleApiError(err)
+            })
+        } else {
+            getPlantList()
+            .then(data => setPlantList(data.data))
+            .then(() => setLoadingPlants(false))
+            .catch((err) => {
+                handleApiError(err)
+            })
+        }
+    }
+
+    const loading = (): JSX.Element => {
+        return (
+            <div className="loading">
+                <p>Gathering plants from our nursery...</p>
+                <img className="loading-img" src={`${process.env.PUBLIC_URL}/images/plant.png`} alt='small plant'/>
+                <p>This may take a few moments.</p>
+            </div>
+        )
+    }
 
     return (
         <section id='plants'>
@@ -60,12 +97,15 @@ const Sidebar = () => {
                     placeholder="Search... "
                     value={searchTerm}
                     onChange={handleSearchChange}
+                    onKeyDown={handleKeyPress}
                 />
-                <button className="submit-search"><span className="material-symbols-rounded">
+                <button className="submit-search" onClick={searchForPlants}><span className="material-symbols-rounded">
                     search
                 </span></button>
             </div>
-            {plantList.length && cards}
+            <div>
+                {loadingPlants ? loading() : cards}
+            </div>
         </section>
     )
 }
