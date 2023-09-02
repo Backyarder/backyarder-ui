@@ -52,6 +52,18 @@ const Sidebar = () => {
         setSearchTerm(event.target.value);
     };
 
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+          if (event.key === 'Enter') {
+            searchForPlants();
+          }
+        };
+
+    // const handleKeyPress = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    //     if (event.key === 'Enter') {
+    //         searchForPlants();
+    //     }
+    // };
+
     const searchForPlants = () => {
         setLoadingPlants(true)
         if (searchTerm.length){
@@ -91,6 +103,7 @@ const Sidebar = () => {
                     placeholder="Search... "
                     value={searchTerm}
                     onChange={handleSearchChange}
+                    onKeyDown={handleKeyPress}
                 />
                 <button className="submit-search" onClick={searchForPlants}><span className="material-symbols-rounded">
                     search
