@@ -24,7 +24,6 @@ const Cell = ({ id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggle
   useEffect(() => {
     if(cellContents) {
       patchCellContents(cellContents, id)
-      .then(data => console.log(data))
       .catch((err) => {
           handleApiError(err)
       })
