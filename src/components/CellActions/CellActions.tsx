@@ -1,4 +1,4 @@
-import { CardProps } from "../Card/Card"
+// import { CardProps } from "../Card/Card"
 import './CellActions.scss'
 
 interface CellProps {

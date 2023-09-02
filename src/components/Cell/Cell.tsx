@@ -1,9 +1,7 @@
-// if i FIRMLY plant a cell, its contents should update in the garden state.
-
 import { useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import CellActions from '../CellActions/CellActions';
-import { CardProps } from '../Card/Card';
+// import { CardProps } from '../Card/Card';
 import { CellKeys, GridProps } from '../Grid/Grid';
 import { GardenKeys } from '../Main/Main';
 import './Cell.scss'
