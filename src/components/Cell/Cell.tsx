@@ -29,6 +29,7 @@ const Cell = ({ id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggle
           handleApiError(err)
       })
     }
+    // eslint-disable-next-line
   }, [])
 
   const handleApiError = (error: string) => {
