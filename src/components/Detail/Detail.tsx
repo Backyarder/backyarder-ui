@@ -1,6 +1,6 @@
 import './Detail.scss';
 import InfoItem from '../InfoItem/InfoItem'
-// import plantDetails from './mockData'
+import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getPlantDetails } from "../../apiCalls"
@@ -78,6 +78,7 @@ const Detail = () => {
                                     <h1 className="common">{plantDetails["common_name"].toUpperCase()}</h1>
                                     <h2 className="scientific">{plantDetails["scientific_name"].join(", ")}</h2>
                                 </div>
+                                <NavLink className='home-button' id='details-home-button' to='/'>Go back to garden</NavLink>
                             </div>
                             <div className="quick-glance-details">
                                 <div className="detail">
@@ -99,9 +100,6 @@ const Detail = () => {
                             </div>
                         </div>
                     </div>
-
-
-
                     <div className="descriptions-and-more-info">
                         <div className='descriptions'>
                             {plantDetails.section.map(plant => {
@@ -113,8 +111,6 @@ const Detail = () => {
                                 )
                             })}
                         </div>
-
-
                         <div className='more-info-section'>
                             <h2 className="header">More Information</h2>
                             <InfoItem data={plantDetails["attracts"]} name="Attracts Wildlife" />
@@ -127,8 +123,6 @@ const Detail = () => {
                             <InfoItem data={plantDetails["maintenance"] === "Low" ? true : false} name="Low Maintenance" />
                             <InfoItem data={plantDetails["invasive"] ? false : true} name="Non-Invasive Species" />
                         </div>
-
-
                     </div>
                 </div> : <p>loading...</p>}
         </>
