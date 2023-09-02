@@ -40,16 +40,19 @@ const Detail = () => {
     const { id } = useParams()
 
     const [plantDetails, setPlantDetails] = useState<PlantDetailsType | undefined>()
+    const [apiError, setApiError] = useState<string>('')
 
     useEffect(() => {
         getPlantDetails(id)
             .then(data => setPlantDetails(data.data.attributes))
             .catch((err) => {
-                // handleApiError(err)
+                handleApiError(err)
             })
     }, [])
-    //implement fetch call here to get all the data and assign that data to plant details in a useEffect using the params passed by the rouute 
-    // need to somehow define the types of all of the data being put into the JSX
+
+    const handleApiError = (error: string) => {
+        setApiError(error)
+    }
 
     const captalizeWord = (string: string): string => {
         return string.charAt(0).toUpperCase() + string.slice(1);
