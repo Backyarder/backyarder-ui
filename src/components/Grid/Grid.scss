@@ -10,3 +10,28 @@
     align-items: center;
 }
 
+#middleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#waterAllBtn {
+    border: none;
+    font-weight: bold;
+    border-radius: 25px;
+    height: 5vh;
+    margin-bottom: 0.2em;
+    width: 30%;
+    min-width: 180px;
+    display: flex;
+    align-items: center;
+    background-color: #af2268;
+    color: #f4f4f4;
+    cursor: pointer;
+}
+
+#waterAllIcon {
+    margin-right: .2em;
+}
+

@@ -4,7 +4,7 @@ nav {
   justify-content: flex-start;
   align-items: center;
   width: 20%;
-  max-width: 300px
+  max-width: 300px;
 }
 
 .nav-button, .clear-button {
@@ -76,6 +76,29 @@ nav {
 .unavailable-symbol {
   border: 5px solid #786961;
   background-color: #786961;
+}
+
+#wateringCan {
+  margin-bottom: 0.5em;
+  transform: rotate(45deg);
+  position: relative;
+  text-align: center;
+  color: white;
+  &:hover {
+    transform: none;
+    cursor: pointer;
+  }
+}
+
+#wateringCan img {
+  height: 100px;
+}
+
+#wateringCanText {
+  position: absolute;
+  left: 62%;
+  top: 36%;
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .clear-button {

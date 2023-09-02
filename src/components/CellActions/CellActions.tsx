@@ -31,15 +31,15 @@ const CellActions = ({ plant, handleCloseModal, isPlanted, handlePlanted, handle
             <p className='plant-name'>{plant.name.toUpperCase()}</p>
             <div className='cell-actions'>
                 {isPlanted
-                    ? <button className='cell-button plant-button' onClick={handleClick}>
+                    ? <button className='cell-button water-button' onClick={handleClick}>
                         Water!
-                        <span onClick={handleClick} className="material-symbols-rounded plant-icon plant-button">
+                        <span className="material-symbols-rounded plant-icon plant-button">
                             water_drop
                         </span>
                     </button>
-                    : <button className='cell-button water-button' onClick={handleClick}>
+                    : <button className='cell-button plant-button' onClick={handleClick}>
                         Plant!
-                        <span onClick={handleClick} className="material-symbols-rounded plant-icon plant-button">
+                        <span className="material-symbols-rounded plant-icon plant-button">
                             psychiatry
                         </span>
                     </button>
