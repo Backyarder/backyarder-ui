@@ -19,4 +19,11 @@ const searchPlants = (searchterm: string) => {
     .then(res => handleError(res))
 }
 
-export { getPlantList, searchPlants }
+const getPlantDetails = (id: string | undefined) => {
+  return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants/${id}`, {
+    cache: 'force-cache'
+  })
+    .then(res => handleError(res))
+}
+
+export { getPlantList, searchPlants, getPlantDetails }
