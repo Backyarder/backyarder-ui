@@ -1,4 +1,5 @@
 import { CardProps } from "../Card/Card"
+import { NavLink } from 'react-router-dom'
 import './CellActions.scss'
 
 interface CellProps extends CardProps {
@@ -32,9 +33,9 @@ const CellActions = ({ plant, handleCloseModal, handlePlanted, handleRemove }: C
                 <button className='cell-button plant-button' onClick={handleClick}>Plant!<span onClick={handleClick} className="material-symbols-rounded plant-icon plant-button">
                     psychiatry
                 </span></button>
-                <button className='cell-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded">
+                <NavLink to={`/plants/${plant.plant_id}`} className='cell-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded">
                     menu_book
-                </span></button>
+                </span></NavLink>
                 <button className='cell-button remove-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded remove-button">
                     delete
                 </span></button>

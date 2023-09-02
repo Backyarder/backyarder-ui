@@ -60,20 +60,20 @@ const Sidebar = () => {
 
     const searchForPlants = () => {
         setLoadingPlants(true)
-        if (searchTerm.length){
+        if (searchTerm.length) {
             searchPlants(searchTerm)
-            .then(data => setPlantList(data.data))
-            .then(() => setLoadingPlants(false))
-            .catch((err) => {
-                handleApiError(err)
-            })
+                .then(data => setPlantList(data.data))
+                .then(() => setLoadingPlants(false))
+                .catch((err) => {
+                    handleApiError(err)
+                })
         } else {
             getPlantList()
-            .then(data => setPlantList(data.data))
-            .then(() => setLoadingPlants(false))
-            .catch((err) => {
-                handleApiError(err)
-            })
+                .then(data => setPlantList(data.data))
+                .then(() => setLoadingPlants(false))
+                .catch((err) => {
+                    handleApiError(err)
+                })
         }
     }
 
@@ -81,7 +81,7 @@ const Sidebar = () => {
         return (
             <div className="loading">
                 <p>Gathering plants from our nursery...</p>
-                <img className="loading-img" src={`${process.env.PUBLIC_URL}/images/plant.png`} alt='small plant'/>
+                <img className="loading-img" src={`${process.env.PUBLIC_URL}/images/plant.png`} alt='small plant' />
                 <p>This may take a few moments.</p>
             </div>
         )

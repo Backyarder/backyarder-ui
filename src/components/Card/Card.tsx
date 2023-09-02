@@ -1,5 +1,6 @@
 import { useDrag, DragPreviewImage } from 'react-dnd'
 import { PlantAttributes } from '../Sidebar/Sidebar'
+import { NavLink } from 'react-router-dom'
 import './Card.scss'
 
 export interface CardProps {
@@ -49,7 +50,7 @@ const Card = ({ plant }: CardProps) => {
             {!isDragging && (
                 <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
             )}
-            <div className='card' style={draggedCardStyle} ref={dragRef}>
+            <NavLink to={`/plants/${plant.plant_id}`} className='card' style={draggedCardStyle} ref={dragRef}>
                 <img className='card-image' src={plant.image} alt={`${plant.name}`} />
                 <p className='plant-name'>{plant.name.toUpperCase()}</p>
                 <div className='card-icons-container'>
@@ -71,7 +72,7 @@ const Card = ({ plant }: CardProps) => {
                         <span>{hardiness}</span>
                     </div>
                 </div>
-            </div>
+            </NavLink>
         </>
     )
 }
