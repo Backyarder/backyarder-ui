@@ -8,8 +8,12 @@ export interface CardProps {
 
 const iconMap: { [key: string]: any } = {
     type: {
+        'Flower': 'Deceased',
         'flower': 'Deceased',
+        'Thistle': 'Phishing',
+        'Tree': 'park',
         'tree': 'park',
+        'Fruit': 'Nutrition',
         'fruit': 'Nutrition',
         "Palm or Cycad": 'park',
         'Ornamental grass': 'psychiatry',
@@ -24,8 +28,11 @@ const iconMap: { [key: string]: any } = {
         'Vegetable': 'Restaurant'
     },
     sunlight: {
+        'Full sun': 'sunny',
         'full sun': 'sunny',
-        'part shade': 'partly_cloudy_day'
+        'Part shade': 'partly_cloudy_day',
+        'part shade': 'partly_cloudy_day',
+        'part sun/part shade': 'partly_cloudy_day'
     }
 }
 

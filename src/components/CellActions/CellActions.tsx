@@ -30,29 +30,35 @@ const CellActions = ({ plant, handleCloseModal, isPlanted, handlePlanted, handle
             <img className='card-image' src={plant.image} alt={`${plant.name}`} />
             <p className='plant-name'>{plant.name.toUpperCase()}</p>
             <div className='cell-actions'>
-            {isPlanted
-                ? <button className='cell-button plant-button' onClick={handleClick}>
-                    Water!
-                    <span onClick={handleClick} className="material-symbols-rounded plant-icon plant-button">
-                        water_drop
-                    </span>
+                {isPlanted
+                    ? <button className='cell-button plant-button' onClick={handleClick}>
+                        Water!
+                        <span onClick={handleClick} className="material-symbols-rounded plant-icon plant-button">
+                            water_drop
+                        </span>
                     </button>
-                : <button className='cell-button water-button' onClick={handleClick}>
-                    Plant!
+                    : <button className='cell-button water-button' onClick={handleClick}>
+                        Plant!
                         <span onClick={handleClick} className="material-symbols-rounded plant-icon plant-button">
                             psychiatry
                         </span>
                     </button>
-            }
-            <button className='cell-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded">
-                menu_book
-            </span></button>
-            <button className='cell-button remove-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded remove-button">
-                delete
-            </span></button>
-            <button className='close-modal cell-button' onClick={handleClick}><span className="material-symbols-rounded">
-                close
-            </span></button>
+                }
+                <button className='cell-button' onClick={handleClick}>
+                    <span onClick={handleClick} className="material-symbols-rounded">
+                        menu_book
+                    </span>
+                </button>
+                <button className='cell-button remove-button' onClick={handleClick}>
+                    <span onClick={handleClick} className="material-symbols-rounded remove-button">
+                        delete
+                    </span>
+                </button>
+                <button className='close-modal cell-button' onClick={handleClick}>
+                    <span className="material-symbols-rounded">
+                        close
+                    </span>
+                </button>
             </div>
         </div>
     )
