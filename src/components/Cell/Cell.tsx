@@ -25,10 +25,13 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
 
   useEffect(() => {
-    setCell(garden?.find(cell => cell.id === id))
-    if (cell?.status === 1) {
-      setIsDisabled(true);
-      !isDisabled ? setClassName('cell disabled') : setClassName('cell');
+    if (garden) {
+      const foundCell = garden.find(cell => cell.id === id)
+      if (foundCell !== undefined && foundCell.status === 1) {
+        setIsDisabled(true);
+        !isDisabled ? setClassName('cell disabled') : setClassName('cell');
+      }
+      setCell(foundCell);
     }
   }, [cellContents]);
 
