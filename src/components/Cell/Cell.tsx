@@ -2,21 +2,47 @@ import { useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import CellActions from '../CellActions/CellActions';
 import { CardProps } from '../Card/Card';
+import { CellKeys, GridProps } from '../Grid/Grid';
+import { GardenKeys } from '../Main/Main';
 import './Cell.scss'
-import { GridProps } from '../Grid/Grid';
 
 interface GridCell extends GridProps {
   id: string;
   toggleModal: () => void;
 }
 
-const Cell = ({ id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
+const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
+  const [cell, setCell] = useState<CellKeys | undefined>();
   const [className, setClassName] = useState<string>('cell');
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isPopulated, setIsPopulated] = useState<boolean>(false);
   const [cellContents, setCellContents] = useState<CardProps | undefined>();
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
+
+  // if i FIRMLY plant a cell, its contents should update in the garden state.
+  // if i clear my garden, my garden should be updated.
+  // if i remove unplanted items, my garden should still have disabled cells and planted items.
+
+  useEffect(() => {
+    setCell(garden?.find(cell => cell.id === id))
+    if (cell?.status === 1) {
+      setIsDisabled(true);
+      !isDisabled ? setClassName('cell disabled') : setClassName('cell');
+    }
+  }, []);
+
+  useEffect(() => {
+    setGarden((prevState: GardenKeys) => {
+      let index = prevState?.findIndex((item) => item.id === cell?.id);
+      let newState = [...prevState];
+      newState[index] = {
+        ...newState[index],
+        status: Number(isDisabled)
+      };
+      return newState;
+    })
+  }, [isDisabled]);
 
   useEffect(() => {
     if (bullDoze) {

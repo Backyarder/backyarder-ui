@@ -1,24 +1,49 @@
 import { useState } from 'react';
 import Cell from '../Cell/Cell';
 import Modal from '../Modal/Modal';
+// import { cellsMockData } from './cellsMockData';
+import { GardenKeys } from '../Main/Main';
 import './Grid.scss';
-import { cellsMockData } from './cellsMockData';
 
 export interface GridProps {
+  garden: GardenKeys | undefined;
+  setGarden: Function;
   bullDoze: boolean;
   setBullDoze: Function;
   filterGarden: boolean;
   setFilterGarden: Function;
 }
 
-const Grid = ({ bullDoze, setBullDoze, filterGarden, setFilterGarden }: GridProps) => {
+export type CellKeys = {
+  id: string;
+  image: string | null;
+  name: string | null;
+  'plant_id': number | null;
+  status: number | null;
+}
+
+const Grid = ({ garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: GridProps) => {
   const [modal, setModal] = useState<boolean>(false);
 
   const toggleModal = (): void => {
     setModal(!modal);
   }
 
-  const cells = cellsMockData.map(cell => <Cell id={cell.id} key={cell.id} toggleModal={toggleModal} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} />);
+  const cells = garden?.map(cell => {
+    return (
+      <Cell
+        key={cell.id}
+        id={cell.id}
+        garden={garden}
+        setGarden={setGarden}
+        bullDoze={bullDoze}
+        setBullDoze={setBullDoze}
+        filterGarden={filterGarden}
+        setFilterGarden={setFilterGarden}
+        toggleModal={toggleModal}
+      />
+    );
+  });
 
   return (
     <section id='grid'>

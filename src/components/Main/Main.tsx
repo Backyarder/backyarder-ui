@@ -1,54 +1,34 @@
-import './Main.scss';
 import Sidebar from '../Sidebar/Sidebar';
 import Grid from '../Grid/Grid';
 import Nav from '../Nav/Nav';
 import List from '../List/List';
-import { useState } from 'react';
-// import { patchGarden } from '../../apiCalls';
-// import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { cellsMockData } from '../Grid/cellsMockData';
+import './Main.scss';
 
-// type GardenKeys = {
-//   id: string,
-//   'plant_name': string,
-//   status: number,
-//   'plant_id': number,
-//   image: string
-// }[];
+export type GardenKeys = {
+  id: string,
+  status: number | null,
+  image: string | null,
+  name: string | null,
+  'plant_id': number | null
+}[];
 
 const Main = () => {
-  // const [garden, setGarden] = useState<GardenKeys>([]);
+  const [garden, setGarden] = useState<GardenKeys | undefined>([]);
   const [isGardenView, setIsGardenView] = useState<boolean>(true);
   const [bullDoze, setBullDoze] = useState<boolean>(false);
   const [filterGarden, setFilterGarden] = useState<boolean>(false);
-  // const [error, setError] = useState<string>('');
 
-  // useEffect(() => {
-  //   if (garden) {
-  //     patchGarden(garden)
-  //     .then(res => {
-  //       if (!res.ok) {
-  //         throw Error('There has been an error.')
-  //       }
-  //       return res.json()
-  //     })
-  //     .then(data => {
-  //       setGarden([])
-  //       setError('')
-  //     })
-  //     .catch(err => setError(err));
-  //   }
-  // }, [garden]);
-
-  // const clearGarden = (garden: GardenKeys) : void => {
-  //   setGarden(garden);
-  // };
+  useEffect(() => {
+    setGarden(cellsMockData);
+  }, []);
 
   return (
     <main>
       <Sidebar />
-      {isGardenView ? <Grid bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List />}
+      {isGardenView ? <Grid garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List />}
       <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
-      {/* <Link to='/plants'>See Plant Details Page</Link> */}
     </main>
   );
 }
