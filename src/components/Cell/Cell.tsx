@@ -4,6 +4,7 @@ import CellActions from '../CellActions/CellActions';
 import { CardProps } from '../Card/Card';
 import './Cell.scss'
 import { GridProps } from '../Grid/Grid';
+import { patchCellContents } from '../../apiCalls';
 
 interface GridCell extends GridProps {
   id: string;
@@ -17,6 +18,22 @@ const Cell = ({ id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggle
   const [cellContents, setCellContents] = useState<CardProps | undefined>();
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
+  // eslint-disable-next-line
+  const [apiError, setApiError] = useState<string>('')
+
+  useEffect(() => {
+    if(cellContents) {
+      patchCellContents(cellContents, id)
+      .then(data => console.log(data))
+      .catch((err) => {
+          handleApiError(err)
+      })
+    }
+  }, [cellContents])
+
+  const handleApiError = (error: string) => {
+    setApiError(error)
+  }
 
   useEffect(() => {
     if (bullDoze) {

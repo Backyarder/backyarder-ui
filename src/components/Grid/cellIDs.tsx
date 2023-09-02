@@ -1,4 +1,4 @@
-export const cellsMockData = [
+export const cellIDs = [
     {
         id: 'a0'
     },
