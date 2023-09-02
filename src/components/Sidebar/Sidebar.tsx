@@ -31,7 +31,7 @@ const Sidebar = () => {
     useEffect(() => {
         getPlantList()
             .then(data => setPlantList(data.data))
-            .then(() => setLoadingPlants(false))
+            // .then(() => setLoadingPlants(false))
             .catch((err) => {
                 handleApiError(err)
             })
@@ -54,14 +54,14 @@ const Sidebar = () => {
         setLoadingPlants(true)
         searchPlants(searchTerm)
             .then(data => setPlantList(data.data))
-            .then(() => setLoadingPlants(false))
+            // .then(() => setLoadingPlants(false))
             .catch((err) => {
                 handleApiError(err)
             })
     }
 
     const loading = ():JSX.Element => {
-        return (
+            return (
             <p>Gathering plants from our nursery</p>
         )
     }
@@ -82,11 +82,8 @@ const Sidebar = () => {
                 </span></button>
             </div>
             <div>
-                {!loadingPlants ? 
-                cards : 
-                loading}
+                {loadingPlants ? loading() : cards}
             </div>
-            {/* {plantList.length && cards} */}
         </section>
     )
 }
