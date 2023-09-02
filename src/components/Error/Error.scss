@@ -1,0 +1,25 @@
+.error{
+  background: #BEAB96;
+  border-radius: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0.5em;
+  width: 40%;
+  color: #483C3C;
+  margin: 1em;
+}
+
+.error-img{
+  width: 50px;
+}
+
+.home-button{
+  text-decoration: none;
+  color: #f4f4f4;
+  margin-top: 1em;
+  background: #AF2268;
+  padding: 0.5em;
+  border-radius: 1em;
+}
