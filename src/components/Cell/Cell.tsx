@@ -11,7 +11,7 @@ interface GridCell extends GridProps {
   toggleModal: () => void;
 }
 
-interface CellContents extends CellKeys {
+interface CellContents {
   plant: CellKeys;
 }
 
@@ -30,6 +30,11 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       if (foundCell !== undefined && foundCell.status === 1) {
         setIsDisabled(true);
         !isDisabled ? setClassName('cell disabled') : setClassName('cell');
+      }
+      if (foundCell !== undefined && foundCell.plant_id) {
+        setCellContents({ plant: foundCell })
+        setIsPopulated(true);
+        setIsPlanted(true);
       }
       setCell(foundCell);
     }
@@ -162,7 +167,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   }
 
   const divStyle = !isDisabled && {
-    backgroundImage: `url(${cellContents?.image})`,
+    backgroundImage: `url(${cellContents?.plant.image})`,
     backgroundPosition: 'center',
     backgroundSize: '100%',
     border: isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
@@ -173,7 +178,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       {isPopulated ? (
         <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
           {isClicked && <div className='cell-modal'>
-            {cellContents && <CellActions image={cellContents.image} name={cellContents.name} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal} />}
+            {cellContents && <CellActions image={cellContents.plant.image} name={cellContents.plant.name} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal} />}
           </div>}
         </div>
       ) : (
