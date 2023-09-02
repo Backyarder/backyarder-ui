@@ -52,12 +52,21 @@ const Sidebar = () => {
 
     const searchForPlants = () => {
         setLoadingPlants(true)
-        searchPlants(searchTerm)
+        if (searchTerm.length){
+            searchPlants(searchTerm)
             .then(data => setPlantList(data.data))
             .then(() => setLoadingPlants(false))
             .catch((err) => {
                 handleApiError(err)
             })
+        } else {
+            getPlantList()
+            .then(data => setPlantList(data.data))
+            .then(() => setLoadingPlants(false))
+            .catch((err) => {
+                handleApiError(err)
+            })
+        }
     }
 
     const loading = (): JSX.Element => {
