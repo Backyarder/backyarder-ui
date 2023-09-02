@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent } from "react"
 import Card from "../Card/Card"
 import './Sidebar.scss'
-import { getPlantList } from "../../apiCalls"
+import { getPlantList, searchPlants } from "../../apiCalls"
 
 interface PlantData {
     id: number
@@ -26,11 +26,12 @@ const Sidebar = () => {
     // eslint-disable-next-line
     const [apiError, setApiError] = useState<string>('')
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [loadingPlants, setLoadingPlants] = useState<boolean>(false)
+    const [loadingPlants, setLoadingPlants] = useState<boolean>(true)
 
     useEffect(() => {
         getPlantList()
             .then(data => setPlantList(data.data))
+            .then(() => setLoadingPlants(false))
             .catch((err) => {
                 handleApiError(err)
             })
@@ -50,16 +51,18 @@ const Sidebar = () => {
     };
 
     const searchForPlants = () => {
-        //onClick will display a loading message in the sidebar, run a fetch call to get the search cards
-            //if response is good a cards will be updated and displayed - need to figure this one out a little more
-            // if the response is bad then the user will get a message saying that there are no plants mathcing their search OR there was an error on the server side and to try agian later
+        setLoadingPlants(true)
+        searchPlants(searchTerm)
+            .then(data => setPlantList(data.data))
+            .then(() => setLoadingPlants(false))
+            .catch((err) => {
+                handleApiError(err)
+            })
     }
 
-    const loading = () => {
+    const loading = ():JSX.Element => {
         return (
-            <>
-                <p>Gathering plants from our nursery</p>
-            </>
+            <p>Gathering plants from our nursery</p>
         )
     }
 
@@ -78,7 +81,11 @@ const Sidebar = () => {
                     search
                 </span></button>
             </div>
-            {/* {!loadingPlants ? cards : loading} */}
+            <div>
+                {!loadingPlants ? 
+                cards : 
+                loading}
+            </div>
             {/* {plantList.length && cards} */}
         </section>
     )
