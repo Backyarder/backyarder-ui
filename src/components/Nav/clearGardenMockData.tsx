@@ -1,700 +1,700 @@
 export const clearGardenMockData = [
   // Will have a clearer idea of info needed once JSON Contract is complete
   {
-    id: 'a0',
+    id: 'A1',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'a1',
+    id: 'A2',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'a2',
+    id: 'A3',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'a3',
+    id: 'A4',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'a4',
+    id: 'A5',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'a5',
+    id: 'A6',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'a6',
+    id: 'A7',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'a7',
+    id: 'A8',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'a8',
+    id: 'A9',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'a9',
+    id: 'A10',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'b0',
+    id: 'B1',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'b1',
+    id: 'B2',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'b2',
+    id: 'B3',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'b3',
+    id: 'B4',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'b4',
+    id: 'B5',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'b5',
+    id: 'B6',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'b6',
+    id: 'B7',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'b7',
+    id: 'B8',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'b8',
+    id: 'B9',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'b9',
+    id: 'B10',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'c0',
+    id: 'C1',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'c1',
+    id: 'C2',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'c2',
+    id: 'C3',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'c3',
+    id: 'C4',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'c4',
+    id: 'C5',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'c5',
+    id: 'C6',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'c6',
+    id: 'C7',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'c7',
+    id: 'C8',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'c8',
+    id: 'C9',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'c9',
+    id: 'C10',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'd0',
+    id: 'D1',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'd1',
+    id: 'D2',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'd2',
+    id: 'D3',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'd3',
+    id: 'D4',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'd4',
+    id: 'D5',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'd5',
+    id: 'D6',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'd6',
+    id: 'D7',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'd7',
+    id: 'D8',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'd8',
+    id: 'D9',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'd9',
+    id: 'D10',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'e0',
+    id: 'E1',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'e1',
+    id: 'E2',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'e2',
+    id: 'E3',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'e3',
+    id: 'E4',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'e4',
+    id: 'E5',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'e5',
+    id: 'E6',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'e6',
+    id: 'E7',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'e7',
+    id: 'E8',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'e8',
+    id: 'E9',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'e9',
+    id: 'E10',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'f0',
+    id: 'F1',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'f1',
+    id: 'F2',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'f2',
+    id: 'F3',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'f3',
+    id: 'F4',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'f4',
+    id: 'F5',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'f5',
+    id: 'F6',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'f6',
+    id: 'F7',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'f7',
+    id: 'F8',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'f8',
+    id: 'F9',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'f9',
+    id: 'F10',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'g0',
+    id: 'G1',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'g1',
+    id: 'G2',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'g2',
+    id: 'G3',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'g3',
+    id: 'G4',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'g4',
+    id: 'G5',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'g5',
+    id: 'G6',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'g6',
+    id: 'G7',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'g7',
+    id: 'G8',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'g8',
+    id: 'G9',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'g9',
+    id: 'G10',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'h0',
+    id: 'H1',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'h1',
+    id: 'H2',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'h2',
+    id: 'H3',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'h3',
+    id: 'H4',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'h4',
+    id: 'H5',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'h5',
+    id: 'H6',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'h6',
+    id: 'H7',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'h7',
+    id: 'H8',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'h8',
+    id: 'H9',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'h9',
+    id: 'H10',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'i0',
+    id: 'I1',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'i1',
+    id: 'I2',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'i2',
+    id: 'I3',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'i3',
+    id: 'I4',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'i4',
+    id: 'I5',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'i5',
+    id: 'I6',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'i6',
+    id: 'I7',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'i7',
+    id: 'I8',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'i8',
+    id: 'I9',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'i9',
+    id: 'I10',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'j0',
+    id: 'J1',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'j1',
+    id: 'J2',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'j2',
+    id: 'J3',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'j3',
+    id: 'J4',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'j4',
+    id: 'J5',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'j5',
+    id: 'J6',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'j6',
+    id: 'J7',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'j7',
+    id: 'J8',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'j8',
+    id: 'J9',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
     image: ''
   },
   {
-    id: 'j9',
+    id: 'J10',
     'plant_name': '',
     status: 0,
     'plant_id': 0,
