@@ -3,17 +3,13 @@ import './List.scss';
 import { GardenKeys } from '../Main/Main';
 import { CellKeys } from '../Grid/Grid';
 
-// type Plant = {
-//   'plant_name': string,
-//   'plant_id': number,
-//   'image': string
-// };
-
 interface ListProps {
   garden: GardenKeys | undefined;
 }
 
 const List = ({ garden }: ListProps) => {
+
+  // NOTE: likely will be resolved with the new BE endpoints, but please leave it until you're able to check when you connect to it!
   const findQuantity = (array: GardenKeys | undefined, id: number | undefined): number | undefined => {
     if (array) {
       let count = 0;
@@ -26,6 +22,7 @@ const List = ({ garden }: ListProps) => {
     }
   }
 
+  // NOTE: likely will be resolved with the new BE endpoints, but please leave it until you're able to check when you connect to it!
   const uniquePlants = (garden || []).reduce((array: GardenKeys, plant: CellKeys) => {
     if (!array.some(item => item.plant_id === plant.plant_id) && plant.name) {
       array.push(plant);
@@ -33,6 +30,7 @@ const List = ({ garden }: ListProps) => {
     return array;
   }, []);
 
+  // NOTE: likely need to be updated with BE data once connected
   const plantElements: JSX.Element[] | undefined = uniquePlants?.map(plant => {
     return (
       <div key={plant['plant_id']} className='plant-element' >

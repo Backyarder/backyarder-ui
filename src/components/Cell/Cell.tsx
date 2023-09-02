@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import CellActions from '../CellActions/CellActions';
-// import { CardProps } from '../Card/Card';
 import { CellKeys, GridProps } from '../Grid/Grid';
 import { GardenKeys } from '../Main/Main';
 import { patchCellContents } from '../../apiCalls';
@@ -58,6 +57,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     // eslint-disable-next-line
   }, []);
 
+  // NOTE: make sure to refactor this to only update the single cell data instead of updating the entire garden state
   useEffect(() => {
     setGarden((prevState: GardenKeys) => {
       let index = prevState?.findIndex((item) => item.id === cell?.id);
@@ -71,6 +71,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     // eslint-disable-next-line
   }, [isDisabled]);
 
+  // NOTE: make sure to refactor this to only update the single cell data instead of updating the entire garden state
   useEffect(() => {
     setGarden((prevState: GardenKeys) => {
       let index = prevState?.findIndex((item) => item.id === cell?.id);
@@ -86,6 +87,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     // eslint-disable-next-line
   }, [isPlanted]);
 
+  // NOTE: likely all we need to do for this one is trigger a re-render on the useEffect we run on page load. Check it out when you're hooking this functionality into the BE.
   useEffect(() => {
     if (bullDoze) {
       setClassName('cell');

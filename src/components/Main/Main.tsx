@@ -14,6 +14,7 @@ const Main = () => {
   const [bullDoze, setBullDoze] = useState<boolean>(false);
   const [filterGarden, setFilterGarden] = useState<boolean>(false);
 
+  // NOTE: will be updated with BE data next!
   useEffect(() => {
     setGarden(cellIDs);
   }, []);

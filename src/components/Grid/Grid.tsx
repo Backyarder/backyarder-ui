@@ -18,7 +18,7 @@ export type CellKeys = {
   id: string;
   image: string | undefined;
   name: string | undefined;
-  'plant_id': number | undefined;
+  plant_id: number | undefined;
   status: number | null;
 }
 
