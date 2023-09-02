@@ -33,7 +33,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       }
       setCell(foundCell);
     }
-  }, [cellContents]);
+  }, []);
 
   useEffect(() => {
     setGarden((prevState: GardenKeys) => {
