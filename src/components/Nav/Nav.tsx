@@ -1,4 +1,3 @@
-// import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import './Nav.scss';
 
@@ -14,30 +13,30 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: Na
   const [fullClear, setFullClear] = useState<boolean>(false);
   const [partialClear, setPartialClear] = useState<boolean>(false);
 
-  const reset = () : void => {
+  const reset = (): void => {
     setPopUp(false);
     setFullClear(false);
     setPartialClear(false);
   }
 
-  const toggleView = () : void => {
+  const toggleView = (): void => {
     setIsGardenView(!isGardenView);
     reset();
   }
 
-  const handleFullClear = () : void => {
+  const handleFullClear = (): void => {
     setPopUp(true);
     setFullClear(true);
     setPartialClear(false);
   }
 
-  const handlePartialClear = () : void => {
+  const handlePartialClear = (): void => {
     setPopUp(true);
     setPartialClear(true);
     setFullClear(false);
   }
 
-  const handleDelete = () : void => {
+  const handleDelete = (): void => {
     if (fullClear) {
       setBullDoze(true);
       alert('Garden cleared.');
@@ -59,7 +58,7 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: Na
         disabled={!isGardenView}
         onClick={toggleView}
       >
-        LIST OF GARDEN PLANTS
+        <span className="material-symbols-rounded nav-icon">list_alt</span>LIST OF GARDEN PLANTS
       </button>
       <button
         className='nav-button'
@@ -70,12 +69,11 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: Na
         disabled={isGardenView}
         onClick={toggleView}
       >
-        GARDEN VIEW
+        <span className="material-symbols-rounded nav-icon">outdoor_garden</span>GARDEN VIEW
       </button>
       {isGardenView &&
         <>
           <div className='key'>
-            <p className='key-text' >KEY:</p>
             <div className='key-symbol-container' >
               <div className='empty-symbol' ></div>
               <p>EMPTY</p>
@@ -93,8 +91,12 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: Na
               <p>UNAVAILABLE</p>
             </div>
           </div>
-          <button className='clear-button' onClick={handleFullClear} >CLEAR GARDEN</button>
-          <button className='clear-button' onClick={handlePartialClear} >REMOVE UNPLANTED ITEMS</button>
+          <button className='clear-button' onClick={handleFullClear} ><span className="material-symbols-rounded nav-icon">
+            bomb
+          </span>CLEAR GARDEN</button>
+          <button className='clear-button' onClick={handlePartialClear} ><span className="material-symbols-rounded nav-icon">
+            agriculture
+          </span>REMOVE UNPLANTED ITEMS</button>
           {popUp &&
             <div className='pop-up'>
               {fullClear && <p>Are you sure you wish to clear your garden? This action cannot be undone.</p>}

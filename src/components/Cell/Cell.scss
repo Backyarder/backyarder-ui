@@ -1,9 +1,9 @@
 .cell {
-    background-color: white;
-    border-radius: 5px;
-    margin: 10px;
-    height: 2.5em;
-    width: 2.5em;
+    background-color: #F4F4F4;
+    border-radius: 0.3em;
+    margin: 12%;
+    height: 65%;
+    width: 65%;
     &:not(.disabled):not(.disable-scale):hover {
         transform: scale(1.3);
     }
@@ -14,7 +14,6 @@
 .disabled {
     background-color: #786961;
     transform: scale(.75);
-    margin: 12px;
 }
 
 .cell-img {

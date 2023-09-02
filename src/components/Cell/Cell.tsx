@@ -10,7 +10,7 @@ interface GridCell extends GridProps {
   toggleModal: () => void;
 }
 
-const Cell = ({id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal}: GridCell) => {
+const Cell = ({ id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
   const [className, setClassName] = useState<string>('cell');
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isPopulated, setIsPopulated] = useState<boolean>(false);
@@ -24,7 +24,7 @@ const Cell = ({id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleM
       emptyCell();
       setBullDoze(false);
     }
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [bullDoze])
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const Cell = ({id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleM
       unPlantItems();
       setFilterGarden(false);
     }
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [filterGarden])
 
   const [{ isOver }, dropRef] = useDrop({
@@ -76,14 +76,14 @@ const Cell = ({id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleM
     }
   }
 
-  const emptyCell = () : void => {
+  const emptyCell = (): void => {
     setIsDisabled(false);
     setCellContents(undefined);
     setIsPopulated(false);
     setIsPlanted(false);
   }
 
-  const unPlantItems = () : void => {
+  const unPlantItems = (): void => {
     if (isPopulated && !isPlanted) {
       setCellContents(undefined);
       setIsPopulated(false);
@@ -92,26 +92,26 @@ const Cell = ({id, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleM
 
   const hoverStyle = isOver && !isDisabled && {
     transform: 'scale(1.3)',
-    backgroundColor: 'LawnGreen'
+    backgroundColor: '#9EC924'
   }
 
   const divStyle = !isDisabled && {
     backgroundImage: `url(${cellContents?.plant.image})`,
     backgroundPosition: 'center',
     backgroundSize: '100%',
-    border: isPlanted ? 'solid LawnGreen 3px' : 'solid white 3px'
+    border: isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
   };
 
   return (
     <>
       {isPopulated ? (
-        <div id={id} className={className} style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}>
+        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
           {isClicked && <div className='cell-modal'>
             {cellContents && <CellActions plant={cellContents?.plant} isPlanted={isPlanted} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal}/>}
           </div>}
         </div>
       ) : (
-        <div id={id} className={className} style={{...divStyle, ...hoverStyle}} onClick={handleClick} ref={dropRef}></div>
+        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}></div>
       )}
     </>
   );

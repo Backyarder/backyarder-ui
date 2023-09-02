@@ -1,18 +1,17 @@
 .cell-info {
     position: absolute;
     bottom: 110%;
-    left: -250%;
-    background-color: white;
+    left: -270%;
+    background-color: #f4f4f4;
+    margin-top: 0.8em;
     display: flex;
     flex-direction: column;
-    border-radius: 15px;
-    padding: 15px;
-    z-index: 1;
+    border-radius: 1em;
+    padding: 10px;
 }
 
 .cell-actions {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -22,16 +21,20 @@
     cursor: pointer;
     border: none;
     font-weight: bold;
-    border-radius: 25px;
-    height: 3vh;
-    width: 5vw;
-    margin: 2% 0 2%;
+    border-radius: 5em;
     pointer-events: auto;
+    display: flex;
+    align-items: center;
+    padding: 0.4em;
+    margin: .5em;
 }
 
-.close-modal {
-    height: 20px;
-    width: 20px;
-    pointer-events: auto;
-    cursor: pointer;
+.card-image {
+    height: 7em;
+    object-fit: cover;
+    border-radius: 1em;
+}
+
+.plant-icon {
+    padding-left: 0.3em
 }

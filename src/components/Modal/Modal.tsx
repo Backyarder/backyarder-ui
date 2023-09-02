@@ -9,6 +9,7 @@ const Modal = ({ toggleModal }: ModalProps) => {
     <div className='modal-overlay' >
       <div className='modal' >
         <p>Sorry! Cell is unavailable for planting.</p>
+        <span className="material-symbols-rounded modal-icon">potted_plant</span>
         <button className='modal-button' onClick={toggleModal} >Close</button>
       </div>
     </div>

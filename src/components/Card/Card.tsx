@@ -1,15 +1,9 @@
 import { useDrag, DragPreviewImage } from 'react-dnd'
+import { PlantAttributes } from '../Sidebar/Sidebar'
 import './Card.scss'
 
 export interface CardProps {
-    plant: {
-        id: number
-        name: string
-        image: string
-        type: string
-        sunlight: string[]
-        hardiness: string
-    }
+    plant: PlantAttributes
 }
 
 const iconMap: { [key: string]: any } = {
@@ -26,7 +20,7 @@ const iconMap: { [key: string]: any } = {
         "Fern": 'grass',
         "Epiphyte": 'grass',
         'Broadleaf evergreen': 'park',
-        'Herb': 'Temp Preferences Eco',
+        'Herb': 'temp_preferences_eco',
         'Vegetable': 'Restaurant'
     },
     sunlight: {
@@ -35,7 +29,7 @@ const iconMap: { [key: string]: any } = {
     }
 }
 
-const Card = ({plant}: CardProps) => {
+const Card = ({ plant }: CardProps) => {
     const [{ isDragging }, dragRef, preview] = useDrag({
         type: 'plant',
         item: { plant },
@@ -44,7 +38,11 @@ const Card = ({plant}: CardProps) => {
         })
     })
 
-    const draggedCardStyle = isDragging ? {opacity: '.4'} : {}
+    const draggedCardStyle = isDragging ? { opacity: '.4' } : {}
+
+    const hardiness = plant.hardiness.min === plant.hardiness.max
+                        ? `${plant.hardiness.min}`
+                        : `${plant.hardiness.min}-${plant.hardiness.max}`
 
     return (
         <>
@@ -52,7 +50,7 @@ const Card = ({plant}: CardProps) => {
                 <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
             )}
             <div className='card' style={draggedCardStyle} ref={dragRef}>
-                <img className='card-image' src={plant.image} alt={`${plant.name}`}/>
+                <img className='card-image' src={plant.image} alt={`${plant.name}`} />
                 <p className='plant-name'>{plant.name.toUpperCase()}</p>
                 <div className='card-icons-container'>
                     <div className='card-icons'>
@@ -70,7 +68,7 @@ const Card = ({plant}: CardProps) => {
                             location_on
                             <span className="hardiness-text tooltip-text">hardiness zone</span>
                         </div>
-                        <span>{plant.hardiness}</span>
+                        <span>{hardiness}</span>
                     </div>
                 </div>
             </div>
