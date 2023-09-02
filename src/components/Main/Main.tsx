@@ -1,18 +1,12 @@
 import Sidebar from '../Sidebar/Sidebar';
-import Grid from '../Grid/Grid';
+import Grid, { CellKeys } from '../Grid/Grid';
 import Nav from '../Nav/Nav';
 import List from '../List/List';
 import { useEffect, useState } from 'react';
 import { cellsMockData } from '../Grid/cellsMockData';
 import './Main.scss';
 
-export type GardenKeys = {
-  id: string,
-  status: number | null,
-  image: string | null,
-  name: string | null,
-  'plant_id': number | null
-}[];
+export type GardenKeys = CellKeys[];
 
 const Main = () => {
   const [garden, setGarden] = useState<GardenKeys | undefined>([]);

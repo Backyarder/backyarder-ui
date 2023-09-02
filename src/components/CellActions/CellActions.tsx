@@ -1,13 +1,15 @@
 import { CardProps } from "../Card/Card"
 import './CellActions.scss'
 
-interface CellProps extends CardProps {
+interface CellProps {
+    image: string | undefined
+    name: string | undefined
     handleCloseModal: () => void
     handlePlanted: () => void
     handleRemove: () => void
 }
 
-const CellActions = ({ plant, handleCloseModal, handlePlanted, handleRemove }: CellProps) => {
+const CellActions = ({ image, name, handleCloseModal, handlePlanted, handleRemove }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -26,8 +28,8 @@ const CellActions = ({ plant, handleCloseModal, handlePlanted, handleRemove }: C
 
     return (
         <div className='cell-info'>
-            <img className='card-image' src={plant.image} alt={`${plant.name}`} />
-            <p className='plant-name'>{plant.name.toUpperCase()}</p>
+            <img className='card-image' src={image} alt={`${name}`} />
+            <p className='plant-name'>{name?.toUpperCase()}</p>
             <div className='cell-actions'>
                 <button className='cell-button plant-button' onClick={handleClick}>Plant!<span onClick={handleClick} className="material-symbols-rounded plant-icon plant-button">
                     psychiatry

@@ -13,12 +13,16 @@ interface GridCell extends GridProps {
   toggleModal: () => void;
 }
 
+interface CellContents extends CellKeys {
+  plant: CellKeys;
+}
+
 const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
   const [cell, setCell] = useState<CellKeys | undefined>();
   const [className, setClassName] = useState<string>('cell');
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isPopulated, setIsPopulated] = useState<boolean>(false);
-  const [cellContents, setCellContents] = useState<CardProps | undefined>();
+  const [cellContents, setCellContents] = useState<CellContents | undefined>();
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
 
@@ -28,7 +32,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       setIsDisabled(true);
       !isDisabled ? setClassName('cell disabled') : setClassName('cell');
     }
-  }, []);
+  }, [cellContents]);
 
   useEffect(() => {
     setGarden((prevState: GardenKeys) => {
@@ -43,6 +47,20 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   }, [isDisabled]);
 
   useEffect(() => {
+    setGarden((prevState: GardenKeys) => {
+      let index = prevState?.findIndex((item) => item.id === cell?.id);
+      let newState = [...prevState];
+      newState[index] = {
+        ...newState[index],
+        image: cellContents?.plant.image,
+        name: cellContents?.plant.name,
+        'plant_id': cellContents?.plant.plant_id
+      };
+      return newState;
+    });
+  }, [isPlanted]);
+
+  useEffect(() => {
     if (bullDoze) {
       setClassName('cell');
       emptyCell();
@@ -52,9 +70,9 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         let newState = [...prevState];
         newState[index] = {
           ...newState[index],
-          image: null,
-          name: null,
-          'plant_id': null,
+          image: undefined,
+          name: undefined,
+          'plant_id': undefined,
           status: 0
         };
         return newState;
@@ -72,9 +90,9 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         let newState = [...prevState];
         newState[index] = {
           ...newState[index],
-          image: null,
-          name: null,
-          'plant_id': null
+          image: undefined,
+          name: undefined,
+          'plant_id': undefined
         };
         return newState;
       });
@@ -84,7 +102,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
 
   const [{ isOver }, dropRef] = useDrop({
     accept: 'plant',
-    drop: (plant: CardProps) => {
+    drop: (plant: CellContents) => {
       if (isDisabled) {
         toggleModal()
       } else {
@@ -143,7 +161,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   }
 
   const divStyle = !isDisabled && {
-    backgroundImage: `url(${cellContents?.plant.image})`,
+    backgroundImage: `url(${cellContents?.image})`,
     backgroundPosition: 'center',
     backgroundSize: '100%',
     border: isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
@@ -154,7 +172,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       {isPopulated ? (
         <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
           {isClicked && <div className='cell-modal'>
-            {cellContents && <CellActions plant={cellContents?.plant} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal} />}
+            {cellContents && <CellActions image={cellContents.image} name={cellContents.name} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal} />}
           </div>}
         </div>
       ) : (
