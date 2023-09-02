@@ -54,4 +54,17 @@
 
 .quick-glance-details{
   display: flex;
+  // border: blue solid 2px;
+}
+
+.detail-icon{
+  margin: 0.2em
+}
+
+.type-and-color{
+  text-align: right;
+}
+
+.detail{
+  margin-right: 2em
 }

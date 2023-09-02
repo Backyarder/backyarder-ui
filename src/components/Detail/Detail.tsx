@@ -18,7 +18,7 @@ type PlantDetailsType = {
     hardiness: {
         min: string,
         max: string
-            },
+    },
     section: {
         id: number,
         type: string,
@@ -75,22 +75,26 @@ const Detail = () => {
                         <div className='at-a-glance'>
                             <div className="header-container">
                                 <div className="names">
-                                    <h1 className="common">{plantDetails["common_name"]}</h1>
+                                    <h1 className="common">{plantDetails["common_name"].toUpperCase()}</h1>
                                     <h2 className="scientific">{plantDetails["scientific_name"].join(", ")}</h2>
-                                </div>
-                                <div className="type-and-color">
-                                    <p className="type">{captalizeWord(plantDetails.type)}</p>
-                                    <p className="color">{plantDetails["leaf_color"].map(color => captalizeWord(color)).join(", ")}</p>
                                 </div>
                             </div>
                             <div className="quick-glance-details">
-                                <div>
-                                    <p className="sun"><span className="material-symbols-rounded">sunny</span>{plantDetails.sunlight.map(condition => captalizeWord(condition)).join(", ")}</p>
-                                    <p className="cycle"><span className="material-symbols-rounded">calendar_month</span>{plantDetails.cycle}</p>
+                                <div className="detail">
+                                    <p className="sun "><span className="material-symbols-rounded detail-icon">sunny</span>{plantDetails.sunlight.map(condition => captalizeWord(condition)).join(", ")}</p>
+                                    <p className="cycle"><span className="material-symbols-rounded detail-icon">calendar_month</span>{plantDetails.cycle}</p>
                                 </div>
-                                <div>
-                                    <p className="water"><span className="material-symbols-rounded">water_drop</span>{plantDetails.watering}</p>
-                                    <p className="location"><span className="material-symbols-rounded">location_on</span>Zone {determineHardinessString(plantDetails.hardiness)}</p>
+                                <div className="detail">
+                                    <p className="water"><span className="material-symbols-rounded detail-icon">water_drop</span>{plantDetails.watering}</p>
+                                    <p className="location"><span className="material-symbols-rounded detail-icon">location_on</span>Zone {determineHardinessString(plantDetails.hardiness)}</p>
+                                </div>
+                                <div className="detail">
+                                    <p className="type"><span className="material-symbols-rounded detail-icon">
+                                        psychiatry
+                                    </span>{captalizeWord(plantDetails.type)}</p>
+                                    <p className="color"><span className="material-symbols-rounded detail-icon">
+                                        format_paint
+                                    </span>{plantDetails["leaf_color"].map(color => captalizeWord(color)).join(", ")}</p>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +107,7 @@ const Detail = () => {
                             {plantDetails.section.map(plant => {
                                 return (
                                     <div className='description'>
-                                        <h2 className='header'>{plant.type.charAt(0).toUpperCase() + plant.type.slice(1)+ " Description"}</h2>
+                                        <h2 className='header'>{plant.type.charAt(0).toUpperCase() + plant.type.slice(1) + " Description"}</h2>
                                         <p className="description">{plantDetails.section[1].description}</p>
                                     </div>
                                 )
