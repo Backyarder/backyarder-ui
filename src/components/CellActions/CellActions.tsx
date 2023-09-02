@@ -1,4 +1,3 @@
-// import { CardProps } from "../Card/Card"
 import { NavLink } from 'react-router-dom'
 import './CellActions.scss'
 

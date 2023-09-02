@@ -43,11 +43,11 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   useEffect(() => {
     if (garden) {
       const foundCell = garden.find(cell => cell.id === id)
-      if (foundCell !== undefined && foundCell.status === 1) {
+      if (foundCell && foundCell.status === 1) {
         setIsDisabled(true);
         !isDisabled ? setClassName('cell disabled') : setClassName('cell');
       }
-      if (foundCell !== undefined && foundCell.plant_id) {
+      if (foundCell && foundCell.plant_id) {
         setCellContents({ plant: foundCell })
         setIsPopulated(true);
         setIsPlanted(true);
@@ -109,6 +109,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     // eslint-disable-next-line
   }, [bullDoze])
 
+  // NOTE: likely all we need to do for this one is trigger a re-render on the useEffect we run on page load. Check it out when you're hooking this functionality into the BE.
   useEffect(() => {
     if (filterGarden && !isPlanted) {
       unPlantItems();
