@@ -70,7 +70,10 @@ const Detail = () => {
 
     return (
         <>
-            {plantDetails ?
+            {apiError ? (
+                <p>There was an error</p>
+            ) : (
+                plantDetails ?
                 <div className='detail-page'>
                     <div className="top-of-page">
                         <img className="plant-img" src={plantDetails.image} alt={`A ${plantDetails["common_name"]}`} />
@@ -126,7 +129,8 @@ const Detail = () => {
                             <InfoItem data={plantDetails["invasive"] ? false : true} name="Non-Invasive Species" />
                         </div>
                     </div>
-                </div> : <p>loading...</p>}
+                </div> : <p>loading...</p>
+            )}
         </>
     )
 }
