@@ -4,7 +4,6 @@ const handleError = (res: Response) => {
     if(!res.ok) {
       throw new Error(`HTTP Error: ${res.status} -- Please try again later`)
     }
-    console.log(res)
     return res.json()
   }
 
@@ -92,7 +91,6 @@ const deleteContents = (path: string, setter: Function) => {
       if (!res.ok) {
         throw new Error('Unable to clear garden');
       }
-      console.log(res);
       setter(true);
       alert('Garden cleared.');
     })

@@ -31,6 +31,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   useEffect(() => {
     if(cellContents && needsUpdate) {
       patchCellContents(cellContents, id, needsUpdate)
+      .then(data => console.log(data))
       .catch((err) => {
           handleApiError(err)
       })
@@ -70,6 +71,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       }
       setCell(foundCell);
     }
+    // eslint-disable-next-line
   }, []);
 
   // NOTE: make sure to refactor this to only update the single cell data instead of updating the entire garden state
@@ -151,8 +153,10 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         toggleModal()
       } else {
         setCellContents(plant)
-        setNeedsUpdate('placed')
-        setIsPopulated(true)
+        setTimeout(() => {
+          setNeedsUpdate('placed')
+          setIsPopulated(true)
+        }, 0)
       }
     },
     collect: (monitor) => ({

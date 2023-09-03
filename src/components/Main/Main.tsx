@@ -3,7 +3,6 @@ import Grid, { CellKeys } from '../Grid/Grid';
 import Nav from '../Nav/Nav';
 import List from '../List/List';
 import { useEffect, useState } from 'react';
-import { cellIDs } from '../Grid/cellIDs';
 import { getGarden } from '../../apiCalls';
 import './Main.scss';
 
