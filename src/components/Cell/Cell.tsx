@@ -74,37 +74,6 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     // eslint-disable-next-line
   }, []);
 
-  // NOTE: make sure to refactor this to only update the single cell data instead of updating the entire garden state
-  // useEffect(() => {
-  //   setGarden((prevState: GardenKeys) => {
-  //     let index = prevState?.findIndex((item) => item.id === cell?.id);
-  //     let newState = [...prevState];
-  //     newState[index] = {
-  //       ...newState[index],
-  //       status: Number(isDisabled)
-  //     };
-  //     return newState;
-  //   });
-  //   // eslint-disable-next-line
-  // }, [isDisabled]);
-
-  // NOTE: make sure to refactor this to only update the single cell data instead of updating the entire garden state
-  // useEffect(() => {
-  //   setGarden((prevState: GardenKeys) => {
-  //     let index = prevState?.findIndex((item) => item.id === cell?.id);
-  //     let newState = [...prevState];
-  //     newState[index] = {
-  //       ...newState[index],
-  //       image: cellContents?.plant.image,
-  //       name: cellContents?.plant.name,
-  //       'plant_id': cellContents?.plant.plant_id
-  //     };
-  //     return newState;
-  //   });
-  //   // eslint-disable-next-line
-  // }, [isPlanted]);
-
-  // NOTE: likely all we need to do for this one is trigger a re-render on the useEffect we run on page load. Check it out when you're hooking this functionality into the BE.
   useEffect(() => {
     if (bullDoze) {
       setClassName('cell');
@@ -126,7 +95,6 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     // eslint-disable-next-line
   }, [bullDoze])
 
-  // NOTE: likely all we need to do for this one is trigger a re-render on the useEffect we run on page load. Check it out when you're hooking this functionality into the BE.
   useEffect(() => {
     if (filterGarden && !isPlanted) {
       unPlantItems();

@@ -22,7 +22,6 @@ const Main = () => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('')
 
-  // NOTE: will be updated with BE data next!
   useEffect(() => {
     getGarden()
       .then(data => {
