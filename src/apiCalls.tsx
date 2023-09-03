@@ -45,7 +45,19 @@ const patchCellContents = ({plant}: CellContents, id: string) => {
           .then(res => handleError(res))
 }
 
-const deleteGarden = () => {}
+const deleteGarden = () => {
+  return fetch('https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/all', {
+    method: 'DELETE'
+  })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Unable to clear garden');
+      }
+    })
+    .catch(err => {
+      handleError(err)
+    })
+}
 
 const deleteUnplantedItems = () => {}
 
