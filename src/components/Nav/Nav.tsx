@@ -41,7 +41,7 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: Na
     if (fullClear) {
       deleteContents('all', setBullDoze);
     } else {
-      deleteContents('all', setFilterGarden);
+      deleteContents('garden', setFilterGarden);
     }
     reset();
   }
