@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { deleteContents } from '../../apiCalls';
 import './Nav.scss';
 
 type NavProps = {
@@ -38,11 +39,9 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: Na
 
   const handleDelete = (): void => {
     if (fullClear) {
-      setBullDoze(true);
-      alert('Garden cleared.');
+      deleteContents('all', setBullDoze);
     } else {
-      setFilterGarden(true);
-      alert('Unplanted items removed.');
+      deleteContents('all', setFilterGarden);
     }
     reset();
   }
