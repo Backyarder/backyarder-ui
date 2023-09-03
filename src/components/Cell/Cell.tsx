@@ -93,7 +93,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   }, [isDisabled]);
 
   useEffect(() => {
-    if (shouldRender) {
+    if (shouldRender && isPopulated) {
       setGarden((prevState: GardenKeys) => {
         let index = prevState?.findIndex((item) => item.location_id === id);
         let newState = [...prevState];
@@ -106,8 +106,21 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         };
         return newState;
       });
-      setShouldRender(false);
+    } else if (shouldRender && !isPopulated) {
+      setGarden((prevState: GardenKeys) => {
+        let index = prevState?.findIndex((item) => item.location_id === id);
+        let newState = [...prevState];
+        newState[index] = {
+          ...newState[index],
+          image: undefined,
+          name: undefined,
+          'plant_id': undefined,
+          status: 'empty'
+        };
+        return newState;
+      });
     }
+    setShouldRender(false);
   }, [isPopulated]);
 
   useEffect(() => {
@@ -125,8 +138,21 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         };
         return newState;
       });
-      setShouldRender(false);
+    } else if (shouldRender && !isPlanted) {
+      setGarden((prevState: GardenKeys) => {
+        let index = prevState?.findIndex((item) => item.location_id === id);
+        let newState = [...prevState];
+        newState[index] = {
+          ...newState[index],
+          image: undefined,
+          name: undefined,
+          'plant_id': undefined,
+          status: 'empty'
+        };
+        return newState;
+      });
     }
+    setShouldRender(false);
   }, [isPlanted]);
 
   useEffect(() => {
@@ -194,9 +220,11 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   }
 
   const handleRemove = () => {
+    setIsPopulated(false)
     setIsPlanted(false)
     setCellContents(undefined)
     handleNeedsUpdating('empty')
+    setShouldRender(true)
   }
 
   const handleCloseModal = () => {
