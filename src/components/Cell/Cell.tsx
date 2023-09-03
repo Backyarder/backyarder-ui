@@ -4,6 +4,7 @@ import CellActions from '../CellActions/CellActions';
 import { CellKeys, GridProps } from '../Grid/Grid';
 import { GardenKeys } from '../Main/Main';
 import { patchCellContents } from '../../apiCalls';
+import { cellIDs } from '../Grid/cellIDs';
 import './Cell.scss'
 
 interface GridCell extends GridProps {
@@ -25,16 +26,18 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('')
+  const [needsUpdate, setNeedsUpdate] = useState<boolean>(false)
 
   useEffect(() => {
-    if(cellContents) {
+    if(cellContents && needsUpdate) {
+      setNeedsUpdate(false)
       patchCellContents(cellContents, id)
       .catch((err) => {
           handleApiError(err)
       })
     }
     // eslint-disable-next-line
-  }, [cellContents])
+  }, [needsUpdate])
 
   const handleApiError = (error: string) => {
     setApiError(error)
@@ -42,50 +45,53 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
 
   useEffect(() => {
     if (garden) {
-      const foundCell = garden.find(cell => cell.id === id)
-      if (foundCell && foundCell.status === 1) {
+      const foundCell = garden.find(cell => cell.location_id === id)
+      if (foundCell && foundCell.status === 'placed') {
+        setCellContents({ plant: foundCell })
+        setIsPopulated(true);
+      }
+      if (foundCell && foundCell.status === 'disabled') {
         setIsDisabled(true);
         !isDisabled ? setClassName('cell disabled') : setClassName('cell');
       }
-      if (foundCell && foundCell.plant_id) {
+      if (foundCell && foundCell.status === 'locked') {
         setCellContents({ plant: foundCell })
         setIsPopulated(true);
         setIsPlanted(true);
       }
       setCell(foundCell);
     }
-    // eslint-disable-next-line
   }, []);
 
   // NOTE: make sure to refactor this to only update the single cell data instead of updating the entire garden state
-  useEffect(() => {
-    setGarden((prevState: GardenKeys) => {
-      let index = prevState?.findIndex((item) => item.id === cell?.id);
-      let newState = [...prevState];
-      newState[index] = {
-        ...newState[index],
-        status: Number(isDisabled)
-      };
-      return newState;
-    });
-    // eslint-disable-next-line
-  }, [isDisabled]);
+  // useEffect(() => {
+  //   setGarden((prevState: GardenKeys) => {
+  //     let index = prevState?.findIndex((item) => item.id === cell?.id);
+  //     let newState = [...prevState];
+  //     newState[index] = {
+  //       ...newState[index],
+  //       status: Number(isDisabled)
+  //     };
+  //     return newState;
+  //   });
+  //   // eslint-disable-next-line
+  // }, [isDisabled]);
 
   // NOTE: make sure to refactor this to only update the single cell data instead of updating the entire garden state
-  useEffect(() => {
-    setGarden((prevState: GardenKeys) => {
-      let index = prevState?.findIndex((item) => item.id === cell?.id);
-      let newState = [...prevState];
-      newState[index] = {
-        ...newState[index],
-        image: cellContents?.plant.image,
-        name: cellContents?.plant.name,
-        'plant_id': cellContents?.plant.plant_id
-      };
-      return newState;
-    });
-    // eslint-disable-next-line
-  }, [isPlanted]);
+  // useEffect(() => {
+  //   setGarden((prevState: GardenKeys) => {
+  //     let index = prevState?.findIndex((item) => item.id === cell?.id);
+  //     let newState = [...prevState];
+  //     newState[index] = {
+  //       ...newState[index],
+  //       image: cellContents?.plant.image,
+  //       name: cellContents?.plant.name,
+  //       'plant_id': cellContents?.plant.plant_id
+  //     };
+  //     return newState;
+  //   });
+  //   // eslint-disable-next-line
+  // }, [isPlanted]);
 
   // NOTE: likely all we need to do for this one is trigger a re-render on the useEffect we run on page load. Check it out when you're hooking this functionality into the BE.
   useEffect(() => {
@@ -94,14 +100,14 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       emptyCell();
       setBullDoze(false);
       setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.id === cell?.id);
+        let index = prevState?.findIndex((item) => item.location_id === cell?.location_id);
         let newState = [...prevState];
         newState[index] = {
           ...newState[index],
           image: undefined,
           name: undefined,
           'plant_id': undefined,
-          status: 0
+          status: 'empty'
         };
         return newState;
       });
@@ -115,7 +121,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       unPlantItems();
       setFilterGarden(false);
       setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.id === cell?.id);
+        let index = prevState?.findIndex((item) => item.location_id === cell?.location_id);
         let newState = [...prevState];
         newState[index] = {
           ...newState[index],
@@ -136,6 +142,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         toggleModal()
       } else {
         setCellContents(plant)
+        setNeedsUpdate(true)
         setIsPopulated(true)
       }
     },

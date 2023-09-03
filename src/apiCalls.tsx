@@ -4,14 +4,20 @@ const handleError = (res: Response) => {
     if(!res.ok) {
       throw new Error(`HTTP Error: ${res.status} -- Please try again later`)
     }
+    console.log(res)
     return res.json()
   }
 
 const getPlantList = () => {
     return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants`, {
-        cache: 'force-cache',
+      cache: 'force-cache',
     })
-        .then(res => handleError(res))
+      .then(res => handleError(res))
+}
+
+const getGarden = () => {
+    return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden`)
+      .then(res => handleError(res))
 }
 
 const searchPlants = (searchterm: string) => {
@@ -29,6 +35,7 @@ const getPlantDetails = (id: string | undefined) => {
 }
 
 const patchCellContents = ({plant}: CellContents, id: string) => {
+  console.log(plant)
   return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell`, {
             method: 'PATCH',
             body: JSON.stringify({
@@ -45,4 +52,4 @@ const patchCellContents = ({plant}: CellContents, id: string) => {
           .then(res => handleError(res))
 }
 
-export { getPlantList, searchPlants, getPlantDetails, patchCellContents }
+export { getPlantList, getGarden, searchPlants, getPlantDetails, patchCellContents }
