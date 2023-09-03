@@ -42,10 +42,14 @@ const Sidebar = () => {
     }
 
     let cards;
-    if (plantList.length) {
+
+    if(!plantList) {
+        cards = <p className="loading">It looks like our nursery is not operating correctly, please try again later</p>
+    }
+    else if (plantList.length) {
         cards = plantList.map((plant: PlantData) => <Card plant={plant.attributes} key={plant.attributes.plant_id} />)
     } else {
-        cards = <p className="loading">There are no plants in our nursery matching your search</p>
+        cards = <p className="loading">Hmmm... there are no plants in our nursery matching your search.</p>
     }
 
     const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
