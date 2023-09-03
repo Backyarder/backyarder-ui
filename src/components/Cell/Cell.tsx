@@ -31,7 +31,6 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   useEffect(() => {
     if(cellContents && needsUpdate) {
       patchCellContents(cellContents, id, needsUpdate)
-      .then(data => console.log(data))
       .catch((err) => {
           handleApiError(err)
       })
