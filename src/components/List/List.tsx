@@ -27,7 +27,7 @@ const List = ({ garden }: ListProps) => {
     if (!array.some(item => item.plant_id === plant.plant_id) && plant.name) {
       array.push(plant);
     }
-    return array;
+    return array.filter(item => item.status === 'locked');
   }, []);
 
   // NOTE: likely need to be updated with BE data once connected
