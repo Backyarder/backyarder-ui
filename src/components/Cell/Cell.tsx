@@ -3,7 +3,7 @@ import { useDrop } from 'react-dnd';
 import CellActions from '../CellActions/CellActions';
 import { CellKeys, GridProps } from '../Grid/Grid';
 import { GardenKeys } from '../Main/Main';
-import { patchCellContents } from '../../apiCalls';
+import { patchCellContents, patchDisabledOrRemoved } from '../../apiCalls';
 import { StatusType } from '../../apiCalls';
 import './Cell.scss'
 
@@ -37,6 +37,16 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     }
     // eslint-disable-next-line
   }, [needsUpdate])
+
+  useEffect(() => {
+    if(needsUpdate) {
+      patchDisabledOrRemoved(id, needsUpdate)
+      .catch((err) => {
+          handleApiError(err)
+      })
+    }
+    // eslint-disable-next-line
+  }, [isDisabled, cellContents === undefined])
 
   const handleApiError = (error: string) => {
     setApiError(error)
@@ -157,6 +167,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const handleRemove = () => {
     setIsPlanted(false)
     setCellContents(undefined)
+    handleNeedsUpdating('empty')
   }
 
   const handleCloseModal = () => {
@@ -172,6 +183,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     if (!cellContents) {
       setIsDisabled(!isDisabled)
       !isDisabled ? setClassName('cell disabled') : setClassName('cell');
+      !isDisabled ? setNeedsUpdate('disabled') : setNeedsUpdate('empty')
     } else {
       setIsClicked(true)
       target.classList.add('disable-scale')
