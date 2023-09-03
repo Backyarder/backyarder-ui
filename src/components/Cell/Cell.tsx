@@ -27,6 +27,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('')
   const [needsUpdate, setNeedsUpdate] = useState<(keyof StatusType)>()
+  const [shouldRender, setShouldRender] = useState<boolean>(false);
 
   useEffect(() => {
     if(cellContents && needsUpdate) {
@@ -72,6 +73,61 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     }
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (shouldRender) {
+      setGarden((prevState: GardenKeys) => {
+        let index = prevState?.findIndex((item) => item.location_id === id);
+        let newState = [...prevState];
+        newState[index] = {
+          ...newState[index],
+          image: cellContents?.plant.image,
+          name: cellContents?.plant.name,
+          'plant_id': cellContents?.plant.plant_id,
+          status: isDisabled ? 'disabled' : 'empty'
+        };
+        return newState;
+      });
+      setShouldRender(false);
+    }
+  }, [isDisabled]);
+
+  useEffect(() => {
+    if (shouldRender) {
+      setGarden((prevState: GardenKeys) => {
+        let index = prevState?.findIndex((item) => item.location_id === id);
+        let newState = [...prevState];
+        newState[index] = {
+          ...newState[index],
+          image: cellContents?.plant.image,
+          name: cellContents?.plant.name,
+          'plant_id': cellContents?.plant.plant_id,
+          status: 'placed'
+        };
+        return newState;
+      });
+      setShouldRender(false);
+    }
+  }, [isPopulated]);
+
+  useEffect(() => {
+    console.log('planted', isPlanted)
+    if (shouldRender && isPlanted) {
+      setGarden((prevState: GardenKeys) => {
+        let index = prevState?.findIndex((item) => item.location_id === id);
+        let newState = [...prevState];
+        newState[index] = {
+          ...newState[index],
+          image: cellContents?.plant.image,
+          name: cellContents?.plant.name,
+          'plant_id': cellContents?.plant.plant_id,
+          status: 'locked'
+        };
+        return newState;
+      });
+      setShouldRender(false);
+    }
+  }, [isPlanted]);
 
   useEffect(() => {
     if (bullDoze) {
@@ -121,6 +177,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       } else {
         setCellContents(plant)
         setTimeout(() => {
+          setShouldRender(true)
           setNeedsUpdate('placed')
           setIsPopulated(true)
         }, 0)
@@ -133,6 +190,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
 
   const handlePlanted = () => {
     setIsPlanted(true)
+    setShouldRender(true);
   }
 
   const handleRemove = () => {
@@ -155,6 +213,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       setIsDisabled(!isDisabled)
       !isDisabled ? setClassName('cell disabled') : setClassName('cell');
       !isDisabled ? setNeedsUpdate('disabled') : setNeedsUpdate('empty')
+      setShouldRender(true)
     } else {
       setIsClicked(true)
       target.classList.add('disable-scale')
