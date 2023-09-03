@@ -16,6 +16,8 @@ export interface CellContents {
   plant: CellKeys;
 }
 
+// CODE NEEDS TO BE HEAVILY DRY'ed UP
+
 const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
   const [cell, setCell] = useState<CellKeys | undefined>();
   const [className, setClassName] = useState<string>('cell');
