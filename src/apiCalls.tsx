@@ -45,4 +45,8 @@ const patchCellContents = ({plant}: CellContents, id: string) => {
           .then(res => handleError(res))
 }
 
-export { getPlantList, searchPlants, getPlantDetails, patchCellContents }
+const deleteGarden = () => {}
+
+const deleteUnplantedItems = () => {}
+
+export { getPlantList, searchPlants, getPlantDetails, patchCellContents, deleteGarden, deleteUnplantedItems }
