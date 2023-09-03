@@ -45,8 +45,8 @@ const patchCellContents = ({plant}: CellContents, id: string) => {
           .then(res => handleError(res))
 }
 
-const deleteGarden = () => {
-  return fetch('https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/all', {
+const deleteContents = (path: string) => {
+  return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/${path}`, {
     method: 'DELETE'
   })
     .then(res => {
@@ -59,18 +59,4 @@ const deleteGarden = () => {
     })
 }
 
-const deleteUnplantedItems = () => {
-  return fetch('https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
-    method: 'DELETE'
-  })
-    .then(res => {
-      if (!res.ok) {
-        throw new Error('Unable to clear garden');
-      }
-    })
-    .catch(err => {
-      handleError(err)
-    })
-}
-
-export { getPlantList, searchPlants, getPlantDetails, patchCellContents, deleteGarden, deleteUnplantedItems }
+export { getPlantList, searchPlants, getPlantDetails, patchCellContents, deleteContents }
