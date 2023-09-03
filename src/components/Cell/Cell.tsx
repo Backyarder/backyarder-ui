@@ -4,7 +4,7 @@ import CellActions from '../CellActions/CellActions';
 import { CellKeys, GridProps } from '../Grid/Grid';
 import { GardenKeys } from '../Main/Main';
 import { patchCellContents } from '../../apiCalls';
-import { cellIDs } from '../Grid/cellIDs';
+import { StatusType } from '../../apiCalls';
 import './Cell.scss'
 
 interface GridCell extends GridProps {
@@ -26,12 +26,11 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('')
-  const [needsUpdate, setNeedsUpdate] = useState<boolean>(false)
+  const [needsUpdate, setNeedsUpdate] = useState<(keyof StatusType)>()
 
   useEffect(() => {
     if(cellContents && needsUpdate) {
-      setNeedsUpdate(false)
-      patchCellContents(cellContents, id)
+      patchCellContents(cellContents, id, needsUpdate)
       .catch((err) => {
           handleApiError(err)
       })
@@ -142,7 +141,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         toggleModal()
       } else {
         setCellContents(plant)
-        setNeedsUpdate(true)
+        setNeedsUpdate('placed')
         setIsPopulated(true)
       }
     },
@@ -162,6 +161,10 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
 
   const handleCloseModal = () => {
     setIsClicked(false)
+  }
+
+  const handleNeedsUpdating = (status: keyof StatusType) => {
+    setNeedsUpdate(status)
   }
 
   const handleClick = (e: React.MouseEvent) => {
@@ -208,7 +211,15 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       {isPopulated ? (
         <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
           {isClicked && <div className='cell-modal'>
-            {cellContents && <CellActions image={cellContents.plant.image} name={cellContents.plant.name} plantId={cellContents.plant.plant_id} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal} />}
+            {cellContents && <CellActions 
+                                image={cellContents.plant.image}
+                                name={cellContents.plant.name}
+                                plantId={cellContents.plant.plant_id}
+                                handlePlanted={handlePlanted}
+                                handleRemove={handleRemove}
+                                handleCloseModal={handleCloseModal}
+                                handleNeedsUpdating={handleNeedsUpdating}
+                              />}
           </div>}
         </div>
       ) : (
