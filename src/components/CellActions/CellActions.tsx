@@ -8,15 +8,17 @@ interface CellProps {
     handleCloseModal: () => void
     handlePlanted: () => void
     handleRemove: () => void
+    handleNeedsUpdating: Function
 }
 
-const CellActions = ({ image, name, plantId, handleCloseModal, handlePlanted, handleRemove }: CellProps) => {
+const CellActions = ({ image, name, plantId, handleCloseModal, handlePlanted, handleRemove, handleNeedsUpdating }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
         const target = e.target as Element
         if (target.classList.contains('plant-button')) {
             handlePlanted()
+            handleNeedsUpdating('locked')
         } else if (target.classList.contains('remove-button')) {
             handleRemove()
         }

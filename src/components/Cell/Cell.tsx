@@ -3,7 +3,8 @@ import { useDrop } from 'react-dnd';
 import CellActions from '../CellActions/CellActions';
 import { CellKeys, GridProps } from '../Grid/Grid';
 import { GardenKeys } from '../Main/Main';
-import { patchCellContents } from '../../apiCalls';
+import { patchCellContents, patchDisabledOrRemoved } from '../../apiCalls';
+import { StatusType } from '../../apiCalls';
 import './Cell.scss'
 
 interface GridCell extends GridProps {
@@ -25,16 +26,27 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('')
+  const [needsUpdate, setNeedsUpdate] = useState<(keyof StatusType)>()
 
   useEffect(() => {
-    if(cellContents) {
-      patchCellContents(cellContents, id)
+    if(cellContents && needsUpdate) {
+      patchCellContents(cellContents, id, needsUpdate)
       .catch((err) => {
           handleApiError(err)
       })
     }
     // eslint-disable-next-line
-  }, [cellContents])
+  }, [needsUpdate])
+
+  useEffect(() => {
+    if(needsUpdate) {
+      patchDisabledOrRemoved(id, needsUpdate)
+      .catch((err) => {
+          handleApiError(err)
+      })
+    }
+    // eslint-disable-next-line
+  }, [isDisabled, cellContents === undefined])
 
   const handleApiError = (error: string) => {
     setApiError(error)
@@ -42,12 +54,16 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
 
   useEffect(() => {
     if (garden) {
-      const foundCell = garden.find(cell => cell.id === id)
-      if (foundCell && foundCell.status === 1) {
+      const foundCell = garden.find(cell => cell.location_id === id)
+      if (foundCell && foundCell.status === 'placed') {
+        setCellContents({ plant: foundCell })
+        setIsPopulated(true);
+      }
+      if (foundCell && foundCell.status === 'disabled') {
         setIsDisabled(true);
         !isDisabled ? setClassName('cell disabled') : setClassName('cell');
       }
-      if (foundCell && foundCell.plant_id) {
+      if (foundCell && foundCell.status === 'locked') {
         setCellContents({ plant: foundCell })
         setIsPopulated(true);
         setIsPlanted(true);
@@ -57,51 +73,20 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     // eslint-disable-next-line
   }, []);
 
-  // NOTE: make sure to refactor this to only update the single cell data instead of updating the entire garden state
-  useEffect(() => {
-    setGarden((prevState: GardenKeys) => {
-      let index = prevState?.findIndex((item) => item.id === cell?.id);
-      let newState = [...prevState];
-      newState[index] = {
-        ...newState[index],
-        status: Number(isDisabled)
-      };
-      return newState;
-    });
-    // eslint-disable-next-line
-  }, [isDisabled]);
-
-  // NOTE: make sure to refactor this to only update the single cell data instead of updating the entire garden state
-  useEffect(() => {
-    setGarden((prevState: GardenKeys) => {
-      let index = prevState?.findIndex((item) => item.id === cell?.id);
-      let newState = [...prevState];
-      newState[index] = {
-        ...newState[index],
-        image: cellContents?.plant.image,
-        name: cellContents?.plant.name,
-        'plant_id': cellContents?.plant.plant_id
-      };
-      return newState;
-    });
-    // eslint-disable-next-line
-  }, [isPlanted]);
-
-  // NOTE: likely all we need to do for this one is trigger a re-render on the useEffect we run on page load. Check it out when you're hooking this functionality into the BE.
   useEffect(() => {
     if (bullDoze) {
       setClassName('cell');
       emptyCell();
       setBullDoze(false);
       setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.id === cell?.id);
+        let index = prevState?.findIndex((item) => item.location_id === cell?.location_id);
         let newState = [...prevState];
         newState[index] = {
           ...newState[index],
           image: undefined,
           name: undefined,
           'plant_id': undefined,
-          status: 0
+          status: 'empty'
         };
         return newState;
       });
@@ -109,13 +94,12 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     // eslint-disable-next-line
   }, [bullDoze])
 
-  // NOTE: likely all we need to do for this one is trigger a re-render on the useEffect we run on page load. Check it out when you're hooking this functionality into the BE.
   useEffect(() => {
     if (filterGarden && !isPlanted) {
       unPlantItems();
       setFilterGarden(false);
       setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.id === cell?.id);
+        let index = prevState?.findIndex((item) => item.location_id === cell?.location_id);
         let newState = [...prevState];
         newState[index] = {
           ...newState[index],
@@ -136,7 +120,10 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         toggleModal()
       } else {
         setCellContents(plant)
-        setIsPopulated(true)
+        setTimeout(() => {
+          setNeedsUpdate('placed')
+          setIsPopulated(true)
+        }, 0)
       }
     },
     collect: (monitor) => ({
@@ -151,10 +138,15 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const handleRemove = () => {
     setIsPlanted(false)
     setCellContents(undefined)
+    handleNeedsUpdating('empty')
   }
 
   const handleCloseModal = () => {
     setIsClicked(false)
+  }
+
+  const handleNeedsUpdating = (status: keyof StatusType) => {
+    setNeedsUpdate(status)
   }
 
   const handleClick = (e: React.MouseEvent) => {
@@ -162,6 +154,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     if (!cellContents) {
       setIsDisabled(!isDisabled)
       !isDisabled ? setClassName('cell disabled') : setClassName('cell');
+      !isDisabled ? setNeedsUpdate('disabled') : setNeedsUpdate('empty')
     } else {
       setIsClicked(true)
       target.classList.add('disable-scale')
@@ -201,7 +194,15 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       {isPopulated ? (
         <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
           {isClicked && <div className='cell-modal'>
-            {cellContents && <CellActions image={cellContents.plant.image} name={cellContents.plant.name} plantId={cellContents.plant.plant_id} handlePlanted={handlePlanted} handleRemove={handleRemove} handleCloseModal={handleCloseModal} />}
+            {cellContents && <CellActions 
+                                image={cellContents.plant.image}
+                                name={cellContents.plant.name}
+                                plantId={cellContents.plant.plant_id}
+                                handlePlanted={handlePlanted}
+                                handleRemove={handleRemove}
+                                handleCloseModal={handleCloseModal}
+                                handleNeedsUpdating={handleNeedsUpdating}
+                              />}
           </div>}
         </div>
       ) : (

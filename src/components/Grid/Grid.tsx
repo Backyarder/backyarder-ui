@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Cell from '../Cell/Cell';
 import Modal from '../Modal/Modal';
 import { GardenKeys } from '../Main/Main';
+import { cellIDs } from './cellIDs';
 import './Grid.scss';
 
 export interface GridProps {
@@ -14,11 +15,11 @@ export interface GridProps {
 }
 
 export type CellKeys = {
-  id: string;
+  location_id: string;
   image: string | undefined;
   name: string | undefined;
   plant_id: number | undefined;
-  status: number | null;
+  status: string | number | null;
 }
 
 const Grid = ({ garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: GridProps) => {
@@ -28,11 +29,11 @@ const Grid = ({ garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilte
     setModal(!modal);
   }
 
-  const cells = garden?.map(cell => {
+  const cells = garden?.map((cell, i) => {
     return (
       <Cell
-        key={cell.id}
-        id={cell.id}
+        key={cell.location_id}
+        id={cellIDs[i].id}
         garden={garden}
         setGarden={setGarden}
         bullDoze={bullDoze}
