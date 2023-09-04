@@ -8,3 +8,4 @@ describe('Getting plants for sidebar', () => {
     cy.visit('http://localhost:3000/')
   })
 })
+
