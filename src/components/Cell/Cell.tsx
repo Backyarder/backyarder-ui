@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
-import CellActions from '../CellActions/CellActions';
-import { CellKeys, GridProps } from '../Grid/Grid';
 import { GardenKeys } from '../Main/Main';
-import { patchCellContents, patchDisabledOrRemoved } from '../../apiCalls';
-import { StatusType } from '../../apiCalls';
+import { CellKeys, GridProps } from '../Grid/Grid';
+import CellActions from '../CellActions/CellActions';
+import { patchCellContents, patchDisabledOrRemoved, StatusType } from '../../apiCalls';
 import './Cell.scss'
 
 interface GridCell extends GridProps {
@@ -17,54 +16,30 @@ export interface CellContents {
 }
 
 const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
-  const [cell, setCell] = useState<CellKeys | undefined>();
-  const [className, setClassName] = useState<string>('cell');
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const [isPopulated, setIsPopulated] = useState<boolean>(false);
-  const [cellContents, setCellContents] = useState<CellContents | undefined>();
-  const [isClicked, setIsClicked] = useState<boolean>(false);
-  const [isPlanted, setIsPlanted] = useState<boolean>(false);
   // eslint-disable-next-line
-  const [apiError, setApiError] = useState<string>('')
-  const [needsUpdate, setNeedsUpdate] = useState<(keyof StatusType)>()
-
-  useEffect(() => {
-    if(cellContents && needsUpdate) {
-      patchCellContents(cellContents, id, needsUpdate)
-      .catch((err) => {
-          handleApiError(err)
-      })
-    }
-    // eslint-disable-next-line
-  }, [needsUpdate])
-
-  useEffect(() => {
-    if(needsUpdate) {
-      patchDisabledOrRemoved(id, needsUpdate)
-      .catch((err) => {
-          handleApiError(err)
-      })
-    }
-    // eslint-disable-next-line
-  }, [isDisabled, cellContents === undefined])
-
-  const handleApiError = (error: string) => {
-    setApiError(error)
-  }
+  const [apiError, setApiError] = useState<string>('');
+  // eslint-disable-next-line
+  const [cell, setCell] = useState<CellKeys | undefined>();
+  const [cellContents, setCellContents] = useState<CellContents | undefined>();
+  const [className, setClassName] = useState<string>('cell');
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [isPlanted, setIsPlanted] = useState<boolean>(false);
+  const [isPopulated, setIsPopulated] = useState<boolean>(false);
+  const [needsUpdate, setNeedsUpdate] = useState<(keyof StatusType)>();
+  const [shouldRender, setShouldRender] = useState<boolean>(false);
 
   useEffect(() => {
     if (garden) {
-      const foundCell = garden.find(cell => cell.location_id === id)
-      if (foundCell && foundCell.status === 'placed') {
-        setCellContents({ plant: foundCell })
+      const foundCell = garden.find(cell => cell.location_id === id);
+      if (foundCell?.status === 'placed') {
+        setCellContents({ plant: foundCell });
         setIsPopulated(true);
-      }
-      if (foundCell && foundCell.status === 'disabled') {
+      } else if (foundCell?.status === 'disabled') {
         setIsDisabled(true);
         !isDisabled ? setClassName('cell disabled') : setClassName('cell');
-      }
-      if (foundCell && foundCell.status === 'locked') {
-        setCellContents({ plant: foundCell })
+      } else if (foundCell?.status === 'locked') {
+        setCellContents({ plant: foundCell });
         setIsPopulated(true);
         setIsPlanted(true);
       }
@@ -74,103 +49,149 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   }, []);
 
   useEffect(() => {
-    if (bullDoze) {
-      setClassName('cell');
-      emptyCell();
-      setBullDoze(false);
-      setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.location_id === cell?.location_id);
-        let newState = [...prevState];
-        newState[index] = {
-          ...newState[index],
-          image: undefined,
-          name: undefined,
-          'plant_id': undefined,
-          status: 'empty'
-        };
-        return newState;
+    if (cellContents && needsUpdate) {
+      patchCellContents(cellContents, id, needsUpdate)
+      .catch((err) => {
+          handleApiError(err);
       });
     }
     // eslint-disable-next-line
-  }, [bullDoze])
+  }, [needsUpdate]);
 
   useEffect(() => {
-    if (filterGarden && !isPlanted) {
-      unPlantItems();
-      setFilterGarden(false);
-      setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.location_id === cell?.location_id);
-        let newState = [...prevState];
-        newState[index] = {
-          ...newState[index],
-          image: undefined,
-          name: undefined,
-          'plant_id': undefined
-        };
-        return newState;
+    if (needsUpdate) {
+      patchDisabledOrRemoved(id, needsUpdate)
+      .catch((err) => {
+          handleApiError(err);
       });
     }
     // eslint-disable-next-line
-  }, [filterGarden])
+  }, [isDisabled, cellContents === undefined]);
+
+  useEffect(() => {
+    if (shouldRender) {
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, isDisabled ? 'disabled' : 'empty');
+      setShouldRender(false);
+    }
+    // eslint-disable-next-line
+  }, [isDisabled]);
+
+  useEffect(() => {
+    if (shouldRender) {
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, isPopulated ? 'placed' : 'empty');
+    }
+    setShouldRender(false);
+    // eslint-disable-next-line
+  }, [isPopulated]);
+
+  useEffect(() => {
+    if (shouldRender && isPlanted) {
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, 'locked');
+    } else if (shouldRender && isPopulated) {
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, 'placed');
+    } else if (shouldRender && !isPopulated) {
+      handleGarden(id, undefined, undefined, undefined, 'empty');
+    }
+    setShouldRender(false);
+    // eslint-disable-next-line
+  }, [isPlanted]);
+
+  useEffect(() => {
+    if (bullDoze) {
+      setClassName('cell');
+      handleEmptyCells();
+      setBullDoze(false);
+      handleGarden(id, undefined, undefined, undefined, 'empty');
+    } else if (filterGarden && !isPlanted && !isDisabled) {
+      handleUnplanted();
+      setFilterGarden(false);
+      handleGarden(id, undefined, undefined, undefined, 'empty');
+    }
+    // eslint-disable-next-line
+  }, [bullDoze, filterGarden]);
 
   const [{ isOver }, dropRef] = useDrop({
     accept: 'plant',
     drop: (plant: CellContents) => {
       if (isDisabled) {
-        toggleModal()
+        toggleModal();
       } else {
-        setCellContents(plant)
+        setCellContents(plant);
         setTimeout(() => {
-          setNeedsUpdate('placed')
-          setIsPopulated(true)
-        }, 0)
+          setShouldRender(true);
+          setNeedsUpdate('placed');
+          setIsPopulated(true);
+        }, 0);
       }
     },
     collect: (monitor) => ({
       isOver: monitor.isOver()
     })
-  })
+  });
+
+  const handleApiError = (error: string) => {
+    setApiError(error);
+  }
+
+  const handleGarden = (id: string, image: string | undefined, name: string | undefined, plant_id: number | undefined, status: string) => {
+    setGarden((prevState: GardenKeys) => {
+      let index = prevState?.findIndex((item) => item.location_id === id);
+      let newState = [...prevState];
+      newState[index] = {
+        ...newState[index],
+        image: image,
+        plant_name: name,
+        'plant_id': plant_id,
+        status: status
+      };
+      return newState;
+    });
+  }
 
   const handlePlanted = () => {
-    setIsPlanted(true)
+    setIsPlanted(true);
+    setShouldRender(true);
   }
 
   const handleRemove = () => {
-    setIsPlanted(false)
-    setCellContents(undefined)
-    handleNeedsUpdating('empty')
+    setIsPopulated(false);
+    setIsPlanted(false);
+    setCellContents(undefined);
+    handleNeedsUpdating('empty');
+    setShouldRender(true);
   }
 
   const handleCloseModal = () => {
-    setIsClicked(false)
+    setIsClicked(false);
   }
 
   const handleNeedsUpdating = (status: keyof StatusType) => {
-    setNeedsUpdate(status)
+    setNeedsUpdate(status);
   }
 
   const handleClick = (e: React.MouseEvent) => {
     const target = e.target as Element
     if (!cellContents) {
-      setIsDisabled(!isDisabled)
+      setIsDisabled(!isDisabled);
       !isDisabled ? setClassName('cell disabled') : setClassName('cell');
-      !isDisabled ? setNeedsUpdate('disabled') : setNeedsUpdate('empty')
+      !isDisabled ? setNeedsUpdate('disabled') : setNeedsUpdate('empty');
+      setShouldRender(true);
     } else {
-      setIsClicked(true)
-      target.classList.add('disable-scale')
-      const parent = target.parentNode as Element
-      parent.classList.add('disable-hover')
+      setIsClicked(true);
+      target.classList.add('disable-scale');
+      const parent = target.parentNode as Element;
+      parent.classList.add('disable-hover');
     }
   }
 
-  const emptyCell = (): void => {
+  const handleEmptyCells = (): void => {
     setIsDisabled(false);
     setCellContents(undefined);
     setIsPopulated(false);
     setIsPlanted(false);
   }
 
-  const unPlantItems = (): void => {
+  const handleUnplanted = (): void => {
     if (isPopulated && !isPlanted) {
       setCellContents(undefined);
       setIsPopulated(false);
@@ -196,7 +217,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
           {isClicked && <div className='cell-modal'>
             {cellContents && <CellActions 
                                 image={cellContents.plant.image}
-                                name={cellContents.plant.name}
+                                name={cellContents.plant.plant_name}
                                 plantId={cellContents.plant.plant_id}
                                 handlePlanted={handlePlanted}
                                 handleRemove={handleRemove}
