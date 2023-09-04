@@ -7,7 +7,7 @@ describe('Nav Actions: Remove Unplanted Items', () => {
       
       cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
         statusCode: 200,
-        fixture: 'secondary-grid.json'
+        fixture: 'onload-grid.json'
       }).as('onload-grid');
       
       cy.intercept('DELETE', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
