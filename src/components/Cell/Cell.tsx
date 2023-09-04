@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
-import CellActions from '../CellActions/CellActions';
-import { CellKeys, GridProps } from '../Grid/Grid';
 import { GardenKeys } from '../Main/Main';
-import { patchCellContents, patchDisabledOrRemoved } from '../../apiCalls';
-import { StatusType } from '../../apiCalls';
+import { CellKeys, GridProps } from '../Grid/Grid';
+import CellActions from '../CellActions/CellActions';
+import { patchCellContents, patchDisabledOrRemoved, StatusType } from '../../apiCalls';
 import './Cell.scss'
 
 interface GridCell extends GridProps {
@@ -16,52 +15,30 @@ export interface CellContents {
   plant: CellKeys;
 }
 
-// CODE NEEDS TO BE HEAVILY DRY'ed UP
-
 const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
-  const [cell, setCell] = useState<CellKeys | undefined>();
-  const [className, setClassName] = useState<string>('cell');
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const [isPopulated, setIsPopulated] = useState<boolean>(false);
-  const [cellContents, setCellContents] = useState<CellContents | undefined>();
-  const [isClicked, setIsClicked] = useState<boolean>(false);
-  const [isPlanted, setIsPlanted] = useState<boolean>(false);
   // eslint-disable-next-line
-  const [apiError, setApiError] = useState<string>('')
-  const [needsUpdate, setNeedsUpdate] = useState<(keyof StatusType)>()
+  const [apiError, setApiError] = useState<string>('');
+  const [cell, setCell] = useState<CellKeys | undefined>();
+  const [cellContents, setCellContents] = useState<CellContents | undefined>();
+  const [className, setClassName] = useState<string>('cell');
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [isPlanted, setIsPlanted] = useState<boolean>(false);
+  const [isPopulated, setIsPopulated] = useState<boolean>(false);
+  const [needsUpdate, setNeedsUpdate] = useState<(keyof StatusType)>();
   const [shouldRender, setShouldRender] = useState<boolean>(false);
 
   useEffect(() => {
-    if (cellContents && needsUpdate) {
-      patchCellContents(cellContents, id, needsUpdate)
-      .catch((err) => {
-          handleApiError(err)
-      })
-    }
-    // eslint-disable-next-line
-  }, [needsUpdate])
-
-  useEffect(() => {
-    if (needsUpdate) {
-      patchDisabledOrRemoved(id, needsUpdate)
-      .catch((err) => {
-          handleApiError(err)
-      })
-    }
-    // eslint-disable-next-line
-  }, [isDisabled, cellContents === undefined])
-
-  useEffect(() => {
     if (garden) {
-      const foundCell = garden.find(cell => cell.location_id === id)
+      const foundCell = garden.find(cell => cell.location_id === id);
       if (foundCell?.status === 'placed') {
-        setCellContents({ plant: foundCell })
+        setCellContents({ plant: foundCell });
         setIsPopulated(true);
       } else if (foundCell?.status === 'disabled') {
         setIsDisabled(true);
         !isDisabled ? setClassName('cell disabled') : setClassName('cell');
       } else if (foundCell?.status === 'locked') {
-        setCellContents({ plant: foundCell })
+        setCellContents({ plant: foundCell });
         setIsPopulated(true);
         setIsPlanted(true);
       }
@@ -71,24 +48,46 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   }, []);
 
   useEffect(() => {
+    if (cellContents && needsUpdate) {
+      patchCellContents(cellContents, id, needsUpdate)
+      .catch((err) => {
+          handleApiError(err);
+      });
+    }
+    // eslint-disable-next-line
+  }, [needsUpdate]);
+
+  useEffect(() => {
+    if (needsUpdate) {
+      patchDisabledOrRemoved(id, needsUpdate)
+      .catch((err) => {
+          handleApiError(err);
+      });
+    }
+    // eslint-disable-next-line
+  }, [isDisabled, cellContents === undefined]);
+
+  useEffect(() => {
     if (shouldRender) {
-      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, isDisabled ? 'disabled' : 'empty')
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, isDisabled ? 'disabled' : 'empty');
       setShouldRender(false);
     }
   }, [isDisabled]);
 
   useEffect(() => {
     if (shouldRender) {
-      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, isPopulated ? 'placed' : 'empty')
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, isPopulated ? 'placed' : 'empty');
     }
     setShouldRender(false);
   }, [isPopulated]);
 
   useEffect(() => {
     if (shouldRender && isPlanted) {
-      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, 'locked')
-    } else if (shouldRender && !isPlanted) {
-      handleGarden(id, undefined, undefined, undefined, 'empty')
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, 'locked');
+    } else if (shouldRender && isPopulated) {
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, 'placed');
+    } else if (shouldRender && !isPopulated) {
+      handleGarden(id, undefined, undefined, undefined, 'empty');
     }
     setShouldRender(false);
   }, [isPlanted]);
@@ -98,36 +97,36 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       setClassName('cell');
       handleEmptyCells();
       setBullDoze(false);
-      handleGarden(id, undefined, undefined, undefined, 'empty')
+      handleGarden(id, undefined, undefined, undefined, 'empty');
     } else if (filterGarden && !isPlanted && !isDisabled) {
       handleUnplanted();
       setFilterGarden(false);
-      handleGarden(id, undefined, undefined, undefined, 'empty')
+      handleGarden(id, undefined, undefined, undefined, 'empty');
     }
     // eslint-disable-next-line
-  }, [bullDoze, filterGarden])
+  }, [bullDoze, filterGarden]);
 
   const [{ isOver }, dropRef] = useDrop({
     accept: 'plant',
     drop: (plant: CellContents) => {
       if (isDisabled) {
-        toggleModal()
+        toggleModal();
       } else {
-        setCellContents(plant)
+        setCellContents(plant);
         setTimeout(() => {
-          setShouldRender(true)
-          setNeedsUpdate('placed')
-          setIsPopulated(true)
-        }, 0)
+          setShouldRender(true);
+          setNeedsUpdate('placed');
+          setIsPopulated(true);
+        }, 0);
       }
     },
     collect: (monitor) => ({
       isOver: monitor.isOver()
     })
-  })
+  });
 
   const handleApiError = (error: string) => {
-    setApiError(error)
+    setApiError(error);
   }
 
   const handleGarden = (id: string, image: string | undefined, name: string | undefined, plant_id: number | undefined, status: string) => {
@@ -146,38 +145,38 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   }
 
   const handlePlanted = () => {
-    setIsPlanted(true)
+    setIsPlanted(true);
     setShouldRender(true);
   }
 
   const handleRemove = () => {
-    setIsPopulated(false)
-    setIsPlanted(false)
-    setCellContents(undefined)
-    handleNeedsUpdating('empty')
-    setShouldRender(true)
+    setIsPopulated(false);
+    setIsPlanted(false);
+    setCellContents(undefined);
+    handleNeedsUpdating('empty');
+    setShouldRender(true);
   }
 
   const handleCloseModal = () => {
-    setIsClicked(false)
+    setIsClicked(false);
   }
 
   const handleNeedsUpdating = (status: keyof StatusType) => {
-    setNeedsUpdate(status)
+    setNeedsUpdate(status);
   }
 
   const handleClick = (e: React.MouseEvent) => {
     const target = e.target as Element
     if (!cellContents) {
-      setIsDisabled(!isDisabled)
+      setIsDisabled(!isDisabled);
       !isDisabled ? setClassName('cell disabled') : setClassName('cell');
-      !isDisabled ? setNeedsUpdate('disabled') : setNeedsUpdate('empty')
-      setShouldRender(true)
+      !isDisabled ? setNeedsUpdate('disabled') : setNeedsUpdate('empty');
+      setShouldRender(true);
     } else {
-      setIsClicked(true)
-      target.classList.add('disable-scale')
-      const parent = target.parentNode as Element
-      parent.classList.add('disable-hover')
+      setIsClicked(true);
+      target.classList.add('disable-scale');
+      const parent = target.parentNode as Element;
+      parent.classList.add('disable-hover');
     }
   }
 
