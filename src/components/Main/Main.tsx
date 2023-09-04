@@ -38,11 +38,23 @@ const Main = () => {
   }
 
   return (
-    <main>
-      <Sidebar />
-      {isGardenView ? <Grid garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
-      <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
-    </main>
+    <>
+      {apiError ? (
+        <div className='server-error'>
+          <h2>Oh no! The weather isn't cooperating!</h2>
+          <span className="material-symbols-rounded">
+thunderstorm
+</span>
+          <p>There was an error on our end, please try again later</p>
+        </div>
+      ) : (
+        <main>
+        <Sidebar />
+        {isGardenView ? <Grid garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
+        <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
+      </main>
+      )}
+    </>
   );
 }
 

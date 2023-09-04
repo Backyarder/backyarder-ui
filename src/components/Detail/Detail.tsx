@@ -9,7 +9,7 @@ import { getPlantDetails } from "../../apiCalls"
 type PlantDetailsType = {
     id: number,
     image: string,
-    common_name: string,
+    plant_name: string,
     scientific_name: string[],
     type: string,
     leaf_color: string[],
@@ -77,11 +77,11 @@ const Detail = () => {
                 plantDetails ?
                 <div className='detail-page'>
                     <div className="top-of-page">
-                        <img className="plant-img" src={plantDetails.image} alt={`A ${plantDetails["common_name"]}`} />
+                        <img className="plant-img" src={plantDetails.image} alt={`A ${plantDetails["plant_name"]}`} />
                         <div className='at-a-glance'>
                             <div className="header-container">
                                 <div className="names">
-                                    <h1 className="common">{plantDetails["common_name"].toUpperCase()}</h1>
+                                    <h1 className="common">{plantDetails["plant_name"].toUpperCase()}</h1>
                                     <h2 className="scientific">{plantDetails["scientific_name"].join(", ")}</h2>
                                 </div>
                                 <NavLink className='home-button' id='details-home-button' to='/'>Go back to garden</NavLink>
