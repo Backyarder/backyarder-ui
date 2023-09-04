@@ -19,7 +19,7 @@ export type CellKeys = {
   image: string | undefined;
   name: string | undefined;
   plant_id: number | undefined;
-  status: string | number | null;
+  status: string | number | null | undefined;
 }
 
 const Grid = ({ garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: GridProps) => {

@@ -78,81 +78,23 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
 
   useEffect(() => {
     if (shouldRender) {
-      setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.location_id === id);
-        let newState = [...prevState];
-        newState[index] = {
-          ...newState[index],
-          image: cellContents?.plant.image,
-          name: cellContents?.plant.name,
-          'plant_id': cellContents?.plant.plant_id,
-          status: isDisabled ? 'disabled' : 'empty'
-        };
-        return newState;
-      });
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, isDisabled ? 'disabled' : 'empty')
       setShouldRender(false);
     }
   }, [isDisabled]);
 
   useEffect(() => {
-    if (shouldRender && isPopulated) {
-      setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.location_id === id);
-        let newState = [...prevState];
-        newState[index] = {
-          ...newState[index],
-          image: cellContents?.plant.image,
-          name: cellContents?.plant.name,
-          'plant_id': cellContents?.plant.plant_id,
-          status: 'placed'
-        };
-        return newState;
-      });
-    } else if (shouldRender && !isPopulated) {
-      setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.location_id === id);
-        let newState = [...prevState];
-        newState[index] = {
-          ...newState[index],
-          image: undefined,
-          name: undefined,
-          'plant_id': undefined,
-          status: 'empty'
-        };
-        return newState;
-      });
+    if (shouldRender) {
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, isPopulated ? 'placed' : 'empty')
     }
     setShouldRender(false);
   }, [isPopulated]);
 
   useEffect(() => {
-    console.log('planted', isPlanted)
     if (shouldRender && isPlanted) {
-      setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.location_id === id);
-        let newState = [...prevState];
-        newState[index] = {
-          ...newState[index],
-          image: cellContents?.plant.image,
-          name: cellContents?.plant.name,
-          'plant_id': cellContents?.plant.plant_id,
-          status: 'locked'
-        };
-        return newState;
-      });
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, 'locked')
     } else if (shouldRender && !isPlanted) {
-      setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.location_id === id);
-        let newState = [...prevState];
-        newState[index] = {
-          ...newState[index],
-          image: undefined,
-          name: undefined,
-          'plant_id': undefined,
-          status: 'empty'
-        };
-        return newState;
-      });
+      handleGarden(id, undefined, undefined, undefined, 'empty')
     }
     setShouldRender(false);
   }, [isPlanted]);
@@ -162,18 +104,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       setClassName('cell');
       emptyCell();
       setBullDoze(false);
-      setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.location_id === cell?.location_id);
-        let newState = [...prevState];
-        newState[index] = {
-          ...newState[index],
-          image: undefined,
-          name: undefined,
-          'plant_id': undefined,
-          status: 'empty'
-        };
-        return newState;
-      });
+      handleGarden(id, undefined, undefined, undefined, 'empty')
     }
     // eslint-disable-next-line
   }, [bullDoze])
@@ -182,17 +113,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     if (filterGarden && !isPlanted) {
       unPlantItems();
       setFilterGarden(false);
-      setGarden((prevState: GardenKeys) => {
-        let index = prevState?.findIndex((item) => item.location_id === cell?.location_id);
-        let newState = [...prevState];
-        newState[index] = {
-          ...newState[index],
-          image: undefined,
-          name: undefined,
-          'plant_id': undefined
-        };
-        return newState;
-      });
+      handleGarden(id, undefined, undefined, undefined, 'empty')
     }
     // eslint-disable-next-line
   }, [filterGarden])
@@ -215,6 +136,21 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       isOver: monitor.isOver()
     })
   })
+
+  const handleGarden = (id: string, image: string | undefined, name: string | undefined, plant_id: number | undefined, status: string) => {
+    setGarden((prevState: GardenKeys) => {
+      let index = prevState?.findIndex((item) => item.location_id === id);
+      let newState = [...prevState];
+      newState[index] = {
+        ...newState[index],
+        image: image,
+        name: name,
+        'plant_id': plant_id,
+        status: status
+      };
+      return newState;
+    });
+  }
 
   const handlePlanted = () => {
     setIsPlanted(true)
