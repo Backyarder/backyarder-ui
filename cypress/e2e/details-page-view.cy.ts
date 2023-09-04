@@ -43,35 +43,35 @@ describe('Details Page', () => {
 
     cy.get('.more-info-section > .header').should('have.text', 'More Information')
 
-      //wildlife
-      cy.get(':nth-child(2) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
-      cy.get('.more-info-section > :nth-child(2) > div > h3').should('have.text', 'Attracts Wildlife')
-      cy.get('.more-info-section > :nth-child(2) > div > p').should('have.text', 'Birds, Butterflies')
-      //flowering
-      cy.get(':nth-child(3) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
-      cy.get('.more-info-section > :nth-child(3) > div > h3').should('have.text', 'Flowering')
-      //pruned
-      cy.get(':nth-child(4) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
-      cy.get('.more-info-section > :nth-child(4) > div > h3').should('have.text', 'Needs to be Pruned')
-      cy.get('.more-info-section > :nth-child(4) > div > p').should('have.text', 'April')
-      //drought tolerant
-      cy.get(':nth-child(5) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
-      cy.get('.more-info-section > :nth-child(5) > div > h3').should('have.text', 'Drought Tolerant')
-      //pet safe
-      cy.get(':nth-child(6) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
-      cy.get('.more-info-section > :nth-child(6) > div > h3').should('have.text', 'Pet Safe')
-      //indoor
-      cy.get(':nth-child(7) > .checkbox').should('have.attr', 'src').should('include', 'unchecked_backyarder')
-      cy.get('.more-info-section > :nth-child(7) > div > h3').should('have.text', 'Grown Indoors')
-      //edible
-      cy.get(':nth-child(8) > .checkbox').should('have.attr', 'src').should('include', 'unchecked_backyarder')
-      cy.get('.more-info-section > :nth-child(8) > div > h3').should('have.text', 'Edible')
-      //maintenance
-      cy.get(':nth-child(9) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
-      cy.get('.more-info-section > :nth-child(9) > div > h3').should('have.text', 'Low Maintenance')
-      //non-invasive
-      cy.get(':nth-child(10) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
-      cy.get('.more-info-section > :nth-child(10) > div > h3').should('have.text', 'Non-Invasive Species')
+
+    cy.get(':nth-child(2) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
+    cy.get('.more-info-section > :nth-child(2) > div > h3').should('have.text', 'Attracts Wildlife')
+    cy.get('.more-info-section > :nth-child(2) > div > p').should('have.text', 'Birds, Butterflies')
+
+    cy.get(':nth-child(3) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
+    cy.get('.more-info-section > :nth-child(3) > div > h3').should('have.text', 'Flowering')
+
+    cy.get(':nth-child(4) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
+    cy.get('.more-info-section > :nth-child(4) > div > h3').should('have.text', 'Needs to be Pruned')
+    cy.get('.more-info-section > :nth-child(4) > div > p').should('have.text', 'April')
+
+    cy.get(':nth-child(5) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
+    cy.get('.more-info-section > :nth-child(5) > div > h3').should('have.text', 'Drought Tolerant')
+
+    cy.get(':nth-child(6) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
+    cy.get('.more-info-section > :nth-child(6) > div > h3').should('have.text', 'Pet Safe')
+
+    cy.get(':nth-child(7) > .checkbox').should('have.attr', 'src').should('include', 'unchecked_backyarder')
+    cy.get('.more-info-section > :nth-child(7) > div > h3').should('have.text', 'Grown Indoors')
+
+    cy.get(':nth-child(8) > .checkbox').should('have.attr', 'src').should('include', 'unchecked_backyarder')
+    cy.get('.more-info-section > :nth-child(8) > div > h3').should('have.text', 'Edible')
+
+    cy.get(':nth-child(9) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
+    cy.get('.more-info-section > :nth-child(9) > div > h3').should('have.text', 'Low Maintenance')
+
+    cy.get(':nth-child(10) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
+    cy.get('.more-info-section > :nth-child(10) > div > h3').should('have.text', 'Non-Invasive Species')
 
     cy.get('#details-home-button').should('have.text', 'Go back to garden').click()
     cy.url().should('eq', 'http://localhost:3000/')
