@@ -5,7 +5,10 @@ describe('Handle 500 level errors', () => {
         status: 500
       })
     })
+    //stub a successful grid fetch
     cy.visit('http://localhost:3000/')
+    //await for get to return
+    //test that in the side bar the error meesgae is displayed
   })
 
   it('Getting plants details', () => {
@@ -14,8 +17,15 @@ describe('Handle 500 level errors', () => {
         status: 500
       })
     })
+    //stub a successful sidebar fetch
+    //stub a successful grid fetch
     cy.visit('http://localhost:3000/')
+    //await sidebar fetch
     cy.get('[href="/plants/2692"]').click()
+    //await details fetch (500)
+    //assert that the details page has an error message
+    //click on the home button
+    //assert the user is taken back to the garden
   })
 
   it('Getting grid', () => {
@@ -24,47 +34,26 @@ describe('Handle 500 level errors', () => {
         status: 500
       })
     })
+    //stub successful sidebar fetch
     cy.visit('http://localhost:3000/')
+    //await grid fetch
+    //assert that the error meesage is displayed
   })
 
-  it('Searching plant', () => {
+  it.only('Searching plant', () => {
     cy.intercept('GET', `https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/search/apple`, (req) => {
       req.reply({
         status: 500
       })
     })
+    //stub successful grid fetch
+    //stub successful sidebar fetch
     cy.visit('http://localhost:3000/')
+    //await sidebar fetch
     cy.get('.search-bar').type('apple')
     cy.get('.submit-search > .material-symbols-rounded').click()
+    //await search fetch
+    //assert that the error message is displayed
   })
-
-  //   it('Adding plant to grid', () => {
-  //     cy.intercept('PATCH', `https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell`, (req) => {
-  //       req.reply({
-  //         status: 500
-  //       })
-  //     })
-  //     cy.visit('http://localhost:3000/')
-  //     cy.get('[href="/plants/2692"]').first().trigger("dragstart", { dataTransfer })
-  //       .get('#J9').trigger("drop", { dataTransfer })
-  // })
-
-  //   it('Disabling a cell', () => {
-  //     cy.intercept('PATCH', `https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell`, (req) => {
-  //       req.reply({
-  //         status: 500
-  //       })
-  //     })
-  //     cy.visit('http://localhost:3000/')
-  //   })
-
-  //   it('Deleting cell contents', () => {
-  //     cy.intercept('DELETE', `https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/${path}`, (req) => {
-  //       req.reply({
-  //         status: 500
-  //       })
-  //     })
-  //     cy.visit('http://localhost:3000/')
-  //   })
 })
 
