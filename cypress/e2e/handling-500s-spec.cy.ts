@@ -5,10 +5,12 @@ describe('Handle 500 level errors', () => {
         status: 500
       })
     })
+
     cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
       statusCode: 200,
       fixture: 'onload-grid.json'
-    }).as('onload-grid')
+    })
+
     cy.visit('http://localhost:3000/')
     cy.get('.loading').should('have.text', 'It looks like our nursery is not operating correctly, please try again later')
   })
@@ -19,14 +21,17 @@ describe('Handle 500 level errors', () => {
         status: 500
       })
     })
+
     cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants', {
       statusCode: 200,
       fixture: 'onload-plants.json'
-    }).as('onload-plants')
+    })
+
     cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
       statusCode: 200,
       fixture: 'onload-grid.json'
-    }).as('onload-grid')
+    })
+
     cy.visit('http://localhost:3000/')
     cy.get('[href="/plants/2692"]').click()
     cy.url().should('include', '/plants/2692')
@@ -41,10 +46,12 @@ describe('Handle 500 level errors', () => {
         status: 500
       })
     })
+
     cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants', {
       statusCode: 200,
       fixture: 'onload-plants.json'
-    }).as('onload-plants')
+    })
+
     cy.visit('http://localhost:3000/')
     cy.get('.server-error').should('be.visible')
     cy.get('h2').should('have.text', `Oh no! The weather isn't cooperating!`)
@@ -61,12 +68,12 @@ describe('Handle 500 level errors', () => {
     cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants', {
       statusCode: 200,
       fixture: 'onload-plants.json'
-    }).as('onload-plants')
-    
+    })
+
     cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
       statusCode: 200,
       fixture: 'onload-grid.json'
-    }).as('onload-grid')
+    })
 
     cy.visit('http://localhost:3000/')
     cy.get('.search-bar').type('apple')
