@@ -18,6 +18,7 @@ export interface CellContents {
 const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
+  // eslint-disable-next-line
   const [cell, setCell] = useState<CellKeys | undefined>();
   const [cellContents, setCellContents] = useState<CellContents | undefined>();
   const [className, setClassName] = useState<string>('cell');
@@ -72,6 +73,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, isDisabled ? 'disabled' : 'empty');
       setShouldRender(false);
     }
+    // eslint-disable-next-line
   }, [isDisabled]);
 
   useEffect(() => {
@@ -79,6 +81,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, isPopulated ? 'placed' : 'empty');
     }
     setShouldRender(false);
+    // eslint-disable-next-line
   }, [isPopulated]);
 
   useEffect(() => {
@@ -90,6 +93,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       handleGarden(id, undefined, undefined, undefined, 'empty');
     }
     setShouldRender(false);
+    // eslint-disable-next-line
   }, [isPlanted]);
 
   useEffect(() => {
