@@ -1,5 +1,6 @@
 import './Detail.scss';
 import InfoItem from '../InfoItem/InfoItem'
+import Error from '../Error/Error'
 import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -70,7 +71,10 @@ const Detail = () => {
 
     return (
         <>
-            {plantDetails ?
+            {apiError ? (
+                <Error />
+            ) : (
+                plantDetails ?
                 <div className='detail-page'>
                     <div className="top-of-page">
                         <img className="plant-img" src={plantDetails.image} alt={`A ${plantDetails["plant_name"]}`} />
@@ -126,7 +130,8 @@ const Detail = () => {
                             <InfoItem data={plantDetails["invasive"] ? false : true} name="Non-Invasive Species" />
                         </div>
                     </div>
-                </div> : <p>loading...</p>}
+                </div> : <p>loading...</p>
+            )}
         </>
     )
 }

@@ -5,7 +5,7 @@ import './Card.scss'
 
 export interface CardProps {
     plant: PlantAttributes
-}
+};
 
 const iconMap: { [key: string]: any } = {
     type: {
