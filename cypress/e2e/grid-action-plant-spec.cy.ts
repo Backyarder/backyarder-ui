@@ -25,7 +25,7 @@ describe('Grid actions: plant', () => {
             .get('#A1').click()
             .get('.cell-button.plant-button').click()
             .wait('@plant-cell').then(() => {
-              cy.get('#A1').should('have.css', 'border', '2.99479px solid rgb(158, 201, 36)')
+              cy.get('#A1').should('have.css', 'border', '3px solid rgb(158, 201, 36)')
             })
         })
     })
