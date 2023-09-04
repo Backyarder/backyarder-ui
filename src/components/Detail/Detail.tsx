@@ -130,7 +130,7 @@ const Detail = () => {
                             <InfoItem data={plantDetails["invasive"] ? false : true} name="Non-Invasive Species" />
                         </div>
                     </div>
-                </div> : <p>loading...</p>
+                </div> : <p className='details-loading'>loading...</p>
             )}
         </>
     )
