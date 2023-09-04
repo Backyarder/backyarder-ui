@@ -1,0 +1,60 @@
+{
+    "data": {
+        "id": null,
+        "type": "detail",
+        "attributes": {
+            "plant_id": 2692,
+            "image": "https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/regular/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg",
+            "plant_name": "coneflower",
+            "scientific_name": [
+                "Echinacea 'Tomato Soup'"
+            ],
+            "type": "Flower",
+            "leaf_color": [
+                "green",
+                "purple"
+            ],
+            "cycle": "Herbaceous Perennial",
+            "watering": "Minimum",
+            "sunlight": [
+                "Full sun",
+                "part shade"
+            ],
+            "hardiness": {
+                "min": "3",
+                "max": "8"
+            },
+            "pruning_month": [
+                "April"
+            ],
+            "attracts": [
+                "Birds",
+                " Butterflies"
+            ],
+            "flowering_season": [],
+            "edible_fruit": false,
+            "maintenance": "Low",
+            "poisonous_to_pets": false,
+            "drought_tolerant": true,
+            "invasive": false,
+            "indoor": false,
+            "section": [
+                {
+                    "id": 11426,
+                    "type": "watering",
+                    "description": "Coneflower (Echinacea 'Tomato Soup') typically prefers a moist soil to promote growth. Water deeply when the top 2”–3” (5–7.5 cm) of the soil has dried out. During the first few weeks after planting, you'll want to check the soil more frequently to ensure it's not drying out too quickly. If you experience a dry spell, make sure you water your coneflower deeply, providing the plant with 1” (2.5 cm) of water per week. Water in the morning to give the plant the entire day to dry off, which can help to prevent fungal problems."
+                },
+                {
+                    "id": 11427,
+                    "type": "sunlight",
+                    "description": "Coneflower (Echinacea 'Tomato Soup') plants perform best in full sun, meaning they need 6 to 8 hours of direct sunlight per day. During the summer months, they should receive most of that sun in the morning, with afternoon shade providing relief from the heat; this will prevent the flowers from wilting during the hottest part of the day. In the winter, the sun may not provide as much heat, therefore the cone flower may benefit from more afternoon sun."
+                },
+                {
+                    "id": 11428,
+                    "type": "pruning",
+                    "description": "Coneflower (Echincaea 'Tomato Soup') should be pruned in the early to mid spring. It is best to prune just after flowering has finished so no flower buds are removed before they have a chance to open. Remove faded flower heads and any dead or broken stems. Pruning time should be kept to a minimum - no more than a quarter of the foliage should be removed in any 1 season in order to prevent stressing the plant."
+                }
+            ]
+        }
+    }
+}
