@@ -20,6 +20,9 @@ describe('Nav Actions: Clear Garden', () => {
   it('Should be able to clear the garden', () => {
     cy.wait(['@onload-plants', '@onload-grid']).then(() => {
       cy.get('.clear-button').first().click()
+      .get('.pop-up-button').last().click()
+      .get('.pop-up-button-container').should('not.exist')
+      .get('.clear-button').first().click()
       .get('.pop-up-button').first().click()
       .wait('@clear-garden').then(() => {
         cy.get('#grid').children().each(cell => {

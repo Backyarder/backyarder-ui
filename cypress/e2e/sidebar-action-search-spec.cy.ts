@@ -36,7 +36,8 @@ describe('SideBar Actions: Search', () => {
   it('Should not be case sensitive', () => {
     cy.wait(['@onload-plants', '@onload-grid']).then(() => {
       cy.get('.search').find('input').type('pEaR')
-      .get('.submit-search').click()
+      .get('.search-bar').type('{enter}')
+      // .get('.submit-search').click()
       .wait('@search-pear').then(() => {
         cy.get('.card').should('have.length', 10);
       });
