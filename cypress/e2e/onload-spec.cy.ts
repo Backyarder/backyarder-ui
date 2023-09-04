@@ -3,14 +3,14 @@ describe('Onload', () => {
     cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants', {
       statusCode: 200,
       fixture: 'onload-plants.json'
-    }).as('onload-plants')
+    }).as('onload-plants');
     
     cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
       statusCode: 200,
       fixture: 'onload-grid.json'
-    }).as('onload-grid')
+    }).as('onload-grid');
     
-    cy.visit('http://localhost:3000/')
+    cy.visit('http://localhost:3000/');
   })
   
   it('should display all required content', () => {
@@ -44,7 +44,7 @@ describe('Onload', () => {
       .get('.plant-element').children().should('have.length', 2)
       .get('.plant-info-container').find('.plant-image')
       .get('.plant-info-container').contains('p', 'CONEFLOWER x1')
-      .get('.detail-button').should('have.text', 'VIEW PLANT DETAILS')
-    })
-  })
-})
+      .get('.detail-button').should('have.text', 'VIEW PLANT DETAILS');
+    });
+  });
+});
