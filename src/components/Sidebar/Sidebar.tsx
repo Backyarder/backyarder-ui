@@ -61,7 +61,7 @@ const Sidebar = () => {
     const searchForPlants = () => {
         setLoadingPlants(true)
         if (searchTerm.length) {
-            searchPlants(searchTerm)
+            searchPlants(searchTerm.toLowerCase())
                 .then(data => setPlantList(data.data))
                 .then(() => setLoadingPlants(false))
                 .catch((err) => {

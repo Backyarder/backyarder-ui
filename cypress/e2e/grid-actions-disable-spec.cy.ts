@@ -20,9 +20,9 @@ describe('Grid actions: disable', () => {
 
     it('should be able to disable a cell', () => {
         cy.wait(['@onload-plants', '@onload-grid']).then(() => {
-            cy.get('#J10').click()
+            cy.get('#J9').click()
             .wait('@disable-cell').then(() => {
-                cy.get('#J10')
+                cy.get('#J9')
                 .invoke('attr', 'class').should('contain', 'disabled')
             })
         })

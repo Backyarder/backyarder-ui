@@ -23,7 +23,7 @@ describe('Drag and Drop', () => {
         
         cy.wait(['@onload-plants', '@onload-grid']).then(() => {
           cy.get('[href="/plants/2692"]').first().trigger("dragstart", { dataTransfer })
-          .get('#J10').trigger("drop", { dataTransfer })
+          .get('#J9').trigger("drop", { dataTransfer })
           .should('have.css', 'background-image', 'url("https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/thumbnail/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg")')
         })
 
