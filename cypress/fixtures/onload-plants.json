@@ -5,7 +5,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/thumbnail/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg",
-                "name": "coneflower",
+                "plant_name": "coneflower",
                 "hardiness": {
                     "min": "3",
                     "max": "8"
@@ -23,7 +23,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/2699_echinops_ritro/thumbnail/52315581367_1406967d9d_b.jpg",
-                "name": "small globe thistle",
+                "plant_name": "small globe thistle",
                 "hardiness": {
                     "min": "3",
                     "max": "8"
@@ -40,7 +40,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/2719_elephantopus_carolinianus/thumbnail/9286939262_9e870c574e_b.jpg",
-                "name": "elephant's foot",
+                "plant_name": "elephant's foot",
                 "hardiness": {
                     "min": "4",
                     "max": "9"
@@ -57,7 +57,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/2730_encephalartos_altensteinii/thumbnail/32943227366_7a5f6c8764_b.jpg",
-                "name": "prickly cycad",
+                "plant_name": "prickly cycad",
                 "hardiness": {
                     "min": "10",
                     "max": "12"
@@ -75,7 +75,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/2742_epimedium_acuminatum/thumbnail/9190632721_e91b76b3bb_b.jpg",
-                "name": "bishop's hat",
+                "plant_name": "bishop's hat",
                 "hardiness": {
                     "min": "5",
                     "max": "9"
@@ -93,7 +93,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/274_diospyros_virginiana/thumbnail/49014714943_39e9d002d6_b.jpg",
-                "name": "Common Persimmon",
+                "plant_name": "Common Persimmon",
                 "hardiness": {
                     "min": "4",
                     "max": "4"
@@ -110,7 +110,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/277_elaeocarpus_decipiens/thumbnail/2560px-Elaeocarpus_decipiens_at_Mounts_Botanical_Garden.jpg",
-                "name": "Japanese Blueberry Tree",
+                "plant_name": "Japanese Blueberry Tree",
                 "hardiness": {
                     "min": "8",
                     "max": "8"
@@ -128,7 +128,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/278_eriobotrya_japonica/thumbnail/24454831223_358eb14c7c_b.jpg",
-                "name": "Loquat",
+                "plant_name": "Loquat",
                 "hardiness": {
                     "min": "7",
                     "max": "7"
@@ -146,7 +146,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/360_malus_donald_wyman/thumbnail/frembellishment_apple_small_694055-image-kybdt6db.jpg",
-                "name": "Donald Wyman Flowering Crab",
+                "plant_name": "Donald Wyman Flowering Crab",
                 "hardiness": {
                     "min": "4",
                     "max": "4"
@@ -163,7 +163,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/365_malus_granny_smith/thumbnail/52433732205_15e7af9d98_b.jpg",
-                "name": "Granny Smith Apple",
+                "plant_name": "Granny Smith Apple",
                 "hardiness": {
                     "min": "6",
                     "max": "6"
@@ -180,7 +180,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/400_abelia_grandiflora/thumbnail/52152430649_8d9ddd2cf5_b.jpg",
-                "name": "glossy abelia",
+                "plant_name": "glossy abelia",
                 "hardiness": {
                     "min": "5",
                     "max": "9"
@@ -198,7 +198,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/410_abelmoschus_esculentus/thumbnail/48879233903_b29f90fefd_b.jpg",
-                "name": "okra",
+                "plant_name": "okra",
                 "hardiness": {
                     "min": "2",
                     "max": "11"
@@ -215,7 +215,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/240_cornus_stellar_pink/thumbnail/2560px-Wzwz_tree_15d_Cornus_florida_27Cherokee_Brave27.jpg",
-                "name": "Stellar Pink Flowering Dogwood",
+                "plant_name": "Stellar Pink Flowering Dogwood",
                 "hardiness": {
                     "min": "6",
                     "max": "6"
@@ -233,7 +233,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/290_ficus_carica_mission/thumbnail/Fig.jpg",
-                "name": "Mission Fig",
+                "plant_name": "Mission Fig",
                 "hardiness": {
                     "min": "7",
                     "max": "7"
@@ -251,7 +251,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/178_amelanchier_x_grandiflora_princess_diana/thumbnail/Amelanchier_x_grandiflora_Autumn_Brilliance_11zz.jpg",
-                "name": "Princess Diana Serviceberry",
+                "plant_name": "Princess Diana Serviceberry",
                 "hardiness": {
                     "min": "4",
                     "max": "4"
@@ -269,7 +269,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/174_albizia_julibrissin_summer_chocolate/thumbnail/4846456933_a3fd8efe99_b.jpg",
-                "name": "Summer Chocolate Mimosa",
+                "plant_name": "Summer Chocolate Mimosa",
                 "hardiness": {
                     "min": "6",
                     "max": "6"
@@ -287,7 +287,7 @@
             "type": "list",
             "attributes": {
                 "image": null,
-                "name": "Wilson's Pink Dwarf Japanese Maple",
+                "plant_name": "Wilson's Pink Dwarf Japanese Maple",
                 "hardiness": {
                     "min": "6",
                     "max": "6"
@@ -305,7 +305,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/120_acer_palmatum_sherwood_flame/thumbnail/43548598614_3fdf490bfb_b.jpg",
-                "name": "Sherwood Flame Japanese Maple",
+                "plant_name": "Sherwood Flame Japanese Maple",
                 "hardiness": {
                     "min": "6",
                     "max": "6"
@@ -323,7 +323,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/510_aconitum_napellus/thumbnail/38214790954_f875a2bd9e_b.jpg",
-                "name": "monkshood",
+                "plant_name": "monkshood",
                 "hardiness": {
                     "min": "3",
                     "max": "7"
@@ -341,7 +341,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/522_actaea_dahurica/thumbnail/52172229098_b25b21206d_b.jpg",
-                "name": "bugbane",
+                "plant_name": "bugbane",
                 "hardiness": {
                     "min": "4",
                     "max": "9"
@@ -359,7 +359,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/524_actaea_pachypoda/thumbnail/25484939465_d30c5fac03_b.jpg",
-                "name": "white baneberry",
+                "plant_name": "white baneberry",
                 "hardiness": {
                     "min": "3",
                     "max": "8"
@@ -376,7 +376,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/534_actinidia_arguta/thumbnail/8054888032_690ac1e6ae_b.jpg",
-                "name": "hardy kiwi",
+                "plant_name": "hardy kiwi",
                 "hardiness": {
                     "min": "3",
                     "max": "8"
@@ -394,7 +394,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/536_actinidia_deliciosa/thumbnail/25119432356_f10218d971_b.jpg",
-                "name": "kiwifruit",
+                "plant_name": "kiwifruit",
                 "hardiness": {
                     "min": "8",
                     "max": "9"
@@ -411,7 +411,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/539_adansonia_digitata/thumbnail/52185616677_5e7ccc0374_b.jpg",
-                "name": "baobab",
+                "plant_name": "baobab",
                 "hardiness": {
                     "min": "10",
                     "max": "12"
@@ -428,7 +428,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/540_adenium_obesum/thumbnail/9244335137_6d662ed77c_b.jpg",
-                "name": "desert rose",
+                "plant_name": "desert rose",
                 "hardiness": {
                     "min": "11",
                     "max": "12"
@@ -445,7 +445,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/541_adenophora_amethyst/thumbnail/2448px-Adenophora_cf._aurita_282098345350529.jpg",
-                "name": "ladybells",
+                "plant_name": "ladybells",
                 "hardiness": {
                     "min": "3",
                     "max": "8"
@@ -463,7 +463,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/543_adiantum_capillus-veneris/thumbnail/49636882698_cb4fa4c685_b.jpg",
-                "name": "maidenhair fern",
+                "plant_name": "maidenhair fern",
                 "hardiness": {
                     "min": "5",
                     "max": "8"
@@ -481,7 +481,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/549_aechmea_fasciata/thumbnail/51446529161_03b99a881f_b.jpg",
-                "name": "urn plant",
+                "plant_name": "urn plant",
                 "hardiness": {
                     "min": "10",
                     "max": "11"
@@ -498,7 +498,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/551_aeonium_undulatum/thumbnail/023e2628848775ea95af34a39eaee4d60fab11ed.jpg",
-                "name": "stalked aeonium",
+                "plant_name": "stalked aeonium",
                 "hardiness": {
                     "min": "10",
                     "max": "11"
@@ -516,7 +516,7 @@
             "type": "list",
             "attributes": {
                 "image": "https://perenual.com/storage/species_image/552_aeschynanthus_radicans/thumbnail/29949422675_2671589cdf_b.jpg",
-                "name": "lipstick plant",
+                "plant_name": "lipstick plant",
                 "hardiness": {
                     "min": "10",
                     "max": "11"
