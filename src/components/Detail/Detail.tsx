@@ -77,7 +77,7 @@ const Detail = () => {
                 plantDetails ?
                 <div className='detail-page'>
                     <div className="top-of-page">
-                        <img className="plant-img" src={plantDetails.image} alt={`A ${plantDetails["plant_name"]}`} />
+                        <img className="plant-img" src={plantDetails.image ? plantDetails.image : `${process.env.PUBLIC_URL}/images/plant-fallback.png`} alt={`A ${plantDetails["plant_name"]}`} />
                         <div className='at-a-glance'>
                             <div className="header-container">
                                 <div className="names">
