@@ -4,7 +4,7 @@ nav {
   justify-content: flex-start;
   align-items: center;
   width: 20%;
-  max-width: 300px
+  margin-left: .5%;
 }
 
 .nav-button, .clear-button {
@@ -12,7 +12,7 @@ nav {
   font-weight: bold;
   border-radius: 25px;
   height: 5vh;
-  width: 15vw;
+  min-width: 11vw;
   margin-bottom: 0.5em;
   width: 100%;
   display: flex;

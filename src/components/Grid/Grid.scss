@@ -1,12 +1,11 @@
 #grid {
-    display: grid;
-    grid-template-columns: repeat(10, 10%);
-    background-color: #beab95;
-    height: calc(100vh - 190px);
-    width: calc(100vh - 190px);
-    border-radius: 15px;
-    flex-shrink: 0;
-    justify-items: center;
-    align-items: center;
+  display: grid;
+  grid-template-columns: repeat(10, 10%);
+  background-color: #beab95;
+  height: calc(100vh - 190px);
+  width: calc(100vh - 190px);
+  border-radius: 15px;
+  flex-shrink: 0;
+  justify-items: center;
+  align-items: center;
 }
-
