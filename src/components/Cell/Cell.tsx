@@ -32,7 +32,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [shouldRender, setShouldRender] = useState<boolean>(false);
 
   useEffect(() => {
-    if(cellContents && needsUpdate) {
+    if (cellContents && needsUpdate) {
       patchCellContents(cellContents, id, needsUpdate)
       .catch((err) => {
           handleApiError(err)
@@ -42,7 +42,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   }, [needsUpdate])
 
   useEffect(() => {
-    if(needsUpdate) {
+    if (needsUpdate) {
       patchDisabledOrRemoved(id, needsUpdate)
       .catch((err) => {
           handleApiError(err)
@@ -51,22 +51,16 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     // eslint-disable-next-line
   }, [isDisabled, cellContents === undefined])
 
-  const handleApiError = (error: string) => {
-    setApiError(error)
-  }
-
   useEffect(() => {
     if (garden) {
       const foundCell = garden.find(cell => cell.location_id === id)
-      if (foundCell && foundCell.status === 'placed') {
+      if (foundCell?.status === 'placed') {
         setCellContents({ plant: foundCell })
         setIsPopulated(true);
-      }
-      if (foundCell && foundCell.status === 'disabled') {
+      } else if (foundCell?.status === 'disabled') {
         setIsDisabled(true);
         !isDisabled ? setClassName('cell disabled') : setClassName('cell');
-      }
-      if (foundCell && foundCell.status === 'locked') {
+      } else if (foundCell?.status === 'locked') {
         setCellContents({ plant: foundCell })
         setIsPopulated(true);
         setIsPlanted(true);
@@ -102,21 +96,16 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   useEffect(() => {
     if (bullDoze) {
       setClassName('cell');
-      emptyCell();
+      handleEmptyCells();
       setBullDoze(false);
       handleGarden(id, undefined, undefined, undefined, 'empty')
-    }
-    // eslint-disable-next-line
-  }, [bullDoze])
-
-  useEffect(() => {
-    if (filterGarden && !isPlanted) {
-      unPlantItems();
+    } else if (filterGarden && !isPlanted && !isDisabled) {
+      handleUnplanted();
       setFilterGarden(false);
       handleGarden(id, undefined, undefined, undefined, 'empty')
     }
     // eslint-disable-next-line
-  }, [filterGarden])
+  }, [bullDoze, filterGarden])
 
   const [{ isOver }, dropRef] = useDrop({
     accept: 'plant',
@@ -136,6 +125,10 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       isOver: monitor.isOver()
     })
   })
+
+  const handleApiError = (error: string) => {
+    setApiError(error)
+  }
 
   const handleGarden = (id: string, image: string | undefined, name: string | undefined, plant_id: number | undefined, status: string) => {
     setGarden((prevState: GardenKeys) => {
@@ -188,14 +181,14 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     }
   }
 
-  const emptyCell = (): void => {
+  const handleEmptyCells = (): void => {
     setIsDisabled(false);
     setCellContents(undefined);
     setIsPopulated(false);
     setIsPlanted(false);
   }
 
-  const unPlantItems = (): void => {
+  const handleUnplanted = (): void => {
     if (isPopulated && !isPlanted) {
       setCellContents(undefined);
       setIsPopulated(false);
