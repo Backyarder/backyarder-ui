@@ -1,5 +1,6 @@
 import './Detail.scss';
 import InfoItem from '../InfoItem/InfoItem'
+import Error from '../Error/Error'
 import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -71,7 +72,7 @@ const Detail = () => {
     return (
         <>
             {apiError ? (
-                <p>There was an error</p>
+                <Error />
             ) : (
                 plantDetails ?
                 <div className='detail-page'>
