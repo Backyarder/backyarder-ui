@@ -19,8 +19,18 @@ const Main = () => {
   const [isGardenView, setIsGardenView] = useState<boolean>(true);
   const [bullDoze, setBullDoze] = useState<boolean>(false);
   const [filterGarden, setFilterGarden] = useState<boolean>(false);
+  const [isDesktop, setIsDesktop] = useState<boolean>(true)
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('')
+
+  const updateMedia = () => {
+    setIsDesktop(window.innerWidth > 1048);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  });
 
   useEffect(() => {
     getGarden()
@@ -42,17 +52,20 @@ const Main = () => {
       {apiError ? (
         <div className='server-error'>
           <h2>Oh no! The weather isn't cooperating!</h2>
-          <span className="material-symbols-rounded">
-thunderstorm
-</span>
+          <span className="material-symbols-rounded">thunderstorm</span>
           <p>There was an error on our end, please try again later</p>
         </div>
       ) : (
         <main>
-        <Sidebar />
-        {isGardenView ? <Grid garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
-        <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
-      </main>
+          {isDesktop ?
+            <>
+              <Sidebar />
+              {isGardenView ? <Grid garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
+              <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
+            </>
+            : 'Please switch to a larger device to use this app'
+          }
+        </main>
       )}
     </>
   );
