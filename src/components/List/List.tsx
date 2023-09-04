@@ -14,7 +14,7 @@ const List = ({ garden }: ListProps) => {
     if (array) {
       let count = 0;
       for (const element of array) {
-        if (element['plant_id'] === id) {
+        if (element.plant_id === id && element.status === 'locked') {
           count++;
         }
       }
