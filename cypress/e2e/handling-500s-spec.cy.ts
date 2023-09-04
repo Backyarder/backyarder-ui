@@ -1,14 +1,18 @@
 describe('Handle 500 level errors', () => {
-  it('Getting plants for sidebar', () => {
+  it.only('Getting plants for sidebar', () => {
     cy.intercept('GET', `https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants`, (req) => {
       req.reply({
         status: 500
       })
     })
-    //stub a successful grid fetch
+    cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
+      statusCode: 200,
+      fixture: 'onload-grid.json'
+    }).as('onload-grid')
     cy.visit('http://localhost:3000/')
     //await for get to return
     //test that in the side bar the error meesgae is displayed
+    cy.get('.loading').should('have.text', 'It looks like our nursery is not operating correctly, please try again later')
   })
 
   it('Getting plants details', () => {
@@ -40,7 +44,7 @@ describe('Handle 500 level errors', () => {
     //assert that the error meesage is displayed
   })
 
-  it.only('Searching plant', () => {
+  it('Searching plant', () => {
     cy.intercept('GET', `https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/search/apple`, (req) => {
       req.reply({
         status: 500
