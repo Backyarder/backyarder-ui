@@ -1,4 +1,4 @@
-describe('Grid actions: plant', () => {
+describe('Grid actions: delete', () => {
     beforeEach(() => {
       cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants', {
         statusCode: 200,
@@ -12,8 +12,8 @@ describe('Grid actions: plant', () => {
       
       cy.intercept('PATCH', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell', {
         statusCode: 200,
-        fixture: 'plant-cell-response.json'
-      }).as('plant-cell')
+        fixture: 'delete-cell-response.json'
+      }).as('delete-cell')
       
       cy.visit('http://localhost:3000/')
     })
@@ -21,11 +21,9 @@ describe('Grid actions: plant', () => {
     it('should be able to disable a cell', () => {
         cy.wait(['@onload-plants', '@onload-grid']).then(() => {
             cy.get('#A1').click()
-            .get('.close-modal').click() // testing close modal in this test
-            .get('#A1').click()
-            .get('.cell-button.plant-button').click()
-            .wait('@plant-cell').then(() => {
-              cy.get('#A1').should('have.css', 'border', '3px solid rgb(158, 201, 36)')
+            .get('.cell-button.remove-button').click()
+            .wait('@delete-cell').then(() => {
+                cy.get('#A1').should('have.css', 'background-image', 'url("http://localhost:3000/undefined")')
             })
         })
     })
