@@ -18,7 +18,7 @@ describe('Grid actions: plant', () => {
       cy.visit('http://localhost:3000/')
     })
 
-    it('should be able to disable a cell', () => {
+    it('should be able to plant a cell', () => {
         cy.wait(['@onload-plants', '@onload-grid']).then(() => {
             cy.get('#A1').click()
             .get('.close-modal').click() // testing close modal in this test

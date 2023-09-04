@@ -18,7 +18,7 @@ describe('Grid actions: delete', () => {
       cy.visit('http://localhost:3000/')
     })
 
-    it('should be able to disable a cell', () => {
+    it('should be able to delete a cell', () => {
         cy.wait(['@onload-plants', '@onload-grid']).then(() => {
             cy.get('#A1').click()
             .get('.cell-button.remove-button').click()
