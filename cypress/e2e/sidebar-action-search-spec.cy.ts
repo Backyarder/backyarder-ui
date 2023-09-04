@@ -48,7 +48,7 @@ describe('SideBar Actions: Search', () => {
       cy.get('.search').find('input').type('asdfjkl')
       .get('.submit-search').click()
       .wait('@search-asdfjkl').then(() => {
-        cy.get('.loading').should('have.text', 'There are no plants in our nursery matching your search');
+        cy.get('.loading').should('have.text', 'Hmmm... there are no plants in our nursery matching your search.');
       });
     });
   });

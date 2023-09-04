@@ -4,3 +4,13 @@ main {
   justify-content: space-around;
   padding: 1em;
 }
+
+.server-error{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #BEAB96;
+  padding: 1em;
+  border-radius: 1em;
+  margin: 1em;
+}
