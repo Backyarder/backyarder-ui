@@ -51,8 +51,8 @@ const Card = ({ plant }: CardProps) => {
                 <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
             )}
             <NavLink to={`/plants/${plant.plant_id}`} className='card' style={draggedCardStyle} ref={dragRef}>
-                <img className='card-image' src={plant.image} alt={`${plant.name}`} />
-                <p className='plant-name'>{plant.name.toUpperCase()}</p>
+                <img className='card-image' src={plant.image} alt={`${plant.plant_name}`} />
+                <p className='plant-name'>{plant.plant_name.toUpperCase()}</p>
                 <div className='card-icons-container'>
                     <div className='card-icons'>
                         <div className="material-symbols-rounded card-icon">

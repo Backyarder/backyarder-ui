@@ -69,23 +69,23 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
 
   useEffect(() => {
     if (shouldRender) {
-      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, isDisabled ? 'disabled' : 'empty');
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, isDisabled ? 'disabled' : 'empty');
       setShouldRender(false);
     }
   }, [isDisabled]);
 
   useEffect(() => {
     if (shouldRender) {
-      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, isPopulated ? 'placed' : 'empty');
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, isPopulated ? 'placed' : 'empty');
     }
     setShouldRender(false);
   }, [isPopulated]);
 
   useEffect(() => {
     if (shouldRender && isPlanted) {
-      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, 'locked');
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, 'locked');
     } else if (shouldRender && isPopulated) {
-      handleGarden(id, cellContents?.plant.image, cellContents?.plant.name, cellContents?.plant.plant_id, 'placed');
+      handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, 'placed');
     } else if (shouldRender && !isPopulated) {
       handleGarden(id, undefined, undefined, undefined, 'empty');
     }
@@ -136,7 +136,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       newState[index] = {
         ...newState[index],
         image: image,
-        name: name,
+        plant_name: name,
         'plant_id': plant_id,
         status: status
       };
@@ -213,7 +213,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
           {isClicked && <div className='cell-modal'>
             {cellContents && <CellActions 
                                 image={cellContents.plant.image}
-                                name={cellContents.plant.name}
+                                name={cellContents.plant.plant_name}
                                 plantId={cellContents.plant.plant_id}
                                 handlePlanted={handlePlanted}
                                 handleRemove={handleRemove}
