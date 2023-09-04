@@ -1,4 +1,4 @@
-describe('Grid actions: plant', () => {
+describe('Grid actions: nav', () => {
     beforeEach(() => {
       cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants', {
         statusCode: 200,
@@ -18,7 +18,7 @@ describe('Grid actions: plant', () => {
       cy.visit('http://localhost:3000/')
     })
 
-    it('should be able to disable a cell', () => {
+    it('should be able to nav to individual plant details page', () => {
         cy.wait(['@onload-plants', '@onload-grid']).then(() => {
             cy.get('#A1').click()
             .get('a.cell-button').click()
