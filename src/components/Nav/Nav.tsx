@@ -98,8 +98,8 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: Na
           </span>REMOVE UNPLANTED ITEMS</button>
           {popUp &&
             <div className='pop-up'>
-              {fullClear && <p>Are you sure you wish to clear your garden? This action cannot be undone.</p>}
-              {partialClear && <p>Are you sure you wish to remove your unplanted items? This action cannot be undone.</p>}
+              {fullClear && <p className='confirm-message'>Are you sure you wish to clear your garden? This action cannot be undone.</p>}
+              {partialClear && <p className='confirm-message'>Are you sure you wish to remove your unplanted items? This action cannot be undone.</p>}
               <div className='pop-up-button-container'>
                 <button className='pop-up-button' onClick={handleDelete} >YES</button>
                 <button className='pop-up-button' onClick={reset} >NO</button>
