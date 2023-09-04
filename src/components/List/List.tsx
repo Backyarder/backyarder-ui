@@ -48,6 +48,7 @@ const List = ({ garden }: ListProps) => {
   return (
     <section className='list-container'>
       {plantElements}
+      {!plantElements.length && <h1 className='empty-list-text'>Your garden is empty!</h1>}
     </section>
   );
 }

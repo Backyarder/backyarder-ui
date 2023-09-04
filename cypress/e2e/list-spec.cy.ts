@@ -30,7 +30,26 @@ describe('List Actions', () => {
         .get('.cell-button.plant-button').click()
         .wait('@plant-cell').then(() => {
           cy.get('.nav-button').first().click()
-          .get('.plant-info-container').last().contains('p', 'SMALL GLOBE THISTLE x1');
+          .get('.plant-info-container').last().contains('p', 'SMALL GLOBE THISTLE x1')
+          .intercept('PATCH', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell', {
+            statusCode: 200,
+            fixture: 'delete-cell-response.json'
+          }).as('delete-cell')
+          .get('.nav-button').last().click()
+          .get('#A1').click()
+          .get('.cell-button.remove-button').click()
+          .wait('@delete-cell').then(() => {
+            cy.get('#A2').click()
+            .get('.cell-button.remove-button').click()
+            .wait('@delete-cell').then(() => {
+              cy.get('#D2').click()
+              .get('.cell-button.remove-button').click()
+              .wait('@delete-cell').then(() => {
+                cy.get('.nav-button').first().click()
+                .get('.empty-list-text').should('have.text', 'Your garden is empty!');
+              });
+            });
+          });
         });
       });
     });
