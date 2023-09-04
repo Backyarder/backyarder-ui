@@ -1,27 +1,30 @@
 .cell {
-    background-color: #F4F4F4;
-    border-radius: 0.3em;
-    margin: 12%;
-    height: 65%;
-    width: 65%;
-    &:not(.disabled):not(.disable-scale):hover {
-        transform: scale(1.3);
-    }
-    position: relative;
-    backface-visibility: hidden;
-    background-repeat: no-repeat;
+  background-color: #F4F4F4;
+  border-radius: 0.3em;
+  margin: 12%;
+  height: 65%;
+  width: 65%;
+
+  &:not(.disabled):not(.disable-scale):hover {
+    transform: scale(1.3);
+  }
+
+  position: relative;
+  backface-visibility: hidden;
+  background-repeat: no-repeat;
+  transition: transform 0.3s ease;
 }
 
 .disabled {
-    background-color: #786961;
-    transform: scale(.75);
+  background-color: #786961;
+  transform: scale(.75);
 }
 
 .cell-img {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .disable-hover {
-    pointer-events: none
+  pointer-events: none
 }

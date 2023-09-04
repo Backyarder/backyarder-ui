@@ -8,4 +8,5 @@
   flex-shrink: 0;
   justify-items: center;
   align-items: center;
+  grid-auto-rows: minmax(0, 1fr);
 }
