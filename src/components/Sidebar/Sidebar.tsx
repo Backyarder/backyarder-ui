@@ -15,7 +15,7 @@ export interface PlantAttributes {
         max: string
     }
     image: string
-    name: string
+    plant_name: string
     plant_id: number
     sunlight: string[]
     type: string
