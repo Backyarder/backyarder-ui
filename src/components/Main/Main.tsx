@@ -24,14 +24,22 @@ const Main = () => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('')
 
-  const updateMedia = () => {
-    setIsDesktop(window.innerWidth > 1048);
-  };
-
   useEffect(() => {
-    window.addEventListener("resize", updateMedia);
-    return () => window.removeEventListener("resize", updateMedia);
-  });
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth > 1048 && window.innerHeight > 600);
+    };
+
+    // Check screen size on page load
+    checkScreenSize();
+
+    // Attach event listener to update screen size on resize
+    window.addEventListener('resize', checkScreenSize);
+
+    // Remove event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
 
   useEffect(() => {
     getGarden()
@@ -64,7 +72,9 @@ const Main = () => {
               {isGardenView ? <Grid alert={alert} setAlert={setAlert} garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
               <Nav setAlert={setAlert} isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
             </>
-            : 'Please switch to a larger device to use this app'
+            : <div className="mobile-message">
+                Please switch to a larger device to use this app.
+              </div>
           }
         </main>
       )}
