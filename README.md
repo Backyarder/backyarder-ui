@@ -41,16 +41,16 @@
   - `Control + C` is the command to stop running the local server.
 
 ## CONTRIBUTERS
-- Front End:
-  - Daniel Cochico: [GitHub](https://github.com/dcochico) | [LinkedIn](https://www.linkedin.com/in/daniel-c-3a0201176/)
-  - Matt Fowler: [GitHub](https://github.com/mbenfowler) | [LinkedIn](https://www.linkedin.com/in/mbenfowler/)
-  - Alexa VanSchaardenburg: [GitHub](https://github.com/AlexaVanSchaardenburg) | [LinkedIn](https://www.linkedin.com/in/alexa-r-vanschaardenburg/)
-<br>
-- Back End:
-  - Kim Bergstrom: [GitHub](https://github.com/kbergstrom78) | [LinkedIn](https://www.linkedin.com/in/kimberley-bergstrom/)
-  - Boston Lowrey: [GitHub](https://github.com/BLowrey24) | [LinkedIn](https://www.linkedin.com/in/boston-lowrey/)
-  - Myles Nottingham: [GitHub](https://github.com/MylesNottingham) | [LinkedIn](https://www.linkedin.com/in/mylesnottingham/)
-  - Austin Woods: [GitHub](https://github.com/boomclear) | [LinkedIn](https://www.linkedin.com/in/austin-woods-1830aa195/)
+### Front End:
+- Daniel Cochico: [GitHub](https://github.com/dcochico) | [LinkedIn](https://www.linkedin.com/in/daniel-c-3a0201176/)
+- Matt Fowler: [GitHub](https://github.com/mbenfowler) | [LinkedIn](https://www.linkedin.com/in/mbenfowler/)
+- Alexa VanSchaardenburg: [GitHub](https://github.com/AlexaVanSchaardenburg) | [LinkedIn](https://www.linkedin.com/in/alexa-r-vanschaardenburg/)
+
+### Back End:
+- Kim Bergstrom: [GitHub](https://github.com/kbergstrom78) | [LinkedIn](https://www.linkedin.com/in/kimberley-bergstrom/)
+- Boston Lowrey: [GitHub](https://github.com/BLowrey24) | [LinkedIn](https://www.linkedin.com/in/boston-lowrey/)
+- Myles Nottingham: [GitHub](https://github.com/MylesNottingham) | [LinkedIn](https://www.linkedin.com/in/mylesnottingham/)
+- Austin Woods: [GitHub](https://github.com/boomclear) | [LinkedIn](https://www.linkedin.com/in/austin-woods-1830aa195/)
 
 ## CONTEXT
 - Final Capstone project as part of the [Turing School of Software & Design](https://turing.edu/) program.
