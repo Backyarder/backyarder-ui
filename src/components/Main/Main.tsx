@@ -28,9 +28,11 @@ const Main = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", updateMedia);
-    return () => window.removeEventListener("resize", updateMedia);
-  });
+    const checkScreenSize = () => setIsDesktop(window.innerWidth > 1048)
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, []);
 
   useEffect(() => {
     getGarden()
@@ -63,7 +65,9 @@ const Main = () => {
               {isGardenView ? <Grid garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
               <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
             </>
-            : 'Please switch to a larger device to use this app'
+            : <div className="mobile-message">
+                Please switch to a larger device to use this app.
+              </div>
           }
         </main>
       )}
