@@ -25,7 +25,7 @@ const Main = () => {
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsDesktop(window.innerWidth > 1048);
+      setIsDesktop(window.innerWidth > 1048 && window.innerHeight > 600);
     };
 
     // Check screen size on page load
