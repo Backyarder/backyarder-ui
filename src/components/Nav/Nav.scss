@@ -3,8 +3,8 @@ nav {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 20%;
-  max-width: 300px
+  width: 25%;
+  margin-left: .5%;
 }
 
 .nav-button, .clear-button {
@@ -12,7 +12,7 @@ nav {
   font-weight: bold;
   border-radius: 25px;
   height: 5vh;
-  width: 15vw;
+  min-width: 14.2vw;
   margin-bottom: 0.5em;
   width: 100%;
   display: flex;
@@ -91,6 +91,11 @@ nav {
   text-align: center;
   color: #af2268;
   font-weight: bolder;
+  max-width: 10vw;
+}
+
+.confirm-message {
+  width: 105%;
 }
 
 .pop-up-button-container {
