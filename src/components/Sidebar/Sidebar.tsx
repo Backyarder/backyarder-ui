@@ -113,7 +113,7 @@ const Sidebar = () => {
           search
         </span></button>
       </div>
-      <div>
+      <div className="search-results" >
         {loadingPlants ? loading() : cards}
       </div>
     </section>

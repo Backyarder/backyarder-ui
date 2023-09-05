@@ -3,7 +3,7 @@
   width: 20vw;
   max-width: 300px;
   background-color: #beab95;
-  overflow: scroll;
+  overflow: hidden;
   overflow-x: hidden;
   border-radius: 1em;
   color: #483C3C;
@@ -25,6 +25,7 @@
   background: #f4f4f4;
   border-radius: 1em;
   padding: 0.3em;
+  margin-bottom: 3%;
 }
 
 .submit-search {
@@ -57,4 +58,12 @@
 
 .loading-img {
   width: 20%
+}
+
+.search-results {
+  overflow-y: scroll;
+}
+
+.search-results::-webkit-scrollbar {
+  display: none;
 }

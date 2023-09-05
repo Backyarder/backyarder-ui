@@ -40,6 +40,11 @@
   width: calc(100vh - 190px);
   border-radius: 15px;
   flex-shrink: 0;
+  overflow-y: scroll;
+}
+
+.list-container::-webkit-scrollbar {
+  display: none;
 }
 
 .empty-list-text {
