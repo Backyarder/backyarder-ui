@@ -1,6 +1,8 @@
 # BackYarder
 [DEPLOYMENT LINK](https://backyarder.vercel.app/)
 
+[BACKEND REPO](https://github.com/Backyarder/backyarder-be)
+
 ## ABSTRACT
 - BackYarder is an innovative app designed to revolutionize the way gardeners brainstorm and optimize their gardens! This app empowers gardeners of all skill levels to create their dream gardens with ease. Key features include a large database of plants with detailed information, including care instructions, and a drag-and-drop tool to experiment with different arrangements. BackYarder enables the user to create a beautiful garden tailored to their unique vision. Whether you're a seasoned gardener or just starting your gardening journey, this app will be the perfect companion for you!
 
@@ -39,12 +41,24 @@
   - `Control + C` is the command to stop running the local server.
 
 ## CONTRIBUTERS
-- Daniel Cochico: [GitHub](https://github.com/dcochico) | [LinkedIn](https://www.linkedin.com/in/daniel-c-3a0201176/)
-- Matt Fowler: [GitHub](https://github.com/mbenfowler) | [LinkedIn](https://www.linkedin.com/in/mbenfowler/)
-- Alexa VanSchaardenburg: [GitHub](https://github.com/AlexaVanSchaardenburg) | [LinkedIn](https://www.linkedin.com/in/alexa-r-vanschaardenburg/)
+- Front End:
+  - Daniel Cochico: [GitHub](https://github.com/dcochico) | [LinkedIn](https://www.linkedin.com/in/daniel-c-3a0201176/)
+  - Matt Fowler: [GitHub](https://github.com/mbenfowler) | [LinkedIn](https://www.linkedin.com/in/mbenfowler/)
+  - Alexa VanSchaardenburg: [GitHub](https://github.com/AlexaVanSchaardenburg) | [LinkedIn](https://www.linkedin.com/in/alexa-r-vanschaardenburg/)
+<br>
+- Back End:
+  - Kim Bergstrom: [GitHub](https://github.com/kbergstrom78) | [LinkedIn](https://www.linkedin.com/in/kimberley-bergstrom/)
+  - Boston Lowrey: [GitHub](https://github.com/BLowrey24) | [LinkedIn](https://www.linkedin.com/in/boston-lowrey/)
+  - Myles Nottingham: [GitHub](https://github.com/MylesNottingham) | [LinkedIn](https://www.linkedin.com/in/mylesnottingham/)
+  - Austin Woods: [GitHub](https://github.com/boomclear) | [LinkedIn](https://www.linkedin.com/in/austin-woods-1830aa195/)
 
 ## CONTEXT
 - Final Capstone project as part of the [Turing School of Software & Design](https://turing.edu/) program.
+
+## LEARNING GOALS
+- Explore and implement TypeScript concepts that have not been explicitly taught while at Turing
+- Gain experience using continuous integration tools to build and automate the deployment of features
+- Focus on communication between front-end and back-end teams
 
 ## FUTURE EXTENSIONS
 - The user should receive timely alerts for watering plants in their garden.
