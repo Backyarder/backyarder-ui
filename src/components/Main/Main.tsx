@@ -23,15 +23,21 @@ const Main = () => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('')
 
-  const updateMedia = () => {
-    setIsDesktop(window.innerWidth > 1048);
-  };
-
   useEffect(() => {
-    const checkScreenSize = () => setIsDesktop(window.innerWidth > 1048)
-    checkScreenSize()
-    window.addEventListener('resize', checkScreenSize)
-    return () => window.removeEventListener('resize', checkScreenSize)
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth > 1048);
+    };
+
+    // Check screen size on page load
+    checkScreenSize();
+
+    // Attach event listener to update screen size on resize
+    window.addEventListener('resize', checkScreenSize);
+
+    // Remove event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
   }, []);
 
   useEffect(() => {
