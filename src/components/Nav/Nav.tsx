@@ -3,13 +3,14 @@ import { deleteContents } from '../../apiCalls';
 import './Nav.scss';
 
 type NavProps = {
+  setAlert: Function;
   isGardenView: boolean;
   setIsGardenView: Function;
   setBullDoze: Function;
   setFilterGarden: Function;
 }
 
-const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: NavProps) => {
+const Nav = ({ setAlert, isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: NavProps) => {
   const [popUp, setPopUp] = useState<boolean>(false);
   const [fullClear, setFullClear] = useState<boolean>(false);
   const [partialClear, setPartialClear] = useState<boolean>(false);
@@ -39,9 +40,9 @@ const Nav = ({ isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: Na
 
   const handleDelete = (): void => {
     if (fullClear) {
-      deleteContents('all', setBullDoze);
+      deleteContents('all', setBullDoze, setAlert);
     } else {
-      deleteContents('garden', setFilterGarden);
+      deleteContents('garden', setFilterGarden, setAlert);
     }
     reset();
   }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Cell from '../Cell/Cell';
 import Modal from '../Modal/Modal';
 import { GardenKeys } from '../Main/Main';
@@ -14,6 +14,13 @@ export interface GridProps {
   setFilterGarden: Function;
 }
 
+interface AdditionalProps {
+  alert: boolean;
+  setAlert: Function;
+}
+
+type CombinedProps = GridProps & AdditionalProps;
+
 export type CellKeys = {
   location_id: string;
   image: string | undefined;
@@ -22,11 +29,22 @@ export type CellKeys = {
   status: string | number | null | undefined;
 }
 
-const Grid = ({ garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: GridProps) => {
+const Grid = ({ alert, setAlert, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: CombinedProps) => {
   const [modal, setModal] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (alert) {
+      setModal(true);
+    }
+  }, [alert])
+
   const toggleModal = (): void => {
+    setAlert(false);
     setModal(!modal);
+    if (bullDoze || filterGarden) {
+      setBullDoze(false);
+      setFilterGarden(false);
+    }
   }
 
   const cells = garden?.map((cell, i) => {
@@ -48,7 +66,7 @@ const Grid = ({ garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilte
   return (
     <section id='grid'>
       {cells}
-      {modal && <Modal toggleModal={toggleModal} />}
+      {modal && <Modal alert={alert} bullDoze={bullDoze} filterGarden={filterGarden} toggleModal={toggleModal} />}
     </section>
   );
 }

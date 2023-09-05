@@ -15,6 +15,7 @@ type GetGardenKeys = {
 }
 
 const Main = () => {
+  const [alert, setAlert] = useState<boolean>(false);
   const [garden, setGarden] = useState<GardenKeys | undefined>([]);
   const [isGardenView, setIsGardenView] = useState<boolean>(true);
   const [bullDoze, setBullDoze] = useState<boolean>(false);
@@ -68,8 +69,8 @@ const Main = () => {
           {isDesktop ?
             <>
               <Sidebar />
-              {isGardenView ? <Grid garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
-              <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
+              {isGardenView ? <Grid alert={alert} setAlert={setAlert} garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
+              <Nav setAlert={setAlert} isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
             </>
             : <div className="mobile-message">
                 Please switch to a larger device to use this app.

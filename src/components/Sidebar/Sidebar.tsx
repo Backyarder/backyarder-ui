@@ -99,7 +99,9 @@ const Sidebar = () => {
 
   return (
     <section id='plants'>
-      <h2>PLANTS</h2>
+      <h2>
+        <span className="material-symbols-rounded" id="drag-material" >drag_pan</span>
+      PLANTS</h2>
       <div className="search">
         <input
           className="search-bar"
