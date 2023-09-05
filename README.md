@@ -36,7 +36,7 @@
 - Fork this repository.
 - Copy the SSH key in order to clone your forked repository down into your local device.
 - `cd` into the cloned directory.
-- Run `npm install` to install project dependancies.
+- Run `npm install` to install project dependencies.
 - Run `npm start` in the terminal to see the HTML page
   - `Control + C` is the command to stop running the local server.
 
@@ -64,3 +64,4 @@
 - The user should receive timely alerts for watering plants in their garden.
 - The user should be able to input their location and be shown what hardiness zone they are in.
 - The user should be able to customize the dimensions of their garden grid.
+- The user should be able to log in and have multiple plots to manage
