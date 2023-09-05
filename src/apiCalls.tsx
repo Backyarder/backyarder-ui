@@ -81,7 +81,7 @@ const patchDisabledOrRemoved = (id: string, status: keyof StatusType) => {
           .then(res => handleError(res))
 }
 
-const deleteContents = (path: string, setter: Function) => {
+const deleteContents = (path: string, setter: Function, alert: Function) => {
   return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/${path}`, {
     method: 'DELETE'
   })
@@ -90,7 +90,7 @@ const deleteContents = (path: string, setter: Function) => {
         throw new Error('Unable to clear garden');
       }
       setter(true);
-      alert('Garden cleared.');
+      alert(true);
     })
     .catch(err => {
       handleError(err)
