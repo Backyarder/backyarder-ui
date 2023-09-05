@@ -1,34 +1,12 @@
 import { useDrag, DragPreviewImage } from 'react-dnd'
 import { PlantAttributes } from '../Sidebar/Sidebar'
 import { NavLink } from 'react-router-dom'
+import { ICON_MAP, IconType, SunlightType } from './plantIconMap'
 import './Card.scss'
 
 export interface CardProps {
     plant: PlantAttributes
 };
-
-const iconMap: { [key: string]: any } = {
-    type: {
-        'flower': 'Deceased',
-        'tree': 'park',
-        'fruit': 'Nutrition',
-        "Palm or Cycad": 'park',
-        'Ornamental grass': 'psychiatry',
-        'Vine': 'psychiatry',
-        'Deciduous shrub': 'grass',
-        "Rush or Sedge": 'grass',
-        'Shrub': 'grass',
-        "Fern": 'grass',
-        "Epiphyte": 'grass',
-        'Broadleaf evergreen': 'park',
-        'Herb': 'temp_preferences_eco',
-        'Vegetable': 'Restaurant'
-    },
-    sunlight: {
-        'full sun': 'sunny',
-        'part shade': 'partly_cloudy_day'
-    }
-}
 
 const Card = ({ plant }: CardProps) => {
     const [{ isDragging }, dragRef, preview] = useDrag({
@@ -49,6 +27,14 @@ const Card = ({ plant }: CardProps) => {
                         ? plant.image
                         : `${process.env.PUBLIC_URL}/images/plant-fallback.png`
 
+    const plantData: { type: string; sunlight: string } = {
+        type: plant.type,
+        sunlight: plant.sunlight[0],
+    }
+
+    const flowerCategory = ICON_MAP.type[plantData.type as IconType]
+    const sunlightCategory = ICON_MAP.sunlight[plantData.sunlight as SunlightType]
+
     return (
         <>
             {!isDragging && (
@@ -60,11 +46,11 @@ const Card = ({ plant }: CardProps) => {
                 <div className='card-icons-container'>
                     <div className='card-icons'>
                         <div className="material-symbols-rounded card-icon">
-                            {iconMap.type[plant.type]}
+                            {flowerCategory}
                             <span className="left-icon-text tooltip-text">{`${plant.type}`}</span>
                         </div>
                         <div className="material-symbols-rounded card-icon">
-                            {iconMap.sunlight[plant.sunlight[0]]}
+                            {sunlightCategory}
                             <span className="left-icon-text tooltip-text">{`${plant.sunlight[0]}`}</span>
                         </div>
                     </div>
