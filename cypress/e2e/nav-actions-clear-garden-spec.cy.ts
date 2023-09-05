@@ -25,7 +25,8 @@ describe('Nav Actions: Clear Garden', () => {
       .get('.clear-button').first().click()
       .get('.pop-up-button').first().click()
       .wait('@clear-garden').then(() => {
-        cy.get('#grid').children().each(cell => {
+        cy.get('.modal-button').click()
+        .get('#grid').children().each(cell => {
           cy.wrap(cell).should('have.css', 'background-image', 'url("http://localhost:3000/undefined")')
         });
       });
