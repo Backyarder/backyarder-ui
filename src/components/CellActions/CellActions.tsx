@@ -22,7 +22,7 @@ const CellActions = ({ image, name, plantId, handleCloseModal, handlePlanted, ha
         } else if (target.classList.contains('remove-button')) {
             handleRemove()
         }
-        const cell = target.closest('disable-scale')
+        const cell = target.closest('.disable-scale')
         cell?.classList.remove('disable-scale')
         const grid = target.closest('#grid')
         grid?.classList.remove('disable-hover')
