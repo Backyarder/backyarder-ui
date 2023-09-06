@@ -113,7 +113,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [{ isOver }, dropRef] = useDrop({
     accept: 'plant',
     drop: (plant: CellContents) => {
-      if (isDisabled) {
+      if (isDisabled || isPlanted) {
         toggleModal();
       } else {
         setCellContents(plant);
