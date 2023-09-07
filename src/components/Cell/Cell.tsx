@@ -137,7 +137,6 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
 
   const handleGarden = (id: string, image: string | undefined, name: string | undefined, plant_id: number | undefined, status: string) => {
     setGarden((prevState: GardenKeys) => {
-      console.log(status)
       let index = prevState?.findIndex((item) => item.location_id === id);
       let newState = [...prevState];
       newState[index] = {
@@ -147,7 +146,6 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         'plant_id': plant_id,
         status: status
       };
-      console.log(newState)
       return newState;
     });
   }
