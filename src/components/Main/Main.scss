@@ -4,3 +4,19 @@ main {
   justify-content: space-around;
   padding: 1em;
 }
+
+.server-error{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #BEAB96;
+  padding: 1em;
+  border-radius: 1em;
+  margin: 1em;
+}
+
+@media (max-width: 1048px) {
+  .mobile-message {
+    display: block; /* Show this message on small screens */
+  }
+}

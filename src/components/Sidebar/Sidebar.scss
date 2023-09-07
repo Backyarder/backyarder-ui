@@ -1,58 +1,76 @@
-
 #plants {
-    height: 100%;
-    width: 20%;
-    max-width: 300px;
-    min-width: 230px;
-    background-color: #beab95;
-    overflow: scroll;
-    overflow-x: hidden;
-    border-radius: 1em;
-    color: #483C3C;
-    display: flex;
-    flex-direction: column;
-    padding: 0.5em;
-    height: calc(100vh - 165px);
+  height: 100%;
+  width: 20vw;
+  max-width: 300px;
+  background-color: #beab95;
+  overflow: hidden;
+  overflow-x: hidden;
+  border-radius: 1em;
+  color: #483C3C;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+  height: calc(100vh - 205px);
+  margin-right: .5%;
+}
+
+#drag-material {
+  padding-right: 0.3em;
 }
 
 #plants h2 {
-    color: #F4F4F4;
-    font-size: 2em;
-    margin: 0.2em;
+  color: #483C3C;
+  font-size: 2em;
+  margin: 0.2em;
 }
 
 .search {
-    display: flex;
-    background: #f4f4f4;
-    border-radius: 1em;
-    padding: 0.3em;
+  display: flex;
+  background: #f4f4f4;
+  border-radius: 1em;
+  padding: 0.3em;
+  margin-bottom: 3%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
 }
 
 .submit-search {
-    border: none;
-    background: #8F0D4E;
-    color: #f4f4f4;
-    border-radius: 4em;
-    padding-top: 0.33em;
+  border: none;
+  background: #8F0D4E;
+  color: #f4f4f4;
+  border-radius: 4em;
+  padding-top: 0.33em;
+  margin-left: 1em;
+  cursor: pointer;
 }
 
 .search-bar {
-    border: none;
-    font-size: 1.2em;
-    color: #483C3C;
-    background: transparent;
-    width: 80%;
-    &:focus { outline: none; }
+  border: none;
+  font-size: 1.2em;
+  color: #483C3C;
+  background: transparent;
+  width: 80%;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0.7em;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.7em;
+  text-align: center;
 }
 
 .loading-img {
-    width: 20%
+  width: 20%
+}
+
+.search-results {
+  overflow-y: scroll;
+}
+
+.search-results::-webkit-scrollbar {
+  display: none;
 }

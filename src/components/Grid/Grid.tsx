@@ -1,30 +1,73 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Cell from '../Cell/Cell';
 import Modal from '../Modal/Modal';
+import { GardenKeys } from '../Main/Main';
+import { cellIDs } from './cellIDs';
 import './Grid.scss';
-import { cellsMockData } from './cellsMockData';
 
 export interface GridProps {
+  garden: GardenKeys | undefined;
+  setGarden: Function;
   bullDoze: boolean;
   setBullDoze: Function;
   filterGarden: boolean;
   setFilterGarden: Function;
 }
 
-const Grid = ({ bullDoze, setBullDoze, filterGarden, setFilterGarden }: GridProps) => {
+interface AdditionalProps {
+  alert: boolean;
+  setAlert: Function;
+}
+
+type CombinedProps = GridProps & AdditionalProps;
+
+export type CellKeys = {
+  location_id: string;
+  image: string | undefined;
+  plant_name: string | undefined;
+  plant_id: number | undefined;
+  status: string | number | null | undefined;
+}
+
+const Grid = ({ alert, setAlert, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: CombinedProps) => {
   const [modal, setModal] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (alert) {
+      setModal(true);
+    }
+  }, [alert])
+
   const toggleModal = (): void => {
+    setAlert(false);
     setModal(!modal);
+    if (bullDoze || filterGarden) {
+      setBullDoze(false);
+      setFilterGarden(false);
+    }
   }
 
-  const cells = cellsMockData.map(cell => <Cell id={cell.id} key={cell.id} toggleModal={toggleModal} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} />);
+  const cells = garden?.map((cell, i) => {
+    return (
+      <Cell
+        key={cell.location_id}
+        id={cellIDs[i].id}
+        garden={garden}
+        setGarden={setGarden}
+        bullDoze={bullDoze}
+        setBullDoze={setBullDoze}
+        filterGarden={filterGarden}
+        setFilterGarden={setFilterGarden}
+        toggleModal={toggleModal}
+      />
+    );
+  });
 
   return (
     <>
       <section id='grid'>
         {cells}
-        {modal && <Modal toggleModal={toggleModal} />}
+        {modal && <Modal alert={alert} bullDoze={bullDoze} filterGarden={filterGarden} toggleModal={toggleModal} />}
       </section>
     </>
   );

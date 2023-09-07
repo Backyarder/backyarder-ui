@@ -1,0 +1,14 @@
+{
+    "data": {
+      "id": "501",
+      "type": "cell",
+      "attributes": {
+        "image": "image_url",
+        "plant_name": "Weedy Weed",
+        "location_id": "A1",
+        "status": "placed",
+        "plant_id": 13,
+        "updated_at": "09/02/2023 23:11"
+      }
+    }
+}

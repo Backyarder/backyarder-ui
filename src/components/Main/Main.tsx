@@ -1,55 +1,84 @@
-import './Main.scss';
 import Sidebar from '../Sidebar/Sidebar';
-import Grid from '../Grid/Grid';
+import Grid, { CellKeys } from '../Grid/Grid';
 import Nav from '../Nav/Nav';
 import List from '../List/List';
-import { useState } from 'react';
-// import { patchGarden } from '../../apiCalls';
-// import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getGarden } from '../../apiCalls';
+import './Main.scss';
 
-// type GardenKeys = {
-//   id: string,
-//   'plant_name': string,
-//   status: number,
-//   'plant_id': number,
-//   image: string
-// }[];
+export type GardenKeys = CellKeys[];
+
+type GetGardenKeys = {
+  id: number
+  type: string
+  attributes: CellKeys[]
+}
 
 const Main = () => {
-  // const [garden, setGarden] = useState<GardenKeys>([]);
+  const [alert, setAlert] = useState<boolean>(false);
+  const [garden, setGarden] = useState<GardenKeys | undefined>([]);
   const [isGardenView, setIsGardenView] = useState<boolean>(true);
   const [bullDoze, setBullDoze] = useState<boolean>(false);
   const [filterGarden, setFilterGarden] = useState<boolean>(false);
-  // const [error, setError] = useState<string>('');
+  const [isDesktop, setIsDesktop] = useState<boolean>(true)
+  // eslint-disable-next-line
+  const [apiError, setApiError] = useState<string>('')
 
-  // useEffect(() => {
-  //   if (garden) {
-  //     patchGarden(garden)
-  //     .then(res => {
-  //       if (!res.ok) {
-  //         throw Error('There has been an error.')
-  //       }
-  //       return res.json()
-  //     })
-  //     .then(data => {
-  //       setGarden([])
-  //       setError('')
-  //     })
-  //     .catch(err => setError(err));
-  //   }
-  // }, [garden]);
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth > 1048 && window.innerHeight > 600);
+    };
 
-  // const clearGarden = (garden: GardenKeys) : void => {
-  //   setGarden(garden);
-  // };
+    // Check screen size on page load
+    checkScreenSize();
+
+    // Attach event listener to update screen size on resize
+    window.addEventListener('resize', checkScreenSize);
+
+    // Remove event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
+
+  useEffect(() => {
+    getGarden()
+      .then(data => {
+        const cellData = data.data.map((cellData: GetGardenKeys) => cellData.attributes)
+        setGarden(cellData)
+      })
+      .catch((err) => {
+        handleApiError(err)
+      })
+  }, []);
+
+  const handleApiError = (error: string) => {
+    setApiError(error)
+  }
 
   return (
-    <main>
-      <Sidebar />
-      {isGardenView ? <Grid bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List />}
-      <Nav isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
-      {/* <Link to='/plants'>See Plant Details Page</Link> */}
-    </main>
+    <>
+      {apiError ? (
+        <div className='server-error'>
+          <h2>Oh no! The weather isn't cooperating!</h2>
+          <span className="material-symbols-rounded">thunderstorm</span>
+          <p>There was an error on our end, please try again later</p>
+        </div>
+      ) : (
+        <main>
+          {isDesktop ?
+            <>
+              <Sidebar />
+              {isGardenView ? <Grid alert={alert} setAlert={setAlert} garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
+              <Nav setAlert={setAlert} isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
+            </>
+            : <div className="mobile-message">
+                Please switch to a larger device to use this app.
+              </div>
+          }
+        </main>
+      )}
+    </>
   );
 }
 
