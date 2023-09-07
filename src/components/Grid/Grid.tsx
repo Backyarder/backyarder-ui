@@ -64,12 +64,10 @@ const Grid = ({ alert, setAlert, garden, setGarden, bullDoze, setBullDoze, filte
   });
 
   return (
-    <>
-      <section id='grid'>
-        {cells}
-        {modal && <Modal alert={alert} bullDoze={bullDoze} filterGarden={filterGarden} toggleModal={toggleModal} />}
-      </section>
-    </>
+    <section id='grid'>
+      {cells}
+      {modal && <Modal alert={alert} bullDoze={bullDoze} filterGarden={filterGarden} toggleModal={toggleModal} />}
+    </section>
   );
 }
 
