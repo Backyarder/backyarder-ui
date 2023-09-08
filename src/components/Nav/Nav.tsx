@@ -26,6 +26,10 @@ const Nav = ({ setAlert, isGardenView, setIsGardenView, setBullDoze, setFilterGa
     reset();
   }
 
+  const handleWaterAll = (): void => {
+    console.log('watered yo')
+  }
+
   const handleFullClear = (): void => {
     setPopUp(true);
     setFullClear(true);
@@ -90,6 +94,9 @@ const Nav = ({ setAlert, isGardenView, setIsGardenView, setBullDoze, setFilterGa
               <div className='unavailable-symbol' ></div>
               <p>UNAVAILABLE</p>
             </div>
+          </div>
+          <div id='wateringCan'>
+            <img src={`${process.env.PUBLIC_URL}/images/watering-can.png`} className='ripple' onClick={handleWaterAll} alt='watering can, click to water all planted items'/>
           </div>
           <button className='clear-button' onClick={handleFullClear} ><span className="material-symbols-rounded nav-icon">
             bomb

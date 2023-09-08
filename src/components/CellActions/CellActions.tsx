@@ -6,12 +6,14 @@ interface CellProps {
     name: string | undefined
     plantId: number | undefined
     handleCloseModal: () => void
+    isPlanted: boolean
     handlePlanted: () => void
+    handleWatered: () => void
     handleRemove: () => void
     handleNeedsUpdating: Function
 }
 
-const CellActions = ({ image, name, plantId, handleCloseModal, handlePlanted, handleRemove, handleNeedsUpdating }: CellProps) => {
+const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handlePlanted, handleWatered, handleRemove, handleNeedsUpdating }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -19,6 +21,8 @@ const CellActions = ({ image, name, plantId, handleCloseModal, handlePlanted, ha
         if (target.classList.contains('plant-button')) {
             handlePlanted()
             handleNeedsUpdating('locked')
+        } else if (target.classList.contains('water-button')) {
+            handleWatered()
         } else if (target.classList.contains('remove-button')) {
             handleRemove()
         }
@@ -34,9 +38,20 @@ const CellActions = ({ image, name, plantId, handleCloseModal, handlePlanted, ha
             <img className='card-image' src={image} alt={`${name}`} />
             <p className='plant-name'>{name?.toUpperCase()}</p>
             <div className='cell-actions'>
-                <button className='cell-button plant-button' onClick={handleClick}>Plant!<span onClick={handleClick} className="material-symbols-rounded plant-icon plant-button">
-                    psychiatry
-                </span></button>
+                {isPlanted
+                    ? <button className='cell-button water-button' onClick={handleClick}>
+                        Water!
+                        <span className="material-symbols-rounded plant-icon plant-button">
+                            water_drop
+                        </span>
+                    </button>
+                    : <button className='cell-button plant-button' onClick={handleClick}>
+                        Plant!
+                        <span className="material-symbols-rounded plant-icon plant-button">
+                            psychiatry
+                        </span>
+                    </button>
+                }
                 <NavLink to={`/plants/${plantId}`} className='cell-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded">
                     menu_book
                 </span></NavLink>

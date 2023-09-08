@@ -25,6 +25,8 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
+  // eslint-disable-next-line
+  const [isWatered, setIsWatered] = useState<boolean>(false);
   const [isPopulated, setIsPopulated] = useState<boolean>(false);
   const [needsUpdate, setNeedsUpdate] = useState<(keyof StatusType)>();
   const [shouldRender, setShouldRender] = useState<boolean>(false);
@@ -153,6 +155,10 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     setShouldRender(true);
   }
 
+  const handleWatered = () => {
+    setIsWatered(true)
+  }
+
   const handleRemove = () => {
     setIsPopulated(false);
     setIsPlanted(false);
@@ -219,7 +225,9 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
                                 image={cellContents.plant.image}
                                 name={cellContents.plant.plant_name}
                                 plantId={cellContents.plant.plant_id}
+                                isPlanted={isPlanted}
                                 handlePlanted={handlePlanted}
+                                handleWatered={handleWatered}
                                 handleRemove={handleRemove}
                                 handleCloseModal={handleCloseModal}
                                 handleNeedsUpdating={handleNeedsUpdating}
