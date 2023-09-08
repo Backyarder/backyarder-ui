@@ -20,12 +20,12 @@ describe('Grid actions: plant', () => {
 
     it('should be able to plant a cell', () => {
         cy.wait(['@onload-plants', '@onload-grid']).then(() => {
-            cy.get('#A1').click()
+            cy.get('#A2').click()
             .get('.close-modal').click() // testing close modal in this test
-            .get('#A1').click()
+            .get('#A2').click()
             .get('.cell-button.plant-button').click()
             .wait('@plant-cell').then(() => {
-              cy.get('#A1').should('have.css', 'border', '3px solid rgb(158, 201, 36)')
+              cy.get('#A2').should('have.css', 'border', '3px solid rgb(158, 201, 36)')
             })
         })
     })

@@ -19,7 +19,7 @@ describe('Onload', () => {
       .get('#plants > :nth-child(3)').children().should('have.length', '30')
       .get('#grid').children().should('have.length', 100)
       .get('#A1').should('have.css', 'background-image', 'url("https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/thumbnail/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg")')
-      .get('nav').children().should('have.length', 5)
+      .get('nav').children().should('have.length', 6)
       .get('.nav-button').first().should('have.text', 'list_altLIST OF GARDEN PLANTS')
       .get('.nav-button').last().should('have.text', 'outdoor_gardenGARDEN VIEW')
       .get('.key').children().should('have.length', 4)
