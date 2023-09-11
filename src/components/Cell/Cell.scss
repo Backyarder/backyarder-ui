@@ -5,7 +5,7 @@
   height: 65%;
   width: 65%;
 
-  &:not(.disabled):not(.disable-scale) {
+  &:not(.disabled) {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
   }
 
@@ -32,4 +32,11 @@
 
 .disable-hover {
   pointer-events: none
+}
+
+.cell-modal {
+  height: .1vh;
+  max-height: .1vh;
+  width: .1vw;
+  max-width: .1vw;
 }
