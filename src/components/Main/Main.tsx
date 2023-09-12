@@ -22,6 +22,7 @@ const Main = () => {
   const [filterGarden, setFilterGarden] = useState<boolean>(false);
   const [popUp, setPopUp] = useState<boolean>(false);
   const [fullClear, setFullClear] = useState<boolean>(false);
+  // eslint-disable-next-line
   const [partialClear, setPartialClear] = useState<boolean>(false);
   const [isDesktop, setIsDesktop] = useState<boolean>(true)
   // eslint-disable-next-line
@@ -91,7 +92,7 @@ const Main = () => {
             <>
               <Sidebar />
               {isGardenView ? <Grid popUp={popUp} setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} alert={alert} setAlert={setAlert} garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
-              <Nav setPopUp={setPopUp} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} handleFullClear={handleFullClear} handlePartialClear={handlePartialClear} setAlert={setAlert} isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
+              <Nav reset={reset} handleFullClear={handleFullClear} handlePartialClear={handlePartialClear} isGardenView={isGardenView} setIsGardenView={setIsGardenView} />
             </>
             : <div className="mobile-message">
                 Please switch to a larger device to use this app.

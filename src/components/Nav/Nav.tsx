@@ -1,25 +1,14 @@
-import { useState } from 'react';
-import { deleteContents } from '../../apiCalls';
 import './Nav.scss';
 
 type NavProps = {
-  setPopUp: Function;
-  setFullClear: Function;
-  setPartialClear: Function;
   reset: Function;
   handleFullClear: () => void;
   handlePartialClear: () => void;
-  setAlert: Function;
   isGardenView: boolean;
   setIsGardenView: Function;
-  setBullDoze: Function;
-  setFilterGarden: Function;
 }
 
-const Nav = ({ setPopUp, setFullClear, setPartialClear, reset, handleFullClear, handlePartialClear, setAlert, isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: NavProps) => {
-  // const [popUp, setPopUp] = useState<boolean>(false);
-  // const [fullClear, setFullClear] = useState<boolean>(false);
-  // const [partialClear, setPartialClear] = useState<boolean>(false);
+const Nav = ({ reset, handleFullClear, handlePartialClear, isGardenView, setIsGardenView }: NavProps) => {
 
   const toggleView = (): void => {
     setIsGardenView(!isGardenView);
@@ -83,16 +72,6 @@ const Nav = ({ setPopUp, setFullClear, setPartialClear, reset, handleFullClear, 
           <button className='clear-button' onClick={handlePartialClear} ><span className="material-symbols-rounded nav-icon">
             agriculture
           </span>REMOVE UNPLANTED ITEMS</button>
-          {/* {popUp &&
-            <div className='pop-up'>
-              {fullClear && <p className='confirm-message'>Are you sure you wish to clear your garden? This action cannot be undone.</p>}
-              {partialClear && <p className='confirm-message'>Are you sure you wish to remove your unplanted items? This action cannot be undone.</p>}
-              <div className='pop-up-button-container'>
-                <button className='pop-up-button' onClick={handleDelete} >YES</button>
-                <button className='pop-up-button' onClick={reset} >NO</button>
-              </div>
-            </div>
-          } */}
         </>
       }
     </nav>
