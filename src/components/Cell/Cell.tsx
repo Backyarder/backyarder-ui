@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDrop } from 'react-dnd';
+import { useDrop, useDrag, DragPreviewImage } from 'react-dnd';
 import { GardenKeys } from '../Main/Main';
 import { CellKeys, GridProps } from '../Grid/Grid';
 import CellActions from '../CellActions/CellActions';
@@ -131,6 +131,21 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     })
   });
 
+  const [{ isDragging }, dragRef, preview] = useDrag({
+    type: 'plant',
+    canDrag: () => !isPlanted,
+    item: cellContents,
+    end: (item, monitor) => {
+      if (!monitor.didDrop()) {
+        return;
+      };
+      handleRemove();
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging()
+    })
+  });
+  
   const handleApiError = (error: string) => {
     setApiError(error);
   }
@@ -219,21 +234,26 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   return (
     <>
       {isPopulated ? (
-        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
+      <>
+        {!isDragging && (
+        <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
+        )}
+        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dragRef}>
           {isClicked && <div className='cell-modal'>
             {cellContents && <CellActions 
-                                image={cellContents.plant.image}
-                                name={cellContents.plant.plant_name}
-                                plantId={cellContents.plant.plant_id}
-                                isPlanted={isPlanted}
-                                handlePlanted={handlePlanted}
-                                handleWatered={handleWatered}
-                                handleRemove={handleRemove}
-                                handleCloseModal={handleCloseModal}
-                                handleNeedsUpdating={handleNeedsUpdating}
-                              />}
+                              image={cellContents.plant.image}
+                              name={cellContents.plant.plant_name}
+                              plantId={cellContents.plant.plant_id}
+                              isPlanted={isPlanted}
+                              handlePlanted={handlePlanted}
+                              handleWatered={handleWatered}
+                              handleRemove={handleRemove}
+                              handleCloseModal={handleCloseModal}
+                              handleNeedsUpdating={handleNeedsUpdating}
+                            />}
           </div>}
         </div>
+      </>
       ) : (
         <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}></div>
       )}
