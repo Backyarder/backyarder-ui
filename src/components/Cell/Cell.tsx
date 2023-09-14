@@ -25,6 +25,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
+  const [needsWatering, setNeedsWatering] = useState<boolean>(false);
   // eslint-disable-next-line
   const [isWatered, setIsWatered] = useState<boolean>(false);
   const [isPopulated, setIsPopulated] = useState<boolean>(false);
@@ -34,6 +35,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   useEffect(() => {
     if (garden) {
       const foundCell = garden.find(cell => cell.location_id === id);
+      console.log(id)
       if (foundCell?.status === 'placed') {
         setCellContents({ plant: foundCell });
         setIsPopulated(true);
@@ -44,6 +46,9 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         setCellContents({ plant: foundCell });
         setIsPopulated(true);
         setIsPlanted(true);
+      }
+      if (id === 'H5'){
+        setNeedsWatering(true)
       }
       setCell(foundCell);
     }
@@ -213,7 +218,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     backgroundImage: `url(${cellContents?.plant.image})`,
     backgroundPosition: 'center',
     backgroundSize: '100%',
-    border: isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
+    border: needsWatering ? 'solid orange 3px' : isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
   };
 
   return (
@@ -221,7 +226,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       {isPopulated ? (
         <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
           {isClicked && <div className='cell-modal'>
-            {cellContents && <CellActions 
+            {cellContents && <CellActions
                                 image={cellContents.plant.image}
                                 name={cellContents.plant.plant_name}
                                 plantId={cellContents.plant.plant_id}
