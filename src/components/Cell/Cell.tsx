@@ -47,9 +47,9 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         setIsPopulated(true);
         setIsPlanted(true);
       }
-      if (id === 'H5'){
-        setNeedsWatering(true)
-      }
+      // if (id === 'H5'){
+        // setNeedsWatering(true) // uncomment to test needsWatering behavior
+      // }
       setCell(foundCell);
     }
     // eslint-disable-next-line
@@ -218,13 +218,15 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     backgroundImage: `url(${cellContents?.plant.image})`,
     backgroundPosition: 'center',
     backgroundSize: '100%',
-    border: needsWatering ? 'solid orange 3px' : isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
+    border: !needsWatering && isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
   };
+
+  const wateringWarning = needsWatering ? 'watering-alert' : ''
 
   return (
     <>
       {isPopulated ? (
-        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
+        <div id={id} className={[className, wateringWarning].join(' ')} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
           {isClicked && <div className='cell-modal'>
             {cellContents && <CellActions
                                 image={cellContents.plant.image}
