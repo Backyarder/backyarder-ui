@@ -112,12 +112,36 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     // eslint-disable-next-line
   }, [bullDoze, filterGarden]);
 
+  // const [{ isOver }, dropRef] = useDrop({
+  //   accept: 'plant',
+  //   drop: (plant: CellContents) => {
+  //     if (isDisabled || isPlanted) {
+  //       toggleModal();
+  //       return;
+  //     } else {
+  //       console.log(dropRef)
+  //       setCellContents(plant);
+  //       setTimeout(() => {
+  //         setShouldRender(true);
+  //         setNeedsUpdate('placed');
+  //         setIsPopulated(true);
+  //       }, 0);
+  //     }
+  //   },
+  //   collect: (monitor) => ({
+  //     isOver: monitor.isOver()
+  //   })
+  // });
+
   const [{ isOver }, dropRef] = useDrop({
     accept: 'plant',
-    drop: (plant: CellContents) => {
+    drop: isDisabled ? () => {} :
+    (plant: CellContents) => {
       if (isDisabled || isPlanted) {
         toggleModal();
+        return;
       } else {
+        console.log(dropRef)
         setCellContents(plant);
         setTimeout(() => {
           setShouldRender(true);
@@ -137,9 +161,12 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     item: cellContents,
     end: (item, monitor) => {
       if (!monitor.didDrop()) {
-        return;
+        console.log('not dropped', monitor)
+        toggleModal();
+      } else {
+        console.log('dropped', monitor)
+        handleRemove();
       };
-      handleRemove();
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging()
