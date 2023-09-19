@@ -26,6 +26,8 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
   // eslint-disable-next-line
+  const [needsWatering, setNeedsWatering] = useState<boolean>(false);
+  // eslint-disable-next-line
   const [isWatered, setIsWatered] = useState<boolean>(false);
   const [isPopulated, setIsPopulated] = useState<boolean>(false);
   const [needsUpdate, setNeedsUpdate] = useState<(keyof StatusType)>();
@@ -34,6 +36,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   useEffect(() => {
     if (garden) {
       const foundCell = garden.find(cell => cell.location_id === id);
+      console.log(id)
       if (foundCell?.status === 'placed') {
         setCellContents({ plant: foundCell });
         setIsPopulated(true);
@@ -45,6 +48,9 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         setIsPopulated(true);
         setIsPlanted(true);
       }
+      // if (id === 'H5'){
+        // setNeedsWatering(true) // uncomment to test needsWatering behavior
+      // }
       setCell(foundCell);
     }
     // eslint-disable-next-line
@@ -213,15 +219,17 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     backgroundImage: `url(${cellContents?.plant.image})`,
     backgroundPosition: 'center',
     backgroundSize: '100%',
-    border: isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
+    border: !needsWatering && isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
   };
+
+  const wateringWarning = needsWatering ? 'watering-alert' : ''
 
   return (
     <>
       {isPopulated ? (
-        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
+        <div id={id} className={[className, wateringWarning].join(' ')} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}>
           {isClicked && <div className='cell-modal'>
-            {cellContents && <CellActions 
+            {cellContents && <CellActions
                                 image={cellContents.plant.image}
                                 name={cellContents.plant.plant_name}
                                 plantId={cellContents.plant.plant_id}
