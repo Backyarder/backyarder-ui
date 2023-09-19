@@ -25,6 +25,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
+  // eslint-disable-next-line
   const [needsWatering, setNeedsWatering] = useState<boolean>(false);
   // eslint-disable-next-line
   const [isWatered, setIsWatered] = useState<boolean>(false);
