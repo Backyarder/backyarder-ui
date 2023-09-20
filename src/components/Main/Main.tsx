@@ -16,6 +16,7 @@ type GetGardenKeys = {
 
 const Main = () => {
   const [alert, setAlert] = useState<boolean>(false);
+  const [modal, setModal] = useState<boolean>(false);
   const [garden, setGarden] = useState<GardenKeys | undefined>([]);
   const [isGardenView, setIsGardenView] = useState<boolean>(true);
   const [bullDoze, setBullDoze] = useState<boolean>(false);
@@ -90,8 +91,8 @@ const Main = () => {
         <main>
           {isDesktop ?
             <>
-              <Sidebar />
-              {isGardenView ? <Grid popUp={popUp} setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} alert={alert} setAlert={setAlert} garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
+              <Sidebar modal={modal} setModal={setModal} />
+              {isGardenView ? <Grid popUp={popUp} setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} alert={alert} setAlert={setAlert} modal={modal} setModal={setModal} garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
               <Nav reset={reset} handleFullClear={handleFullClear} handlePartialClear={handlePartialClear} isGardenView={isGardenView} setIsGardenView={setIsGardenView} />
             </>
             : <div className="mobile-message">

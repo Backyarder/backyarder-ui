@@ -53,9 +53,9 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   useEffect(() => {
     if (cellContents && needsUpdate) {
       patchCellContents(cellContents, id, needsUpdate)
-      .catch((err) => {
+        .catch((err) => {
           handleApiError(err);
-      });
+        });
     }
     // eslint-disable-next-line
   }, [needsUpdate]);
@@ -63,9 +63,9 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   useEffect(() => {
     if (needsUpdate) {
       patchDisabledOrRemoved(id, needsUpdate)
-      .catch((err) => {
+        .catch((err) => {
           handleApiError(err);
-      });
+        });
     }
     // eslint-disable-next-line
   }, [isDisabled, cellContents === undefined]);
@@ -135,19 +135,19 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
 
   const [{ isOver }, dropRef] = useDrop({
     accept: 'plant',
-    drop: isDisabled ? () => {} :
-    (plant: CellContents) => {
+    drop: (plant: CellContents) => {
+      setCellContents(plant);
+      setTimeout(() => {
+        setShouldRender(true);
+        setNeedsUpdate('placed');
+        setIsPopulated(true);
+      }, 0);
+    },
+    canDrop: (item, monitor) => {
       if (isDisabled || isPlanted) {
-        toggleModal();
-        return;
+        return false;
       } else {
-        console.log(dropRef)
-        setCellContents(plant);
-        setTimeout(() => {
-          setShouldRender(true);
-          setNeedsUpdate('placed');
-          setIsPopulated(true);
-        }, 0);
+        return true;
       }
     },
     collect: (monitor) => ({
@@ -161,10 +161,8 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     item: cellContents,
     end: (item, monitor) => {
       if (!monitor.didDrop()) {
-        console.log('not dropped', monitor)
         toggleModal();
       } else {
-        console.log('dropped', monitor)
         handleRemove();
       };
     },
@@ -172,7 +170,7 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       isDragging: monitor.isDragging()
     })
   });
-  
+
   const handleApiError = (error: string) => {
     setApiError(error);
   }
@@ -261,26 +259,26 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   return (
     <>
       {isPopulated ? (
-      <>
-        {!isDragging && (
-        <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
-        )}
-        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dragRef}>
-          {isClicked && <div className='cell-modal'>
-            {cellContents && <CellActions 
-                              image={cellContents.plant.image}
-                              name={cellContents.plant.plant_name}
-                              plantId={cellContents.plant.plant_id}
-                              isPlanted={isPlanted}
-                              handlePlanted={handlePlanted}
-                              handleWatered={handleWatered}
-                              handleRemove={handleRemove}
-                              handleCloseModal={handleCloseModal}
-                              handleNeedsUpdating={handleNeedsUpdating}
-                            />}
-          </div>}
-        </div>
-      </>
+        <>
+          {!isDragging && (
+            <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
+          )}
+          <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dragRef}>
+            {isClicked && <div className='cell-modal'>
+              {cellContents && <CellActions
+                image={cellContents.plant.image}
+                name={cellContents.plant.plant_name}
+                plantId={cellContents.plant.plant_id}
+                isPlanted={isPlanted}
+                handlePlanted={handlePlanted}
+                handleWatered={handleWatered}
+                handleRemove={handleRemove}
+                handleCloseModal={handleCloseModal}
+                handleNeedsUpdating={handleNeedsUpdating}
+              />}
+            </div>}
+          </div>
+        </>
       ) : (
         <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}></div>
       )}

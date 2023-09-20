@@ -24,6 +24,8 @@ interface AdditionalProps {
   reset: () => void;
   alert: boolean;
   setAlert: Function;
+  modal: boolean;
+  setModal: Function;
 }
 
 type CombinedProps = GridProps & AdditionalProps;
@@ -36,8 +38,7 @@ export type CellKeys = {
   status: string | number | null | undefined;
 }
 
-const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset, alert, setAlert, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: CombinedProps) => {
-  const [modal, setModal] = useState<boolean>(false);
+const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset, alert, setAlert, modal, setModal, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: CombinedProps) => {
 
   useEffect(() => {
     if (alert) {
