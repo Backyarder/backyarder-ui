@@ -112,27 +112,6 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     // eslint-disable-next-line
   }, [bullDoze, filterGarden]);
 
-  // const [{ isOver }, dropRef] = useDrop({
-  //   accept: 'plant',
-  //   drop: (plant: CellContents) => {
-  //     if (isDisabled || isPlanted) {
-  //       toggleModal();
-  //       return;
-  //     } else {
-  //       console.log(dropRef)
-  //       setCellContents(plant);
-  //       setTimeout(() => {
-  //         setShouldRender(true);
-  //         setNeedsUpdate('placed');
-  //         setIsPopulated(true);
-  //       }, 0);
-  //     }
-  //   },
-  //   collect: (monitor) => ({
-  //     isOver: monitor.isOver()
-  //   })
-  // });
-
   const [{ isOver }, dropRef] = useDrop({
     accept: 'plant',
     drop: (plant: CellContents) => {
@@ -160,9 +139,9 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     canDrag: () => !isPlanted,
     item: cellContents,
     end: (item, monitor) => {
-      if (!monitor.didDrop()) {
+      if (!monitor.didDrop() && monitor.getTargetIds().length) {
         toggleModal();
-      } else {
+      } else if (monitor.didDrop()) {
         handleRemove();
       };
     },
@@ -263,7 +242,16 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
           {!isDragging && (
             <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
           )}
-          <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dragRef}>
+          <div
+            id={id}
+            className={className}
+            style={{ ...divStyle, ...hoverStyle }}
+            onClick={handleClick}
+            ref={(node) => {
+              dragRef(node)
+              dropRef(node)
+            }}
+          >
             {isClicked && <div className='cell-modal'>
               {cellContents && <CellActions
                 image={cellContents.plant.image}
