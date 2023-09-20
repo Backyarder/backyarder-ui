@@ -44,6 +44,7 @@ const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset
     if (alert) {
       setModal(true);
     }
+    // eslint-disable-next-line
   }, [alert])
 
   const toggleModal = (): void => {
