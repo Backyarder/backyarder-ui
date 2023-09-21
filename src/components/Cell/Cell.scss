@@ -31,7 +31,26 @@
 }
 
 .disable-hover {
-  pointer-events: none
+  pointer-events: none;
+}
+
+.watering-alert {
+  animation: pulse linear 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    border-color: #F8D568;
+    transform: scale(1);
+  }
+  50% {
+    border-color: #FFA500;
+    transform: scale(1.2);
+  }
+  100% {
+    border-color: #F8D568;
+    transform: scale(1);
+  }
 }
 
 .cell-modal {
