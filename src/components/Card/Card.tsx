@@ -20,7 +20,7 @@ const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
     type: 'plant',
     item: { plant },
     end: (item, monitor) => {
-      if (!monitor.didDrop()) {
+      if (!monitor.didDrop() && monitor.getTargetIds().length) {
         setModal(!modal);
       }
     },
