@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f4f4f4;
+  background-color: #786961;
   padding: 1em;
   border-radius: 1em;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
@@ -25,4 +25,19 @@
 
 .confirm-message {
   text-align: center;
+}
+
+.pop-up-button {
+  border: none;
+  border-radius: 25px;
+  background-color: #f4f4f4;
+  color: #af2268;
+  height: 5vh;
+  width: 4vw;
+}
+
+.pop-up-button:hover {
+  background-color: #af2268;
+  color: #f4f4f4;
+  cursor: pointer;
 }
