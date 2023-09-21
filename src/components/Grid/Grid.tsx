@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Cell from '../Cell/Cell';
 import Modal from '../Modal/Modal';
 import { GardenKeys } from '../Main/Main';
 import { cellIDs } from './cellIDs';
 import './Grid.scss';
+import ConfirmModal from '../ConfirmModal/ConfirmModal';
 
 export interface GridProps {
   garden: GardenKeys | undefined;
@@ -15,8 +16,16 @@ export interface GridProps {
 }
 
 interface AdditionalProps {
+  popUp: boolean;
+  setPopUp: Function;
+  fullClear: boolean;
+  setFullClear: Function;
+  setPartialClear: Function;
+  reset: () => void;
   alert: boolean;
   setAlert: Function;
+  modal: boolean;
+  setModal: Function;
 }
 
 type CombinedProps = GridProps & AdditionalProps;
@@ -29,13 +38,13 @@ export type CellKeys = {
   status: string | number | null | undefined;
 }
 
-const Grid = ({ alert, setAlert, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: CombinedProps) => {
-  const [modal, setModal] = useState<boolean>(false);
+const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset, alert, setAlert, modal, setModal, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: CombinedProps) => {
 
   useEffect(() => {
     if (alert) {
       setModal(true);
     }
+    // eslint-disable-next-line
   }, [alert])
 
   const toggleModal = (): void => {
@@ -66,6 +75,7 @@ const Grid = ({ alert, setAlert, garden, setGarden, bullDoze, setBullDoze, filte
   return (
     <section id='grid'>
       {cells}
+      {popUp && <ConfirmModal setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} setAlert={setAlert} />}
       {modal && <Modal alert={alert} bullDoze={bullDoze} filterGarden={filterGarden} toggleModal={toggleModal} />}
     </section>
   );

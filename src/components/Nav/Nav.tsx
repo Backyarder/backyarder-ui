@@ -1,25 +1,14 @@
-import { useState } from 'react';
-import { deleteContents } from '../../apiCalls';
 import './Nav.scss';
 
 type NavProps = {
-  setAlert: Function;
+  reset: Function;
+  handleFullClear: () => void;
+  handlePartialClear: () => void;
   isGardenView: boolean;
   setIsGardenView: Function;
-  setBullDoze: Function;
-  setFilterGarden: Function;
 }
 
-const Nav = ({ setAlert, isGardenView, setIsGardenView, setBullDoze, setFilterGarden }: NavProps) => {
-  const [popUp, setPopUp] = useState<boolean>(false);
-  const [fullClear, setFullClear] = useState<boolean>(false);
-  const [partialClear, setPartialClear] = useState<boolean>(false);
-
-  const reset = (): void => {
-    setPopUp(false);
-    setFullClear(false);
-    setPartialClear(false);
-  }
+const Nav = ({ reset, handleFullClear, handlePartialClear, isGardenView, setIsGardenView }: NavProps) => {
 
   const toggleView = (): void => {
     setIsGardenView(!isGardenView);
@@ -28,27 +17,6 @@ const Nav = ({ setAlert, isGardenView, setIsGardenView, setBullDoze, setFilterGa
 
   const handleWaterAll = (): void => {
     console.log('watered yo')
-  }
-
-  const handleFullClear = (): void => {
-    setPopUp(true);
-    setFullClear(true);
-    setPartialClear(false);
-  }
-
-  const handlePartialClear = (): void => {
-    setPopUp(true);
-    setPartialClear(true);
-    setFullClear(false);
-  }
-
-  const handleDelete = (): void => {
-    if (fullClear) {
-      deleteContents('all', setBullDoze, setAlert);
-    } else {
-      deleteContents('garden', setFilterGarden, setAlert);
-    }
-    reset();
   }
 
   return (
@@ -104,16 +72,6 @@ const Nav = ({ setAlert, isGardenView, setIsGardenView, setBullDoze, setFilterGa
           <button className='clear-button' onClick={handlePartialClear} ><span className="material-symbols-rounded nav-icon">
             agriculture
           </span>REMOVE UNPLANTED ITEMS</button>
-          {popUp &&
-            <div className='pop-up'>
-              {fullClear && <p className='confirm-message'>Are you sure you wish to clear your garden? This action cannot be undone.</p>}
-              {partialClear && <p className='confirm-message'>Are you sure you wish to remove your unplanted items? This action cannot be undone.</p>}
-              <div className='pop-up-button-container'>
-                <button className='pop-up-button' onClick={handleDelete} >YES</button>
-                <button className='pop-up-button' onClick={reset} >NO</button>
-              </div>
-            </div>
-          }
         </>
       }
     </nav>

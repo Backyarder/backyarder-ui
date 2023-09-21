@@ -21,7 +21,12 @@ export interface PlantAttributes {
   type: string
 }
 
-const Sidebar = () => {
+interface SideBarProps {
+  modal: boolean;
+  setModal: Function;
+}
+
+const Sidebar = ({ modal, setModal }: SideBarProps) => {
   const [plantList, setPlantList] = useState<PlantData[]>([])
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('')
@@ -52,7 +57,7 @@ const Sidebar = () => {
         ? plant.attributes.image
         : `${process.env.PUBLIC_URL}/images/plant-fallback.png`
       plant.attributes.image = plantImage
-      return <Card plant={plant.attributes} key={plant.attributes.plant_id} />
+      return <Card plant={plant.attributes} modal={modal} setModal={setModal} key={plant.attributes.plant_id} />
     })
   } else {
     cards = <p className="loading">Hmmm... there are no plants in our nursery matching your search.</p>

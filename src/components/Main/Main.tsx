@@ -16,10 +16,15 @@ type GetGardenKeys = {
 
 const Main = () => {
   const [alert, setAlert] = useState<boolean>(false);
+  const [modal, setModal] = useState<boolean>(false);
   const [garden, setGarden] = useState<GardenKeys | undefined>([]);
   const [isGardenView, setIsGardenView] = useState<boolean>(true);
   const [bullDoze, setBullDoze] = useState<boolean>(false);
   const [filterGarden, setFilterGarden] = useState<boolean>(false);
+  const [popUp, setPopUp] = useState<boolean>(false);
+  const [fullClear, setFullClear] = useState<boolean>(false);
+  // eslint-disable-next-line
+  const [partialClear, setPartialClear] = useState<boolean>(false);
   const [isDesktop, setIsDesktop] = useState<boolean>(true)
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('')
@@ -56,6 +61,24 @@ const Main = () => {
     setApiError(error)
   }
 
+  const reset = (): void => {
+    setPopUp(false);
+    setFullClear(false);
+    setPartialClear(false);
+  }
+
+  const handleFullClear = (): void => {
+    setPopUp(true);
+    setFullClear(true);
+    setPartialClear(false);
+  }
+
+  const handlePartialClear = (): void => {
+    setPopUp(true);
+    setPartialClear(true);
+    setFullClear(false);
+  }
+
   return (
     <>
       {apiError ? (
@@ -68,9 +91,9 @@ const Main = () => {
         <main>
           {isDesktop ?
             <>
-              <Sidebar />
-              {isGardenView ? <Grid alert={alert} setAlert={setAlert} garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
-              <Nav setAlert={setAlert} isGardenView={isGardenView} setIsGardenView={setIsGardenView} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} />
+              <Sidebar modal={modal} setModal={setModal} />
+              {isGardenView ? <Grid popUp={popUp} setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} alert={alert} setAlert={setAlert} modal={modal} setModal={setModal} garden={garden} setGarden={setGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} /> : <List garden={garden} />}
+              <Nav reset={reset} handleFullClear={handleFullClear} handlePartialClear={handlePartialClear} isGardenView={isGardenView} setIsGardenView={setIsGardenView} />
             </>
             : <div className="mobile-message">
                 Please switch to a larger device to use this app.

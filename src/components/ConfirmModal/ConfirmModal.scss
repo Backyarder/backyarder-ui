@@ -1,4 +1,4 @@
-.modal-overlay {
+.confirm-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-.modal {
+.confirm-modal {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,21 +23,23 @@
   min-width: 17vw;
 }
 
-.modal-text {
+.confirm-message {
   text-align: center;
 }
 
-.modal-icon{
-  margin-bottom: 0.5em;
+.pop-up-button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.modal-button {
+.pop-up-button {
   border: none;
   border-radius: 1em;
   background-color: #af2268;
   color: #f4f4f4;
   cursor: pointer;
   padding: 0.5em;
-  width: 80%;
+  width: 30%;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.4);
 }
