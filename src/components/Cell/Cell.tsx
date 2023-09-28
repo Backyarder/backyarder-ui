@@ -70,8 +70,8 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       const today = Date.now() + new Date(cellContents?.plant.updated_at).getTimezoneOffset() * 60 * 1000
       const daysToAdd = WATERING_SCHEDULE[cellContents?.plant.watering]
       const nextWatering = new Date(cellContents?.plant.updated_at).getTime() + (daysToAdd * 24 * 60 * 60 * 1000)
-      // console.log(cellContents?.plant.updated_at)
-      // console.log(today, nextWatering)
+      console.log(cellContents?.plant.updated_at)
+      console.log(today, nextWatering)
       if (today > nextWatering) {
         setNeedsWatering(true);
       }
@@ -202,8 +202,16 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     setShouldRender(true);
   }
 
-  const handleWatered = () => {
-    setIsWatered(true)
+  const handleWatered = async () => {
+    if (cellContents) {
+      try {
+        await patchCellContents(cellContents, id, 'placed', cellContents?.plant?.watering)
+        await patchCellContents(cellContents, id, 'locked', cellContents?.plant?.watering)
+        setNeedsWatering(false)
+      } catch (err) {
+          handleApiError(err as string)
+      }
+    }
   }
 
   const handleRemove = () => {
