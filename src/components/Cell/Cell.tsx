@@ -27,7 +27,7 @@ const WATERING_SCHEDULE = {
   'Frequent': 1 / (24 * 60 * 60) // 1sec
 }
 
-const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
+const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
   // eslint-disable-next-line
@@ -37,7 +37,6 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
-  // eslint-disable-next-line
   const [needsWatering, setNeedsWatering] = useState<boolean>(false);
   // eslint-disable-next-line
   const [isWatered, setIsWatered] = useState<boolean>(false);
@@ -77,6 +76,11 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
       }
     }
   }, [cellContents, isPlanted])
+
+  useEffect(() => {
+    handleWatered()
+    // eslint-disable-next-line
+  }, [waterGarden])
 
   useEffect(() => {
     if (cellContents && needsUpdate) {

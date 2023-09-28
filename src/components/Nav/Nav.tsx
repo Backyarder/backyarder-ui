@@ -2,13 +2,15 @@ import './Nav.scss';
 
 type NavProps = {
   reset: Function;
+  waterGarden: boolean;
+  setWaterGarden: Function;
   handleFullClear: () => void;
   handlePartialClear: () => void;
   isGardenView: boolean;
   setIsGardenView: Function;
 }
 
-const Nav = ({ reset, handleFullClear, handlePartialClear, isGardenView, setIsGardenView }: NavProps) => {
+const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartialClear, isGardenView, setIsGardenView }: NavProps) => {
 
   const toggleView = (): void => {
     setIsGardenView(!isGardenView);
@@ -16,7 +18,7 @@ const Nav = ({ reset, handleFullClear, handlePartialClear, isGardenView, setIsGa
   }
 
   const handleWaterAll = (): void => {
-    console.log('watered yo')
+    setWaterGarden(!waterGarden)
   }
 
   return (

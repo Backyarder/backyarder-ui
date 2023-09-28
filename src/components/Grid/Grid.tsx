@@ -10,6 +10,7 @@ import { WateringType } from '../../apiCalls';
 export interface GridProps {
   garden: GardenKeys | undefined;
   setGarden: Function;
+  waterGarden: boolean;
   bullDoze: boolean;
   setBullDoze: Function;
   filterGarden: boolean;
@@ -41,7 +42,7 @@ export type CellKeys = {
   updated_at: number | undefined;
 }
 
-const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset, alert, setAlert, modal, setModal, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: CombinedProps) => {
+const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset, alert, setAlert, modal, setModal, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: CombinedProps) => {
 
   useEffect(() => {
     if (alert) {
@@ -66,6 +67,7 @@ const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset
         id={cellIDs[i].id}
         garden={garden}
         setGarden={setGarden}
+        waterGarden={waterGarden}
         bullDoze={bullDoze}
         setBullDoze={setBullDoze}
         filterGarden={filterGarden}
