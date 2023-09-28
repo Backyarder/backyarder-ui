@@ -67,11 +67,11 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
 
   useEffect(() => {
     if (isPlanted && cellContents?.plant.watering && cellContents?.plant.watering !== 'None' && typeof cellContents?.plant.updated_at !== 'undefined') {
-      const today = Date.now() + 14400000  //for some reason I have to add 4 hours to get the correct time
+      const today = Date.now() + new Date(cellContents?.plant.updated_at).getTimezoneOffset() * 60 * 1000
       const daysToAdd = WATERING_SCHEDULE[cellContents?.plant.watering]
       const nextWatering = new Date(cellContents?.plant.updated_at).getTime() + (daysToAdd * 24 * 60 * 60 * 1000)
-      console.log(cellContents?.plant.updated_at)
-      console.log(today, nextWatering)
+      // console.log(cellContents?.plant.updated_at)
+      // console.log(today, nextWatering)
       if (today > nextWatering) {
         setNeedsWatering(true);
       }
