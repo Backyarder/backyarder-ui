@@ -5,6 +5,7 @@ import { GardenKeys } from '../Main/Main';
 import { cellIDs } from './cellIDs';
 import './Grid.scss';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
+import { WateringType } from '../../apiCalls';
 
 export interface GridProps {
   garden: GardenKeys | undefined;
@@ -35,7 +36,9 @@ export type CellKeys = {
   image: string | undefined;
   plant_name: string | undefined;
   plant_id: number | undefined;
+  watering: keyof WateringType
   status: string | number | null | undefined;
+  updated_at: number | undefined;
 }
 
 const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset, alert, setAlert, modal, setModal, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: CombinedProps) => {
@@ -71,7 +74,7 @@ const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset
       />
     );
   });
-
+  console.log(garden)
   return (
     <section id='grid'>
       {cells}

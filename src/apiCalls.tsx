@@ -9,7 +9,7 @@ const handleError = (res: Response) => {
 
 const getPlantList = () => {
     return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants`, {
-      cache: 'force-cache',
+      // cache: 'force-cache',
     })
       .then(res => handleError(res))
 }
@@ -21,7 +21,7 @@ const getGarden = () => {
 
 const searchPlants = (searchterm: string) => {
   return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/search/${searchterm}`, {
-    cache: 'force-cache'
+    // cache: 'force-cache'
   })
     .then(res => handleError(res))
 }
@@ -47,7 +47,21 @@ const STATUS_MAP: StatusType = {
   'locked': 3
 }
 
-const patchCellContents = ({plant}: CellContents, id: string, status: keyof StatusType) => {
+export type WateringType = {
+  'None': number | undefined
+  'Minimum': number | undefined
+  'Average': number | undefined
+  'Frequent': number | undefined
+}
+
+const WATERING_MAP: WateringType = {
+  'None': 0,
+  'Minimum': 1,
+  'Average': 2,
+  'Frequent': 3
+}
+
+const patchCellContents = ({plant}: CellContents, id: string, status: keyof StatusType, watering: keyof WateringType) => {
   return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell`, {
             method: 'PATCH',
             body: JSON.stringify({
@@ -55,6 +69,7 @@ const patchCellContents = ({plant}: CellContents, id: string, status: keyof Stat
               location_id: id,
               image: plant.image,
               status: STATUS_MAP[`${status}`],
+              watering: WATERING_MAP[`${watering}`],
               plant_id: plant.plant_id
             }),
             headers: {
