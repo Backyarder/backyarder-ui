@@ -15,7 +15,19 @@ export interface CellContents {
   plant: CellKeys;
 }
 
-const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
+// const WATERING_SCHEDULE = {
+//   'Minimum': 7,
+//   'Average': 3,
+//   'Frequent': 1
+// }
+
+const WATERING_SCHEDULE = {
+  'Minimum': 1 / (24),           // 1hr
+  'Average': 1 / (24 * 60),      // 1min
+  'Frequent': 1 / (24 * 60 * 60) // 1sec
+}
+
+const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
   // eslint-disable-next-line
@@ -25,7 +37,6 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isPlanted, setIsPlanted] = useState<boolean>(false);
-  // eslint-disable-next-line
   const [needsWatering, setNeedsWatering] = useState<boolean>(false);
   // eslint-disable-next-line
   const [isWatered, setIsWatered] = useState<boolean>(false);
@@ -36,7 +47,6 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
   useEffect(() => {
     if (garden) {
       const foundCell = garden.find(cell => cell.location_id === id);
-      console.log(id)
       if (foundCell?.status === 'placed') {
         setCellContents({ plant: foundCell });
         setIsPopulated(true);
@@ -48,17 +58,33 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
         setIsPopulated(true);
         setIsPlanted(true);
       }
-      // if (id === 'H5'){
-      // setNeedsWatering(true) // uncomment to test needsWatering behavior
-      // }
+
       setCell(foundCell);
     }
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
+    if (isPlanted && cellContents?.plant.watering && cellContents?.plant.watering !== 'None' && typeof cellContents?.plant.updated_at !== 'undefined') {
+      const today = Date.now() + new Date(cellContents?.plant.updated_at).getTimezoneOffset() * 60 * 1000
+      const daysToAdd = WATERING_SCHEDULE[cellContents?.plant.watering]
+      const nextWatering = new Date(cellContents?.plant.updated_at).getTime() + (daysToAdd * 24 * 60 * 60 * 1000)
+      console.log(cellContents?.plant.updated_at)
+      console.log(today, nextWatering)
+      if (today > nextWatering) {
+        setNeedsWatering(true);
+      }
+    }
+  }, [cellContents, isPlanted])
+
+  useEffect(() => {
+    handleWatered()
+    // eslint-disable-next-line
+  }, [waterGarden])
+
+  useEffect(() => {
     if (cellContents && needsUpdate) {
-      patchCellContents(cellContents, id, needsUpdate)
+      patchCellContents(cellContents, id, needsUpdate, cellContents?.plant?.watering)
         .catch((err) => {
           handleApiError(err);
         });
@@ -180,8 +206,16 @@ const Cell = ({ id, garden, setGarden, bullDoze, setBullDoze, filterGarden, setF
     setShouldRender(true);
   }
 
-  const handleWatered = () => {
-    setIsWatered(true)
+  const handleWatered = async () => {
+    if (cellContents) {
+      try {
+        await patchCellContents(cellContents, id, 'placed', cellContents?.plant?.watering)
+        await patchCellContents(cellContents, id, 'locked', cellContents?.plant?.watering)
+        setNeedsWatering(false)
+      } catch (err) {
+          handleApiError(err as string)
+      }
+    }
   }
 
   const handleRemove = () => {
