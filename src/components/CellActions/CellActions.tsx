@@ -21,7 +21,7 @@ const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handle
         if (target.classList.contains('plant-button')) {
             handlePlanted()
             handleNeedsUpdating('locked')
-        } else if (target.classList.contains('water-button')) {
+        } else if (target.classList.contains('water-button') || target.classList.contains('icon')) {
             handleWatered()
         } else if (target.classList.contains('remove-button')) {
             handleRemove()
@@ -41,13 +41,13 @@ const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handle
                 {isPlanted
                     ? <button className='cell-button water-button' onClick={handleClick}>
                         Water!
-                        <span className="material-symbols-rounded plant-icon plant-button">
+                        <span className="material-symbols-rounded icon">
                             water_drop
                         </span>
                     </button>
                     : <button className='cell-button plant-button' onClick={handleClick}>
                         Plant!
-                        <span className="material-symbols-rounded plant-icon plant-button">
+                        <span className="material-symbols-rounded icon plant-button">
                             psychiatry
                         </span>
                     </button>
