@@ -30,8 +30,6 @@ const WATERING_SCHEDULE = {
 const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
-  // eslint-disable-next-line
-  const [cell, setCell] = useState<CellKeys | undefined>();
   const [cellContents, setCellContents] = useState<CellContents | undefined>();
   const [className, setClassName] = useState<string>('cell');
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -58,8 +56,6 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
         setIsPopulated(true);
         setIsPlanted(true);
       }
-
-      setCell(foundCell);
     }
     // eslint-disable-next-line
   }, []);
@@ -70,7 +66,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
       const daysToAdd = WATERING_SCHEDULE[cellContents?.plant.watering]
       const nextWatering = new Date(cellContents?.plant.updated_at).getTime() + (daysToAdd * 24 * 60 * 60 * 1000)
       console.log(cellContents?.plant.updated_at)
-      console.log(today, nextWatering)
+      console.log('today', today, 'nextwatering', nextWatering)
       if (today > nextWatering) {
         setNeedsWatering(true);
       }
@@ -224,6 +220,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
     setCellContents(undefined);
     handleNeedsUpdating('empty');
     setShouldRender(true);
+    setNeedsWatering(false);
   }
 
   const handleCloseModal = () => {
@@ -254,6 +251,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
     setCellContents(undefined);
     setIsPopulated(false);
     setIsPlanted(false);
+    setNeedsWatering(false);
   }
 
   const handleUnplanted = (): void => {
