@@ -54,15 +54,18 @@ const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handle
                         </span>
                     </button>
                 }
-                <NavLink to={`/plants/${plantId}`} className='cell-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded">
-                    menu_book
-                </span></NavLink>
-                <button className='cell-button remove-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded remove-button">
-                    delete
-                </span></button>
-                <button className='close-modal cell-button' onClick={handleClick}><span className="material-symbols-rounded">
-                    close
-                </span></button>
+                <NavLink to={`/plants/${plantId}`} className='cell-button' onClick={handleClick}>
+                    <span onClick={handleClick} className="material-symbols-rounded">menu_book</span>
+                    <span className='cell-action-tooltip-text'>Plant details</span>
+                </NavLink>
+                <button className='cell-button remove-button' onClick={handleClick}>
+                    <span onClick={handleClick} className="material-symbols-rounded remove-button">delete</span>
+                    <span className='cell-action-tooltip-text'>Remove from garden</span>
+                </button>
+                <button className='close-modal cell-button' onClick={handleClick}>
+                    <span className="material-symbols-rounded">close</span>
+                    <span className='cell-action-tooltip-text'>Close</span>
+                </button>
             </div>
         </div>
     )

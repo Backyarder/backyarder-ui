@@ -90,7 +90,7 @@
   left: 50%;
   transform: translate(-50%);
   white-space: nowrap;
-  opacity: 0; /* Start with opacity set to 0 */
+  opacity: 0;
   transition: opacity 0.3s ease;
   z-index: 9999;
 }
