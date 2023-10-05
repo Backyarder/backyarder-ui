@@ -5,7 +5,6 @@ import { CellKeys, GridProps } from '../Grid/Grid';
 import CellActions from '../CellActions/CellActions';
 import { patchCellContents, patchDisabledOrRemoved, StatusType } from '../../apiCalls';
 import './Cell.scss'
-import { set } from 'cypress/types/lodash';
 
 interface GridCell extends GridProps {
   id: string;
