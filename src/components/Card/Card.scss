@@ -48,6 +48,8 @@
 
 .tooltip-text {
     visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
     font-size: small;
     font-family: 'Arial';
     width: fit-content;
@@ -63,4 +65,5 @@
 
 .card-icon:hover .tooltip-text {
     visibility: visible;
+    opacity: 1;
 }
