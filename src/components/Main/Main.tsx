@@ -70,6 +70,7 @@ const Main = () => {
         (lastUpdate as Record<string, string>)[key] = '10/10/2000 10:10';
       }
     }
+    // eslint-disable-next-line
   }, []);
 
   const handleApiError = (error: string) => {
