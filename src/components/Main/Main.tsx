@@ -29,6 +29,7 @@ const Main = () => {
   const [isDesktop, setIsDesktop] = useState<boolean>(true);
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
+  const [lastUpdate, setLastUpdate] = useState<string>('');
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -95,7 +96,7 @@ const Main = () => {
               <Sidebar modal={modal} setModal={setModal} />
               {
                 isGardenView
-                ? <Grid popUp={popUp} setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} alert={alert} setAlert={setAlert} modal={modal} setModal={setModal} garden={garden} setGarden={setGarden} waterGarden={waterGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} />
+                ? <Grid popUp={popUp} setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} alert={alert} setAlert={setAlert} modal={modal} setModal={setModal} garden={garden} setGarden={setGarden} waterGarden={waterGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} lastUpdate={lastUpdate} setLastUpdate={setLastUpdate}/>
                 : <List garden={garden} />
               }
               <Nav reset={reset} waterGarden={waterGarden} setWaterGarden={setWaterGarden} handleFullClear={handleFullClear} handlePartialClear={handlePartialClear} isGardenView={isGardenView} setIsGardenView={setIsGardenView} />

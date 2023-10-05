@@ -27,7 +27,7 @@ const WATERING_SCHEDULE = {
   'Frequent': 1 / (24 * 60 * 60) // 1sec
 }
 
-const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
+const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
   const [cellContents, setCellContents] = useState<CellContents | undefined>();
@@ -41,7 +41,6 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   const [isPopulated, setIsPopulated] = useState<boolean>(false);
   const [needsUpdate, setNeedsUpdate] = useState<(keyof StatusType)>();
   const [shouldRender, setShouldRender] = useState<boolean>(false);
-  const [lastUpdate, setLastUpdate] = useState<string>('');
 
   useEffect(() => {
     if (garden) {
@@ -69,6 +68,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
       let now = Date.now() + (new Date().getTimezoneOffset() * 60 * 1000);
       let lastUpdateAdjusted = convertTime(lastUpdate);
       let interval = WATERING_SCHEDULE[cellContents?.plant.watering] * 24 * 60 * 60 * 1000;
+      // console.log('now', new Date(now), 'last', new Date(lastUpdateAdjusted))
       if ((now - lastUpdateAdjusted) >= interval) {
         setNeedsWatering(true);
       }
