@@ -76,7 +76,7 @@ const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset
       />
     );
   });
-  console.log(garden)
+
   return (
     <section id='grid'>
       {cells}
