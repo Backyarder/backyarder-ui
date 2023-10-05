@@ -3,7 +3,7 @@ import { useDrop, useDrag, DragPreviewImage } from 'react-dnd';
 import { GardenKeys } from '../Main/Main';
 import { CellKeys, GridProps } from '../Grid/Grid';
 import CellActions from '../CellActions/CellActions';
-import { patchCellContents, patchDisabledOrRemoved, StatusType } from '../../apiCalls';
+import { patchCellContents, patchDisabledOrRemoved, StatusType, WateringType } from '../../apiCalls';
 import './Cell.scss'
 
 interface GridCell extends GridProps {
@@ -27,11 +27,9 @@ const WATERING_SCHEDULE = {
   'Frequent': 1 / (24 * 60 * 60) // 1sec
 }
 
-const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
+const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
-  // eslint-disable-next-line
-  const [cell, setCell] = useState<CellKeys | undefined>();
   const [cellContents, setCellContents] = useState<CellContents | undefined>();
   const [className, setClassName] = useState<string>('cell');
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -59,23 +57,27 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
         setIsPopulated(true);
         setIsPlanted(true);
       }
-
-      setCell(foundCell);
+      if (foundCell && foundCell.updated_at) {
+        let updateValue = convertTime(lastUpdate[foundCell.location_id]) > convertTime(foundCell.updated_at) ? lastUpdate[foundCell.location_id] : foundCell.updated_at;
+        handleUpdate(foundCell.location_id, updateValue);
+      }
     }
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if (isPlanted && cellContents?.plant.watering && cellContents?.plant.watering !== 'None' && typeof cellContents?.plant.updated_at !== 'undefined') {
-      const today = Date.now() + new Date(cellContents?.plant.updated_at).getTimezoneOffset() * 60 * 1000
-      const daysToAdd = WATERING_SCHEDULE[cellContents?.plant.watering]
-      const nextWatering = new Date(cellContents?.plant.updated_at).getTime() + (daysToAdd * 24 * 60 * 60 * 1000)
-      console.log(cellContents?.plant.updated_at)
-      console.log(today, nextWatering)
-      if (today > nextWatering) {
+    if (isPlanted && cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None' && typeof cellContents.plant.updated_at !== 'undefined') {
+      let now = Date.now() + (new Date().getTimezoneOffset() * 60 * 1000);
+      let lastUpdateAdjusted = convertTime(lastUpdate[cellContents.plant.location_id]);
+      let interval = WATERING_SCHEDULE[cellContents?.plant.watering] * 24 * 60 * 60 * 1000;
+      if ((now - lastUpdateAdjusted) >= interval) {
         setNeedsWatering(true);
       }
+      setTimeout(() => {
+        setNeedsWatering(true);
+      }, interval - (now-lastUpdateAdjusted));
     }
+    // eslint-disable-next-line
   }, [cellContents, isPlanted])
 
   useEffect(() => {
@@ -85,7 +87,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
 
   useEffect(() => {
     if (cellContents && needsUpdate) {
-      patchCellContents(cellContents, id, needsUpdate, cellContents?.plant?.watering)
+      patchCellContents(cellContents, id, needsUpdate, cellContents.plant.watering)
         .catch((err) => {
           handleApiError(err);
         });
@@ -104,28 +106,30 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   }, [isDisabled, cellContents === undefined]);
 
   useEffect(() => {
-    if (shouldRender) {
-      handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, isDisabled ? 'disabled' : 'empty');
+    if (shouldRender && cellContents) {
+      handleGarden(id, cellContents.plant.image, cellContents.plant.plant_name, cellContents.plant.plant_id, isDisabled ? 'disabled' : 'empty', cellContents.plant.watering, handleTime());
       setShouldRender(false);
     }
     // eslint-disable-next-line
   }, [isDisabled]);
 
   useEffect(() => {
-    if (shouldRender) {
-      handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, isPopulated ? 'placed' : 'empty');
+    if (shouldRender && cellContents) {
+      handleGarden(id, cellContents.plant.image, cellContents.plant.plant_name, cellContents.plant.plant_id, isPopulated ? 'placed' : 'empty', cellContents.plant.watering, handleTime());
     }
     setShouldRender(false);
     // eslint-disable-next-line
   }, [isPopulated]);
 
   useEffect(() => {
-    if (shouldRender && isPlanted) {
-      handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, 'locked');
-    } else if (shouldRender && isPopulated) {
-      handleGarden(id, cellContents?.plant.image, cellContents?.plant.plant_name, cellContents?.plant.plant_id, 'placed');
+    if (shouldRender && isPlanted && cellContents) {
+      handleGarden(id, cellContents.plant.image, cellContents.plant.plant_name, cellContents.plant.plant_id, 'locked', cellContents.plant.watering, handleTime());
+      setNeedsWatering(false);
+      handleWatered();
+    } else if (shouldRender && isPopulated && cellContents) {
+      handleGarden(id, cellContents.plant.image, cellContents.plant.plant_name, cellContents.plant.plant_id, 'placed', cellContents.plant.watering, handleTime());
     } else if (shouldRender && !isPopulated) {
-      handleGarden(id, undefined, undefined, undefined, 'empty');
+      handleGarden(id, undefined, undefined, undefined, 'empty', 'None', handleTime());
     }
     setShouldRender(false);
     // eslint-disable-next-line
@@ -136,11 +140,11 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
       setClassName('cell');
       handleEmptyCells();
       setBullDoze(false);
-      handleGarden(id, undefined, undefined, undefined, 'empty');
+      handleGarden(id, undefined, undefined, undefined, 'empty', 'None', handleTime());
     } else if (filterGarden && !isPlanted && !isDisabled) {
       handleUnplanted();
       setFilterGarden(false);
-      handleGarden(id, undefined, undefined, undefined, 'empty');
+      handleGarden(id, undefined, undefined, undefined, 'empty', 'None', handleTime());
     }
     // eslint-disable-next-line
   }, [bullDoze, filterGarden]);
@@ -187,7 +191,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
     setApiError(error);
   }
 
-  const handleGarden = (id: string, image: string | undefined, name: string | undefined, plant_id: number | undefined, status: string) => {
+  const handleGarden = (id: string, image: string | undefined, name: string | undefined, plant_id: number | undefined, status: string, watering: keyof WateringType, updated_at: string) => {
     setGarden((prevState: GardenKeys) => {
       let index = prevState?.findIndex((item) => item.location_id === id);
       let newState = [...prevState];
@@ -195,12 +199,39 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
         ...newState[index],
         image: image,
         plant_name: name,
-        'plant_id': plant_id,
-        status: status
+        plant_id: plant_id,
+        status: status,
+        watering: watering,
+        updated_at: updated_at
       };
       return newState;
     });
   }
+
+  const handleUpdate = (key: string, value: string) => {
+    setLastUpdate((prevState: {}) => ({
+      ...prevState,
+      [key]: value,
+    }));
+  }
+
+  const handleTime = () => {
+    let now = new Date(Date.now() + new Date().getTimezoneOffset() * 60 * 1000);
+    let year = now.getFullYear();
+    let month = String(now.getMonth() + 1).padStart(2, '0');
+    let day = String(now.getDate()).padStart(2, '0');
+    let hours = String(now.getHours()).padStart(2, '0');
+    let minutes = String(now.getMinutes()).padStart(2, '0');
+    return `${month}/${day}/${year}  ${hours}:${minutes}`;
+  }
+
+  const convertTime = (dateString: string) => {
+    let [datePart, timePart] = dateString.charAt(11) === ' ' ? dateString.split('  ') : dateString.split(' ');
+    let [month, day, year] = datePart.split('/').map(Number);
+    let [hours, minutes] = timePart.split(':').map(Number);
+    let timestamp = new Date(year, month - 1, day, hours, minutes).getTime();
+    return timestamp;
+  } 
 
   const handlePlanted = () => {
     setIsPlanted(true);
@@ -208,11 +239,16 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   }
 
   const handleWatered = async () => {
-    if (cellContents) {
+    if (cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None') {
       try {
-        await patchCellContents(cellContents, id, 'placed', cellContents?.plant?.watering)
-        await patchCellContents(cellContents, id, 'locked', cellContents?.plant?.watering)
-        setNeedsWatering(false)
+        await patchCellContents(cellContents, id, 'placed', cellContents.plant.watering)
+        await patchCellContents(cellContents, id, 'locked', cellContents.plant.watering)
+        handleUpdate(cellContents.plant.location_id, handleTime());
+        setNeedsWatering(false);
+        let interval = WATERING_SCHEDULE[cellContents.plant.watering] * 24 * 60 * 60 * 1000;
+        setTimeout(() => {
+          setNeedsWatering(true);
+        }, interval);
       } catch (err) {
           handleApiError(err as string)
       }
@@ -225,6 +261,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
     setCellContents(undefined);
     handleNeedsUpdating('empty');
     setShouldRender(true);
+    setNeedsWatering(false);
   }
 
   const handleCloseModal = () => {
@@ -256,6 +293,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
     setCellContents(undefined);
     setIsPopulated(false);
     setIsPlanted(false);
+    setNeedsWatering(false);
   }
 
   const handleUnplanted = (): void => {

@@ -14,6 +14,10 @@ type GetGardenKeys = {
   attributes: CellKeys[]
 }
 
+export type lastUpdateType = {
+  [key: string]: string;
+}
+
 const Main = () => {
   const [alert, setAlert] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
@@ -26,9 +30,10 @@ const Main = () => {
   const [fullClear, setFullClear] = useState<boolean>(false);
   // eslint-disable-next-line
   const [partialClear, setPartialClear] = useState<boolean>(false);
-  const [isDesktop, setIsDesktop] = useState<boolean>(true)
+  const [isDesktop, setIsDesktop] = useState<boolean>(true);
   // eslint-disable-next-line
-  const [apiError, setApiError] = useState<string>('')
+  const [apiError, setApiError] = useState<string>('');
+  const [lastUpdate, setLastUpdate] = useState<lastUpdateType>({});
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -56,6 +61,16 @@ const Main = () => {
       .catch((err) => {
         handleApiError(err)
       })
+  }, []);
+
+  useEffect(() => {
+    for (let letter = 'A'.charCodeAt(0); letter <= 'J'.charCodeAt(0); letter++) {
+      for (let number = 1; number <= 10; number++) {
+        const key = String.fromCharCode(letter) + number;
+        (lastUpdate as Record<string, string>)[key] = '10/10/2000 10:10';
+      }
+    }
+    // eslint-disable-next-line
   }, []);
 
   const handleApiError = (error: string) => {
@@ -95,7 +110,7 @@ const Main = () => {
               <Sidebar modal={modal} setModal={setModal} />
               {
                 isGardenView
-                ? <Grid popUp={popUp} setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} alert={alert} setAlert={setAlert} modal={modal} setModal={setModal} garden={garden} setGarden={setGarden} waterGarden={waterGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} />
+                ? <Grid popUp={popUp} setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} alert={alert} setAlert={setAlert} modal={modal} setModal={setModal} garden={garden} setGarden={setGarden} waterGarden={waterGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} lastUpdate={lastUpdate} setLastUpdate={setLastUpdate}/>
                 : <List garden={garden} />
               }
               <Nav reset={reset} waterGarden={waterGarden} setWaterGarden={setWaterGarden} handleFullClear={handleFullClear} handlePartialClear={handlePartialClear} isGardenView={isGardenView} setIsGardenView={setIsGardenView} />

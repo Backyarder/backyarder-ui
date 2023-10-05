@@ -77,6 +77,7 @@ const patchCellContents = ({plant}: CellContents, id: string, status: keyof Stat
             }
           })
           .then(res => handleError(res))
+          // .then(data => setter(data.data.attributes["updated_at"]))
 }
 
 const patchDisabledOrRemoved = (id: string, status: keyof StatusType) => {
@@ -87,6 +88,7 @@ const patchDisabledOrRemoved = (id: string, status: keyof StatusType) => {
               location_id: id,
               image: null,
               status: STATUS_MAP[`${status}`],
+              watering: 'None',
               plant_id: null
             }),
             headers: {
