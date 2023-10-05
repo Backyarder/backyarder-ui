@@ -27,7 +27,7 @@ const WATERING_SCHEDULE = {
   'Frequent': 1 / (24 * 60 * 60) // 1sec
 }
 
-const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, isToggled }: GridCell) => {
+const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal }: GridCell) => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
   const [cellContents, setCellContents] = useState<CellContents | undefined>();
@@ -67,7 +67,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   useEffect(() => {
     if (isPlanted && cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None' && typeof cellContents.plant.updated_at !== 'undefined') {
       let now = Date.now() + (new Date().getTimezoneOffset() * 60 * 1000);
-      let lastUpdateAdjusted = isToggled ? convertTime(lastUpdate) + (new Date().getTimezoneOffset() * 60 * 1000) : convertTime(lastUpdate);
+      let lastUpdateAdjusted = convertTime(lastUpdate);
       let interval = WATERING_SCHEDULE[cellContents?.plant.watering] * 24 * 60 * 60 * 1000;
       if ((now - lastUpdateAdjusted) >= interval) {
         setNeedsWatering(true);
@@ -76,6 +76,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
         setNeedsWatering(true);
       }, interval - (now-lastUpdateAdjusted));
     }
+    // eslint-disable-next-line
   }, [cellContents, isPlanted])
 
   useEffect(() => {

@@ -29,7 +29,6 @@ const Main = () => {
   const [isDesktop, setIsDesktop] = useState<boolean>(true);
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
-  const [isToggled, setIsToggled] = useState<boolean>(false);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -96,10 +95,10 @@ const Main = () => {
               <Sidebar modal={modal} setModal={setModal} />
               {
                 isGardenView
-                ? <Grid popUp={popUp} setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} alert={alert} setAlert={setAlert} modal={modal} setModal={setModal} garden={garden} setGarden={setGarden} waterGarden={waterGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} isToggled={isToggled} />
+                ? <Grid popUp={popUp} setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} alert={alert} setAlert={setAlert} modal={modal} setModal={setModal} garden={garden} setGarden={setGarden} waterGarden={waterGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} />
                 : <List garden={garden} />
               }
-              <Nav reset={reset} waterGarden={waterGarden} setWaterGarden={setWaterGarden} handleFullClear={handleFullClear} handlePartialClear={handlePartialClear} isGardenView={isGardenView} setIsGardenView={setIsGardenView} setIsToggled={setIsToggled} />
+              <Nav reset={reset} waterGarden={waterGarden} setWaterGarden={setWaterGarden} handleFullClear={handleFullClear} handlePartialClear={handlePartialClear} isGardenView={isGardenView} setIsGardenView={setIsGardenView} />
             </>
             : <div className="mobile-message">
                 Please switch to a larger device to use this app.
