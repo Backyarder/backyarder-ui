@@ -57,7 +57,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
         setIsPlanted(true);
       }
       if (foundCell && foundCell.updated_at) {
-        setLastUpdate(foundCell.updated_at);
+        handleUpdate(foundCell.location_id, foundCell.updated_at);
       }
     }
     // eslint-disable-next-line
@@ -66,9 +66,9 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   useEffect(() => {
     if (isPlanted && cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None' && typeof cellContents.plant.updated_at !== 'undefined') {
       let now = Date.now() + (new Date().getTimezoneOffset() * 60 * 1000);
-      let lastUpdateAdjusted = convertTime(lastUpdate);
+      let lastUpdateAdjusted = convertTime(lastUpdate[cellContents.plant.location_id]);
       let interval = WATERING_SCHEDULE[cellContents?.plant.watering] * 24 * 60 * 60 * 1000;
-      // console.log('now', new Date(now), 'last', new Date(lastUpdateAdjusted))
+      console.log('now', new Date(now), 'last', new Date(lastUpdateAdjusted))
       if ((now - lastUpdateAdjusted) >= interval) {
         setNeedsWatering(true);
       }
@@ -205,6 +205,13 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
       };
       return newState;
     });
+  }
+
+  const handleUpdate = (key: string, value: string) => {
+    setLastUpdate((prevState: {}) => ({
+      ...prevState,
+      [key]: value,
+    }));
   }
 
   const handleTime = () => {

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Cell from '../Cell/Cell';
 import Modal from '../Modal/Modal';
-import { GardenKeys } from '../Main/Main';
+import { GardenKeys, lastUpdateType } from '../Main/Main';
 import { cellIDs } from './cellIDs';
 import './Grid.scss';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
@@ -15,7 +15,7 @@ export interface GridProps {
   setBullDoze: Function;
   filterGarden: boolean;
   setFilterGarden: Function;
-  lastUpdate: string;
+  lastUpdate: lastUpdateType;
   setLastUpdate: Function;
 }
 

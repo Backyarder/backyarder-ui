@@ -14,6 +14,10 @@ type GetGardenKeys = {
   attributes: CellKeys[]
 }
 
+export type lastUpdateType = {
+  [key: string]: string;
+}
+
 const Main = () => {
   const [alert, setAlert] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
@@ -29,7 +33,7 @@ const Main = () => {
   const [isDesktop, setIsDesktop] = useState<boolean>(true);
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
-  const [lastUpdate, setLastUpdate] = useState<string>('');
+  const [lastUpdate, setLastUpdate] = useState<lastUpdateType>({});
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -57,6 +61,15 @@ const Main = () => {
       .catch((err) => {
         handleApiError(err)
       })
+  }, []);
+
+  useEffect(() => {
+    for (let letter = 'A'.charCodeAt(0); letter <= 'J'.charCodeAt(0); letter++) {
+      for (let number = 1; number <= 10; number++) {
+        const key = String.fromCharCode(letter) + number;
+        (lastUpdate as Record<string, string>)[key] = 'string';
+      }
+    }
   }, []);
 
   const handleApiError = (error: string) => {
