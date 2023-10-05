@@ -35,7 +35,22 @@
 }
 
 .watering-alert {
-  animation: pulse linear 2s infinite;
+  animation: shift linear 2s infinite;
+  &:not(.disable-scale) {
+    animation: pulse linear 2s infinite;
+  }
+}
+
+@keyframes shift {
+  0% {
+    border-color: #F8D568;
+  }
+  50% {
+    border-color: #FFA500;
+  }
+  100% {
+    border-color: #F8D568;
+  }
 }
 
 @keyframes pulse {
@@ -58,4 +73,36 @@
   max-height: .1vh;
   width: .1vw;
   max-width: .1vw;
+}
+
+.cell-tooltip-text {
+  visibility: hidden;
+  font-size: x-small;
+  font-family: 'Arial';
+  width: max-content;
+  top: 100%;
+  background-color: #483C3C;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  white-space: nowrap;
+  opacity: 0; /* Start with opacity set to 0 */
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+}
+
+.cell:hover .cell-tooltip-text {
+  &:not(.disable-hover):not(.hidden) {
+    visibility: visible;
+    opacity: 1;
+    z-index: 9999;
+  }
+}
+
+.hidden {
+  visibility: hidden;
 }

@@ -11,9 +11,10 @@ interface CellProps {
     handleWatered: () => void
     handleRemove: () => void
     handleNeedsUpdating: Function
+    toggleHoverEffect: Function
 }
 
-const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handlePlanted, handleWatered, handleRemove, handleNeedsUpdating }: CellProps) => {
+const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handlePlanted, handleWatered, handleRemove, handleNeedsUpdating, toggleHoverEffect }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -30,6 +31,7 @@ const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handle
         cell?.classList.remove('disable-scale')
         const grid = target.closest('#grid')
         grid?.classList.remove('disable-hover')
+        toggleHoverEffect()
         handleCloseModal()
     }
 

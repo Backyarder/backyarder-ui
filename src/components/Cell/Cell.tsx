@@ -5,6 +5,7 @@ import { CellKeys, GridProps } from '../Grid/Grid';
 import CellActions from '../CellActions/CellActions';
 import { patchCellContents, patchDisabledOrRemoved, StatusType } from '../../apiCalls';
 import './Cell.scss'
+import { set } from 'cypress/types/lodash';
 
 interface GridCell extends GridProps {
   id: string;
@@ -43,6 +44,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   const [isPopulated, setIsPopulated] = useState<boolean>(false);
   const [needsUpdate, setNeedsUpdate] = useState<(keyof StatusType)>();
   const [shouldRender, setShouldRender] = useState<boolean>(false);
+  const [enableHoverEffect, setEnableHoverEffect] = useState(true);
 
   useEffect(() => {
     if (garden) {
@@ -243,6 +245,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
       setShouldRender(true);
     } else {
       setIsClicked(true);
+      setEnableHoverEffect(false);
       target.classList.add('disable-scale');
       const parent = target.parentNode as Element;
       parent.classList.add('disable-hover');
@@ -277,6 +280,12 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
 
   const wateringWarning = needsWatering ? 'watering-alert' : ''
 
+  const toggleHoverEffect = () => {
+    setEnableHoverEffect(!enableHoverEffect);
+  };
+
+  const hoverEffectClass = !enableHoverEffect ? 'hidden' : '';
+
   return (
     <>
       {isPopulated ? (
@@ -286,6 +295,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
           )}
           <div
             id={id}
+            data-tooltip={`${cellContents?.plant.plant_name}`}
             className={[className, wateringWarning].join(' ')}
             style={{ ...divStyle, ...hoverStyle }}
             onClick={handleClick}
@@ -294,6 +304,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
               dropRef(node)
             }}
           >
+            <span className={`cell-tooltip-text ${hoverEffectClass}`}>{`${cellContents?.plant.plant_name}`}</span>
             {isClicked && <div className='cell-modal'>
               {cellContents && <CellActions
                 image={cellContents.plant.image}
@@ -305,6 +316,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
                 handleRemove={handleRemove}
                 handleCloseModal={handleCloseModal}
                 handleNeedsUpdating={handleNeedsUpdating}
+                toggleHoverEffect={toggleHoverEffect}
               />}
             </div>}
           </div>
