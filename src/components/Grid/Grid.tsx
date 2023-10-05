@@ -15,6 +15,7 @@ export interface GridProps {
   setBullDoze: Function;
   filterGarden: boolean;
   setFilterGarden: Function;
+  isToggled: boolean;
 }
 
 interface AdditionalProps {
@@ -39,10 +40,10 @@ export type CellKeys = {
   plant_id: number | undefined;
   watering: keyof WateringType
   status: string | number | null | undefined;
-  updated_at: number | undefined;
+  updated_at: string | undefined;
 }
 
-const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset, alert, setAlert, modal, setModal, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden }: CombinedProps) => {
+const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset, alert, setAlert, modal, setModal, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, isToggled }: CombinedProps) => {
 
   useEffect(() => {
     if (alert) {
@@ -73,6 +74,7 @@ const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset
         filterGarden={filterGarden}
         setFilterGarden={setFilterGarden}
         toggleModal={toggleModal}
+        isToggled={isToggled}
       />
     );
   });

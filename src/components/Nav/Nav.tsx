@@ -8,9 +8,10 @@ type NavProps = {
   handlePartialClear: () => void;
   isGardenView: boolean;
   setIsGardenView: Function;
+  setIsToggled: Function;
 }
 
-const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartialClear, isGardenView, setIsGardenView }: NavProps) => {
+const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartialClear, isGardenView, setIsGardenView, setIsToggled }: NavProps) => {
 
   const toggleView = (): void => {
     setIsGardenView(!isGardenView);
@@ -41,7 +42,10 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
           cursor: isGardenView ? 'auto' : 'pointer'
         }}
         disabled={isGardenView}
-        onClick={toggleView}
+        onClick={() => {
+          setIsToggled(true);
+          toggleView();
+        }}
       >
         <span className="material-symbols-rounded nav-icon">outdoor_garden</span>GARDEN VIEW
       </button>
