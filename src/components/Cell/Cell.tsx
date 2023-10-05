@@ -69,7 +69,6 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
       let now = Date.now() + (new Date().getTimezoneOffset() * 60 * 1000);
       let lastUpdateAdjusted = convertTime(lastUpdate[cellContents.plant.location_id]);
       let interval = WATERING_SCHEDULE[cellContents?.plant.watering] * 24 * 60 * 60 * 1000;
-      console.log('now', new Date(now), 'last', new Date(lastUpdateAdjusted))
       if ((now - lastUpdateAdjusted) >= interval) {
         setNeedsWatering(true);
       }
