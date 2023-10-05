@@ -16,6 +16,7 @@
 }
 
 .cell-button {
+    position: relative;
     background-color: #af2268;
     color: #f4f4f4;
     cursor: pointer;
@@ -38,4 +39,28 @@
 
 .icon {
     padding-left: 0.3em
+}
+
+.cell-action-tooltip-text {
+    visibility: hidden;
+    font-size: x-small;
+    font-family: 'Arial';
+    width: max-content;
+    top: 100%;
+    background-color: #483C3C;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cell-button:hover .cell-action-tooltip-text {
+    visibility: visible;
+    opacity: 1;
 }

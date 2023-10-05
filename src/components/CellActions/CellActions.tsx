@@ -11,9 +11,10 @@ interface CellProps {
     handleWatered: () => void
     handleRemove: () => void
     handleNeedsUpdating: Function
+    toggleHoverEffect: Function
 }
 
-const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handlePlanted, handleWatered, handleRemove, handleNeedsUpdating }: CellProps) => {
+const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handlePlanted, handleWatered, handleRemove, handleNeedsUpdating, toggleHoverEffect }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -30,6 +31,7 @@ const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handle
         cell?.classList.remove('disable-scale')
         const grid = target.closest('#grid')
         grid?.classList.remove('disable-hover')
+        toggleHoverEffect()
         handleCloseModal()
     }
 
@@ -52,15 +54,18 @@ const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handle
                         </span>
                     </button>
                 }
-                <NavLink to={`/plants/${plantId}`} className='cell-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded">
-                    menu_book
-                </span></NavLink>
-                <button className='cell-button remove-button' onClick={handleClick}><span onClick={handleClick} className="material-symbols-rounded remove-button">
-                    delete
-                </span></button>
-                <button className='close-modal cell-button' onClick={handleClick}><span className="material-symbols-rounded">
-                    close
-                </span></button>
+                <NavLink to={`/plants/${plantId}`} className='cell-button' onClick={handleClick}>
+                    <span onClick={handleClick} className="material-symbols-rounded">menu_book</span>
+                    <span className='cell-action-tooltip-text'>Plant details</span>
+                </NavLink>
+                <button className='cell-button remove-button' onClick={handleClick}>
+                    <span onClick={handleClick} className="material-symbols-rounded remove-button">delete</span>
+                    <span className='cell-action-tooltip-text'>Remove from garden</span>
+                </button>
+                <button className='close-modal cell-button' onClick={handleClick}>
+                    <span className="material-symbols-rounded">close</span>
+                    <span className='cell-action-tooltip-text'>Close</span>
+                </button>
             </div>
         </div>
     )
