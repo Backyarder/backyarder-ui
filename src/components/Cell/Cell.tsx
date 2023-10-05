@@ -57,7 +57,8 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
         setIsPlanted(true);
       }
       if (foundCell && foundCell.updated_at) {
-        handleUpdate(foundCell.location_id, foundCell.updated_at);
+        let updateValue = convertTime(lastUpdate[foundCell.location_id]) > convertTime(foundCell.updated_at) ? lastUpdate[foundCell.location_id] : foundCell.updated_at;
+        handleUpdate(foundCell.location_id, updateValue);
       }
     }
     // eslint-disable-next-line
@@ -86,7 +87,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
 
   useEffect(() => {
     if (cellContents && needsUpdate) {
-      patchCellContents(cellContents, id, needsUpdate, cellContents.plant.watering, setLastUpdate)
+      patchCellContents(cellContents, id, needsUpdate, cellContents.plant.watering)
         .catch((err) => {
           handleApiError(err);
         });
@@ -240,9 +241,9 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   const handleWatered = async () => {
     if (cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None') {
       try {
-        await patchCellContents(cellContents, id, 'placed', cellContents.plant.watering, setLastUpdate)
-        await patchCellContents(cellContents, id, 'locked', cellContents.plant.watering, setLastUpdate)
-        setLastUpdate(handleTime());
+        await patchCellContents(cellContents, id, 'placed', cellContents.plant.watering)
+        await patchCellContents(cellContents, id, 'locked', cellContents.plant.watering)
+        handleUpdate(cellContents.plant.location_id, handleTime());
         setNeedsWatering(false);
         let interval = WATERING_SCHEDULE[cellContents.plant.watering] * 24 * 60 * 60 * 1000;
         setTimeout(() => {
