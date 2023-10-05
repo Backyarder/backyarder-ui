@@ -63,7 +63,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
     }
     // eslint-disable-next-line
   }, []);
-  
+
   useEffect(() => {
     if (isPlanted && cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None' && typeof cellContents.plant.updated_at !== 'undefined') {
       let now = Date.now() + (new Date().getTimezoneOffset() * 60 * 1000);
@@ -207,7 +207,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   }
 
   const handleTime = () => {
-    let now = new Date();
+    let now = new Date(Date.now() + new Date().getTimezoneOffset() * 60 * 1000);
     let year = now.getFullYear();
     let month = String(now.getMonth() + 1).padStart(2, '0');
     let day = String(now.getDate()).padStart(2, '0');
