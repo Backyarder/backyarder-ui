@@ -217,7 +217,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   }
 
   const convertTime = (dateString: string) => {
-    let [datePart, timePart] = dateString.split('  ');
+    let [datePart, timePart] = dateString.charAt(11) === ' ' ? dateString.split('  ') : dateString.split(' ');
     let [month, day, year] = datePart.split('/').map(Number);
     let [hours, minutes] = timePart.split(':').map(Number);
     let timestamp = new Date(year, month - 1, day, hours, minutes).getTime();
