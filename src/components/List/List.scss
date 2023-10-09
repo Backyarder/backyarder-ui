@@ -15,14 +15,21 @@
   width: 100%;
 }
 
-.plant-image {
-  border: 6px solid #93a854;
+.plant-image, .placed-image {
   border-radius: 10px;
   height: 60px;
   width: 55px;
   object-fit: cover;
   margin-right: 3%;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.4);
+}
+
+.plant-image {
+  border: 6px solid #93a854;
+}
+
+.placed-image {
+  border: 6px solid #f4f4f4;
 }
 
 .detail-button {
@@ -77,7 +84,11 @@
   text-align: center;
 }
 
+.garden-view-container, .wishlist-view-container {
+  height: 100%;
+}
+
 .plant-element-container {
-  height: 95%;
+  height: 90%;
   overflow: scroll;
 }

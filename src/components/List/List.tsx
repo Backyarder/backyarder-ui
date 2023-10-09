@@ -25,7 +25,6 @@ const List = ({ garden }: ListProps) => {
 
   const toggleView = (): void => {
     setIsWishlistView(!isWishlistView);
-    // reset();
   }
 
   const uniquePlants = (garden || []).reduce((array: GardenKeys, plant: CellKeys) => {
@@ -35,12 +34,33 @@ const List = ({ garden }: ListProps) => {
     return array.filter(item => item.status === 'locked');
   }, []);
 
+  const uniquePlacedItems = garden?.reduce((array: GardenKeys, plant: CellKeys) => {
+    if (!array.some(item => item.plant_id === plant.plant_id) && plant.plant_name) {
+      array.push(plant);
+    }
+    return array.filter(item => item.status === 'placed');
+  }, []);
+
   const plantElements: JSX.Element[] | undefined = uniquePlants?.map(plant => {
     return (
       <div key={plant['plant_id']} className='plant-element' >
         <div className='plant-info-container' >
           <img src={plant.image} className='plant-image' alt={plant.plant_name} />
           <p>{plant.plant_name?.toUpperCase()} x{findQuantity(garden, plant.plant_id)}</p>
+        </div>
+        <NavLink to={`/plants/${plant['plant_id']}`} >
+          <button className='detail-button' >VIEW PLANT DETAILS</button>
+        </NavLink>
+      </div>
+    );
+  });
+
+  const placedElements: JSX.Element[] | undefined = uniquePlacedItems?.map(plant => {
+    return (
+      <div key={plant['plant_id']} className='plant-element' >
+        <div className='plant-info-container' >
+          <img src={plant.image} className='placed-image' alt={plant.plant_name} />
+          <p>{plant.plant_name?.toUpperCase()}</p>
         </div>
         <NavLink to={`/plants/${plant['plant_id']}`} >
           <button className='detail-button' >VIEW PLANT DETAILS</button>
@@ -75,10 +95,18 @@ const List = ({ garden }: ListProps) => {
           <span className="material-symbols-rounded nav-icon">checklist</span>WISHLIST
         </button>
       </div>
-      <div className='plant-element-container'>
-        {plantElements}
-      </div>
-      {!plantElements.length && <h1 className='empty-list-text'>Your garden is empty!</h1>}
+      {!isWishlistView && <div className='garden-view-container'>
+        {!plantElements.length && <h1 className='empty-list-text'>Your garden is empty!</h1>}
+        <div className='plant-element-container'>
+          {plantElements}
+        </div>
+      </div>}
+      {isWishlistView && <div className='wishlist-view-container'>
+        {!placedElements?.length && <h1 className='empty-list-text'>Your wishlist is empty!</h1>}
+        <div className='plant-element-container'>
+          {placedElements}
+        </div>
+      </div>}
     </section>
   );
 }
