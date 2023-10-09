@@ -35,15 +35,27 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
   const [activeTab, setActiveTab] = useState<string>('plants')
 
   useEffect(() => {
+    //add dependency on activeTab state ✅
+    //create conditional to check what that is
+    //if plants do getPlantList
+    //if decor do getDecorList (for now only displaying text 'decor list')
+    if(activeTab === 'plants'){
+        console.log('on plants tab')
     getPlantList()
       .then(data => setPlantList(data.data))
       .then(() => setLoadingPlants(false))
       .catch((err) => {
         handleApiError(err)
       })
-  }, [])
+    } else {
+        console.log('on decor tab')
+        //getDecorList goes here
+    }
+  }, [activeTab])
 
-  
+  //when a tab is clicked we use an onclick to invoke a function
+  //function updates state to the value of the tab (plants or decor)
+    //when this activeTab state is updated it triggers the useEffect hook in order to get the data that is needed (getPlantList OR getDecorList -- need to write the api call for getting a decor list -- this will start with mock data (can still use the loadinglants message when waiting on decor))
 
   const handleApiError = (error: string) => {
     setApiError(error)
@@ -108,8 +120,8 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
   return (
     <section id='plants'>
       <div className="sidebar-nav">
-        <div className="plants-tab" >PLANTS</div>
-        <div className="decor-tab" >DECOR</div>
+        <div className="plants-tab" onClick={() => {setActiveTab('plants')}}>PLANTS</div>
+        <div className="decor-tab" onClick={() => {setActiveTab('decor')}}>DECOR</div>
       </div>
       <div className="search">
         <input
