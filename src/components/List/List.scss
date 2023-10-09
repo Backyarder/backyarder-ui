@@ -6,6 +6,7 @@
   color: #f4f4f4;
   font-size: xx-large;
   font-weight: bolder;
+  height: 25%;
 }
 
 .plant-info-container {
@@ -42,14 +43,41 @@
   width: calc(100vh - 190px);
   border-radius: 15px;
   flex-shrink: 0;
-  overflow-y: scroll;
+  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .list-container::-webkit-scrollbar {
   display: none;
 }
 
+.list-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: .5em;
+}
+
+.list-button {
+  border: none;
+  font-weight: bold;
+  border-radius: 4px;
+  height: 5vh;
+  min-width: 11vw;
+  // margin-bottom: 0.5em;
+  // width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 1em;
+  margin-top: .5em;
+}
+
 .empty-list-text {
   color: #483C3C;
   text-align: center;
+}
+
+.plant-element-container {
+  height: 95%;
+  overflow: scroll;
 }

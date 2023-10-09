@@ -1,15 +1,16 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import './List.scss';
 import { GardenKeys } from '../Main/Main';
 import { CellKeys } from '../Grid/Grid';
+import './List.scss';
 
 interface ListProps {
   garden: GardenKeys | undefined;
 }
 
 const List = ({ garden }: ListProps) => {
+  const [isWishlistView, setIsWishlistView] = useState<boolean>(false);
 
-  // NOTE: likely will be resolved with the new BE endpoints, but please leave it until you're able to check when you connect to it!
   const findQuantity = (array: GardenKeys | undefined, id: number | undefined): number | undefined => {
     if (array) {
       let count = 0;
@@ -22,7 +23,11 @@ const List = ({ garden }: ListProps) => {
     }
   }
 
-  // NOTE: likely will be resolved with the new BE endpoints, but please leave it until you're able to check when you connect to it!
+  const toggleView = (): void => {
+    setIsWishlistView(!isWishlistView);
+    // reset();
+  }
+
   const uniquePlants = (garden || []).reduce((array: GardenKeys, plant: CellKeys) => {
     if (!array.some(item => item.plant_id === plant.plant_id) && plant.plant_name) {
       array.push(plant);
@@ -30,7 +35,6 @@ const List = ({ garden }: ListProps) => {
     return array.filter(item => item.status === 'locked');
   }, []);
 
-  // NOTE: likely need to be updated with BE data once connected
   const plantElements: JSX.Element[] | undefined = uniquePlants?.map(plant => {
     return (
       <div key={plant['plant_id']} className='plant-element' >
@@ -47,7 +51,33 @@ const List = ({ garden }: ListProps) => {
 
   return (
     <section className='list-container'>
-      {plantElements}
+      <div className='list-button-container'>
+        <button
+          className='list-button'
+          style={{
+            backgroundColor: isWishlistView ? '#beab95' : '#f4f4f4',
+            cursor: !isWishlistView ? 'auto' : 'pointer'
+          }}
+          // disabled={!isWishlistView}
+          onClick={toggleView}
+        >
+          <span className="material-symbols-rounded nav-icon">outdoor_garden</span>MY GARDEN
+        </button>
+        <button
+          className='list-button'
+          style={{
+            backgroundColor: !isWishlistView ? '#beab95' : '#f4f4f4',
+            cursor: isWishlistView ? 'auto' : 'pointer'
+          }}
+          // disabled={isWishlistView}
+          onClick={toggleView}
+        >
+          <span className="material-symbols-rounded nav-icon">checklist</span>WISHLIST
+        </button>
+      </div>
+      <div className='plant-element-container'>
+        {plantElements}
+      </div>
       {!plantElements.length && <h1 className='empty-list-text'>Your garden is empty!</h1>}
     </section>
   );
