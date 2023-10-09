@@ -32,6 +32,7 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
   const [apiError, setApiError] = useState<string>('')
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [loadingPlants, setLoadingPlants] = useState<boolean>(true)
+  const [activeTab, setActiveTab] = useState<string>('plants')
 
   useEffect(() => {
     getPlantList()
@@ -41,6 +42,8 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
         handleApiError(err)
       })
   }, [])
+
+  
 
   const handleApiError = (error: string) => {
     setApiError(error)
@@ -104,9 +107,10 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
 
   return (
     <section id='plants'>
-      <h2>
-        <span className="material-symbols-rounded" id="drag-material" >drag_pan</span>
-      PLANTS</h2>
+      <div className="sidebar-nav">
+        <div className="plants-tab" >PLANTS</div>
+        <div className="decor-tab" >DECOR</div>
+      </div>
       <div className="search">
         <input
           className="search-bar"

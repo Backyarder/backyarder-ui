@@ -18,10 +18,12 @@
   padding-right: 0.3em;
 }
 
-#plants h2 {
+.sidebar-nav {
   color: #483C3C;
-  font-size: 2em;
+  font-size: 1.7em;
   margin: 0.2em;
+  display: flex;
+  justify-content: space-around
 }
 
 .search {
