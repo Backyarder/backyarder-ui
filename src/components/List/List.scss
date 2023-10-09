@@ -1,4 +1,4 @@
-.plant-element {
+.plant-element, .placed-element {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -7,6 +7,10 @@
   font-size: xx-large;
   font-weight: bolder;
   height: 25%;
+}
+
+.placed-element {
+  margin-left: 0;
 }
 
 .plant-info-container {
@@ -91,4 +95,9 @@
 .plant-element-container {
   height: 90%;
   overflow: scroll;
+}
+
+.wishlist-checkbox {
+  width: 2em;
+  height: 2em;
 }

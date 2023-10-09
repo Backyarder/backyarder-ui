@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { GardenKeys } from '../Main/Main';
+import { GardenKeys, WishlistType } from '../Main/Main';
 import { CellKeys } from '../Grid/Grid';
 import './List.scss';
 
 interface ListProps {
   garden: GardenKeys | undefined;
+  wishlist: WishlistType[];
+  setWishlist: Function;
 }
 
-const List = ({ garden }: ListProps) => {
+const List = ({ garden, wishlist, setWishlist }: ListProps) => {
   const [isWishlistView, setIsWishlistView] = useState<boolean>(false);
 
   const findQuantity = (array: GardenKeys | undefined, id: number | undefined): number | undefined => {
@@ -25,6 +27,16 @@ const List = ({ garden }: ListProps) => {
 
   const toggleView = (): void => {
     setIsWishlistView(!isWishlistView);
+  }
+
+  const handleWishlist = (id: number | undefined): void => {
+    setWishlist((prevState: WishlistType[]) => {
+      if (prevState.some(item => item.plant_id === id)) {
+        return prevState.filter(item => item.plant_id !== id);
+      } else {
+        return [...prevState, { plant_id: id }]
+      }
+    });
   }
 
   const uniquePlants = (garden || []).reduce((array: GardenKeys, plant: CellKeys) => {
@@ -57,8 +69,9 @@ const List = ({ garden }: ListProps) => {
 
   const placedElements: JSX.Element[] | undefined = uniquePlacedItems?.map(plant => {
     return (
-      <div key={plant['plant_id']} className='plant-element' >
+      <div key={plant['plant_id']} className='placed-element' >
         <div className='plant-info-container' >
+          <img className='wishlist-checkbox' src={`${process.env.PUBLIC_URL}/images/checked_${wishlist.some(item => item.plant_id === plant.plant_id)}.png`} onClick={() => handleWishlist(plant.plant_id)} />
           <img src={plant.image} className='placed-image' alt={plant.plant_name} />
           <p>{plant.plant_name?.toUpperCase()}</p>
         </div>
