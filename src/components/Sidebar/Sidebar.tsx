@@ -28,30 +28,32 @@ interface SideBarProps {
 
 const Sidebar = ({ modal, setModal }: SideBarProps) => {
   const [plantList, setPlantList] = useState<PlantData[]>([])
+  //need to update data type for decorList
+  const [decorList, setDecorList] = useState<string>('decor is not here!')
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('')
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [loadingPlants, setLoadingPlants] = useState<boolean>(true)
   const [activeTab, setActiveTab] = useState<string>('plants')
 
+  const getDecorList = () => {
+    //this is a placeholder for what will become the api call for the decor list
+    setDecorList('decor is here')
+  }
+
   useEffect(() => {
-    //add dependency on activeTab state ✅
-    //create conditional to check what that is
-    //if plants do getPlantList
-    //if decor do getDecorList (for now only displaying text 'decor list')
-    if(activeTab === 'plants'){
-        console.log('on plants tab')
     getPlantList()
       .then(data => setPlantList(data.data))
       .then(() => setLoadingPlants(false))
       .catch((err) => {
         handleApiError(err)
       })
-    } else {
-        console.log('on decor tab')
-        //getDecorList goes here
-    }
-  }, [activeTab])
+      getDecorList()
+  }, [])
+
+      //create conditional to check what that is
+    //if plants do getPlantList
+    //if decor do getDecorList (for now only displaying text 'decor list')
 
   //when a tab is clicked we use an onclick to invoke a function
   //function updates state to the value of the tab (plants or decor)
@@ -63,10 +65,16 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
 
   let cards;
 
-  if (!plantList) {
+  //below adding in a condtional to check if plants or decor is the active tab
+    //check if !plantList || !decorList - then display 500 error message
+    //check if plantList.length && activeTab === 'plants' - this displays all plants
+    //check if decorList.length && activeTab === 'decor' - this displays all decor
+    //else just display that there is nothing in the nursery mathcing the search 
+
+  if (!plantList || !decorList) {
     cards = <p className="loading">It looks like our nursery is not operating correctly, please try again later</p>
   }
-  else if (plantList.length) {
+  else if (plantList.length && activeTab === 'plants') {
     cards = plantList.map((plant: PlantData) => {
       const plantImage = plant.attributes.image
         ? plant.attributes.image
@@ -74,8 +82,10 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
       plant.attributes.image = plantImage
       return <Card plant={plant.attributes} modal={modal} setModal={setModal} key={plant.attributes.plant_id} />
     })
+  } else if (decorList.length && activeTab === 'decor') {
+    console.log('looking at decor')
   } else {
-    cards = <p className="loading">Hmmm... there are no plants in our nursery matching your search.</p>
+    cards = <p className="loading">Hmmm... there are nothing in our nursery matching your search.</p>
   }
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
