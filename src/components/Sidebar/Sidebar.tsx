@@ -13,24 +13,24 @@ interface PlantData {
 interface DecorData {
         id: null;
         type: string;
-        attributes: DecorAttributes;
+        attributes: PlantAttributes;
 }
 
 export interface PlantAttributes {
-    hardiness: {
+    hardiness?: {
         min: string
         max: string
     }
     image: string
     plant_name: string
-    plant_id: number
-    sunlight: string[]
+    plant_id?: number
+    sunlight?: string[]
     type: string
 }
 
 export interface DecorAttributes {
     image: string
-    name: string
+    plant_name: string
     type: string
 }
 
@@ -97,12 +97,12 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
             return <Card plant={plant.attributes} modal={modal} setModal={setModal} key={plant.attributes.plant_id} />
         })
     } else if (decorList.length && activeTab === 'decor') {
-        // cards = decorList.map((item: DecorData) => {
-        //     return <Card plant={item.attributes} modal={modal} setModal={setModal} key={item.attributes.name} />
-        // })
-        cards = decorList.map((item) => {
-            return <p>{item.attributes.name}</p>
+        cards = decorList.map((item: DecorData) => {
+            return <Card plant={item.attributes} modal={modal} setModal={setModal} key={item.attributes.plant_name} />
         })
+        // cards = decorList.map((item) => {
+        //     return <p>{item.attributes.name}</p>
+        // })
     } else {
         cards = <p className="loading">Hmmm... there are nothing in our nursery matching your search.</p>
     }
