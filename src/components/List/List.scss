@@ -97,7 +97,12 @@
   overflow: scroll;
 }
 
+.plant-element-container::-webkit-scrollbar {
+  display: none;
+}
+
 .wishlist-checkbox {
   width: 2em;
   height: 2em;
+  cursor: pointer;
 }
