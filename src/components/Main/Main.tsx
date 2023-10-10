@@ -18,6 +18,10 @@ export type lastUpdateType = {
   [key: string]: string;
 }
 
+export type WishlistType = {
+  plant_id: number;
+}
+
 const Main = () => {
   const [alert, setAlert] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
@@ -34,6 +38,7 @@ const Main = () => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
   const [lastUpdate, setLastUpdate] = useState<lastUpdateType>({});
+  const [wishlist, setWishlist] = useState<WishlistType[]>([]);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -111,7 +116,7 @@ const Main = () => {
               {
                 isGardenView
                 ? <Grid popUp={popUp} setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} alert={alert} setAlert={setAlert} modal={modal} setModal={setModal} garden={garden} setGarden={setGarden} waterGarden={waterGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} lastUpdate={lastUpdate} setLastUpdate={setLastUpdate}/>
-                : <List garden={garden} />
+                : <List garden={garden} wishlist={wishlist} setWishlist={setWishlist} />
               }
               <Nav reset={reset} waterGarden={waterGarden} setWaterGarden={setWaterGarden} handleFullClear={handleFullClear} handlePartialClear={handlePartialClear} isGardenView={isGardenView} setIsGardenView={setIsGardenView} />
             </>
