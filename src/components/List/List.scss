@@ -74,13 +74,19 @@
   border-radius: 4px;
   height: 5vh;
   min-width: 11vw;
-  // margin-bottom: 0.5em;
-  // width: 100%;
   display: flex;
   justify-content: left;
   align-items: center;
-  padding-left: 1em;
+  // padding-left: .6em;
   margin-top: .5em;
+}
+
+.garden-button {
+  padding-left: .6em;
+}
+
+.wishlist-button {
+  padding-left: 1em;
 }
 
 .empty-list-text {
@@ -106,3 +112,7 @@
   height: 2em;
   cursor: pointer;
 }
+
+// .garden-button {
+//   padding-left: 0;
+// }

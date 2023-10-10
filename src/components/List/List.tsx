@@ -86,7 +86,7 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
     <section className='list-container'>
       <div className='list-button-container'>
         <button
-          className='list-button'
+          className='list-button garden-button'
           style={{
             backgroundColor: isWishlistView ? '#beab95' : '#f4f4f4',
             cursor: !isWishlistView ? 'auto' : 'pointer'
@@ -97,7 +97,7 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
           <span className="material-symbols-rounded nav-icon">outdoor_garden</span>MY GARDEN
         </button>
         <button
-          className='list-button'
+          className='list-button wishlist-button'
           style={{
             backgroundColor: !isWishlistView ? '#beab95' : '#f4f4f4',
             cursor: isWishlistView ? 'auto' : 'pointer'
