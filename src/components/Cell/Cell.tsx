@@ -241,7 +241,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   }
 
   const handleWatered = async () => {
-    if (cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None') {
+    if (isPlanted && cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None') {
       try {
         await patchCellContents(cellContents, id, 'placed', cellContents.plant.watering)
         await patchCellContents(cellContents, id, 'locked', cellContents.plant.watering)
