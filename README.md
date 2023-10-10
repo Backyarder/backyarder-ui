@@ -7,12 +7,19 @@
 - BackYarder is an innovative app designed to revolutionize the way gardeners brainstorm and optimize their gardens! This app empowers gardeners of all skill levels to create their dream gardens with ease. Key features include a large database of plants with detailed information, including care instructions, and a drag-and-drop tool to experiment with different arrangements. BackYarder enables the user to create a beautiful garden tailored to their unique vision. Whether you're a seasoned gardener or just starting your gardening journey, this app will be the perfect companion for you!
 
 ## TECHNOLOGIES USED
-<a href="https://www.typescriptlang.org/" target="_blank"><img style="margin: 10px" src="./public/images/TypeScript.png" alt="TypeScript" height="50" /></a>
-<a href="https://react.dev/" target="_blank"><img style="margin: 10px" src="./public/images/React.png" alt="React" height="50" /></a>
-<a href="https://sass-lang.com/" target="_blank"><img style="margin: 10px" src="./public/images/Sass.png" alt="SCSS" height="50" /></a>
-<a href="https://www.cypress.io/" target="_blank"><img style="background-color: #f0f0f0; margin: 10px" src="./public/images/Cypress.png" alt="Cypress" height="50" /></a>
-<a href="https://circleci.com/" target="_blank"><img style="background-color: #f0f0f0; margin: 10px" src="./public/images/CircleCI.png" alt="CircleCI" height="50" /></a>
-<a href="https://vercel.com/" target="_blank"><img style="background-color: #f0f0f0; margin: 10px" src="./public/images/Vercel.png" alt="Vercel" height="50" /></a>
+<div align="center">
+  <a href="https://www.typescriptlang.org/" ><img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" /></a>
+  <a href="https://html.spec.whatwg.org/" ><img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" /></a>
+  <a href="https://sass-lang.com/" ><img src="https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white" /></a>
+  </br>
+  <a href="https://react.dev/" ><img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" /></a>
+  <a href="https://reactrouter.com/en/main" ><img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" /></a>
+  </br>
+  <a href="https://www.cypress.io/" ><img src="https://img.shields.io/badge/-cypress-%23E5E5E5?style=for-the-badge&logo=cypress&logoColor=058a5e" /></a>
+  <a href="https://circleci.com/" ><img src="https://img.shields.io/badge/circle%20ci-%23161616.svg?style=for-the-badge&logo=circleci&logoColor=white" /></a>
+  </br>
+  <a href="https://vercel.com/" ><img src="https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white" /></a>
+</div>
 
 ## PREVIEW OF APPLICATION
 - The user can drag and drop plants into any empty cell in the garden.
