@@ -43,7 +43,7 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
         disabled={isGardenView}
         onClick={toggleView}
       >
-        <span className="material-symbols-rounded nav-icon">outdoor_garden</span>GARDEN VIEW
+        <span className="material-symbols-rounded nav-icon">grid_view</span>GARDEN VIEW
       </button>
       {isGardenView &&
         <>

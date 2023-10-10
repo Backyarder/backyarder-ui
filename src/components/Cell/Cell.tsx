@@ -116,6 +116,8 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   useEffect(() => {
     if (shouldRender && cellContents) {
       handleGarden(id, cellContents.plant.image, cellContents.plant.plant_name, cellContents.plant.plant_id, isPopulated ? 'placed' : 'empty', cellContents.plant.watering, handleTime());
+    } else if (shouldRender && !isPopulated) {
+      handleGarden(id, undefined, undefined, undefined, 'empty', 'None', handleTime());
     }
     setShouldRender(false);
     // eslint-disable-next-line
@@ -239,7 +241,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   }
 
   const handleWatered = async () => {
-    if (cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None') {
+    if (isPlanted && cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None') {
       try {
         await patchCellContents(cellContents, id, 'placed', cellContents.plant.watering)
         await patchCellContents(cellContents, id, 'locked', cellContents.plant.watering)

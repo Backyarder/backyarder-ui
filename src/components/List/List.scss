@@ -1,4 +1,4 @@
-.plant-element {
+.plant-element, .placed-element {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -6,6 +6,11 @@
   color: #f4f4f4;
   font-size: xx-large;
   font-weight: bolder;
+  height: 25%;
+}
+
+.placed-element {
+  margin-left: 0;
 }
 
 .plant-info-container {
@@ -14,14 +19,21 @@
   width: 100%;
 }
 
-.plant-image {
-  border: 6px solid #93a854;
+.plant-image, .placed-image {
   border-radius: 10px;
   height: 60px;
   width: 55px;
   object-fit: cover;
   margin-right: 3%;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.4);
+}
+
+.plant-image {
+  border: 6px solid #93a854;
+}
+
+.placed-image {
+  border: 6px solid #f4f4f4;
 }
 
 .detail-button {
@@ -42,14 +54,64 @@
   width: calc(100vh - 190px);
   border-radius: 15px;
   flex-shrink: 0;
-  overflow-y: scroll;
+  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .list-container::-webkit-scrollbar {
   display: none;
 }
 
+.list-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: .5em;
+}
+
+.list-button {
+  border: none;
+  font-weight: bold;
+  border-radius: 4px;
+  height: 5vh;
+  min-width: 11vw;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-top: .5em;
+}
+
+.garden-button {
+  padding-left: .6em;
+}
+
+.wishlist-button {
+  padding-left: 1em;
+}
+
 .empty-list-text {
   color: #483C3C;
   text-align: center;
 }
+
+.garden-view-container, .wishlist-view-container {
+  height: 100%;
+}
+
+.plant-element-container {
+  height: 90%;
+  overflow: scroll;
+}
+
+.plant-element-container::-webkit-scrollbar {
+  display: none;
+}
+
+.wishlist-checkbox {
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+}
+
+// .garden-button {
+//   padding-left: 0;
+// }

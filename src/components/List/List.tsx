@@ -1,15 +1,18 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import './List.scss';
-import { GardenKeys } from '../Main/Main';
+import { GardenKeys, WishlistType } from '../Main/Main';
 import { CellKeys } from '../Grid/Grid';
+import './List.scss';
 
 interface ListProps {
   garden: GardenKeys | undefined;
+  wishlist: WishlistType[];
+  setWishlist: Function;
 }
 
-const List = ({ garden }: ListProps) => {
+const List = ({ garden, wishlist, setWishlist }: ListProps) => {
+  const [isWishlistView, setIsWishlistView] = useState<boolean>(false);
 
-  // NOTE: likely will be resolved with the new BE endpoints, but please leave it until you're able to check when you connect to it!
   const findQuantity = (array: GardenKeys | undefined, id: number | undefined): number | undefined => {
     if (array) {
       let count = 0;
@@ -22,7 +25,20 @@ const List = ({ garden }: ListProps) => {
     }
   }
 
-  // NOTE: likely will be resolved with the new BE endpoints, but please leave it until you're able to check when you connect to it!
+  const toggleView = (): void => {
+    setIsWishlistView(!isWishlistView);
+  }
+
+  const handleWishlist = (id: number | undefined): void => {
+    setWishlist((prevState: WishlistType[]) => {
+      if (prevState.some(item => item.plant_id === id)) {
+        return prevState.filter(item => item.plant_id !== id);
+      } else {
+        return [...prevState, { plant_id: id }]
+      }
+    });
+  }
+
   const uniquePlants = (garden || []).reduce((array: GardenKeys, plant: CellKeys) => {
     if (!array.some(item => item.plant_id === plant.plant_id) && plant.plant_name) {
       array.push(plant);
@@ -30,7 +46,13 @@ const List = ({ garden }: ListProps) => {
     return array.filter(item => item.status === 'locked');
   }, []);
 
-  // NOTE: likely need to be updated with BE data once connected
+  const uniquePlacedItems = garden?.reduce((array: GardenKeys, plant: CellKeys) => {
+    if (!array.some(item => item.plant_id === plant.plant_id) && plant.plant_name) {
+      array.push(plant);
+    }
+    return array.filter(item => item.status === 'placed');
+  }, []);
+
   const plantElements: JSX.Element[] | undefined = uniquePlants?.map(plant => {
     return (
       <div key={plant['plant_id']} className='plant-element' >
@@ -45,10 +67,59 @@ const List = ({ garden }: ListProps) => {
     );
   });
 
+  const placedElements: JSX.Element[] | undefined = uniquePlacedItems?.map(plant => {
+    return (
+      <div key={plant['plant_id']} className='placed-element' >
+        <div className='plant-info-container' >
+          <img className='wishlist-checkbox' src={`${process.env.PUBLIC_URL}/images/checked_${wishlist.some(item => item.plant_id === plant.plant_id)}.png`} onClick={() => handleWishlist(plant.plant_id)} alt={`wishlist checkbox ${plant.plant_id}`} />
+          <img src={plant.image} className='placed-image' alt={plant.plant_name} />
+          <p>{plant.plant_name?.toUpperCase()}</p>
+        </div>
+        <NavLink to={`/plants/${plant['plant_id']}`} >
+          <button className='detail-button' >VIEW PLANT DETAILS</button>
+        </NavLink>
+      </div>
+    );
+  });
+
   return (
     <section className='list-container'>
-      {plantElements}
-      {!plantElements.length && <h1 className='empty-list-text'>Your garden is empty!</h1>}
+      <div className='list-button-container'>
+        <button
+          className='list-button garden-button'
+          style={{
+            backgroundColor: isWishlistView ? '#beab95' : '#f4f4f4',
+            cursor: !isWishlistView ? 'auto' : 'pointer'
+          }}
+          // disabled={!isWishlistView}
+          onClick={toggleView}
+        >
+          <span className="material-symbols-rounded nav-icon">outdoor_garden</span>MY GARDEN
+        </button>
+        <button
+          className='list-button wishlist-button'
+          style={{
+            backgroundColor: !isWishlistView ? '#beab95' : '#f4f4f4',
+            cursor: isWishlistView ? 'auto' : 'pointer'
+          }}
+          // disabled={isWishlistView}
+          onClick={toggleView}
+        >
+          <span className="material-symbols-rounded nav-icon">checklist</span>WISHLIST
+        </button>
+      </div>
+      {!isWishlistView && <div className='garden-view-container'>
+        {!plantElements.length && <h1 className='empty-list-text'>Your garden is empty!</h1>}
+        <div className='plant-element-container'>
+          {plantElements}
+        </div>
+      </div>}
+      {isWishlistView && <div className='wishlist-view-container'>
+        {!placedElements?.length && <h1 className='empty-list-text'>Your wishlist is empty!</h1>}
+        <div className='plant-element-container'>
+          {placedElements}
+        </div>
+      </div>}
     </section>
   );
 }
