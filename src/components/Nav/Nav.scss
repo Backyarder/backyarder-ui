@@ -7,7 +7,7 @@ nav {
   margin-left: .5%;
 }
 
-.nav-button, .clear-button {
+.nav-button, .clear-button, .water-button {
   border: none;
   font-weight: bold;
   border-radius: 25px;
@@ -110,11 +110,71 @@ nav {
   100% { -webkit-filter: hue-rotate(0deg); }
 }
 
-.clear-button {
-  background-color: #af2268;
+.clear-button, .water-button {
   color: #f4f4f4;
   cursor: pointer;
   box-shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.water-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.water-button span {
+  z-index: 1;
+}
+
+.liquid {
+  position: absolute;
+  top: -60%;
+  right: 0;
+  width: 100%;
+  height: 250%;
+  background-color: #38b6ff;
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+  transition: top 1s;
+}
+
+.liquid::before, .liquid::after {
+  content: '';
+  position: absolute;
+  width: 220%;
+  height: 600%;
+  top: -112%;
+  left: 50%;
+  transform: translate(-50%, -75%);
+}
+
+.liquid::before {
+  border-radius: 45%;
+  background: rgb(255, 255, 255);
+  animation: animate 5s linear infinite;
+}
+
+.liquid::after {
+  border-radius: 43%;
+  animation: animate 10s linear infinite;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes animate {
+  0%
+  {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
+  100%
+  {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
+}
+
+.water-button:hover .liquid {
+  top: -130%;
+}
+
+.clear-button {
+  background-color: #af2268;
 }
 
 .pop-up {

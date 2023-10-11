@@ -65,9 +65,14 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
               <p>UNAVAILABLE</p>
             </div>
           </div>
-          <div id='wateringCan'>
+          {/* <div id='wateringCan'>
             <img src={`${process.env.PUBLIC_URL}/images/watering-can.png`} className='ripple' onClick={handleWaterAll} alt='watering can, click to water all planted items'/>
-          </div>
+          </div> */}
+          <button className='water-button' onClick={handleWaterAll} >
+            <span className="material-symbols-rounded nav-icon">water_drop</span>
+            <span>WATER GARDEN</span>
+            <div className='liquid'></div>
+          </button>
           <button className='clear-button' onClick={handleFullClear} ><span className="material-symbols-rounded nav-icon">
             bomb
           </span>CLEAR GARDEN</button>
