@@ -12,9 +12,9 @@ interface PlantData {
 }
 
 interface DecorData {
-        id: null;
-        type: string;
-        attributes: PlantAttributes;
+    id: null;
+    type: string;
+    attributes: PlantAttributes;
 }
 
 export interface PlantAttributes {
@@ -132,10 +132,17 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
     return (
         <section id='plants'>
             <div className="sidebar-nav">
-                <div className="plants-tab" onClick={() => { setActiveTab('plants') }}>PLANTS</div>
-                <div className="decor-tab" onClick={() => { setActiveTab('decor') }}>DECOR</div>
+                <button className="plants-tab" onClick={() => { setActiveTab('plants') }} style={{
+                    backgroundColor: (activeTab !== 'plants') ? '#beab95' : '#f4f4f4',
+                    //   cursor: (activeTab === 'plants') ? 'auto' : 'pointer'
+                }}>PLANTS</button>
+                <button className="decor-tab" onClick={() => { setActiveTab('decor') }}
+                    style={{
+                        backgroundColor: (activeTab !== 'decor') ? '#beab95' : '#f4f4f4',
+                        // cursor: (activeTab === 'decor') ? 'auto' : 'pointer'
+                    }}>DECOR</button>
             </div>
-            <div className="search">
+            {activeTab === 'plants' && <div className="search">
                 <input
                     className="search-bar"
                     type="text"
@@ -147,11 +154,11 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
                 <button className="submit-search" onClick={searchForPlants}><span className="material-symbols-rounded">
                     search
                 </span></button>
-            </div>
+            </div>}
             <div className="search-results" >
                 {loadingPlants ? loading() : cards}
             </div>
-        </section>
+        </section >
     )
 }
 
