@@ -75,10 +75,10 @@ const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
             </div>
           </div>
           <div className='card-icons'>
-            <div className="material-symbols-rounded card-icon">
+            {plant.hardiness && <div className="material-symbols-rounded card-icon">
               location_on
               <span className="hardiness-text tooltip-text">hardiness zone</span>
-            </div>
+            </div>}
             <span>{hardiness}</span>
           </div>
         </div>
