@@ -1,4 +1,5 @@
 import { useState, useEffect, ChangeEvent } from "react"
+import { nanoid } from 'nanoid'
 import Card from "../Card/Card"
 import './Sidebar.scss'
 import { getPlantList, searchPlants } from "../../apiCalls"
@@ -48,8 +49,6 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
     const [loadingPlants, setLoadingPlants] = useState<boolean>(true)
     const [activeTab, setActiveTab] = useState<string>('plants')
 
-    // console.log(plantList)
-
     const getDecorList = () => {
         //this is a placeholder for what will become the api call for the decor list
         setDecorList(decorData.data)
@@ -96,13 +95,14 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
             plant.attributes.image = plantImage
             return <Card plant={plant.attributes} modal={modal} setModal={setModal} key={plant.attributes.plant_id} />
         })
+        console.log('looking at plants')
+        console.log('cards:', cards)
     } else if (decorList.length && activeTab === 'decor') {
         cards = decorList.map((item: DecorData) => {
-            return <Card plant={item.attributes} modal={modal} setModal={setModal} key={item.attributes.plant_name} />
+            return <Card plant={item.attributes} modal={modal} setModal={setModal} key={nanoid()} />
         })
-        // cards = decorList.map((item) => {
-        //     return <p>{item.attributes.name}</p>
-        // })
+        console.log('looking at decor')
+        console.log('cards:', cards)
     } else {
         cards = <p className="loading">Hmmm... there are nothing in our nursery matching your search.</p>
     }

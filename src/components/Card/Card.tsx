@@ -13,6 +13,11 @@ interface AdditionalCardProps {
   setModal: Function;
 }
 
+interface PlantData {
+  type: string
+  sunlight: string | undefined
+}
+
 type CombinedCardProps = CardProps & AdditionalCardProps;
 
 const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
@@ -43,14 +48,26 @@ const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
     ? plant.image
     : `${process.env.PUBLIC_URL}/images/plant-fallback.png`
 
-  const plantData: { type: string } = {
-    type: plant.type,
-    // sunlight: plant.sunlight[0],
+  // if (plant.sunlight) {
+  //   const plantData: PlantData = {
+  //     type: plant.type,
+  //     sunlight: plant.sunlight[0],
+  //   }
+  // }
+
+  const type: string = plant.type
+
+  let sunlight
+
+  if (plant.sunlight){
+    sunlight = plant.sunlight[0]
   }
 
-  const flowerCategory = ICON_MAP.type[plantData.type as IconType]
+  // const sunlight: string = plant.sunlight[0]
 
-  // const sunlightCategory = ICON_MAP.sunlight[plantData.sunlight as SunlightType]
+  const flowerCategory = ICON_MAP.type[type as IconType]
+
+  const sunlightCategory = ICON_MAP.sunlight[sunlight as SunlightType]
 
   return (
     <>
@@ -67,8 +84,8 @@ const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
               <span className="left-icon-text tooltip-text">{`${plant.type}`}</span>
             </div>
             <div className="material-symbols-rounded card-icon">
-              {/* {sunlightCategory} */}
-              {/* <span className="left-icon-text tooltip-text">{`${plant.sunlight[0]}`}</span> */}
+              {sunlightCategory}
+              <span className="left-icon-text tooltip-text">{plant.sunlight && `${plant.sunlight[0]}`}</span>
             </div>
           </div>
           <div className='card-icons'>
