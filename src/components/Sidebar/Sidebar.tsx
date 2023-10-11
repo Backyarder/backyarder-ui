@@ -132,15 +132,19 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
     return (
         <section id='plants'>
             <div className="sidebar-nav">
-                <button className="plants-tab" onClick={() => { setActiveTab('plants') }} style={{
+                <button className="plants-tab sidebar-tab" onClick={() => { setActiveTab('plants') }} style={{
                     backgroundColor: (activeTab !== 'plants') ? '#beab95' : '#f4f4f4',
-                    //   cursor: (activeTab === 'plants') ? 'auto' : 'pointer'
-                }}>PLANTS</button>
-                <button className="decor-tab" onClick={() => { setActiveTab('decor') }}
+                      cursor: (activeTab === 'plants') ? 'auto' : 'pointer'
+                }}><span className="material-symbols-rounded">
+                potted_plant
+                </span>PLANTS</button>
+                <button className="decor-tab sidebar-tab" onClick={() => { setActiveTab('decor') }}
                     style={{
                         backgroundColor: (activeTab !== 'decor') ? '#beab95' : '#f4f4f4',
-                        // cursor: (activeTab === 'decor') ? 'auto' : 'pointer'
-                    }}>DECOR</button>
+                        cursor: (activeTab === 'decor') ? 'auto' : 'pointer'
+                    }}><span className="material-symbols-rounded">
+                    deck
+                    </span>DECOR</button>
             </div>
             {activeTab === 'plants' && <div className="search">
                 <input
