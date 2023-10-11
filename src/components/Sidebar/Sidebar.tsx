@@ -64,25 +64,12 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
         getDecorList()
     }, [])
 
-    //create conditional to check what that is
-    //if plants do getPlantList
-    //if decor do getDecorList (for now only displaying text 'decor list')
-
-    //when a tab is clicked we use an onclick to invoke a function
-    //function updates state to the value of the tab (plants or decor)
-    //when this activeTab state is updated it triggers the useEffect hook in order to get the data that is needed (getPlantList OR getDecorList -- need to write the api call for getting a decor list -- this will start with mock data (can still use the loadinglants message when waiting on decor))
-
     const handleApiError = (error: string) => {
         setApiError(error)
     }
 
     let cards;
 
-    //below adding in a condtional to check if plants or decor is the active tab
-    //check if !plantList || !decorList - then display 500 error message
-    //check if plantList.length && activeTab === 'plants' - this displays all plants
-    //check if decorList.length && activeTab === 'decor' - this displays all decor
-    //else just display that there is nothing in the nursery mathcing the search 
 
     if (!plantList || !decorList) {
         cards = <p className="loading">It looks like our nursery is not operating correctly, please try again later</p>
@@ -95,14 +82,10 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
             plant.attributes.image = plantImage
             return <Card plant={plant.attributes} modal={modal} setModal={setModal} key={plant.attributes.plant_id} />
         })
-        console.log('looking at plants')
-        console.log('cards:', cards)
     } else if (decorList.length && activeTab === 'decor') {
         cards = decorList.map((item: DecorData) => {
             return <Card plant={item.attributes} modal={modal} setModal={setModal} key={nanoid()} />
         })
-        console.log('looking at decor')
-        console.log('cards:', cards)
     } else {
         cards = <p className="loading">Hmmm... there are nothing in our nursery matching your search.</p>
     }

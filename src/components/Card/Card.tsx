@@ -13,11 +13,6 @@ interface AdditionalCardProps {
   setModal: Function;
 }
 
-interface PlantData {
-  type: string
-  sunlight: string | undefined
-}
-
 type CombinedCardProps = CardProps & AdditionalCardProps;
 
 const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
@@ -48,13 +43,6 @@ const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
     ? plant.image
     : `${process.env.PUBLIC_URL}/images/plant-fallback.png`
 
-  // if (plant.sunlight) {
-  //   const plantData: PlantData = {
-  //     type: plant.type,
-  //     sunlight: plant.sunlight[0],
-  //   }
-  // }
-
   const type: string = plant.type
 
   let sunlight
@@ -62,8 +50,6 @@ const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
   if (plant.sunlight){
     sunlight = plant.sunlight[0]
   }
-
-  // const sunlight: string = plant.sunlight[0]
 
   const flowerCategory = ICON_MAP.type[type as IconType]
 
