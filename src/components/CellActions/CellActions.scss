@@ -1,3 +1,7 @@
+.cell-info, .cell-actions, .cell-button, .card-image, .icon {
+    z-index: 3;
+}
+
 .cell-info {
     position: absolute;
     bottom: 110%;
