@@ -65,7 +65,8 @@ const patchCellContents = ({plant}: CellContents, id: string, status: keyof Stat
   return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell`, {
             method: 'PATCH',
             body: JSON.stringify({
-              plant_name: plant.plant_name,
+              name: plant.plant_name,
+              content_type: plant.content_type,
               location_id: id,
               image: plant.image,
               status: STATUS_MAP[`${status}`],
@@ -84,7 +85,8 @@ const patchDisabledOrRemoved = (id: string, status: keyof StatusType) => {
   return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell`, {
             method: 'PATCH',
             body: JSON.stringify({
-              plant_name: null,
+              name: null,
+              content_type: "None",
               location_id: id,
               image: null,
               status: STATUS_MAP[`${status}`],
