@@ -107,7 +107,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
 
   useEffect(() => {
     if (shouldRender && cellContents) {
-      handleGarden(id, cellContents.plant.image, cellContents.plant.plant_name, cellContents.plant.plant_id, isDisabled ? 'disabled' : 'empty', cellContents.plant.watering, handleTime());
+      handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.plant_id, isDisabled ? 'disabled' : 'empty', cellContents.plant.watering, handleTime());
       setShouldRender(false);
     }
     // eslint-disable-next-line
@@ -115,7 +115,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
 
   useEffect(() => {
     if (shouldRender && cellContents) {
-      handleGarden(id, cellContents.plant.image, cellContents.plant.plant_name, cellContents.plant.plant_id, isPopulated ? 'placed' : 'empty', cellContents.plant.watering, handleTime());
+      handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.plant_id, isPopulated ? 'placed' : 'empty', cellContents.plant.watering, handleTime());
     } else if (shouldRender && !isPopulated) {
       handleGarden(id, undefined, undefined, undefined, 'empty', 'None', handleTime());
     }
@@ -125,11 +125,11 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
 
   useEffect(() => {
     if (shouldRender && isPlanted && cellContents) {
-      handleGarden(id, cellContents.plant.image, cellContents.plant.plant_name, cellContents.plant.plant_id, 'locked', cellContents.plant.watering, handleTime());
+      handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.plant_id, 'locked', cellContents.plant.watering, handleTime());
       setNeedsWatering(false);
       handleWatered();
     } else if (shouldRender && isPopulated && cellContents) {
-      handleGarden(id, cellContents.plant.image, cellContents.plant.plant_name, cellContents.plant.plant_id, 'placed', cellContents.plant.watering, handleTime());
+      handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.plant_id, 'placed', cellContents.plant.watering, handleTime());
     } else if (shouldRender && !isPopulated) {
       handleGarden(id, undefined, undefined, undefined, 'empty', 'None', handleTime());
     }
@@ -154,6 +154,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   const [{ isOver }, dropRef] = useDrop({
     accept: 'plant',
     drop: (plant: CellContents) => {
+      plant.plant.name = plant.plant.plant_name
       setCellContents(plant);
       setTimeout(() => {
         setShouldRender(true);
@@ -334,7 +335,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
           )}
           <div
             id={id}
-            data-tooltip={`${cellContents?.plant.plant_name}`}
+            data-tooltip={`${cellContents?.plant.name}`}
             className={[className, wateringWarning].join(' ')}
             style={{ ...divStyle, ...hoverStyle }}
             onClick={handleClick}
@@ -343,11 +344,11 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
               dropRef(node)
             }}
           >
-            <span className={`cell-tooltip-text ${hoverEffectClass}`}>{`${cellContents?.plant.plant_name}`}</span>
+            <span className={`cell-tooltip-text ${hoverEffectClass}`}>{`${cellContents?.plant.name}`}</span>
             {isClicked && <div className='cell-modal'>
               {cellContents && <CellActions
                 image={cellContents.plant.image}
-                name={cellContents.plant.plant_name}
+                name={cellContents.plant.name}
                 plantId={cellContents.plant.plant_id}
                 isPlanted={isPlanted}
                 handlePlanted={handlePlanted}
