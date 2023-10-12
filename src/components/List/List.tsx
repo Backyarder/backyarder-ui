@@ -40,14 +40,14 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
   }
 
   const uniquePlants = (garden || []).reduce((array: GardenKeys, plant: CellKeys) => {
-    if (!array.some(item => item.plant_id === plant.plant_id) && plant.plant_name) {
+    if (!array.some(item => item.plant_id === plant.plant_id) && plant.name) {
       array.push(plant);
     }
     return array.filter(item => item.status === 'locked');
   }, []);
 
   const uniquePlacedItems = garden?.reduce((array: GardenKeys, plant: CellKeys) => {
-    if (!array.some(item => item.plant_id === plant.plant_id) && plant.plant_name) {
+    if (!array.some(item => item.plant_id === plant.plant_id) && plant.name) {
       array.push(plant);
     }
     return array.filter(item => item.status === 'placed');
@@ -57,8 +57,8 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
     return (
       <div key={plant['plant_id']} className='plant-element' >
         <div className='plant-info-container' >
-          <img src={plant.image} className='plant-image' alt={plant.plant_name} />
-          <p>{plant.plant_name?.toUpperCase()} x{findQuantity(garden, plant.plant_id)}</p>
+          <img src={plant.image} className='plant-image' alt={plant.name} />
+          <p>{plant.name?.toUpperCase()} x{findQuantity(garden, plant.plant_id)}</p>
         </div>
         <NavLink to={`/plants/${plant['plant_id']}`} >
           <button className='detail-button' >VIEW PLANT DETAILS</button>
@@ -72,8 +72,8 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
       <div key={plant['plant_id']} className='placed-element' >
         <div className='plant-info-container' >
           <img className='wishlist-checkbox' src={`${process.env.PUBLIC_URL}/images/checked_${wishlist.some(item => item.plant_id === plant.plant_id)}.png`} onClick={() => handleWishlist(plant.plant_id)} alt={`wishlist checkbox ${plant.plant_id}`} />
-          <img src={plant.image} className='placed-image' alt={plant.plant_name} />
-          <p>{plant.plant_name?.toUpperCase()}</p>
+          <img src={plant.image} className='placed-image' alt={plant.name} />
+          <p>{plant.name?.toUpperCase()}</p>
         </div>
         <NavLink to={`/plants/${plant['plant_id']}`} >
           <button className='detail-button' >VIEW PLANT DETAILS</button>
