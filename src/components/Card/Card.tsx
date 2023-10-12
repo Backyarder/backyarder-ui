@@ -31,21 +31,29 @@ const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
 
   const draggedCardStyle = isDragging ? { opacity: '.4' } : {}
 
-  const hardiness = plant.hardiness.min === plant.hardiness.max
+  let hardiness;
+
+  if(plant.hardiness){
+    hardiness = plant.hardiness.min === plant.hardiness.max
     ? `${plant.hardiness.min}`
     : `${plant.hardiness.min}-${plant.hardiness.max}`
+  }
 
   const plantImage = plant.image
     ? plant.image
     : `${process.env.PUBLIC_URL}/images/plant-fallback.png`
 
-  const plantData: { type: string; sunlight: string } = {
-    type: plant.type,
-    sunlight: plant.sunlight[0],
+  const type: string = plant.type
+
+  let sunlight
+
+  if (plant.sunlight){
+    sunlight = plant.sunlight[0]
   }
 
-  const flowerCategory = ICON_MAP.type[plantData.type as IconType]
-  const sunlightCategory = ICON_MAP.sunlight[plantData.sunlight as SunlightType]
+  const flowerCategory = ICON_MAP.type[type as IconType]
+
+  const sunlightCategory = ICON_MAP.sunlight[sunlight as SunlightType]
 
   return (
     <>
@@ -63,14 +71,14 @@ const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
             </div>
             <div className="material-symbols-rounded card-icon">
               {sunlightCategory}
-              <span className="left-icon-text tooltip-text">{`${plant.sunlight[0]}`}</span>
+              <span className="left-icon-text tooltip-text">{plant.sunlight && `${plant.sunlight[0]}`}</span>
             </div>
           </div>
           <div className='card-icons'>
-            <div className="material-symbols-rounded card-icon">
+            {plant.hardiness && <div className="material-symbols-rounded card-icon">
               location_on
               <span className="hardiness-text tooltip-text">hardiness zone</span>
-            </div>
+            </div>}
             <span>{hardiness}</span>
           </div>
         </div>
