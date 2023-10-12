@@ -87,7 +87,7 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
             return <Card plant={item.attributes} modal={modal} setModal={setModal} key={nanoid()} />
         })
     } else {
-        cards = <p className="loading">Hmmm... there are nothing in our nursery matching your search.</p>
+        cards = <p className="loading">Hmmm... there are no plants in our nursery matching your search.</p>
     }
 
     const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
