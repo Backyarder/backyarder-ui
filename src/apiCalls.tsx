@@ -62,7 +62,6 @@ const WATERING_MAP: WateringType = {
 }
 
 const patchCellContents = ({plant}: CellContents, id: string, status: keyof StatusType, watering: keyof WateringType) => {
-  console.log(plant)
   return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell`, {
             method: 'PATCH',
             body: JSON.stringify({
