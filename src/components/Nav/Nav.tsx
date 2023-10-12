@@ -62,8 +62,21 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
             </div>
             <div className='key-symbol-container' >
               <div className='unavailable-symbol' ></div>
+              <p>PLACED</p>
+            </div>
+            <div className='key-symbol-container' >
+              <div className='empty-symbol' ></div>
+              <p>NEEDS WATER</p>
+            </div>
+            <div className='key-symbol-container' >
+              <div className='empty-symbol' ></div>
               <p>UNAVAILABLE</p>
             </div>
+            {/* <div className='key-symbol-container' >
+              <div className='empty-symbol' ></div>
+              <p>EMPTY</p>
+            </div> */}
+            <p>DRAG AND DROP PLANTS AND ITEMS INTO THE GARDEN GRID TO CREATE YOUR GARDEN</p>
           </div>
           <div id='wateringCan'>
             <img src={`${process.env.PUBLIC_URL}/images/watering-can.png`} className='ripple' onClick={handleWaterAll} alt='watering can, click to water all planted items'/>
