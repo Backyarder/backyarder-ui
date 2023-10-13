@@ -7,7 +7,7 @@ nav {
   margin-left: .5%;
 }
 
-.nav-button, .clear-button, .water-button {
+.nav-button, .clear-button, .water-all-button {
   border: none;
   font-weight: bold;
   border-radius: 25px;
@@ -82,18 +82,18 @@ nav {
   background-color: #786961;
 }
 
-.clear-button, .water-button {
+.clear-button, .water-all-button {
   color: #f4f4f4;
   cursor: pointer;
   box-shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.2);
 }
 
-.water-button {
+.water-all-button {
   position: relative;
   overflow: hidden;
 }
 
-.water-button span {
+.water-all-button span {
   color: black;
   z-index: 1;
 }
@@ -142,7 +142,7 @@ nav {
   }
 }
 
-.water-button:hover .liquid {
+.water-all-button:hover .liquid {
   top: -130%;
 }
 

@@ -65,7 +65,7 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
               <p>UNAVAILABLE</p>
             </div>
           </div>
-          <button className='water-button' onClick={handleWaterAll} >
+          <button className='water-all-button' onClick={handleWaterAll} >
             <span className="material-symbols-rounded nav-icon">water_drop</span>
             <span>WATER GARDEN</span>
             <div className='liquid'></div>
