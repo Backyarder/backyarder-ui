@@ -310,11 +310,15 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
     backgroundColor: '#9EC924'
   }
 
+  const borderStyle = cellContents?.plant.content_type === 'Plant'
+                        ? !needsWatering && isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
+                        : isPlanted && 'solid #786961 3px'
+
   const divStyle = !isDisabled && {
     backgroundImage: `url(${cellContents?.plant.image})`,
     backgroundPosition: 'center',
     backgroundSize: '100%',
-    border: !needsWatering && isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
+    border: `${borderStyle}`
   };
 
   const wateringWarning = needsWatering ? 'watering-alert' : ''
