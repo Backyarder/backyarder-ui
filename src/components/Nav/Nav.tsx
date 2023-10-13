@@ -49,33 +49,29 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
         <>
           <div className='key'>
             <div className='key-symbol-container' >
-              <div className='empty-symbol' ></div>
+              <div className='key-symbol empty-symbol' ></div>
               <p>EMPTY</p>
             </div>
             <div className='key-symbol-container' >
-              <div className='ready-symbol' ></div>
-              <p>READY TO BE PLANTED</p>
+              <div className='key-symbol ready-symbol' ></div>
+              <p>READY FOR PLANTING OR CONSTRUCTION</p>
             </div>
             <div className='key-symbol-container' >
-              <div className='planted-symbol' ></div>
+              <div className='key-symbol planted-symbol' ></div>
               <p>PLANTED</p>
             </div>
             <div className='key-symbol-container' >
-              <div className='unavailable-symbol' ></div>
-              <p>PLACED</p>
-            </div>
-            <div className='key-symbol-container' >
-              <div className='empty-symbol' ></div>
+              <div className='key-symbol needs-water-symbol' ></div>
               <p>NEEDS WATER</p>
             </div>
             <div className='key-symbol-container' >
-              <div className='empty-symbol' ></div>
+              <div className=' key-symbol constructed-symbol' ></div>
+              <p>CONSTRUCTED</p>
+            </div>
+            <div className='key-symbol-container' >
+              <div className='key-symbol unavailable-symbol' ></div>
               <p>UNAVAILABLE</p>
             </div>
-            {/* <div className='key-symbol-container' >
-              <div className='empty-symbol' ></div>
-              <p>EMPTY</p>
-            </div> */}
             <p>DRAG AND DROP PLANTS AND ITEMS INTO THE GARDEN GRID TO CREATE YOUR GARDEN</p>
           </div>
           <div id='wateringCan'>
