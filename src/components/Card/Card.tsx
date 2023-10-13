@@ -26,8 +26,7 @@ const Card = ({ item, activeTab, modal, setModal }: CombinedCardProps) => {
     } else if (activeTab === 'decor') {
       setPlant(() => ({ ...item, content_type: 'Decor' }))
     }
-  // eslint-disable-next-line
-  }, [])
+  }, [activeTab, item])
 
   const [{ isDragging }, dragRef, preview] = useDrag({
     type: 'plant',
@@ -56,7 +55,7 @@ const Card = ({ item, activeTab, modal, setModal }: CombinedCardProps) => {
     ? item.image
     : `${process.env.PUBLIC_URL}/images/plant-fallback.png`
 
-  const type: string = item.type
+  const type: string = item?.type || ''
 
   let sunlight
 
