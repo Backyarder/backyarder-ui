@@ -37,7 +37,8 @@ type CombinedProps = GridProps & AdditionalProps;
 export type CellKeys = {
   location_id: string;
   image: string | undefined;
-  plant_name: string | undefined;
+  name: string | undefined;
+  content_type: string | undefined;
   plant_id: number | undefined;
   watering: keyof WateringType
   status: string | number | null | undefined;
