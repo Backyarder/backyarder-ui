@@ -5,7 +5,7 @@
       "type": "list",
       "attributes": {
         "image": "https://perenual.com/storage/species_image/492_achillea_ptarmica_the_pearl_group/thumbnail/2767012614_c7e9632338_b.jpg",
-        "plant_name": "sneezewort",
+        "name": "sneezewort",
         "hardiness": {
           "min": "3",
           "max": "9"
@@ -23,7 +23,7 @@
       "type": "list",
       "attributes": {
         "image": null,
-        "plant_name": "begonia",
+        "name": "begonia",
         "hardiness": {
           "min": "10",
           "max": "11"
@@ -41,7 +41,7 @@
       "type": "list",
       "attributes": {
         "image": "https://perenual.com/storage/species_image/1597_capsicum_annuum_black_pearl/thumbnail/2560px-Capsicum_annuum_Black_Pearl_6zz.jpg",
-        "plant_name": "ornamental pepper",
+        "name": "ornamental pepper",
         "hardiness": {
           "min": "9",
           "max": "11"
@@ -58,7 +58,7 @@
       "type": "list",
       "attributes": {
         "image": "https://perenual.com/storage/species_image/523_actaea_matsumurae_white_pearl/thumbnail/9654734200_8618f88c8f_b.jpg",
-        "plant_name": "bugbane",
+        "name": "bugbane",
         "hardiness": {
           "min": "4",
           "max": "9"
@@ -76,7 +76,7 @@
       "type": "list",
       "attributes": {
         "image": "https://perenual.com/storage/species_image/563_aesculus_indica_sydney_pearce/thumbnail/3049990207_0b235f0202_b.jpg",
-        "plant_name": "Indian horse chustnut",
+        "name": "Indian horse chustnut",
         "hardiness": {
           "min": "6",
           "max": "9"
@@ -94,7 +94,7 @@
       "type": "list",
       "attributes": {
         "image": "https://perenual.com/storage/species_image/794_anaphalis_margaritacea/thumbnail/51637179515_76fcd9a6e8_b.jpg",
-        "plant_name": "pearly everlasting",
+        "name": "pearly everlasting",
         "hardiness": {
           "min": "3",
           "max": "8"
@@ -112,7 +112,7 @@
       "type": "list",
       "attributes": {
         "image": "https://perenual.com/storage/species_image/795_anaphalis_triplinervis/thumbnail/2048px-Anaphalis_triplinervis-IMG_6150.jpg",
-        "plant_name": "pearly everlasting",
+        "name": "pearly everlasting",
         "hardiness": {
           "min": "3",
           "max": "9"
@@ -130,7 +130,7 @@
       "type": "list",
       "attributes": {
         "image": "https://perenual.com/storage/species_image/1034_asphodeline_lutea/thumbnail/8869006693_cd691deaed_b.jpg",
-        "plant_name": "king's spear",
+        "name": "king's spear",
         "hardiness": {
           "min": "6",
           "max": "9"
@@ -147,7 +147,7 @@
       "type": "list",
       "attributes": {
         "image": "https://perenual.com/storage/species_image/1067_astilbe_chinensis_diamonds_and_pearls/thumbnail/49081062131_6f47f8b994_b.jpg",
-        "plant_name": "Chinese astilbe",
+        "name": "Chinese astilbe",
         "hardiness": {
           "min": "4",
           "max": "8"
@@ -165,7 +165,7 @@
       "type": "list",
       "attributes": {
         "image": "https://perenual.com/storage/species_image/1773_cercis_canadensis_jn16_black_pearl/thumbnail/redbud-flower-tree-plant.jpg",
-        "plant_name": "eastern redbud",
+        "name": "eastern redbud",
         "hardiness": {
           "min": "5",
           "max": "5"
