@@ -50,29 +50,29 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
           <div className='key'>
             <div className='key-symbol-container' >
               <div className='key-symbol empty-symbol' ></div>
-              <p>EMPTY</p>
+              <p className="key-text">EMPTY</p>
             </div>
             <div className='key-symbol-container' >
               <div className='key-symbol ready-symbol' ></div>
-              <p>READY FOR PLANTING OR CONSTRUCTION</p>
+              <p className="key-text">READY FOR PLANTING OR CONSTRUCTION</p>
             </div>
             <div className='key-symbol-container' >
               <div className='key-symbol planted-symbol' ></div>
-              <p>PLANTED</p>
+              <p className="key-text">PLANTED</p>
             </div>
             <div className='key-symbol-container' >
               <div className='key-symbol needs-water-symbol' ></div>
-              <p>NEEDS WATER</p>
+              <p className="key-text">NEEDS WATER</p>
             </div>
             <div className='key-symbol-container' >
               <div className=' key-symbol constructed-symbol' ></div>
-              <p>CONSTRUCTED</p>
+              <p className="key-text">CONSTRUCTED</p>
             </div>
             <div className='key-symbol-container' >
               <div className='key-symbol unavailable-symbol' ></div>
-              <p>UNAVAILABLE</p>
+              <p className="key-text">UNAVAILABLE</p>
             </div>
-            <p>DRAG AND DROP PLANTS AND ITEMS INTO THE GARDEN GRID TO CREATE YOUR GARDEN</p>
+            <p className="key-text">DRAG AND DROP PLANTS AND ITEMS INTO THE GARDEN GRID TO CREATE YOUR GARDEN</p>
           </div>
           <div id='wateringCan'>
             <img src={`${process.env.PUBLIC_URL}/images/watering-can.png`} className='ripple' onClick={handleWaterAll} alt='watering can, click to water all planted items'/>
