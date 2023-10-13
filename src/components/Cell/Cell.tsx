@@ -312,7 +312,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
 
   const borderStyle = cellContents?.plant.content_type === 'Plant'
                         ? !needsWatering && isPlanted ? 'solid #9EC924 3px' : 'solid #f4f4f4 3px'
-                        : isPlanted && 'solid #786961 3px'
+                        : isPlanted ? 'solid #786961 3px' : 'solid #f4f4f4 3px'
 
   const divStyle = !isDisabled && {
     backgroundImage: `url(${cellContents?.plant.image})`,
