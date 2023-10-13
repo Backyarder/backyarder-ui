@@ -352,6 +352,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
               {cellContents && <CellActions
                 image={cellContents.plant.image}
                 name={cellContents.plant.name}
+                contentType={cellContents.plant.content_type}
                 plantId={cellContents.plant.plant_id}
                 isPlanted={isPlanted}
                 handlePlanted={handlePlanted}

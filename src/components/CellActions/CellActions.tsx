@@ -4,6 +4,7 @@ import './CellActions.scss'
 interface CellProps {
     image: string | undefined
     name: string | undefined
+    contentType: string | undefined
     plantId: number | undefined
     handleCloseModal: () => void
     isPlanted: boolean
@@ -14,7 +15,7 @@ interface CellProps {
     toggleHoverEffect: Function
 }
 
-const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handlePlanted, handleWatered, handleRemove, handleNeedsUpdating, toggleHoverEffect }: CellProps) => {
+const CellActions = ({ image, name, contentType, plantId, handleCloseModal, isPlanted, handlePlanted, handleWatered, handleRemove, handleNeedsUpdating, toggleHoverEffect }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -41,23 +42,25 @@ const CellActions = ({ image, name, plantId, handleCloseModal, isPlanted, handle
             <p className='plant-name'>{name?.toUpperCase()}</p>
             <div className='cell-actions'>
                 {isPlanted
-                    ? <button className='cell-button water-button' onClick={handleClick}>
+                    ? contentType === "Plant" && <button className='cell-button water-button' onClick={handleClick}>
                         Water!
                         <span className="material-symbols-rounded icon">
                             water_drop
                         </span>
                     </button>
                     : <button className='cell-button plant-button' onClick={handleClick}>
-                        Plant!
+                        { contentType === "Plant" ? "Plant!" : "Construct!" }
                         <span className="material-symbols-rounded icon plant-button">
-                            psychiatry
+                        { contentType === "Plant" ? "psychiatry" : "construction" }
                         </span>
                     </button>
                 }
-                <NavLink to={`/plants/${plantId}`} className='cell-button' onClick={handleClick}>
-                    <span onClick={handleClick} className="material-symbols-rounded">menu_book</span>
-                    <span className='cell-action-tooltip-text'>Plant details</span>
-                </NavLink>
+                {contentType === "Plant" &&
+                    <NavLink to={`/plants/${plantId}`} className='cell-button' onClick={handleClick}>
+                        <span onClick={handleClick} className="material-symbols-rounded">menu_book</span>
+                        <span className='cell-action-tooltip-text'>Plant details</span>
+                    </NavLink>
+                }
                 <button className='cell-button remove-button' onClick={handleClick}>
                     <span onClick={handleClick} className="material-symbols-rounded remove-button">delete</span>
                     <span className='cell-action-tooltip-text'>Remove from garden</span>

@@ -12,11 +12,13 @@
     flex-direction: column;
     border-radius: 1em;
     padding: 10px;
+    min-width: 200px;
 }
 
 .cell-actions {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .cell-button {
