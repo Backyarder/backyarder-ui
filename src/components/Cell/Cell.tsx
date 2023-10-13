@@ -154,7 +154,6 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   const [{ isOver }, dropRef] = useDrop({
     accept: 'plant',
     drop: (plant: CellContents) => {
-      plant.plant.name = plant.plant.plant_name
       setCellContents(plant);
       setTimeout(() => {
         setShouldRender(true);
@@ -201,7 +200,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
       newState[index] = {
         ...newState[index],
         image: image,
-        plant_name: name,
+        name: name,
         plant_id: plant_id,
         status: status,
         watering: watering,
