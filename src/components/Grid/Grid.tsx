@@ -85,7 +85,7 @@ const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset
   return (
     <section id='grid'>
       {cells}
-      {popUp && <ConfirmModal setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} setAlert={setAlert} />}
+      {popUp && <ConfirmModal fullClear={fullClear} reset={reset} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} setAlert={setAlert} />}
       {modal && <Modal alert={alert} bullDoze={bullDoze} filterGarden={filterGarden} toggleModal={toggleModal} />}
     </section>
   );
