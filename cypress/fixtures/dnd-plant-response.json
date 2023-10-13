@@ -4,7 +4,7 @@
       "type": "cell",
       "attributes": {
         "image": "image_url",
-        "plant_name": "Weedy Weed",
+        "name": "Weedy Weed",
         "location_id": "A1",
         "status": "placed",
         "plant_id": 13,

@@ -2,17 +2,14 @@ import { deleteContents } from '../../apiCalls';
 import './ConfirmModal.scss';
 
 interface ConfirmProps {
-  setPopUp: Function;
   fullClear: boolean;
-  setFullClear: Function;
-  setPartialClear: Function;
   reset: () => void;
   setBullDoze: Function;
   setFilterGarden: Function;
   setAlert: Function;
 }
 
-const ConfirmModal = ({ setPopUp, fullClear, setFullClear, setPartialClear, reset, setBullDoze, setFilterGarden, setAlert }: ConfirmProps) => {
+const ConfirmModal = ({ fullClear, reset, setBullDoze, setFilterGarden, setAlert }: ConfirmProps) => {
 
   const handleDelete = (): void => {
     if (fullClear) {
