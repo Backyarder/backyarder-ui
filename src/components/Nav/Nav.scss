@@ -137,26 +137,48 @@ nav {
   transition: top 1s;
 }
 
+// .liquid::before, .liquid::after {
+//   content: '';
+//   position: absolute;
+//   width: 220%;
+//   height: 600%;
+//   top: -112%;
+//   left: 50%;
+//   transform: translate(-50%, -75%);
+// }
+
+// .liquid::before {
+//   border-radius: 45%;
+//   background: rgb(255, 255, 255);
+//   animation: animate 5s linear infinite;
+// }
+
+// .liquid::after {
+//   border-radius: 43%;
+//   animation: animate 10s linear infinite;
+//   background: rgba(255, 255, 255, 0.5);
+// }
+
 .liquid::before, .liquid::after {
   content: '';
   position: absolute;
-  width: 220%;
-  height: 600%;
-  top: -112%;
+  width: 440%;
+  height: 1200%;
+  top: -272%;
   left: 50%;
   transform: translate(-50%, -75%);
 }
 
 .liquid::before {
   border-radius: 45%;
-  background: rgb(255, 255, 255);
+  background: #f4f4f4;
   animation: animate 5s linear infinite;
 }
 
 .liquid::after {
-  border-radius: 43%;
-  animation: animate 10s linear infinite;
+  border-radius: 42%;
   background: rgba(255, 255, 255, 0.5);
+  animation: animate 10s linear infinite;
 }
 
 @keyframes animate {
