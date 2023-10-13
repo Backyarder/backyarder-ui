@@ -26,6 +26,7 @@ const Card = ({ item, activeTab, modal, setModal }: CombinedCardProps) => {
     } else if (activeTab === 'decor') {
       setPlant(() => ({ ...item, content_type: 'Decor' }))
     }
+  // eslint-disable-next-line
   }, [])
 
   const [{ isDragging }, dragRef, preview] = useDrag({
