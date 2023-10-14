@@ -107,7 +107,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
 
   useEffect(() => {
     if (shouldRender && cellContents) {
-      handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.plant_id, isDisabled ? 'disabled' : 'empty', cellContents.plant.watering, handleTime());
+      handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.content_type, cellContents.plant.plant_id, isDisabled ? 'disabled' : 'empty', cellContents.plant.watering, handleTime());
       setShouldRender(false);
     }
     // eslint-disable-next-line
@@ -115,9 +115,9 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
 
   useEffect(() => {
     if (shouldRender && cellContents) {
-      handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.plant_id, isPopulated ? 'placed' : 'empty', cellContents.plant.watering, handleTime());
+      handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.content_type, cellContents.plant.plant_id, isPopulated ? 'placed' : 'empty', cellContents.plant.watering, handleTime());
     } else if (shouldRender && !isPopulated) {
-      handleGarden(id, undefined, undefined, undefined, 'empty', 'None', handleTime());
+      handleGarden(id, undefined, undefined, undefined, undefined, 'empty', 'None', handleTime());
     }
     setShouldRender(false);
     // eslint-disable-next-line
@@ -125,13 +125,13 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
 
   useEffect(() => {
     if (shouldRender && isPlanted && cellContents) {
-      handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.plant_id, 'locked', cellContents.plant.watering, handleTime());
+      handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.content_type, cellContents.plant.plant_id, 'locked', cellContents.plant.watering, handleTime());
       setNeedsWatering(false);
       handleWatered();
     } else if (shouldRender && isPopulated && cellContents) {
-      handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.plant_id, 'placed', cellContents.plant.watering, handleTime());
+      handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.content_type, cellContents.plant.plant_id, 'placed', cellContents.plant.watering, handleTime());
     } else if (shouldRender && !isPopulated) {
-      handleGarden(id, undefined, undefined, undefined, 'empty', 'None', handleTime());
+      handleGarden(id, undefined, undefined, undefined, undefined, 'empty', 'None', handleTime());
     }
     setShouldRender(false);
     // eslint-disable-next-line
@@ -142,11 +142,11 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
       setClassName('cell');
       handleEmptyCells();
       setBullDoze(false);
-      handleGarden(id, undefined, undefined, undefined, 'empty', 'None', handleTime());
+      handleGarden(id, undefined, undefined, undefined, undefined, 'empty', 'None', handleTime());
     } else if (filterGarden && !isPlanted && !isDisabled) {
       handleUnplanted();
       setFilterGarden(false);
-      handleGarden(id, undefined, undefined, undefined, 'empty', 'None', handleTime());
+      handleGarden(id, undefined, undefined, undefined, undefined, 'empty', 'None', handleTime());
     }
     // eslint-disable-next-line
   }, [bullDoze, filterGarden]);
@@ -193,7 +193,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
     setApiError(error);
   }
 
-  const handleGarden = (id: string, image: string | undefined, name: string | undefined, plant_id: number | undefined, status: string, watering: keyof WateringType, updated_at: string) => {
+  const handleGarden = (id: string, image: string | undefined, name: string | undefined, content_type: string | undefined, plant_id: number | undefined, status: string, watering: keyof WateringType, updated_at: string) => {
     setGarden((prevState: GardenKeys) => {
       let index = prevState?.findIndex((item) => item.location_id === id);
       let newState = [...prevState];
@@ -201,6 +201,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
         ...newState[index],
         image: image,
         name: name,
+        content_type: content_type,
         plant_id: plant_id,
         status: status,
         watering: watering,
@@ -317,7 +318,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   const divStyle = !isDisabled && {
     backgroundImage: `url(${cellContents?.plant.image})`,
     backgroundPosition: 'center',
-    backgroundSize: '100%',
+    backgroundSize: 'cover',
     border: `${borderStyle}`
   };
 
