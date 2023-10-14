@@ -34,19 +34,23 @@ nav {
 .key {
   position: relative;
   border: none;
-  border-radius: 1em 1em 4px 4px;
+  border-radius: 1em;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #beab95;
   color: #483c3c;
   font-weight: bolder;
-  margin-bottom: 29vh;
+  margin-bottom: 0.8vh;
   height: 5vh;
   width: 100%;
   cursor: pointer;
+  transition: 0.3s ease;
 
   &:focus {
+    border-radius: 1em 1em 4px 4px;
+    margin-bottom: 29vh;
+
     .key-dropdown {
       transform: translate(0, 20px);
       opacity: 1;
