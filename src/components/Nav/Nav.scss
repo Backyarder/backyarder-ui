@@ -41,15 +41,15 @@ nav {
   background-color: #beab95;
   color: #483c3c;
   font-weight: bolder;
-  margin-bottom: 0.8vh;
+  margin-bottom: 0.55em;
   height: 5vh;
   width: 100%;
   cursor: pointer;
   transition: 0.3s ease;
 
   &:focus {
-    border-radius: 1em 1em 4px 4px;
-    margin-bottom: 29vh;
+    border-radius: 1em 1em 0px 0px;
+    margin-bottom: 19em;
 
     .key-dropdown {
       transform: translate(0, 20px);
@@ -75,10 +75,10 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  border-radius: 4px 4px 1em 1em;
+  border-radius: 0px 0px 1em 1em;
   top: 40%;
   left: 0;
-  height: 28vh;
+  height: 18em;
   width: 100%;
   padding-top: 0.6em;
   background-color: #beab95;
