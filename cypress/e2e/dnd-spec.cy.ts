@@ -12,7 +12,7 @@ describe('Drag and Drop', () => {
       
       cy.intercept('PATCH', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell', {
         statusCode: 200,
-        fixture: 'onload-grid.json'
+        fixture: 'dnd-plant-response.json'
       }).as('dnd-card-on-cell')
 
       cy.visit('http://localhost:3000/')
