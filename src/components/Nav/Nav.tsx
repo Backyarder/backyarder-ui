@@ -72,7 +72,6 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
               <div className='key-symbol unavailable-symbol' ></div>
               <p className="key-text">UNAVAILABLE</p>
             </div>
-            {/* <p className="key-text">DRAG AND DROP PLANTS AND ITEMS INTO THE GARDEN GRID TO CREATE YOUR GARDEN</p> */}
           </div>
           <button className='water-all-button' onClick={handleWaterAll} >
             <span className="material-symbols-rounded nav-icon">water_drop</span>

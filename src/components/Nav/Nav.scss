@@ -43,7 +43,7 @@ nav {
 }
 
 .key-text {
-  padding-left: 3%;
+  font-size: 12px;
 }
 
 .key-symbol-container {
@@ -54,11 +54,10 @@ nav {
 .key-symbol {
   border: none;
   border-radius: 0.3em;
-  height: 30px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
   background-color: #f4f4f4;
-  margin: 0 5%;
-  margin: 0.15em 0.6em;
+  margin: 0 0.6em;
 }
 
 .empty-symbol, .ready-symbol, .planted-symbol {
@@ -103,7 +102,7 @@ nav {
 }
 
 .water-all-button span {
-  color: black;
+  color: #af2268;
   z-index: 1;
 }
 
