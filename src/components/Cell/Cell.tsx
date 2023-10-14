@@ -318,7 +318,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   const divStyle = !isDisabled && {
     backgroundImage: `url(${cellContents?.plant.image})`,
     backgroundPosition: 'center',
-    backgroundSize: '100%',
+    backgroundSize: 'cover',
     border: `${borderStyle}`
   };
 
