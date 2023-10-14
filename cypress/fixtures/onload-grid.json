@@ -6,6 +6,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "I4",
         "status": "empty",
         "plant_id": null,
@@ -18,6 +19,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "I7",
         "status": "empty",
         "plant_id": null,
@@ -30,6 +32,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "I8",
         "status": "empty",
         "plant_id": null,
@@ -42,6 +45,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "I5",
         "status": "empty",
         "plant_id": null,
@@ -54,6 +58,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "C4",
         "status": "empty",
         "plant_id": null,
@@ -66,6 +71,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "B4",
         "status": "empty",
         "plant_id": null,
@@ -78,6 +84,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "A5",
         "status": "empty",
         "plant_id": null,
@@ -90,6 +97,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "A6",
         "status": "empty",
         "plant_id": null,
@@ -102,6 +110,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "A9",
         "status": "empty",
         "plant_id": null,
@@ -114,6 +123,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "C10",
         "status": "empty",
         "plant_id": null,
@@ -126,6 +136,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "B7",
         "status": "empty",
         "plant_id": null,
@@ -138,6 +149,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "B6",
         "status": "empty",
         "plant_id": null,
@@ -150,6 +162,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "H5",
         "status": "empty",
         "plant_id": null,
@@ -162,6 +175,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "C7",
         "status": "empty",
         "plant_id": null,
@@ -174,6 +188,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "C8",
         "status": "empty",
         "plant_id": null,
@@ -186,6 +201,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "F2",
         "status": "empty",
         "plant_id": null,
@@ -198,6 +214,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "A8",
         "status": "empty",
         "plant_id": null,
@@ -210,6 +227,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "H7",
         "status": "empty",
         "plant_id": null,
@@ -222,6 +240,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "G4",
         "status": "empty",
         "plant_id": null,
@@ -234,6 +253,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "J4",
         "status": "empty",
         "plant_id": null,
@@ -246,6 +266,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "G7",
         "status": "empty",
         "plant_id": null,
@@ -258,6 +279,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "D8",
         "status": "empty",
         "plant_id": null,
@@ -270,6 +292,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "E8",
         "status": "empty",
         "plant_id": null,
@@ -282,6 +305,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "G8",
         "status": "empty",
         "plant_id": null,
@@ -294,6 +318,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "A10",
         "status": "empty",
         "plant_id": null,
@@ -306,6 +331,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "C5",
         "status": "empty",
         "plant_id": null,
@@ -318,6 +344,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "D4",
         "status": "empty",
         "plant_id": null,
@@ -330,6 +357,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "D5",
         "status": "empty",
         "plant_id": null,
@@ -342,6 +370,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "D7",
         "status": "empty",
         "plant_id": null,
@@ -367,6 +396,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "G1",
         "status": "empty",
         "plant_id": null,
@@ -379,6 +409,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "E1",
         "status": "empty",
         "plant_id": null,
@@ -404,6 +435,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "J3",
         "status": "empty",
         "plant_id": null,
@@ -416,6 +448,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "I3",
         "status": "empty",
         "plant_id": null,
@@ -428,6 +461,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "H3",
         "status": "empty",
         "plant_id": null,
@@ -440,6 +474,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "F3",
         "status": "empty",
         "plant_id": null,
@@ -452,6 +487,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "D6",
         "status": "empty",
         "plant_id": null,
@@ -464,6 +500,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "E3",
         "status": "empty",
         "plant_id": null,
@@ -476,6 +513,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "A4",
         "status": "empty",
         "plant_id": null,
@@ -488,6 +526,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "F6",
         "status": "empty",
         "plant_id": null,
@@ -500,6 +539,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "E10",
         "status": "empty",
         "plant_id": null,
@@ -512,6 +552,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "B10",
         "status": "empty",
         "plant_id": null,
@@ -524,6 +565,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "B8",
         "status": "empty",
         "plant_id": null,
@@ -536,6 +578,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "A7",
         "status": "empty",
         "plant_id": null,
@@ -548,6 +591,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "G6",
         "status": "empty",
         "plant_id": null,
@@ -560,6 +604,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "H6",
         "status": "empty",
         "plant_id": null,
@@ -598,6 +643,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "F10",
         "status": "empty",
         "plant_id": null,
@@ -610,6 +656,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "D10",
         "status": "empty",
         "plant_id": null,
@@ -622,6 +669,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "E7",
         "status": "empty",
         "plant_id": null,
@@ -634,6 +682,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "F5",
         "status": "empty",
         "plant_id": null,
@@ -646,6 +695,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "H8",
         "status": "empty",
         "plant_id": null,
@@ -658,6 +708,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "E2",
         "status": "empty",
         "plant_id": null,
@@ -670,6 +721,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "H9",
         "status": "empty",
         "plant_id": null,
@@ -682,6 +734,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "J5",
         "status": "empty",
         "plant_id": null,
@@ -694,6 +747,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "J6",
         "status": "empty",
         "plant_id": null,
@@ -706,6 +760,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "J7",
         "status": "empty",
         "plant_id": null,
@@ -718,6 +773,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "H2",
         "status": "empty",
         "plant_id": null,
@@ -730,6 +786,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "H1",
         "status": "empty",
         "plant_id": null,
@@ -742,6 +799,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "I1",
         "status": "empty",
         "plant_id": null,
@@ -754,6 +812,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "G2",
         "status": "empty",
         "plant_id": null,
@@ -766,6 +825,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "I2",
         "status": "empty",
         "plant_id": null,
@@ -778,6 +838,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "J1",
         "status": "empty",
         "plant_id": null,
@@ -790,6 +851,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "J2",
         "status": "empty",
         "plant_id": null,
@@ -802,6 +864,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "G3",
         "status": "empty",
         "plant_id": null,
@@ -814,6 +877,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "I9",
         "status": "empty",
         "plant_id": null,
@@ -826,6 +890,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "G9",
         "status": "empty",
         "plant_id": null,
@@ -838,6 +903,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "D3",
         "status": "empty",
         "plant_id": null,
@@ -850,6 +916,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "H4",
         "status": "empty",
         "plant_id": null,
@@ -862,6 +929,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "J10",
         "status": "disabled",
         "plant_id": null,
@@ -874,6 +942,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "C3",
         "status": "empty",
         "plant_id": null,
@@ -886,6 +955,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "I6",
         "status": "empty",
         "plant_id": null,
@@ -898,6 +968,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "B9",
         "status": "empty",
         "plant_id": null,
@@ -910,6 +981,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "B5",
         "status": "empty",
         "plant_id": null,
@@ -922,6 +994,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "C9",
         "status": "empty",
         "plant_id": null,
@@ -934,6 +1007,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "F8",
         "status": "empty",
         "plant_id": null,
@@ -946,6 +1020,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "F9",
         "status": "empty",
         "plant_id": null,
@@ -958,6 +1033,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "G10",
         "status": "empty",
         "plant_id": null,
@@ -970,6 +1046,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "J8",
         "status": "empty",
         "plant_id": null,
@@ -982,6 +1059,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "J9",
         "status": "empty",
         "plant_id": null,
@@ -994,6 +1072,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "I10",
         "status": "empty",
         "plant_id": null,
@@ -1006,6 +1085,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "H10",
         "status": "empty",
         "plant_id": null,
@@ -1018,6 +1098,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "F7",
         "status": "empty",
         "plant_id": null,
@@ -1030,6 +1111,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "E9",
         "status": "empty",
         "plant_id": null,
@@ -1042,6 +1124,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "D9",
         "status": "empty",
         "plant_id": null,
@@ -1054,6 +1137,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "C6",
         "status": "empty",
         "plant_id": null,
@@ -1066,6 +1150,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "F4",
         "status": "empty",
         "plant_id": null,
@@ -1078,6 +1163,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "G5",
         "status": "empty",
         "plant_id": null,
@@ -1090,6 +1176,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "B3",
         "status": "empty",
         "plant_id": null,
@@ -1102,6 +1189,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "E5",
         "status": "empty",
         "plant_id": null,
@@ -1114,6 +1202,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "E6",
         "status": "empty",
         "plant_id": null,
@@ -1126,6 +1215,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "E4",
         "status": "empty",
         "plant_id": null,
@@ -1138,6 +1228,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "A3",
         "status": "empty",
         "plant_id": null,
@@ -1163,6 +1254,7 @@
       "attributes": {
         "image": null,
         "name": null,
+        "content_type": null,
         "location_id": "F1",
         "status": "empty",
         "plant_id": null,
