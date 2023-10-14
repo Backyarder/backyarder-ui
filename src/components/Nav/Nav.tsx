@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './Nav.scss';
 
 type NavProps = {
@@ -11,10 +12,20 @@ type NavProps = {
 }
 
 const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartialClear, isGardenView, setIsGardenView }: NavProps) => {
+  const [className, setClassName] = useState<string>('key');
+
 
   const toggleView = (): void => {
     setIsGardenView(!isGardenView);
     reset();
+  }
+
+  const toggleFocus = (): void => {
+    if (className === 'key') {
+      setClassName('key-focus')
+    } else {
+      setClassName('key');
+    }
   }
 
   const handleWaterAll = (): void => {
@@ -47,7 +58,7 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
       </button>
       {isGardenView &&
         <>
-          <button className='key'>
+          <button className={className} onClick={toggleFocus}>
             <div className='key-header-container'>
               <span className="material-symbols-rounded key-icon">key</span>
               <div>KEY</div>

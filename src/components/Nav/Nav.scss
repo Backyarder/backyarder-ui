@@ -31,31 +31,35 @@ nav {
   width: 100%;
 }
 
-.key {
+.key, .key-focus {
   position: relative;
   border: none;
-  border-radius: 1em;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #beab95;
   color: #483c3c;
   font-weight: bolder;
-  margin-bottom: 0.55em;
   height: 5vh;
   width: 100%;
   cursor: pointer;
   transition: 0.3s ease;
 
-  &:focus {
-    border-radius: 1em 1em 0px 0px;
-    margin-bottom: 19em;
+}
 
-    .key-dropdown {
-      transform: translate(0, 20px);
-      opacity: 1;
-      visibility: visible;
-    }
+.key {
+  border-radius: 1em;
+  margin-bottom: 0.55em;
+}
+
+.key-focus {
+  border-radius: 1em 1em 0px 0px;
+  margin-bottom: 19em;
+
+  .key-dropdown {
+    transform: translate(0, 20px);
+    opacity: 1;
+    visibility: visible;
   }
 }
 
