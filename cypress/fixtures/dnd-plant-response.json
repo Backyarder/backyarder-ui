@@ -5,6 +5,7 @@
       "attributes": {
         "image": "image_url",
         "name": "Weedy Weed",
+        "content_type": "Plant",
         "location_id": "A1",
         "status": "placed",
         "plant_id": 13,

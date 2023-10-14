@@ -43,14 +43,14 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
     if (!array.some(item => item.plant_id === plant.plant_id) && plant.name) {
       array.push(plant);
     }
-    return array.filter(item => item.status === 'locked');
+    return array.filter(item => item.status === 'locked' && item.content_type === 'Plant');
   }, []);
 
   const uniquePlacedItems = garden?.reduce((array: GardenKeys, plant: CellKeys) => {
     if (!array.some(item => item.plant_id === plant.plant_id) && plant.name) {
       array.push(plant);
     }
-    return array.filter(item => item.status === 'placed');
+    return array.filter(item => item.status === 'placed' && item.content_type === 'Plant');
   }, []);
 
   const plantElements: JSX.Element[] | undefined = uniquePlants?.map(plant => {
