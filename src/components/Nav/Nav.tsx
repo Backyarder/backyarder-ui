@@ -49,20 +49,28 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
         <>
           <div className='key'>
             <div className='key-symbol-container' >
-              <div className='empty-symbol' ></div>
-              <p>EMPTY</p>
+              <div className='key-symbol empty-symbol' ></div>
+              <p className="key-text">EMPTY</p>
             </div>
             <div className='key-symbol-container' >
-              <div className='ready-symbol' ></div>
-              <p>READY TO BE PLANTED</p>
+              <div className='key-symbol ready-symbol' ></div>
+              <p className="key-text">READY FOR PLANTING OR CONSTRUCTION</p>
             </div>
             <div className='key-symbol-container' >
-              <div className='planted-symbol' ></div>
-              <p>PLANTED</p>
+              <div className='key-symbol planted-symbol' ></div>
+              <p className="key-text">PLANTED</p>
             </div>
             <div className='key-symbol-container' >
-              <div className='unavailable-symbol' ></div>
-              <p>UNAVAILABLE</p>
+              <div className='key-symbol needs-water-symbol' ></div>
+              <p className="key-text">NEEDS WATER</p>
+            </div>
+            <div className='key-symbol-container' >
+              <div className=' key-symbol constructed-symbol' ></div>
+              <p className="key-text">CONSTRUCTED</p>
+            </div>
+            <div className='key-symbol-container' >
+              <div className='key-symbol unavailable-symbol' ></div>
+              <p className="key-text">UNAVAILABLE</p>
             </div>
           </div>
           <button className='water-all-button' onClick={handleWaterAll} >

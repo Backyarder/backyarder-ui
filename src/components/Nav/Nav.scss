@@ -43,7 +43,7 @@ nav {
 }
 
 .key-text {
-  padding-left: 3%;
+  font-size: 12px;
 }
 
 .key-symbol-container {
@@ -51,34 +51,42 @@ nav {
   align-items: center;
 }
 
-.empty-symbol, .ready-symbol, .planted-symbol, .unavailable-symbol {
+.key-symbol {
   border: none;
   border-radius: 0.3em;
-  height: 55%;
-  width: 12%;
+  height: 20px;
+  width: 20px;
   background-color: #f4f4f4;
-  margin: 0 5%;
+  margin: 0 0.6em;
 }
 
 .empty-symbol, .ready-symbol, .planted-symbol {
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
-.ready-symbol, .planted-symbol {
+.ready-symbol, .planted-symbol,  .needs-water-symbol, .constructed-symbol{
   background-image: url('../../../public/images/plant.png');
   background-size: cover;
 }
 
 .empty-symbol, .ready-symbol {
-  border: 5px solid #f4f4f4;
+  border: 3px solid #f4f4f4;
 }
 
 .planted-symbol {
-  border: 5px solid #93a854;
+  border: 3px solid #93a854;
+}
+
+.needs-water-symbol {
+  border: 3px solid #fcaf18;
+}
+
+.constructed-symbol {
+  border: 3px solid #786961;
 }
 
 .unavailable-symbol {
-  border: 5px solid #786961;
+  border: 3px solid #786961;
   background-color: #786961;
 }
 
@@ -94,7 +102,7 @@ nav {
 }
 
 .water-all-button span {
-  color: black;
+  color: #af2268;
   z-index: 1;
 }
 
