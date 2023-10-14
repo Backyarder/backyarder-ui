@@ -31,54 +31,113 @@ nav {
   width: 100%;
 }
 
-.key {
-  border-radius: 1em;
+.key, .key-focus {
+  position: relative;
+  border: none;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   background-color: #beab95;
   color: #483c3c;
   font-weight: bolder;
-  margin-bottom: 0.5em;
+  height: 5vh;
   width: 100%;
+  cursor: pointer;
+  transition: 0.3s ease;
+
+}
+
+.key {
+  border-radius: 1em;
+  margin-bottom: 0.55em;
+}
+
+.key-focus {
+  border-radius: 1em 1em 0px 0px;
+  margin-bottom: 19em;
+
+  .key-dropdown {
+    transform: translate(0, 20px);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.key-header-container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 0.5em;
+}
+
+.key-icon {
+  padding-right: 0.5em;
+}
+
+.key-dropdown {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 0px 0px 1em 1em;
+  top: 40%;
+  left: 0;
+  height: 18em;
+  width: 100%;
+  padding-top: 0.6em;
+  background-color: #beab95;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease;
 }
 
 .key-text {
-  padding-left: 3%;
+  font-size: 12px;
 }
 
 .key-symbol-container {
   display: flex;
   align-items: center;
+  padding-left: 0.2em;
 }
 
-.empty-symbol, .ready-symbol, .planted-symbol, .unavailable-symbol {
+.key-symbol {
   border: none;
   border-radius: 0.3em;
-  height: 55%;
-  width: 12%;
+  height: 20px;
+  width: 20px;
   background-color: #f4f4f4;
-  margin: 0 5%;
-}
-
-.empty-symbol, .ready-symbol, .planted-symbol {
+  margin: 0 0.7em;
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
-.ready-symbol, .planted-symbol {
+.unavailable-symbol {
+  box-shadow: none;
+}
+
+.ready-symbol, .planted-symbol, .needs-water-symbol, .constructed-symbol{
   background-image: url('../../../public/images/plant.png');
   background-size: cover;
 }
 
 .empty-symbol, .ready-symbol {
-  border: 5px solid #f4f4f4;
+  border: 3px solid #f4f4f4;
 }
 
 .planted-symbol {
-  border: 5px solid #93a854;
+  border: 3px solid #93a854;
+}
+
+.needs-water-symbol {
+  border: 3px solid #fcaf18;
+}
+
+.constructed-symbol {
+  border: 3px solid #786961;
 }
 
 .unavailable-symbol {
-  border: 5px solid #786961;
+  border: 3px solid #786961;
   background-color: #786961;
 }
 
@@ -94,7 +153,8 @@ nav {
 }
 
 .water-all-button span {
-  color: black;
+  mix-blend-mode: overlay;
+  text-shadow: white 0px 0px 1px;
   z-index: 1;
 }
 

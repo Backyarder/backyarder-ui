@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './Nav.scss';
 
 type NavProps = {
@@ -11,10 +12,20 @@ type NavProps = {
 }
 
 const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartialClear, isGardenView, setIsGardenView }: NavProps) => {
+  const [className, setClassName] = useState<string>('key');
+
 
   const toggleView = (): void => {
     setIsGardenView(!isGardenView);
     reset();
+  }
+
+  const toggleFocus = (): void => {
+    if (className === 'key') {
+      setClassName('key-focus')
+    } else {
+      setClassName('key');
+    }
   }
 
   const handleWaterAll = (): void => {
@@ -47,24 +58,39 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
       </button>
       {isGardenView &&
         <>
-          <div className='key'>
-            <div className='key-symbol-container' >
-              <div className='empty-symbol' ></div>
-              <p>EMPTY</p>
+          <button className={className} onClick={toggleFocus}>
+            <div className='key-header-container'>
+              <span className="material-symbols-rounded key-icon">key</span>
+              <div>KEY</div>
             </div>
-            <div className='key-symbol-container' >
-              <div className='ready-symbol' ></div>
-              <p>READY TO BE PLANTED</p>
+            <div className='key-dropdown' >
+              <div className='key-symbol-container' >
+                <div className='key-symbol empty-symbol' ></div>
+                <p className="key-text">EMPTY</p>
+              </div>
+              <div className='key-symbol-container' >
+                <div className='key-symbol ready-symbol' ></div>
+                <p className="key-text">PLACED</p>
+              </div>
+              <div className='key-symbol-container' >
+                <div className='key-symbol planted-symbol' ></div>
+                <p className="key-text">PLANTED</p>
+              </div>
+              <div className='key-symbol-container' >
+                <div className='key-symbol needs-water-symbol' ></div>
+                <p className="key-text">NEEDS WATER</p>
+              </div>
+              <div className='key-symbol-container' >
+                <div className=' key-symbol constructed-symbol' ></div>
+                <p className="key-text">CONSTRUCTED</p>
+              </div>
+              <div className='key-symbol-container' >
+                <div className='key-symbol unavailable-symbol' ></div>
+                <p className="key-text">UNAVAILABLE</p>
+              </div>
             </div>
-            <div className='key-symbol-container' >
-              <div className='planted-symbol' ></div>
-              <p>PLANTED</p>
-            </div>
-            <div className='key-symbol-container' >
-              <div className='unavailable-symbol' ></div>
-              <p>UNAVAILABLE</p>
-            </div>
-          </div>
+            <span className="material-symbols-rounded">keyboard_arrow_down</span>
+          </button>
           <button className='water-all-button' onClick={handleWaterAll} >
             <span className="material-symbols-rounded nav-icon">water_drop</span>
             <span>WATER GARDEN</span>
@@ -75,7 +101,7 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
           </span>CLEAR GARDEN</button>
           <button className='clear-button' onClick={handlePartialClear} ><span className="material-symbols-rounded nav-icon">
             agriculture
-          </span>REMOVE UNPLANTED ITEMS</button>
+          </span>REMOVE PLACED ITEMS</button>
         </>
       }
     </nav>
