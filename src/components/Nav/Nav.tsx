@@ -54,7 +54,7 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
             </div>
             <div className='key-symbol-container' >
               <div className='key-symbol ready-symbol' ></div>
-              <p className="key-text">READY FOR PLANTING OR CONSTRUCTION</p>
+              <p className="key-text">PLACED</p>
             </div>
             <div className='key-symbol-container' >
               <div className='key-symbol planted-symbol' ></div>
@@ -83,7 +83,7 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
           </span>CLEAR GARDEN</button>
           <button className='clear-button' onClick={handlePartialClear} ><span className="material-symbols-rounded nav-icon">
             agriculture
-          </span>REMOVE UNPLANTED ITEMS</button>
+          </span>REMOVE PLACED ITEMS</button>
         </>
       }
     </nav>

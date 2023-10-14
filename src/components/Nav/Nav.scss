@@ -54,17 +54,20 @@ nav {
 .key-symbol {
   border: none;
   border-radius: 0.3em;
+  // height: 2.05vh;
+  // width: 1.25vw;
   height: 20px;
   width: 20px;
   background-color: #f4f4f4;
   margin: 0 0.6em;
-}
-
-.empty-symbol, .ready-symbol, .planted-symbol {
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
-.ready-symbol, .planted-symbol,  .needs-water-symbol, .constructed-symbol{
+.unavailable-symbol {
+  box-shadow: none;
+}
+
+.ready-symbol, .planted-symbol, .needs-water-symbol, .constructed-symbol{
   background-image: url('../../../public/images/plant.png');
   background-size: cover;
 }
@@ -102,7 +105,8 @@ nav {
 }
 
 .water-all-button span {
-  color: #af2268;
+  mix-blend-mode: overlay;
+  text-shadow: white 0px 0px 1px;
   z-index: 1;
 }
 
