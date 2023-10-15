@@ -335,7 +335,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
       {isPopulated ? (
         <>
           {!isDragging && (
-            <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
+            <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/${cellContents?.plant.content_type === 'Plant' ? 'plant' : 'umbrella'}.png`} />
           )}
           <div
             id={id}

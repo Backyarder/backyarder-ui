@@ -115,9 +115,16 @@ nav {
   box-shadow: none;
 }
 
-.ready-symbol, .planted-symbol, .needs-water-symbol, .constructed-symbol{
-  background-image: url('../../../public/images/plant.png');
+.ready-symbol, .planted-symbol, .needs-water-symbol, .constructed-symbol {
   background-size: cover;
+}
+
+.ready-symbol, .planted-symbol, .needs-water-symbol {
+  background-image: url('../../../public/images/plant.png');
+}
+
+.constructed-symbol {
+  background-image: url('../../../public/images/umbrella.png');
 }
 
 .empty-symbol, .ready-symbol {
