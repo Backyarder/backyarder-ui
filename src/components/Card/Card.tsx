@@ -58,7 +58,7 @@ const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
   return (
     <>
       {!isDragging && (
-        <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/plant.png`} />
+        <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/${plant.content_type === 'Plant' ? 'plant' : 'umbrella'}.png`} />
       )}
       <NavLink to={`/plants/${plant.plant_id}`} className='card' style={draggedCardStyle} ref={dragRef}>
         <img className='card-image' src={plantImage} alt={`${plant.name}`} />

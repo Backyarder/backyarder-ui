@@ -27,6 +27,7 @@ export interface PlantAttributes {
     plant_id?: number
     sunlight?: string[]
     type: string
+    content_type: string
 }
 
 export interface DecorAttributes {
