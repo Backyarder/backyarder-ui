@@ -26,9 +26,13 @@
 }
 
 .sidebar-tab{
-  width: 10em;
   border: none;
-  border-radius: 2em;
+  border-radius: 10px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 2.5em;
+  width: 10em;
   padding: 0.7em;
   color: #483C3C;
   font-size: 1.1em;
