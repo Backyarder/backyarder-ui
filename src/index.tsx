@@ -6,6 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import { inject } from '@vercel/analytics';
+
+inject();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

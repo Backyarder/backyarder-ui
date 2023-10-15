@@ -10,6 +10,7 @@
     "@types/node": "^16.18.44",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
+    "@vercel/analytics": "^1.1.1",
     "nanoid": "^5.0.1",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
