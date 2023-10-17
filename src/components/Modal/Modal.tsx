@@ -2,12 +2,10 @@ import './Modal.scss';
 
 type ModalProps = {
   alert: boolean;
-  bullDoze: boolean;
-  filterGarden: boolean;
   toggleModal: () => void;
 }
 
-const Modal = ({ alert, bullDoze, filterGarden, toggleModal }: ModalProps) => {
+const Modal = ({ alert, toggleModal }: ModalProps) => {
   return (
     <div className='modal-overlay' >
       <div className='modal' >

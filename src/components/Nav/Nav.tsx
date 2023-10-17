@@ -105,7 +105,7 @@ const Nav = ({ reset, waterGarden, setWaterGarden, setCloseModals, handleFullCle
           </span>CLEAR GARDEN</button>
           <button className='clear-button' onClick={() => {
             setCloseModals(true);
-            handlePartialClear()
+            handlePartialClear();
           }} ><span className="material-symbols-rounded nav-icon">
             agriculture
           </span>REMOVE PLACED ITEMS</button>

@@ -142,11 +142,11 @@ const Cell = ({ id, garden, setGarden, waterGarden, closeModals, setCloseModals,
 
   useEffect(() => {
     if (closeModals) {
-      let cell = document.querySelector(`#${cellContents?.plant.location_id}`);
-      cell?.classList.remove('disable-scale');
+      // let cell = document.querySelector(`#${cellContents?.plant.location_id}`);
+      // console.log(cell);
+      // cell?.classList.remove('disable-scale');
       setIsClicked(false);
       setEnableHoverEffect(true);
-      setCloseModals(false);
     }
   }, [closeModals])
 

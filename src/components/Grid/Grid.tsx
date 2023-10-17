@@ -56,7 +56,12 @@ const Grid = ({ popUp, closeModals, setCloseModals, fullClear, reset, alert, set
   useEffect(() => {
     if (closeModals) {
       let grid = document.querySelector('#grid');
+      let cells = document.querySelectorAll('.cell');
+
       grid?.classList.remove('disable-hover');
+      cells.forEach(cell => {
+        cell.classList.remove('disable-scale');
+      });
     }
   }, [closeModals])
 
@@ -93,8 +98,8 @@ const Grid = ({ popUp, closeModals, setCloseModals, fullClear, reset, alert, set
   return (
     <section id='grid'>
       {cells}
-      {popUp && <ConfirmModal fullClear={fullClear} reset={reset} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} setAlert={setAlert} />}
-      {modal && <Modal alert={alert} bullDoze={bullDoze} filterGarden={filterGarden} toggleModal={toggleModal} />}
+      {popUp && <ConfirmModal setCloseModals={setCloseModals} fullClear={fullClear} reset={reset} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} setAlert={setAlert} />}
+      {modal && <Modal alert={alert} toggleModal={toggleModal} />}
     </section>
   );
 }
