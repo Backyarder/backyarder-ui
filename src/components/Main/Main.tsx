@@ -28,6 +28,7 @@ const Main = () => {
   const [garden, setGarden] = useState<GardenKeys | undefined>([]);
   const [waterGarden, setWaterGarden] = useState<boolean>(false);
   const [isGardenView, setIsGardenView] = useState<boolean>(true);
+  const [closeModals, setCloseModals] = useState<boolean>(false);
   const [bullDoze, setBullDoze] = useState<boolean>(false);
   const [filterGarden, setFilterGarden] = useState<boolean>(false);
   const [popUp, setPopUp] = useState<boolean>(false);
@@ -115,10 +116,10 @@ const Main = () => {
               <Sidebar modal={modal} setModal={setModal} />
               {
                 isGardenView
-                ? <Grid popUp={popUp} setPopUp={setPopUp} fullClear={fullClear} setFullClear={setFullClear} setPartialClear={setPartialClear} reset={reset} alert={alert} setAlert={setAlert} modal={modal} setModal={setModal} garden={garden} setGarden={setGarden} waterGarden={waterGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} lastUpdate={lastUpdate} setLastUpdate={setLastUpdate}/>
+                ? <Grid popUp={popUp} closeModals={closeModals} setCloseModals={setCloseModals} fullClear={fullClear} reset={reset} alert={alert} setAlert={setAlert} modal={modal} setModal={setModal} garden={garden} setGarden={setGarden} waterGarden={waterGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
                 : <List garden={garden} wishlist={wishlist} setWishlist={setWishlist} />
               }
-              <Nav reset={reset} waterGarden={waterGarden} setWaterGarden={setWaterGarden} handleFullClear={handleFullClear} handlePartialClear={handlePartialClear} isGardenView={isGardenView} setIsGardenView={setIsGardenView} />
+              <Nav reset={reset} waterGarden={waterGarden} setWaterGarden={setWaterGarden} setCloseModals={setCloseModals} handleFullClear={handleFullClear} handlePartialClear={handlePartialClear} isGardenView={isGardenView} setIsGardenView={setIsGardenView} />
             </>
             : <div className="mobile-message">
                 Please switch to a larger device to use this app.

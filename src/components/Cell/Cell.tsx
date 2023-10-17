@@ -27,7 +27,7 @@ const WATERING_SCHEDULE = {
   'Frequent': 1 / (24 * 60 * 60) // 1sec
 }
 
-const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
+const Cell = ({ id, garden, setGarden, waterGarden, closeModals, setCloseModals, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
   const [cellContents, setCellContents] = useState<CellContents | undefined>();
@@ -139,6 +139,16 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
     setShouldRender(false);
     // eslint-disable-next-line
   }, [isPlanted]);
+
+  useEffect(() => {
+    if (closeModals) {
+      let cell = document.querySelector(`#${cellContents?.plant.location_id}`);
+      cell?.classList.remove('disable-scale');
+      setIsClicked(false);
+      setEnableHoverEffect(true);
+      setCloseModals(false);
+    }
+  }, [closeModals])
 
   useEffect(() => {
     if (bullDoze) {
