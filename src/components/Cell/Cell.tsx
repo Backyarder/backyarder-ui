@@ -75,7 +75,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
       }
       setTimeout(() => {
         setNeedsWatering(true);
-      }, interval - (now-lastUpdateAdjusted));
+      }, Math.abs(interval - (now-lastUpdateAdjusted)));
     }
     // eslint-disable-next-line
   }, [cellContents, isPlanted])
