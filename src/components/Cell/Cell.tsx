@@ -52,6 +52,9 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
       } else if (foundCell?.status === 'disabled') {
         setIsDisabled(true);
         !isDisabled ? setClassName('cell disabled') : setClassName('cell');
+      } else if (foundCell?.status === 'locked' && foundCell?.name === null) {
+        setIsPopulated(false);
+        setIsPlanted(false);
       } else if (foundCell?.status === 'locked') {
         setCellContents({ plant: foundCell });
         setIsPopulated(true);
