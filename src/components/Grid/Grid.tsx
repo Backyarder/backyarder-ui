@@ -12,7 +12,6 @@ export interface GridProps {
   setGarden: Function;
   waterGarden: boolean;
   closeModals: boolean;
-  setCloseModals: Function;
   bullDoze: boolean;
   setBullDoze: Function;
   filterGarden: boolean;
@@ -22,6 +21,7 @@ export interface GridProps {
 }
 
 interface AdditionalProps {
+  setCloseModals: Function;
   popUp: boolean;
   fullClear: boolean;
   reset: () => void;
@@ -83,7 +83,6 @@ const Grid = ({ popUp, closeModals, setCloseModals, fullClear, reset, alert, set
         setGarden={setGarden}
         waterGarden={waterGarden}
         closeModals={closeModals}
-        setCloseModals={setCloseModals}
         bullDoze={bullDoze}
         setBullDoze={setBullDoze}
         filterGarden={filterGarden}

@@ -15,19 +15,13 @@ export interface CellContents {
   plant: CellKeys;
 }
 
-// const WATERING_SCHEDULE = {
-//   'Minimum': 7,
-//   'Average': 3,
-//   'Frequent': 1
-// }
-
 const WATERING_SCHEDULE = {
   'Minimum': 1 / (24),           // 1hr
   'Average': 1 / (24 * 60),      // 1min
   'Frequent': 1 / (24 * 60 * 60) // 1sec
 }
 
-const Cell = ({ id, garden, setGarden, waterGarden, closeModals, setCloseModals, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
+const Cell = ({ id, garden, setGarden, waterGarden, closeModals, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
   const [cellContents, setCellContents] = useState<CellContents | undefined>();
@@ -142,9 +136,6 @@ const Cell = ({ id, garden, setGarden, waterGarden, closeModals, setCloseModals,
 
   useEffect(() => {
     if (closeModals) {
-      // let cell = document.querySelector(`#${cellContents?.plant.location_id}`);
-      // console.log(cell);
-      // cell?.classList.remove('disable-scale');
       setIsClicked(false);
       setEnableHoverEffect(true);
     }
