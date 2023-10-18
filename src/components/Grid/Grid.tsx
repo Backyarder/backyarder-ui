@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Cell from '../Cell/Cell';
 import Modal from '../Modal/Modal';
 import { GardenKeys, lastUpdateType } from '../Main/Main';
@@ -45,6 +45,16 @@ export type CellKeys = {
 }
 
 const Grid = ({ popUp, closeModals, setCloseModals, fullClear, reset, alert, setAlert, modal, setModal, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, lastUpdate, setLastUpdate }: CombinedProps) => {
+  const [dragStart, setDragStart] = useState<{ x: number; y: number }>({ x: 0, y: 0});
+  const [drop, setDrop] = useState<{ x: number; y: number }>({ x: 0, y: 0});
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setDragStart({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    setDrop({ x: e.clientX, y: e.clientY });
+  };
 
   useEffect(() => {
     if (alert) {
@@ -81,6 +91,10 @@ const Grid = ({ popUp, closeModals, setCloseModals, fullClear, reset, alert, set
         id={cellIDs[i].id}
         garden={garden}
         setGarden={setGarden}
+        handleMouseDown={(e) => handleMouseDown(e)}
+        handleMouseUp={(e) => handleMouseUp(e)}
+        dragStart={dragStart}
+        drop={drop}
         waterGarden={waterGarden}
         closeModals={closeModals}
         bullDoze={bullDoze}

@@ -9,6 +9,10 @@ import './Cell.scss'
 interface GridCell extends GridProps {
   id: string;
   toggleModal: () => void;
+  handleMouseDown: (e: React.MouseEvent) => void;
+  handleMouseUp: (e: React.MouseEvent) => void;
+  dragStart: { x: number, y: number };
+  drop: { x: number, y: number };
 }
 
 export interface CellContents {
@@ -21,7 +25,7 @@ const WATERING_SCHEDULE = {
   'Frequent': 1 / (24 * 60 * 60) // 1sec
 }
 
-const Cell = ({ id, garden, setGarden, waterGarden, closeModals, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
+const Cell = ({ id, garden, setGarden, handleMouseDown, handleMouseUp, dragStart, drop, waterGarden, closeModals, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
   const [cellContents, setCellContents] = useState<CellContents | undefined>();
@@ -182,9 +186,11 @@ const Cell = ({ id, garden, setGarden, waterGarden, closeModals, bullDoze, setBu
     canDrag: () => !isPlanted,
     item: cellContents,
     end: (item, monitor) => {
+      let initialOffset = document.elementFromPoint(dragStart.x, dragStart.y)?.id;
+      let currentOffset = document.elementFromPoint(drop.x, drop.y)?.id;
       if (!monitor.didDrop() && monitor.getTargetIds().length) {
         toggleModal();
-      } else if (monitor.didDrop()) {
+      } else if (monitor.didDrop() && initialOffset !== currentOffset) {
         handleRemove();
       };
     },
@@ -347,6 +353,8 @@ const Cell = ({ id, garden, setGarden, waterGarden, closeModals, bullDoze, setBu
             className={[className, wateringWarning].join(' ')}
             style={{ ...divStyle, ...hoverStyle }}
             onClick={handleClick}
+            onDragStart={(e) => handleMouseDown(e)}
+            onDrop={(e) => handleMouseUp(e)}
             ref={(node) => {
               dragRef(node)
               dropRef(node)
@@ -371,7 +379,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, closeModals, bullDoze, setBu
           </div>
         </>
       ) : (
-        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}></div>
+        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} onDragStart={(e) => handleMouseDown(e)} onDrop={(e) => handleMouseUp(e)} ref={dropRef}></div>
       )}
     </>
   );
