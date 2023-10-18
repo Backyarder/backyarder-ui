@@ -87,7 +87,6 @@ The user can reset their garden and start fresh.<br>
 - Focus on communication between front-end and back-end teams
 
 ## FUTURE EXTENSIONS
-- The user should receive timely alerts for watering plants in their garden.
 - The user should be able to input their location and be shown what hardiness zone they are in.
 - The user should be able to customize the dimensions of their garden grid.
 - The user should be able to log in and have multiple plots to manage
