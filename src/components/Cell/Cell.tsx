@@ -44,15 +44,15 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
   useEffect(() => {
     if (garden) {
       const foundCell = garden.find(cell => cell.location_id === id);
-      if (foundCell?.name === null) {
+      if (foundCell?.status === 'disabled') {
+        setIsDisabled(true);
+        !isDisabled ? setClassName('cell disabled') : setClassName('cell');
+      } else if (foundCell?.name === null) {
         setIsPopulated(false);
         setIsPlanted(false);
       } else if (foundCell?.status === 'placed') {
         setCellContents({ plant: foundCell });
         setIsPopulated(true);
-      } else if (foundCell?.status === 'disabled') {
-        setIsDisabled(true);
-        !isDisabled ? setClassName('cell disabled') : setClassName('cell');
       } else if (foundCell?.status === 'locked') {
         setCellContents({ plant: foundCell });
         setIsPopulated(true);
