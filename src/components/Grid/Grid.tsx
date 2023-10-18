@@ -48,11 +48,11 @@ const Grid = ({ popUp, closeModals, setCloseModals, fullClear, reset, alert, set
   const [dragStart, setDragStart] = useState<{ x: number; y: number }>({ x: 0, y: 0});
   const [drop, setDrop] = useState<{ x: number; y: number }>({ x: 0, y: 0});
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const handleDragStart = (e: React.MouseEvent) => {
     setDragStart({ x: e.clientX, y: e.clientY });
   };
 
-  const handleMouseUp = (e: React.MouseEvent) => {
+  const handleDrop = (e: React.MouseEvent) => {
     setDrop({ x: e.clientX, y: e.clientY });
   };
 
@@ -91,8 +91,8 @@ const Grid = ({ popUp, closeModals, setCloseModals, fullClear, reset, alert, set
         id={cellIDs[i].id}
         garden={garden}
         setGarden={setGarden}
-        handleMouseDown={(e) => handleMouseDown(e)}
-        handleMouseUp={(e) => handleMouseUp(e)}
+        handleDragStart={(e) => handleDragStart(e)}
+        handleDrop={(e) => handleDrop(e)}
         dragStart={dragStart}
         drop={drop}
         waterGarden={waterGarden}

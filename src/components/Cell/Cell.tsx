@@ -9,8 +9,8 @@ import './Cell.scss'
 interface GridCell extends GridProps {
   id: string;
   toggleModal: () => void;
-  handleMouseDown: (e: React.MouseEvent) => void;
-  handleMouseUp: (e: React.MouseEvent) => void;
+  handleDragStart: (e: React.MouseEvent) => void;
+  handleDrop: (e: React.MouseEvent) => void;
   dragStart: { x: number, y: number };
   drop: { x: number, y: number };
 }
@@ -25,7 +25,7 @@ const WATERING_SCHEDULE = {
   'Frequent': 1 / (24 * 60 * 60) // 1sec
 }
 
-const Cell = ({ id, garden, setGarden, handleMouseDown, handleMouseUp, dragStart, drop, waterGarden, closeModals, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
+const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, drop, waterGarden, closeModals, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
   const [cellContents, setCellContents] = useState<CellContents | undefined>();
@@ -353,8 +353,8 @@ const Cell = ({ id, garden, setGarden, handleMouseDown, handleMouseUp, dragStart
             className={[className, wateringWarning].join(' ')}
             style={{ ...divStyle, ...hoverStyle }}
             onClick={handleClick}
-            onDragStart={(e) => handleMouseDown(e)}
-            onDrop={(e) => handleMouseUp(e)}
+            onDragStart={(e) => handleDragStart(e)}
+            onDrop={(e) => handleDrop(e)}
             ref={(node) => {
               dragRef(node)
               dropRef(node)
@@ -379,7 +379,7 @@ const Cell = ({ id, garden, setGarden, handleMouseDown, handleMouseUp, dragStart
           </div>
         </>
       ) : (
-        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} onDragStart={(e) => handleMouseDown(e)} onDrop={(e) => handleMouseUp(e)} ref={dropRef}></div>
+        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} onDragStart={(e) => handleDragStart(e)} onDrop={(e) => handleDrop(e)} ref={dropRef}></div>
       )}
     </>
   );
