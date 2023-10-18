@@ -103,6 +103,10 @@
   }
 }
 
+.disable-scale {
+  z-index: 30;
+}
+
 .hidden {
   visibility: hidden;
 }
