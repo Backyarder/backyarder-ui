@@ -23,21 +23,29 @@
 
 ## PREVIEW OF APPLICATION
 - The user can drag and drop plants into any empty cell in the garden.
-![](https://user-images.githubusercontent.com/126428377/265609930-f72c5de6-e7e3-433e-aa91-769f1ef714b7.gif)
+![](https://user-images.githubusercontent.com/126428377/276367124-fff30e1d-b48b-4f04-9dfa-488c972f7306.gif)
 - Planted items are indicated with a green border.
-![](https://user-images.githubusercontent.com/126428377/265611644-565a3bc4-1b5d-4a1c-a891-4b6db2e9e205.gif)
+![](https://user-images.githubusercontent.com/126428377/276367913-14cb87c5-f708-4c60-bcac-75d0baf613bc.gif)
+- The user will receive real-time, dynamic watering alerts.
+![](https://user-images.githubusercontent.com/126428377/276368848-940ead77-808e-46ef-ae12-77dcbafdfb7d.gif)
+- The user can water their garden.
+![](https://user-images.githubusercontent.com/126428377/276369563-a567a8b5-1085-4331-823f-ec9f277c809e.gif)
 - The user can disable cells in the garden.
-![](https://user-images.githubusercontent.com/126428377/265612258-c92f3e0d-3f4c-4b31-88c6-f99b477c95b2.gif)
+![](https://user-images.githubusercontent.com/126428377/276370125-f373127e-a595-49ff-9cc3-e96b4b4f3847.gif)
 - The user can search for plants to add to their garden.
-![](https://user-images.githubusercontent.com/126428377/265613058-e701ab11-d143-4f5f-9beb-0de94d5786b6.gif)
+![](https://user-images.githubusercontent.com/126428377/276370938-b6b27768-f5eb-4bc9-9566-fe80ec95c44c.gif)
+- The user can add decor to the garden.
+![](https://user-images.githubusercontent.com/126428377/276372060-10f51087-bdec-4922-a6c1-be47856a95ee.gif)
 - Quantities of new and existing plants in the garden are continuously updated.
-![](https://user-images.githubusercontent.com/126428377/265614891-c454c201-7d52-4819-b8ff-4389420b52b4.gif)
+![](https://user-images.githubusercontent.com/126428377/276373061-5e1493be-9849-47f8-adb1-87186759db55.gif)
+- The user can view a shopping list of plants they'd like to add in the future.
+![](https://user-images.githubusercontent.com/126428377/276373584-098dcfa1-241d-4f98-88bb-036a43831a5b.gif)
 - The user can view more information about any particular plant.
-![](https://user-images.githubusercontent.com/126428377/265615593-2369b048-84e8-42ce-be3c-259a5a8e1b87.gif)
+![](https://user-images.githubusercontent.com/126428377/276374228-d588a4b9-03bf-4ef2-94d3-608e1a22b189.gif)
 - The user can remove unplanted items from their garden.
-![](https://user-images.githubusercontent.com/126428377/265617067-60b845b6-554e-45f5-acab-e49e1f8f36d3.gif)
+![](https://user-images.githubusercontent.com/126428377/276375118-7a51a143-5462-4bdb-9e0c-75258305cab4.gif)
 - The user can reset their garden and start fresh.
-![](https://user-images.githubusercontent.com/126428377/265617509-f67b13e8-b354-4ec4-8b31-c75325c52f21.gif)
+![](https://user-images.githubusercontent.com/126428377/276375574-4d4e3a35-ce75-44c6-af6a-9713d188454e.gif)
 
 ## SET UP
 - Fork this repository.
