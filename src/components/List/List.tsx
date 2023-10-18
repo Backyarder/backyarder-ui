@@ -58,7 +58,7 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
       <div key={plant['plant_id']} className='plant-element' >
         <div className='plant-info-container' >
           <img src={plant.image} className='plant-image' alt={plant.name} />
-          <p>{plant.name?.toUpperCase()} x{findQuantity(garden, plant.plant_id)}</p>
+          <p className='plant-list-name' >{plant.name?.toUpperCase()} x{findQuantity(garden, plant.plant_id)}</p>
         </div>
         <NavLink to={`/plants/${plant['plant_id']}`} >
           <button className='detail-button' >VIEW PLANT DETAILS</button>
@@ -73,7 +73,7 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
         <div className='plant-info-container' >
           <img className='wishlist-checkbox' src={`${process.env.PUBLIC_URL}/images/checked_${wishlist.some(item => item.plant_id === plant.plant_id)}.png`} onClick={() => handleWishlist(plant.plant_id)} alt={`wishlist checkbox ${plant.plant_id}`} />
           <img src={plant.image} className='placed-image' alt={plant.name} />
-          <p>{plant.name?.toUpperCase()}</p>
+          <p className='plant-list-name' >{plant.name?.toUpperCase()}</p>
         </div>
         <NavLink to={`/plants/${plant['plant_id']}`} >
           <button className='detail-button' >VIEW PLANT DETAILS</button>
@@ -91,7 +91,7 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
             backgroundColor: isWishlistView ? '#beab95' : '#f4f4f4',
             cursor: !isWishlistView ? 'auto' : 'pointer'
           }}
-          // disabled={!isWishlistView}
+          disabled={!isWishlistView}
           onClick={toggleView}
         >
           <span className="material-symbols-rounded nav-icon">outdoor_garden</span>MY GARDEN
@@ -102,7 +102,7 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
             backgroundColor: !isWishlistView ? '#beab95' : '#f4f4f4',
             cursor: isWishlistView ? 'auto' : 'pointer'
           }}
-          // disabled={isWishlistView}
+          disabled={isWishlistView}
           onClick={toggleView}
         >
           <span className="material-symbols-rounded nav-icon">checklist</span>WISHLIST

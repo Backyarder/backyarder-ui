@@ -78,6 +78,7 @@
   justify-content: left;
   align-items: center;
   margin-top: .5em;
+  color: rgba(0, 0, 0, 1);
 }
 
 .garden-button {
@@ -112,6 +113,6 @@
   cursor: pointer;
 }
 
-// .garden-button {
-//   padding-left: 0;
-// }
+.plant-list-name {
+  font-size: 25px;
+}

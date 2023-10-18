@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Cell from '../Cell/Cell';
 import Modal from '../Modal/Modal';
 import { GardenKeys, lastUpdateType } from '../Main/Main';
@@ -11,6 +11,7 @@ export interface GridProps {
   garden: GardenKeys | undefined;
   setGarden: Function;
   waterGarden: boolean;
+  closeModals: boolean;
   bullDoze: boolean;
   setBullDoze: Function;
   filterGarden: boolean;
@@ -20,11 +21,9 @@ export interface GridProps {
 }
 
 interface AdditionalProps {
+  setCloseModals: Function;
   popUp: boolean;
-  setPopUp: Function;
   fullClear: boolean;
-  setFullClear: Function;
-  setPartialClear: Function;
   reset: () => void;
   alert: boolean;
   setAlert: Function;
@@ -45,7 +44,17 @@ export type CellKeys = {
   updated_at: string | undefined;
 }
 
-const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset, alert, setAlert, modal, setModal, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, lastUpdate, setLastUpdate }: CombinedProps) => {
+const Grid = ({ popUp, closeModals, setCloseModals, fullClear, reset, alert, setAlert, modal, setModal, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, lastUpdate, setLastUpdate }: CombinedProps) => {
+  const [dragStart, setDragStart] = useState<{ x: number; y: number }>({ x: 0, y: 0});
+  const [drop, setDrop] = useState<{ x: number; y: number }>({ x: 0, y: 0});
+
+  const handleDragStart = (e: React.MouseEvent) => {
+    setDragStart({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleDrop = (e: React.MouseEvent) => {
+    setDrop({ x: e.clientX, y: e.clientY });
+  };
 
   useEffect(() => {
     if (alert) {
@@ -53,6 +62,18 @@ const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset
     }
     // eslint-disable-next-line
   }, [alert])
+
+  useEffect(() => {
+    if (closeModals) {
+      let grid = document.querySelector('#grid');
+      let cells = document.querySelectorAll('.cell');
+
+      grid?.classList.remove('disable-hover');
+      cells.forEach(cell => {
+        cell.classList.remove('disable-scale');
+      });
+    }
+  }, [closeModals])
 
   const toggleModal = (): void => {
     setAlert(false);
@@ -70,7 +91,12 @@ const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset
         id={cellIDs[i].id}
         garden={garden}
         setGarden={setGarden}
+        handleDragStart={(e) => handleDragStart(e)}
+        handleDrop={(e) => handleDrop(e)}
+        dragStart={dragStart}
+        drop={drop}
         waterGarden={waterGarden}
+        closeModals={closeModals}
         bullDoze={bullDoze}
         setBullDoze={setBullDoze}
         filterGarden={filterGarden}
@@ -85,8 +111,8 @@ const Grid = ({ popUp, setPopUp, fullClear, setFullClear, setPartialClear, reset
   return (
     <section id='grid'>
       {cells}
-      {popUp && <ConfirmModal fullClear={fullClear} reset={reset} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} setAlert={setAlert} />}
-      {modal && <Modal alert={alert} bullDoze={bullDoze} filterGarden={filterGarden} toggleModal={toggleModal} />}
+      {popUp && <ConfirmModal setCloseModals={setCloseModals} fullClear={fullClear} reset={reset} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} setAlert={setAlert} />}
+      {modal && <Modal alert={alert} toggleModal={toggleModal} />}
     </section>
   );
 }

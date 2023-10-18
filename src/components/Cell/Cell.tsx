@@ -9,17 +9,15 @@ import './Cell.scss'
 interface GridCell extends GridProps {
   id: string;
   toggleModal: () => void;
+  handleDragStart: (e: React.MouseEvent) => void;
+  handleDrop: (e: React.MouseEvent) => void;
+  dragStart: { x: number, y: number };
+  drop: { x: number, y: number };
 }
 
 export interface CellContents {
   plant: CellKeys;
 }
-
-// const WATERING_SCHEDULE = {
-//   'Minimum': 7,
-//   'Average': 3,
-//   'Frequent': 1
-// }
 
 const WATERING_SCHEDULE = {
   'Minimum': 1 / (24),           // 1hr
@@ -27,7 +25,7 @@ const WATERING_SCHEDULE = {
   'Frequent': 1 / (24 * 60 * 60) // 1sec
 }
 
-const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
+const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, drop, waterGarden, closeModals, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
   // eslint-disable-next-line
   const [apiError, setApiError] = useState<string>('');
   const [cellContents, setCellContents] = useState<CellContents | undefined>();
@@ -46,7 +44,10 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   useEffect(() => {
     if (garden) {
       const foundCell = garden.find(cell => cell.location_id === id);
-      if (foundCell?.status === 'placed') {
+      if (foundCell?.name === null) {
+        setIsPopulated(false);
+        setIsPlanted(false);
+      } else if (foundCell?.status === 'placed') {
         setCellContents({ plant: foundCell });
         setIsPopulated(true);
       } else if (foundCell?.status === 'disabled') {
@@ -75,7 +76,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
       }
       setTimeout(() => {
         setNeedsWatering(true);
-      }, interval - (now-lastUpdateAdjusted));
+      }, Math.abs(interval - (now-lastUpdateAdjusted)));
     }
     // eslint-disable-next-line
   }, [cellContents, isPlanted])
@@ -138,6 +139,13 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
   }, [isPlanted]);
 
   useEffect(() => {
+    if (closeModals) {
+      setIsClicked(false);
+      setEnableHoverEffect(true);
+    }
+  }, [closeModals])
+
+  useEffect(() => {
     if (bullDoze) {
       setClassName('cell');
       handleEmptyCells();
@@ -178,9 +186,11 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
     canDrag: () => !isPlanted,
     item: cellContents,
     end: (item, monitor) => {
+      let initialOffset = document.elementFromPoint(dragStart.x, dragStart.y)?.id;
+      let currentOffset = document.elementFromPoint(drop.x, drop.y)?.id;
       if (!monitor.didDrop() && monitor.getTargetIds().length) {
         toggleModal();
-      } else if (monitor.didDrop()) {
+      } else if (monitor.didDrop() && initialOffset !== currentOffset) {
         handleRemove();
       };
     },
@@ -343,6 +353,8 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
             className={[className, wateringWarning].join(' ')}
             style={{ ...divStyle, ...hoverStyle }}
             onClick={handleClick}
+            onDragStart={(e) => handleDragStart(e)}
+            onDrop={(e) => handleDrop(e)}
             ref={(node) => {
               dragRef(node)
               dropRef(node)
@@ -367,7 +379,7 @@ const Cell = ({ id, garden, setGarden, waterGarden, bullDoze, setBullDoze, filte
           </div>
         </>
       ) : (
-        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} ref={dropRef}></div>
+        <div id={id} className={className} style={{ ...divStyle, ...hoverStyle }} onClick={handleClick} onDragStart={(e) => handleDragStart(e)} onDrop={(e) => handleDrop(e)} ref={dropRef}></div>
       )}
     </>
   );

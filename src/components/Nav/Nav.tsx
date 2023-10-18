@@ -5,13 +5,14 @@ type NavProps = {
   reset: Function;
   waterGarden: boolean;
   setWaterGarden: Function;
+  setCloseModals: Function;
   handleFullClear: () => void;
   handlePartialClear: () => void;
   isGardenView: boolean;
   setIsGardenView: Function;
 }
 
-const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartialClear, isGardenView, setIsGardenView }: NavProps) => {
+const Nav = ({ reset, waterGarden, setWaterGarden, setCloseModals, handleFullClear, handlePartialClear, isGardenView, setIsGardenView }: NavProps) => {
   const [className, setClassName] = useState<string>('key');
 
 
@@ -96,10 +97,16 @@ const Nav = ({ reset, waterGarden, setWaterGarden, handleFullClear, handlePartia
             <span>WATER GARDEN</span>
             <div className='liquid'></div>
           </button>
-          <button className='clear-button' onClick={handleFullClear} ><span className="material-symbols-rounded nav-icon">
+          <button className='clear-button' onClick={() => {
+            setCloseModals(true);
+            handleFullClear();
+          }} ><span className="material-symbols-rounded nav-icon">
             bomb
           </span>CLEAR GARDEN</button>
-          <button className='clear-button' onClick={handlePartialClear} ><span className="material-symbols-rounded nav-icon">
+          <button className='clear-button' onClick={() => {
+            setCloseModals(true);
+            handlePartialClear();
+          }} ><span className="material-symbols-rounded nav-icon">
             agriculture
           </span>REMOVE PLACED ITEMS</button>
         </>
