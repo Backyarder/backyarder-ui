@@ -22,29 +22,40 @@
 </div>
 
 ## PREVIEW OF APPLICATION
-- The user can drag and drop plants into any empty cell in the garden.
+The user can drag and drop plants into any empty cell in the garden.<br>
 ![](https://user-images.githubusercontent.com/126428377/276367124-fff30e1d-b48b-4f04-9dfa-488c972f7306.gif)
-- Planted items are indicated with a green border.
+
+Planted items are indicated with a green border.<br>
 ![](https://user-images.githubusercontent.com/126428377/276367913-14cb87c5-f708-4c60-bcac-75d0baf613bc.gif)
-- The user will receive real-time, dynamic watering alerts.
+
+The user will receive real-time, dynamic watering alerts.<br>
 ![](https://user-images.githubusercontent.com/126428377/276368848-940ead77-808e-46ef-ae12-77dcbafdfb7d.gif)
-- The user can water their garden.
+
+The user can water their garden.<br>
 ![](https://user-images.githubusercontent.com/126428377/276369563-a567a8b5-1085-4331-823f-ec9f277c809e.gif)
-- The user can disable cells in the garden.
+
+The user can disable cells in the garden.<br>
 ![](https://user-images.githubusercontent.com/126428377/276370125-f373127e-a595-49ff-9cc3-e96b4b4f3847.gif)
-- The user can search for plants to add to their garden.
+
+The user can search for plants to add to their garden.<br>
 ![](https://user-images.githubusercontent.com/126428377/276370938-b6b27768-f5eb-4bc9-9566-fe80ec95c44c.gif)
-- The user can add decor to the garden.
+
+The user can add decor to the garden.<br>
 ![](https://user-images.githubusercontent.com/126428377/276372060-10f51087-bdec-4922-a6c1-be47856a95ee.gif)
-- Quantities of new and existing plants in the garden are continuously updated.
+
+Quantities of new and existing plants in the garden are continuously updated.<br>
 ![](https://user-images.githubusercontent.com/126428377/276373061-5e1493be-9849-47f8-adb1-87186759db55.gif)
-- The user can view a shopping list of plants they'd like to add in the future.
+
+The user can view a shopping list of plants they'd like to add in the future.<br>
 ![](https://user-images.githubusercontent.com/126428377/276373584-098dcfa1-241d-4f98-88bb-036a43831a5b.gif)
-- The user can view more information about any particular plant.
+
+The user can view more information about any particular plant.<br>
 ![](https://user-images.githubusercontent.com/126428377/276374228-d588a4b9-03bf-4ef2-94d3-608e1a22b189.gif)
-- The user can remove unplanted items from their garden.
+
+The user can remove unplanted items from their garden.<br>
 ![](https://user-images.githubusercontent.com/126428377/276375118-7a51a143-5462-4bdb-9e0c-75258305cab4.gif)
-- The user can reset their garden and start fresh.
+
+The user can reset their garden and start fresh.<br>
 ![](https://user-images.githubusercontent.com/126428377/276375574-4d4e3a35-ce75-44c6-af6a-9713d188454e.gif)
 
 ## SET UP
