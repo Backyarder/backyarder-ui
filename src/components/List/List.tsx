@@ -91,7 +91,7 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
             backgroundColor: isWishlistView ? '#beab95' : '#f4f4f4',
             cursor: !isWishlistView ? 'auto' : 'pointer'
           }}
-          // disabled={!isWishlistView}
+          disabled={!isWishlistView}
           onClick={toggleView}
         >
           <span className="material-symbols-rounded nav-icon">outdoor_garden</span>MY GARDEN
@@ -102,7 +102,7 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
             backgroundColor: !isWishlistView ? '#beab95' : '#f4f4f4',
             cursor: isWishlistView ? 'auto' : 'pointer'
           }}
-          // disabled={isWishlistView}
+          disabled={isWishlistView}
           onClick={toggleView}
         >
           <span className="material-symbols-rounded nav-icon">checklist</span>WISHLIST
