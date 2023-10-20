@@ -15,7 +15,10 @@ type GetGardenKeys = {
 }
 
 export type lastUpdateType = {
-  [key: string]: string;
+  [key: string]: {
+    updatedAt: string;
+    status: string;
+  };
 }
 
 export type WishlistType = {
@@ -73,7 +76,10 @@ const Main = () => {
     for (let letter = 'A'.charCodeAt(0); letter <= 'J'.charCodeAt(0); letter++) {
       for (let number = 1; number <= 10; number++) {
         const key = String.fromCharCode(letter) + number;
-        (lastUpdate as Record<string, string>)[key] = '10/10/2000 10:10';
+        (lastUpdate as lastUpdateType)[key] = {
+          updatedAt: '10/10/2000 10:10',
+          status: 'empty'
+        };
       }
     }
     // eslint-disable-next-line

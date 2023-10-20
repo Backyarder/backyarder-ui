@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDrop, useDrag, DragPreviewImage } from 'react-dnd';
-import { GardenKeys } from '../Main/Main';
+import { GardenKeys, lastUpdateType } from '../Main/Main';
 import { CellKeys, GridProps } from '../Grid/Grid';
 import CellActions from '../CellActions/CellActions';
 import { patchCellContents, patchDisabledOrRemoved, StatusType, WateringType } from '../../apiCalls';
@@ -44,7 +44,7 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
   useEffect(() => {
     if (garden) {
       const foundCell = garden.find(cell => cell.location_id === id);
-      if (foundCell?.status === 'disabled') {
+      if (foundCell?.status === 'disabled' || lastUpdate[id].status === 'disabled') {
         setIsDisabled(true);
         !isDisabled ? setClassName('cell disabled') : setClassName('cell');
       } else if (foundCell?.name === null) {
@@ -59,7 +59,7 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
         setIsPlanted(true);
       }
       if (foundCell && foundCell.updated_at) {
-        let updateValue = convertTime(lastUpdate[foundCell.location_id]) > convertTime(foundCell.updated_at) ? lastUpdate[foundCell.location_id] : foundCell.updated_at;
+        let updateValue = convertTime(lastUpdate[foundCell.location_id].updatedAt) > convertTime(foundCell.updated_at) ? lastUpdate[foundCell.location_id].updatedAt : foundCell.updated_at;
         handleUpdate(foundCell.location_id, updateValue);
       }
     }
@@ -69,7 +69,7 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
   useEffect(() => {
     if (isPlanted && cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None' && typeof cellContents.plant.updated_at !== 'undefined') {
       let now = Date.now() + (new Date().getTimezoneOffset() * 60 * 1000);
-      let lastUpdateAdjusted = convertTime(lastUpdate[cellContents.plant.location_id]);
+      let lastUpdateAdjusted = convertTime(lastUpdate[cellContents.plant.location_id].updatedAt);
       let interval = WATERING_SCHEDULE[cellContents?.plant.watering] * 24 * 60 * 60 * 1000;
       if ((now - lastUpdateAdjusted) >= interval) {
         setNeedsWatering(true);
@@ -99,6 +99,10 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
   useEffect(() => {
     if (needsUpdate) {
       patchDisabledOrRemoved(id, needsUpdate)
+        .then(() => {
+          lastUpdate[id].status = isDisabled ? 'disabled' : 'empty';
+          handleGarden(id, undefined, undefined, undefined, undefined, isDisabled ? 'disabled' : 'empty', 'None', handleTime());
+        })
         .catch((err) => {
           handleApiError(err);
         });
@@ -221,10 +225,13 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
     });
   }
 
-  const handleUpdate = (key: string, value: string) => {
-    setLastUpdate((prevState: {}) => ({
+  const handleUpdate = (key: any, value: string) => {
+    setLastUpdate((prevState: lastUpdateType) => ({
       ...prevState,
-      [key]: value,
+      [key]: {
+        ...prevState[key],
+        updatedAt: value
+      },
     }));
   }
 
