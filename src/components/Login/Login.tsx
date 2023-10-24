@@ -33,9 +33,8 @@ const Login = () => {
       if (e.key === 'Enter' && field.classList.contains('email')) {
           console.log(email)
           //api call to login
-          //if use exists, ask for password
+          //if user exists, ask for password
           if (mockEmailData.find(user => user.email === email)) {
-              console.log('user found')
               setUserFound(true)
           } else {
             setUserFound(false)
@@ -51,9 +50,7 @@ const Login = () => {
             navigate('/')
           } else {
             setCorrectPass(false)
-            console.log('incorrect password')
           }
-          //else inform user that password is incorrect
       }
     }
 
@@ -67,12 +64,12 @@ const Login = () => {
             {
               userFound === false &&
               <div className='user-entry'>
-                <h3>user not found</h3>
-                <button>create account</button>
+                <h3 className='info'>Email not found!</h3>
+                <p className='info'>Please make a password to continue creating an account for this email.</p>
               </div>
             }
             {
-              userFound && 
+              userFound !== undefined &&
               <div className='user-entry'>
                 <h2>enter password</h2>
                 <input className='input password' type='password' onChange={handleChange} onKeyDown={handleEnter}></input>
