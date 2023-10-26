@@ -17,14 +17,23 @@
     text-align: center;
     font-size: x-large;
   }
-  & div {
+  & > div {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 }
 
+#zip-input-box {
+  display: flex;
+  align-items: center;
+  & input {
+    margin-right: 10px;
+  }
+}
+
 #hardiness-zone {
   color: gray;
   font-size: large;
+  margin-right: 42px;
 }
