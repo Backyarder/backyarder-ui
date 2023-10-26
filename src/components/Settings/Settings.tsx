@@ -6,6 +6,7 @@ const Settings = () => {
   const [zipCode, setZipCode] = useState(mockUser.data.zip_code)
   const [newZipCode, setNewZipCode] = useState<string>('')
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
+  const [hardinessZone, setHardinessZone] = useState<string>('')
 
   useEffect(() => {
     if (zipCode) {
@@ -13,6 +14,16 @@ const Settings = () => {
       setIsDisabled(true)
     } else setIsDisabled(false)
   }, [zipCode])
+
+  useEffect(() => {
+    if (newZipCode.length === 5) {
+      fetch(`https://phzmapi.org/${newZipCode}.json`)
+        .then(res => res.json())
+        .then(data => setHardinessZone(data.zone))
+        .catch(err => console.log(err))
+        //handle when zip code does not exist
+    } else setHardinessZone('-')
+  }, [newZipCode])
 
   const handleClick = () => {
     setIsDisabled(false)
@@ -36,7 +47,7 @@ const Settings = () => {
       alert('Please enter a valid zip code')
     }
 
-    if (!/[0-9]/.test(e.key)) {
+    if (!/[0-9]/.test(e.key) && e.key !== 'Delete' && e.key !== 'Backspace') {
       e.preventDefault();
     }
   }
@@ -51,7 +62,7 @@ const Settings = () => {
             <input id='zip-input' maxLength={5} pattern="[0-9]*" value={newZipCode} disabled={isDisabled} onChange={handleChange} onKeyDown={handleKeyPress}/>
             <span className="material-symbols-rounded" onClick={handleClick}>edit_square</span>
           </div>
-          <p id='hardiness-zone'>Hardiness zone: 7a</p>
+          <p id='hardiness-zone'>Hardiness zone: {hardinessZone}</p>
         </div>
       </div>
     </section>
