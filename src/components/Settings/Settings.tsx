@@ -22,6 +22,10 @@ const Settings = () => {
     }, 0)
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewZipCode(e.target.value)
+  }
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && newZipCode.length === 5) {
       setIsDisabled(true)
@@ -34,8 +38,6 @@ const Settings = () => {
 
     if (!/[0-9]/.test(e.key)) {
       e.preventDefault();
-    } else {
-      setNewZipCode(newZipCode + e.key)
     }
   }
 
