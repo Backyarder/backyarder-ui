@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { toast } from 'react-toastify'
 import './Settings.scss'
 import { mockUser } from './mockUser'
 
@@ -7,6 +8,25 @@ const Settings = () => {
   const [newZipCode, setNewZipCode] = useState<string>('')
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const [hardinessZone, setHardinessZone] = useState<string>('')
+
+  // this is a mock api call that will need to be updated
+  const resolveAfter3Sec = new Promise(resolve => setTimeout(resolve, 3000));
+  const notify = () => {
+    toast.promise(resolveAfter3Sec, {
+      success: {
+        render: 'Zip code updated!',
+        position: 'bottom-center'
+      },
+      pending: {
+        render: 'Updating zip code...',
+        position: 'bottom-center'
+      },
+      error: {
+        render: 'Something went wrong...',
+        position: 'bottom-center'
+      }
+    });
+  }
 
   useEffect(() => {
     if (zipCode) {
@@ -41,6 +61,7 @@ const Settings = () => {
     if (e.key === 'Enter' && newZipCode.length === 5) {
       setIsDisabled(true)
       setZipCode(newZipCode)
+      notify()
       // display a success toast
     } else if (e.key === 'Enter' && newZipCode.length !== 5) {
       // make a better UX for this
