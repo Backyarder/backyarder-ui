@@ -35,7 +35,7 @@ describe('Handle 500 level errors', () => {
     cy.visit('http://localhost:3000/')
     cy.get('[href="/plants/2692"]').click()
     cy.url().should('include', '/plants/2692')
-    cy.get('p').should('have.text', 'Ooops! There are no plants here!')
+    cy.get('.error > p').should('have.text', 'Ooops! There are no plants here!')
     cy.get('.home-button').click()
     cy.url().should('eq', 'http://localhost:3000/')
   })
@@ -55,7 +55,7 @@ describe('Handle 500 level errors', () => {
     cy.visit('http://localhost:3000/')
     cy.get('.server-error').should('be.visible')
     cy.get('h2').should('have.text', `Oh no! The weather isn't cooperating!`)
-    cy.get('p').should('have.text', 'There was an error on our end, please try again later')
+    cy.get('.server-error > p').should('have.text', 'There was an error on our end, please try again later')
   })
 
   it('Searching plant', () => {
