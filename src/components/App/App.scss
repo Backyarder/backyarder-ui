@@ -3,6 +3,12 @@
   font-weight: bolder;
 }
 
+#root {
+  --toastify-color-success: #9EC924;
+  --toastify-icon-color-success: var(--toastify-color-success);
+  --toastify-color-progress-success: var(--toastify-color-success);
+}
+
 .app{
   display: flex;
   flex-direction: column;
