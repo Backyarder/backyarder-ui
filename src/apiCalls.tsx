@@ -1,5 +1,9 @@
 import { CellContents } from "./components/Cell/Cell"
 
+// Base URL for the Backyarder API. Set REACT_APP_API_URL (e.g. in .env.development)
+// to point at a local backend; falls back to the deployed Heroku instance.
+const BASE_URL = process.env.REACT_APP_API_URL ?? 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1'
+
 const handleError = (res: Response) => {
     if(!res.ok) {
       throw new Error(`HTTP Error: ${res.status} -- Please try again later`)
@@ -8,26 +12,26 @@ const handleError = (res: Response) => {
   }
 
 const getPlantList = () => {
-    return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants`, {
+    return fetch(`${BASE_URL}/plants`, {
       // cache: 'force-cache',
     })
       .then(res => handleError(res))
 }
 
 const getGarden = () => {
-    return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden`)
+    return fetch(`${BASE_URL}/garden`)
       .then(res => handleError(res))
 }
 
 const searchPlants = (searchterm: string) => {
-  return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/search/${searchterm}`, {
+  return fetch(`${BASE_URL}/search/${searchterm}`, {
     // cache: 'force-cache'
   })
     .then(res => handleError(res))
 }
 
 const getPlantDetails = (id: string | undefined) => {
-  return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants/${id}`, {
+  return fetch(`${BASE_URL}/plants/${id}`, {
     cache: 'force-cache'
   })
     .then(res => handleError(res))
@@ -62,7 +66,7 @@ const WATERING_MAP: WateringType = {
 }
 
 const patchCellContents = ({plant}: CellContents, id: string, status: keyof StatusType, watering: keyof WateringType) => {
-  return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell`, {
+  return fetch(`${BASE_URL}/cell`, {
             method: 'PATCH',
             body: JSON.stringify({
               name: plant.name,
@@ -82,7 +86,7 @@ const patchCellContents = ({plant}: CellContents, id: string, status: keyof Stat
 }
 
 const patchDisabledOrRemoved = (id: string, status: keyof StatusType) => {
-  return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell`, {
+  return fetch(`${BASE_URL}/cell`, {
             method: 'PATCH',
             body: JSON.stringify({
               name: null,
@@ -101,7 +105,7 @@ const patchDisabledOrRemoved = (id: string, status: keyof StatusType) => {
 }
 
 const deleteContents = (path: string, setter: Function, alert: Function) => {
-  return fetch(`https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/${path}`, {
+  return fetch(`${BASE_URL}/${path}`, {
     method: 'DELETE'
   })
     .then(res => {
