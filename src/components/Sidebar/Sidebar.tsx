@@ -65,14 +65,18 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
         getDecorList()
     }, [])
 
-    const handleApiError = (error: string) => {
-        setApiError(error)
+    const handleApiError = (error: unknown) => {
+        setApiError(error instanceof Error ? error.message : String(error))
+        setLoadingPlants(false)
     }
 
     let cards;
 
 
-    if (!plantList || !decorList) {
+    if (apiError) {
+        cards = <p className="loading">{apiError}</p>
+    }
+    else if (!plantList || !decorList) {
         cards = <p className="loading">It looks like our nursery is not operating correctly, please try again later</p>
     }
     else if (plantList.length && activeTab === 'plants') {
@@ -103,6 +107,7 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
 
     const searchForPlants = () => {
         setLoadingPlants(true)
+        setApiError('')
         if (searchTerm.length) {
             searchPlants(searchTerm.toLowerCase())
                 .then(data => setPlantList(data.data))

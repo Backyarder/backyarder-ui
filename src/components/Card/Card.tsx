@@ -1,7 +1,7 @@
 import { useDrag, DragPreviewImage } from 'react-dnd'
 import { PlantAttributes } from '../Sidebar/Sidebar'
 import { NavLink } from 'react-router-dom'
-import { ICON_MAP, IconType, SunlightType } from './plantIconMap'
+import { ICON_MAP, DEFAULT_TYPE_ICON, IconType, SunlightType } from './plantIconMap'
 import { plantImageSrc, onImageError } from '../../imageFallback'
 import './Card.scss'
 
@@ -52,7 +52,7 @@ const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
     sunlight = plant.sunlight[0]
   }
 
-  const flowerCategory = ICON_MAP.type[type as IconType]
+  const flowerCategory = ICON_MAP.type[type as IconType] ?? DEFAULT_TYPE_ICON
 
   const sunlightCategory = ICON_MAP.sunlight[sunlight as SunlightType]
 
@@ -68,7 +68,7 @@ const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
           <div className='card-icons'>
             <div className="material-symbols-rounded card-icon">
               {flowerCategory}
-              <span className="left-icon-text tooltip-text">{`${plant.type}`}</span>
+              <span className="left-icon-text tooltip-text">{plant.type ?? 'plant'}</span>
             </div>
             <div className="material-symbols-rounded card-icon">
               {sunlightCategory}

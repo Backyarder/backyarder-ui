@@ -4,9 +4,16 @@ import { CellContents } from "./components/Cell/Cell"
 // to point at a local backend; falls back to the deployed Heroku instance.
 const BASE_URL = process.env.REACT_APP_API_URL ?? 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1'
 
-const handleError = (res: Response) => {
+// The backend answers 502/503 with { error: "<human readable message>" } when
+// the plant database is unavailable or its daily budget is spent; surface that.
+const handleError = async (res: Response) => {
     if(!res.ok) {
-      throw new Error(`HTTP Error: ${res.status} -- Please try again later`)
+      let message = `HTTP Error: ${res.status} -- Please try again later`
+      try {
+        const body = await res.json()
+        if (body && typeof body.error === 'string') message = body.error
+      } catch {}
+      throw new Error(message)
     }
     return res.json()
   }

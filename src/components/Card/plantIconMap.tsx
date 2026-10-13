@@ -2,7 +2,11 @@ export type IconType = 'Flower' | 'flower' | 'Thistle' | 'Tree' | 'tree' | 'Frui
 
 export type SunlightType = 'Full sun' | 'full sun' | 'Part shade' | 'part shade' | 'part sun/part shade';
 
-type IconCategory = 'Deceased' | 'Phishing' | 'park' | 'Nutrition' | 'psychiatry' | 'grass' | 'temp_preferences_eco' | 'Restaurant' | 'sunny' | 'partly_cloudy_day';
+type IconCategory = 'Deceased' | 'Phishing' | 'park' | 'Nutrition' | 'psychiatry' | 'grass' | 'temp_preferences_eco' | 'Restaurant' | 'sunny' | 'partly_cloudy_day' | 'potted_plant';
+
+// Used when the API has not told us a plant's type yet (search results come
+// from a single lightweight call; type arrives once details are cached).
+export const DEFAULT_TYPE_ICON: IconCategory = 'potted_plant';
 
 type IconMap = {
   type: Record<IconType, IconCategory>
