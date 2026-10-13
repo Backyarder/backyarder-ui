@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { plantImageSrc, onImageError } from '../../imageFallback'
 import './CellActions.scss'
 
 interface CellProps {
@@ -38,7 +39,7 @@ const CellActions = ({ image, name, contentType, plantId, handleCloseModal, isPl
 
     return (
         <div className='cell-info'>
-            <img className='card-image' src={image} alt={`${name}`} />
+            <img className='card-image' src={plantImageSrc(image)} onError={onImageError} alt={`${name}`} />
             <p className='plant-name'>{name?.toUpperCase()}</p>
             <div className='cell-actions'>
                 {isPlanted

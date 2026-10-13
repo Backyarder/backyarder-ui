@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { GardenKeys, WishlistType } from '../Main/Main';
 import { CellKeys } from '../Grid/Grid';
+import { plantImageSrc, onImageError } from '../../imageFallback';
 import './List.scss';
 
 interface ListProps {
@@ -57,7 +58,7 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
     return (
       <div key={plant['plant_id']} className='plant-element' >
         <div className='plant-info-container' >
-          <img src={plant.image} className='plant-image' alt={plant.name} />
+          <img src={plantImageSrc(plant.image)} onError={onImageError} className='plant-image' alt={plant.name} />
           <p className='plant-list-name' >{plant.name?.toUpperCase()} x{findQuantity(garden, plant.plant_id)}</p>
         </div>
         <NavLink to={`/plants/${plant['plant_id']}`} >
@@ -72,7 +73,7 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
       <div key={plant['plant_id']} className='placed-element' >
         <div className='plant-info-container' >
           <img className='wishlist-checkbox' src={`${process.env.PUBLIC_URL}/images/checked_${wishlist.some(item => item.plant_id === plant.plant_id)}.png`} onClick={() => handleWishlist(plant.plant_id)} alt={`wishlist checkbox ${plant.plant_id}`} />
-          <img src={plant.image} className='placed-image' alt={plant.name} />
+          <img src={plantImageSrc(plant.image)} onError={onImageError} className='placed-image' alt={plant.name} />
           <p className='plant-list-name' >{plant.name?.toUpperCase()}</p>
         </div>
         <NavLink to={`/plants/${plant['plant_id']}`} >
