@@ -3,7 +3,7 @@ import Grid, { CellKeys } from '../Grid/Grid';
 import Nav from '../Nav/Nav';
 import List from '../List/List';
 import { useEffect, useState } from 'react';
-import { getGarden } from '../../apiCalls';
+import { getGarden, getWishlist, addToWishlist, removeFromWishlist } from '../../apiCalls';
 import './Main.scss';
 
 export type GardenKeys = CellKeys[];
@@ -21,9 +21,7 @@ export type lastUpdateType = {
   };
 }
 
-export type WishlistType = {
-  plant_id: number;
-}
+export type WishlistType = number; // plant_id
 
 const Main = () => {
   const [alert, setAlert] = useState<boolean>(false);
@@ -70,7 +68,19 @@ const Main = () => {
       .catch((err) => {
         handleApiError(err)
       })
+    getWishlist()
+      .then(setWishlist)
+      .catch(() => setWishlist([]))
   }, []);
+
+  // Optimistic toggle; the server copy is restored if the call fails.
+  const toggleWishlist = (plantId: number | undefined): void => {
+    if (plantId === undefined) return;
+    const wasListed = wishlist.includes(plantId);
+    setWishlist(prev => wasListed ? prev.filter(id => id !== plantId) : [...prev, plantId]);
+    (wasListed ? removeFromWishlist(plantId) : addToWishlist(plantId))
+      .catch(() => setWishlist(prev => wasListed ? [...prev, plantId] : prev.filter(id => id !== plantId)));
+  }
 
   useEffect(() => {
     for (let letter = 'A'.charCodeAt(0); letter <= 'J'.charCodeAt(0); letter++) {
@@ -123,7 +133,7 @@ const Main = () => {
               {
                 isGardenView
                 ? <Grid popUp={popUp} closeModals={closeModals} setCloseModals={setCloseModals} fullClear={fullClear} reset={reset} alert={alert} setAlert={setAlert} modal={modal} setModal={setModal} garden={garden} setGarden={setGarden} waterGarden={waterGarden} bullDoze={bullDoze} setBullDoze={setBullDoze} filterGarden={filterGarden} setFilterGarden={setFilterGarden} lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
-                : <List garden={garden} wishlist={wishlist} setWishlist={setWishlist} />
+                : <List garden={garden} wishlist={wishlist} toggleWishlist={toggleWishlist} />
               }
               <Nav reset={reset} waterGarden={waterGarden} setWaterGarden={setWaterGarden} setCloseModals={setCloseModals} handleFullClear={handleFullClear} handlePartialClear={handlePartialClear} isGardenView={isGardenView} setIsGardenView={setIsGardenView} />
             </>

@@ -18,3 +18,8 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+// Every spec runs as a signed-in user unless it overrides these.
+beforeEach(() => {
+  cy.intercept('GET', '**/api/v1/auth/me', { fixture: 'me.json' }).as('me')
+  cy.intercept('GET', '**/api/v1/wishlist', { data: [] }).as('wishlist')
+})

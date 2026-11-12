@@ -1,22 +1,28 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../auth/AuthContext'
 import './Header.scss'
 
 const Header = () => {
-    const [className, setClassName] = useState<string>('user-modal-hidden')
+    const { user, logout } = useAuth()
+    const navigate = useNavigate()
+    const [open, setOpen] = useState<boolean>(false)
 
-    const toggleFocus = (): void => {
-        className === 'user-modal-hidden'
-        ? setClassName('user-modal-focus')
-        : setClassName('user-modal-hidden')
-    }
+    const toggleFocus = (): void => setOpen(current => !current)
 
-    document.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement
-        if (className === 'user-modal-focus' && target.id !== 'userIcon') {
-            setClassName('user-modal-hidden')
+    // Close the menu on any click outside the icon (one listener, removed on unmount).
+    useEffect(() => {
+        if (!open) return
+        const close = (e: MouseEvent) => {
+            if ((e.target as HTMLElement).id !== 'userIcon') setOpen(false)
         }
-    })
+        document.addEventListener('click', close)
+        return () => document.removeEventListener('click', close)
+    }, [open])
+
+    const handleLogout = () => {
+        logout().then(() => navigate('/login'))
+    }
 
     return (
         <header>
@@ -24,15 +30,16 @@ const Header = () => {
                 <Link to='/' id='home'>
                     <img className="header-logo" src={`${process.env.PUBLIC_URL}/images/logo.png`} alt='backyarder logo'/>
                 </Link>
-                <span id='userIcon' className="material-symbols-rounded" onClick={toggleFocus}>account_circle</span>
-                <div className={`user-modal ${className}`}>
-                    <Link to='/settings'>
-                        <p>SETTINGS</p>
-                    </Link>
-                    <Link to='/'>
-                        <p>LOGOUT</p>
-                    </Link>
-                </div>
+                {user && <>
+                    <span id='userIcon' className="material-symbols-rounded" title={user.email} onClick={toggleFocus}>account_circle</span>
+                    <div className={`user-modal ${open ? 'user-modal-focus' : 'user-modal-hidden'}`}>
+                        <p className='user-email' title={user.email}>{user.email}</p>
+                        <Link to='/settings'>
+                            <p>SETTINGS</p>
+                        </Link>
+                        <p id='logout' onClick={handleLogout}>LOGOUT</p>
+                    </div>
+                </>}
             </div>
         </header>
     )
