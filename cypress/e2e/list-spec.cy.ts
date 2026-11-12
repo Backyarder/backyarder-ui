@@ -1,16 +1,16 @@
 describe('List Actions', () => {
   beforeEach(() => {
-    cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants', {
+    cy.intercept('GET', '**/api/v1/plants', {
       statusCode: 200,
       fixture: 'onload-plants.json'
     }).as('onload-plants');
     
-    cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
+    cy.intercept('GET', '**/api/v1/garden', {
       statusCode: 200,
       fixture: 'onload-grid.json'
     }).as('onload-grid');
     
-    cy.intercept('PATCH', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell', {
+    cy.intercept('PATCH', '**/api/v1/cell', {
       statusCode: 200,
       fixture: 'plant-cell-response.json'
     }).as('plant-cell');
@@ -31,7 +31,7 @@ describe('List Actions', () => {
         .wait('@plant-cell').then(() => {
           cy.get('.nav-button').first().click()
           .get('.plant-info-container').last().contains('p', 'SMALL GLOBE THISTLE x1')
-          .intercept('PATCH', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/cell', {
+          .intercept('PATCH', '**/api/v1/cell', {
             statusCode: 200,
             fixture: 'delete-cell-response.json'
           }).as('delete-cell')

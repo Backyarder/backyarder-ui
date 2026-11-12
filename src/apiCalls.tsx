@@ -1,8 +1,8 @@
 import { CellContents } from "./components/Cell/Cell"
 
 // Base URL for the Backyarder API. Set REACT_APP_API_URL (e.g. in .env.development)
-// to point at a local backend; falls back to the deployed Heroku instance.
-const BASE_URL = process.env.REACT_APP_API_URL ?? 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1'
+// (.env.development / .env.production); falls back to a local backend on 9292.
+const BASE_URL = process.env.REACT_APP_API_URL ?? 'http://localhost:9292/api/v1'
 
 // The backend answers 502/503 with { error: "<human readable message>" } when
 // the plant database is unavailable or its daily budget is spent; surface that.

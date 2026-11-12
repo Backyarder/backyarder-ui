@@ -1,17 +1,17 @@
 describe('Details Page', () => {
   it('Check all details are viewable on the plant details page', () => {
 
-    cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants', {
+    cy.intercept('GET', '**/api/v1/plants', {
       statusCode: 200,
       fixture: 'onload-plants.json'
     })
 
-    cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
+    cy.intercept('GET', '**/api/v1/garden', {
       statusCode: 200,
       fixture: 'onload-grid.json'
     })
 
-    cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants/2692', {
+    cy.intercept('GET', '**/api/v1/plants/2692', {
       statusCode: 200,
       fixture: 'plant-details.json'
     })
