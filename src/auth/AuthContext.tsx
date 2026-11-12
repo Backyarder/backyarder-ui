@@ -33,7 +33,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = useCallback((email: string, password: string) => apiLogin(email, password).then(u => { setUser(u); return u }), [])
   const signup = useCallback((email: string, password: string, zipCode?: string) => apiSignup(email, password, zipCode).then(u => { setUser(u); return u }), [])
-  const logout = useCallback(() => apiLogout().catch(() => null).then(() => setUser(null)), [])
+  // Optimistic: the user is signed out locally at once (RequireAuth redirects
+  // immediately), while the server call finishes in the background. It can
+  // take a while when the free-tier backend has to wake up, and it rejects
+  // if the server could not be reached so the caller can say so.
+  const logout = useCallback(() => {
+    setUser(null)
+    return apiLogout().then(() => undefined)
+  }, [])
   const updateMe = useCallback((changes: { zip_code?: string }) => apiUpdateMe(changes).then(u => { setUser(u); return u }), [])
 
   const value = useMemo(() => ({ user, loading, login, signup, logout, updateMe }), [user, loading, login, signup, logout, updateMe])

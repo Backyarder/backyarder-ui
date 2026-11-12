@@ -41,13 +41,27 @@ describe('Login', () => {
     cy.location('pathname').should('eq', '/')
   })
 
-  it('logs out from the header menu', () => {
+  it('logs out from the header menu and shows progress while the server answers', () => {
     cy.intercept('GET', '**/api/v1/auth/me', { fixture: 'me.json' })
-    cy.intercept('DELETE', '**/api/v1/auth/logout', { statusCode: 204, body: '' }).as('logout')
+    cy.intercept('DELETE', '**/api/v1/auth/logout', { statusCode: 204, body: '', delay: 1500 }).as('logout')
+    cy.visit('http://localhost:3000/')
+    cy.get('#userIcon').click()
+    cy.get('#logout').click()
+    // Redirected at once, with a pending toast, before the server has answered.
+    cy.location('pathname').should('eq', '/login')
+    cy.contains('Logging out...').should('be.visible')
+    cy.wait('@logout')
+    cy.contains('Logged out. See you next time!').should('be.visible')
+  })
+
+  it('still signs out locally when the logout request fails', () => {
+    cy.intercept('GET', '**/api/v1/auth/me', { fixture: 'me.json' })
+    cy.intercept('DELETE', '**/api/v1/auth/logout', { statusCode: 502, body: { error: 'nope' } }).as('logout')
     cy.visit('http://localhost:3000/')
     cy.get('#userIcon').click()
     cy.get('#logout').click()
     cy.wait('@logout')
     cy.location('pathname').should('eq', '/login')
+    cy.contains('could not be reached').should('be.visible')
   })
 })
