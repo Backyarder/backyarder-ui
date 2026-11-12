@@ -18,7 +18,7 @@ describe('Onload', () => {
       cy.get('.header-logo').should('exist')
       .get('#plants > :nth-child(3)').children().should('have.length', '30')
       .get('#grid').children().should('have.length', 100)
-      .get('#A1').should('have.css', 'background-image', 'url("https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/thumbnail/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg")')
+      .get('#A1').should('have.css', 'background-image', 'url("http://localhost:3000/images/plants/274.jpg")')
       .get('nav').children().should('have.length', 6)
       .get('.nav-button').first().should('have.text', 'list_altLIST OF GARDEN PLANTS')
       .get('.nav-button').last().should('have.text', 'grid_viewGARDEN VIEW')

@@ -116,3 +116,18 @@
 .plant-list-name {
   font-size: 25px;
 }
+.needs-water-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 12px;
+  padding: 2px 10px;
+  border-radius: 14px;
+  background-color: #F8D568;
+  color: #786961;
+  font-size: medium;
+  vertical-align: middle;
+  white-space: nowrap;
+
+  .material-symbols-rounded { font-size: 18px; color: #2b8fd6; }
+}

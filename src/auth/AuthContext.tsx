@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, ReactNode } from 'react'
-import { getMe, login as apiLogin, logout as apiLogout, signup as apiSignup, updateMe as apiUpdateMe, User, ApiError } from '../apiCalls'
+import { getMe, login as apiLogin, logout as apiLogout, signup as apiSignup, updateMe as apiUpdateMe, resetPassword as apiResetPassword, User, ApiError } from '../apiCalls'
 
 type AuthState = {
   user: User | null
@@ -8,6 +8,7 @@ type AuthState = {
   signup: (email: string, password: string, zipCode?: string) => Promise<User>
   logout: () => Promise<void>
   updateMe: (changes: { zip_code?: string }) => Promise<User>
+  resetPassword: (token: string, password: string) => Promise<User>
 }
 
 const AuthContext = createContext<AuthState | undefined>(undefined)
@@ -42,8 +43,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return apiLogout().then(() => undefined)
   }, [])
   const updateMe = useCallback((changes: { zip_code?: string }) => apiUpdateMe(changes).then(u => { setUser(u); return u }), [])
+  const resetPassword = useCallback((token: string, password: string) => apiResetPassword(token, password).then(u => { setUser(u); return u }), [])
 
-  const value = useMemo(() => ({ user, loading, login, signup, logout, updateMe }), [user, loading, login, signup, logout, updateMe])
+  const value = useMemo(() => ({ user, loading, login, signup, logout, updateMe, resetPassword }), [user, loading, login, signup, logout, updateMe, resetPassword])
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

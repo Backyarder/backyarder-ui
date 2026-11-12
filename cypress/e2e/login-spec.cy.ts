@@ -41,6 +41,41 @@ describe('Login', () => {
     cy.location('pathname').should('eq', '/')
   })
 
+  it('sends a password reset link from the login page', () => {
+    cy.intercept('POST', '**/api/v1/auth/forgot', { ok: true }).as('forgot')
+    cy.visit('http://localhost:3000/login')
+    cy.get('#forgot-password').click()
+    cy.get('#login-password').should('not.exist')
+    cy.get('#login-email').type('gardener@example.com')
+    cy.get('#login-submit').click()
+    cy.wait('@forgot').its('request.body').should('deep.equal', { email: 'gardener@example.com' })
+    cy.get('.login-notice').should('contain', 'reset link is on its way')
+    cy.get('#login-password').should('exist')
+  })
+
+  it('explains when reset email is not set up', () => {
+    cy.intercept('POST', '**/api/v1/auth/forgot', { statusCode: 503, body: { error: 'Password reset email is not set up on this server yet. Ask the garden owner to reset your password.' } })
+    cy.visit('http://localhost:3000/login')
+    cy.get('#forgot-password').click()
+    cy.get('#login-email').type('gardener@example.com')
+    cy.get('#login-submit').click()
+    cy.get('.login-error').should('contain', 'Ask the garden owner')
+  })
+
+  it('sets a new password from the emailed link and lands in the garden', () => {
+    cy.intercept('POST', '**/api/v1/auth/reset', { fixture: 'me.json' }).as('reset')
+    cy.visit('http://localhost:3000/reset?token=abc123')
+    cy.get('#reset-password').type('newgardening1')
+    cy.get('#reset-confirm').type('different1')
+    cy.get('#reset-submit').click()
+    cy.get('.login-error').should('contain', 'do not match')
+    cy.get('#reset-confirm').clear().type('newgardening1')
+    cy.get('#reset-submit').click()
+    cy.wait('@reset').its('request.body').should('deep.equal', { token: 'abc123', password: 'newgardening1' })
+    cy.location('pathname').should('eq', '/')
+    cy.get('#grid').should('exist')
+  })
+
   it('logs out from the header menu and shows progress while the server answers', () => {
     cy.intercept('GET', '**/api/v1/auth/me', { fixture: 'me.json' })
     cy.intercept('DELETE', '**/api/v1/auth/logout', { statusCode: 204, body: '', delay: 1500 }).as('logout')

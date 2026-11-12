@@ -23,7 +23,7 @@ describe('Grid actions: delete', () => {
             cy.get('#A1').click()
             .get('.cell-button.remove-button').click()
             .wait('@delete-cell').then(() => {
-                cy.get('#A1').should('have.css', 'background-image', 'url("http://localhost:3000/undefined")')
+                cy.get('#A1').should('have.css', 'background-image', 'none')
             })
         })
     })

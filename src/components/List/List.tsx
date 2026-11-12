@@ -44,12 +44,19 @@ const List = ({ garden, wishlist, toggleWishlist }: ListProps) => {
     return array.filter(item => item.status === 'placed' && item.content_type === 'Plant');
   }, []);
 
+  const countNeedingWater = (id: number | undefined): number =>
+    (garden || []).filter(cell => cell.plant_id === id && cell.status === 'locked' && cell.needs_water).length
+
   const plantElements: JSX.Element[] | undefined = uniquePlants?.map(plant => {
+    const due = countNeedingWater(plant.plant_id)
     return (
       <div key={plant['plant_id']} className='plant-element' >
         <div className='plant-info-container' >
           <img src={plantImageSrc(plant.image)} onError={onImageError} className='plant-image' alt={plant.name} />
-          <p className='plant-list-name' >{plant.name?.toUpperCase()} x{findQuantity(garden, plant.plant_id)}</p>
+          <p className='plant-list-name' >
+            {plant.name?.toUpperCase()} x{findQuantity(garden, plant.plant_id)}
+            {due > 0 && <span className='needs-water-badge' title='Due for water'><span className='material-symbols-rounded'>water_drop</span>{due > 1 ? `${due} need water` : 'needs water'}</span>}
+          </p>
         </div>
         <NavLink to={`/plants/${plant['plant_id']}`} >
           <button className='detail-button' >VIEW PLANT DETAILS</button>

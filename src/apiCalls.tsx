@@ -62,6 +62,24 @@ const logout = (): Promise<null> => request('/auth/logout', { method: 'DELETE' }
 const updateMe = (changes: { zip_code?: string }): Promise<User> =>
   jsonRequest('/auth/me', 'PATCH', changes).then(toUser)
 
+const forgotPassword = (email: string) => jsonRequest('/auth/forgot', 'POST', { email })
+const resetPassword = (token: string, password: string): Promise<User> =>
+  jsonRequest('/auth/reset', 'POST', { token, password }).then(toUser)
+
+// --- alerts -----------------------------------------------------------------
+
+export type Alerts = {
+  date: string
+  needs_water: { location_id: string; name: string | null; plant_id: number | null; watering: string | null; next_water_at: string | null }[]
+  recent_rain_in: number
+  rain_covers_watering: boolean
+  frost: { date: string; low_f: number } | null
+  weather_available: boolean
+  zip_code: string | null
+}
+
+const getAlerts = (): Promise<Alerts> => request('/alerts')
+
 // --- wishlist ---------------------------------------------------------------
 
 const getWishlist = (): Promise<number[]> =>
@@ -143,4 +161,4 @@ const deleteContents = (path: string, setter: Function, alert: Function) => {
 }
 
 export { getPlantList, getGarden, searchPlants, getPlantDetails, patchCellContents, patchDisabledOrRemoved, waterCell, deleteContents,
-  getMe, signup, login, logout, updateMe, getWishlist, addToWishlist, removeFromWishlist }
+  getMe, signup, login, logout, updateMe, forgotPassword, resetPassword, getAlerts, getWishlist, addToWishlist, removeFromWishlist }
