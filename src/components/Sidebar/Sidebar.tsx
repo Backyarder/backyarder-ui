@@ -37,11 +37,10 @@ export interface DecorAttributes {
 }
 
 interface SideBarProps {
-    modal: boolean;
-    setModal: Function;
+    showUnavailable: () => void;
 }
 
-const Sidebar = ({ modal, setModal }: SideBarProps) => {
+const Sidebar = ({ showUnavailable }: SideBarProps) => {
     const [plantList, setPlantList] = useState<PlantData[]>([])
     const [decorList, setDecorList] = useState<DecorData[]>([])
     // eslint-disable-next-line
@@ -85,11 +84,11 @@ const Sidebar = ({ modal, setModal }: SideBarProps) => {
                 ? plant.attributes.image
                 : `${process.env.PUBLIC_URL}/images/plant-fallback.png`
             plant.attributes.image = plantImage
-            return <Card plant={plant.attributes} modal={modal} setModal={setModal} key={plant.attributes.plant_id} />
+            return <Card plant={plant.attributes} showUnavailable={showUnavailable} key={plant.attributes.plant_id} />
         })
     } else if (decorList.length && activeTab === 'decor') {
         cards = decorList.map((item: DecorData) => {
-            return <Card plant={item.attributes} modal={modal} setModal={setModal} key={nanoid()} />
+            return <Card plant={item.attributes} showUnavailable={showUnavailable} key={nanoid()} />
         })
     } else {
         cards = <p className="loading">Hmmm... there are no plants in our nursery matching your search.</p>

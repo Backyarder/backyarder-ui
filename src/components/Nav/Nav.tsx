@@ -2,17 +2,15 @@ import { useState } from 'react';
 import './Nav.scss';
 
 type NavProps = {
-  reset: Function;
-  waterGarden: boolean;
-  setWaterGarden: Function;
-  setCloseModals: Function;
+  reset: () => void;
+  onWaterGarden: () => void;
   handleFullClear: () => void;
   handlePartialClear: () => void;
   isGardenView: boolean;
-  setIsGardenView: Function;
+  setIsGardenView: (isGardenView: boolean) => void;
 }
 
-const Nav = ({ reset, waterGarden, setWaterGarden, setCloseModals, handleFullClear, handlePartialClear, isGardenView, setIsGardenView }: NavProps) => {
+const Nav = ({ reset, onWaterGarden, handleFullClear, handlePartialClear, isGardenView, setIsGardenView }: NavProps) => {
   const [className, setClassName] = useState<string>('key');
 
 
@@ -30,7 +28,7 @@ const Nav = ({ reset, waterGarden, setWaterGarden, setCloseModals, handleFullCle
   }
 
   const handleWaterAll = (): void => {
-    setWaterGarden(!waterGarden)
+    onWaterGarden()
   }
 
   return (
@@ -97,16 +95,10 @@ const Nav = ({ reset, waterGarden, setWaterGarden, setCloseModals, handleFullCle
             <span>WATER GARDEN</span>
             <div className='liquid'></div>
           </button>
-          <button className='clear-button' onClick={() => {
-            setCloseModals(true);
-            handleFullClear();
-          }} ><span className="material-symbols-rounded nav-icon">
+          <button className='clear-button' onClick={handleFullClear} ><span className="material-symbols-rounded nav-icon">
             bomb
           </span>CLEAR GARDEN</button>
-          <button className='clear-button' onClick={() => {
-            setCloseModals(true);
-            handlePartialClear();
-          }} ><span className="material-symbols-rounded nav-icon">
+          <button className='clear-button' onClick={handlePartialClear} ><span className="material-symbols-rounded nav-icon">
             agriculture
           </span>REMOVE PLACED ITEMS</button>
         </>

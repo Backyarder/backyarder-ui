@@ -10,19 +10,18 @@ export interface CardProps {
 };
 
 interface AdditionalCardProps {
-  modal: boolean;
-  setModal: Function;
+  showUnavailable: () => void; // dropped on a cell that cannot take it
 }
 
 type CombinedCardProps = CardProps & AdditionalCardProps;
 
-const Card = ({ plant, modal, setModal }: CombinedCardProps) => {
+const Card = ({ plant, showUnavailable }: CombinedCardProps) => {
   const [{ isDragging }, dragRef, preview] = useDrag({
     type: 'plant',
     item: { plant },
     end: (item, monitor) => {
       if (!monitor.didDrop() && monitor.getTargetIds().length) {
-        setModal(!modal);
+        showUnavailable();
       }
     },
     collect: (monitor) => ({

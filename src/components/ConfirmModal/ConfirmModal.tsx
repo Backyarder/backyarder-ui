@@ -1,40 +1,20 @@
-import { deleteContents } from '../../apiCalls';
 import './ConfirmModal.scss';
 
 interface ConfirmProps {
-  setCloseModals: Function;
-  fullClear: boolean;
-  reset: () => void;
-  setBullDoze: Function;
-  setFilterGarden: Function;
-  setAlert: Function;
+  fullClear: boolean;      // true: clear everything; false: remove unplanted items only
+  onConfirm: () => void;
+  onCancel: () => void;
 }
 
-const ConfirmModal = ({ setCloseModals, fullClear, reset, setBullDoze, setFilterGarden, setAlert }: ConfirmProps) => {
-
-  const handleDelete = (): void => {
-    if (fullClear) {
-      deleteContents('all', setBullDoze, setAlert);
-    } else {
-      deleteContents('garden', setFilterGarden, setAlert);
-    }
-    reset();
-  }
-
+const ConfirmModal = ({ fullClear, onConfirm, onCancel }: ConfirmProps) => {
   return (
     <div className='confirm-modal-overlay' >
       <div className='confirm-modal' >
         {fullClear && <p className='confirm-message'>Are you sure you wish to clear your garden? This action cannot be undone.</p>}
         {!fullClear && <p className='confirm-message'>Are you sure you wish to remove your unplanted items? This action cannot be undone.</p>}
         <div className='pop-up-button-container'>
-          <button className='pop-up-button' onClick={() => {
-            setCloseModals(false);
-            handleDelete();
-          }} >YES</button>
-          <button className='pop-up-button' onClick={() => {
-            setCloseModals(false);
-            reset();
-          }} >NO</button>
+          <button className='pop-up-button' onClick={onConfirm} >YES</button>
+          <button className='pop-up-button' onClick={onCancel} >NO</button>
         </div>
       </div>
     </div>
