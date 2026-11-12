@@ -67,6 +67,10 @@ The user can reset their garden and start fresh.<br>
 - Run `npm start` in the terminal to see the HTML page
   - `Control + C` is the command to stop running the local server.
 
+## CHECKS
+- Hosted CircleCI checks are switched off for now (its deploy key for this repo stopped working). Run the same checks locally with `bash scripts/local-checks.sh` (production build, then the Cypress suite against `npm start`).
+- To run the hosted workflow on purpose, fix the SSH key under CircleCI Project Settings and trigger the pipeline with the parameter `run_checks=true`.
+
 ## CONTRIBUTERS
 ### Front End:
 - Daniel Cochico: [GitHub](https://github.com/dcochico) | [LinkedIn](https://www.linkedin.com/in/daniel-c-3a0201176/)
