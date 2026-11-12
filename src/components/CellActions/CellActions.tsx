@@ -7,34 +7,27 @@ interface CellProps {
     name: string | undefined
     contentType: string | undefined
     plantId: number | undefined
-    handleCloseModal: () => void
     isPlanted: boolean
-    handlePlanted: () => void
-    handleWatered: () => void
-    handleRemove: () => void
-    handleNeedsUpdating: Function
-    toggleHoverEffect: Function
+    onPlant: () => void
+    onWater: () => void
+    onRemove: () => void
+    onClose: () => void
 }
 
-const CellActions = ({ image, name, contentType, plantId, handleCloseModal, isPlanted, handlePlanted, handleWatered, handleRemove, handleNeedsUpdating, toggleHoverEffect }: CellProps) => {
+// The popup over a populated cell. Every button closes it; some also act.
+const CellActions = ({ image, name, contentType, plantId, isPlanted, onPlant, onWater, onRemove, onClose }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
         const target = e.target as Element
         if (target.classList.contains('plant-button')) {
-            handlePlanted()
-            handleNeedsUpdating('locked')
+            onPlant()
         } else if (target.classList.contains('water-button') || target.classList.contains('icon')) {
-            handleWatered()
+            onWater()
         } else if (target.classList.contains('remove-button')) {
-            handleRemove()
+            onRemove()
         }
-        const cell = target.closest('.disable-scale')
-        cell?.classList.remove('disable-scale')
-        const grid = target.closest('#grid')
-        grid?.classList.remove('disable-hover')
-        toggleHoverEffect()
-        handleCloseModal()
+        onClose()
     }
 
     return (

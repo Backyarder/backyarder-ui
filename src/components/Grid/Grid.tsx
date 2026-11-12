@@ -1,45 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import Cell from '../Cell/Cell';
 import Modal from '../Modal/Modal';
-import { GardenKeys, lastUpdateType } from '../Main/Main';
-import { cellIDs } from './cellIDs';
-import './Grid.scss';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
+import { cellIDs } from './cellIDs';
 import { WateringType } from '../../apiCalls';
+import './Grid.scss';
 
-export interface GridProps {
-  garden: GardenKeys | undefined;
-  setGarden: Function;
-  waterGarden: boolean;
-  closeModals: boolean;
-  bullDoze: boolean;
-  setBullDoze: Function;
-  filterGarden: boolean;
-  setFilterGarden: Function;
-  lastUpdate: lastUpdateType;
-  setLastUpdate: Function;
-}
-
-interface AdditionalProps {
-  setCloseModals: Function;
-  popUp: boolean;
-  fullClear: boolean;
-  reset: () => void;
-  alert: boolean;
-  setAlert: Function;
-  modal: boolean;
-  setModal: Function;
-}
-
-type CombinedProps = GridProps & AdditionalProps;
-
+// One garden cell as the server describes it. The grid is the source of
+// truth for every Cell; cells never keep a copy of this.
 export type CellKeys = {
   location_id: string;
   image: string | undefined;
   name: string | undefined;
   content_type: string | undefined;
   plant_id: number | undefined;
-  watering: keyof WateringType
+  watering: keyof WateringType | undefined | null;
   status: string | number | null | undefined;
   updated_at: string | undefined;
   planted_at?: string | null;
@@ -48,75 +23,49 @@ export type CellKeys = {
   needs_water?: boolean;
 }
 
-const Grid = ({ popUp, closeModals, setCloseModals, fullClear, reset, alert, setAlert, modal, setModal, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, lastUpdate, setLastUpdate }: CombinedProps) => {
-  const [dragStart, setDragStart] = useState<{ x: number; y: number }>({ x: 0, y: 0});
-  const [drop, setDrop] = useState<{ x: number; y: number }>({ x: 0, y: 0});
+export type CellChanges = Partial<CellKeys>;
+export type Notice = 'cleared' | 'unavailable';
+export type ClearScope = 'all' | 'placed';
 
-  const handleDragStart = (e: React.MouseEvent) => {
-    setDragStart({ x: e.clientX, y: e.clientY });
-  };
+interface GridProps {
+  garden: CellKeys[];
+  updateCell: (locationId: string, changes: CellChanges) => void;
+  resync: () => void;
+  openCellId: string | null;
+  setOpenCellId: (id: string | null) => void;
+  showUnavailable: () => void;
+  notice: Notice | null;
+  clearNotice: () => void;
+  confirmClear: ClearScope | null;
+  onConfirmClear: () => void;
+  onCancelClear: () => void;
+}
 
-  const handleDrop = (e: React.MouseEvent) => {
-    setDrop({ x: e.clientX, y: e.clientY });
-  };
+const emptyCell = (location_id: string): CellKeys => ({
+  location_id, image: undefined, name: undefined, content_type: undefined, plant_id: undefined,
+  watering: undefined, status: 'empty', updated_at: undefined
+});
 
-  useEffect(() => {
-    if (alert) {
-      setModal(true);
-    }
-    // eslint-disable-next-line
-  }, [alert])
-
-  useEffect(() => {
-    if (closeModals) {
-      let grid = document.querySelector('#grid');
-      let cells = document.querySelectorAll('.cell');
-
-      grid?.classList.remove('disable-hover');
-      cells.forEach(cell => {
-        cell.classList.remove('disable-scale');
-      });
-    }
-  }, [closeModals])
-
-  const toggleModal = (): void => {
-    setAlert(false);
-    setModal(!modal);
-    if (bullDoze || filterGarden) {
-      setBullDoze(false);
-      setFilterGarden(false);
-    }
-  }
-
-  const cells = garden?.map((cell, i) => {
-    return (
-      <Cell
-        key={cell.location_id}
-        id={cellIDs[i].id}
-        garden={garden}
-        setGarden={setGarden}
-        handleDragStart={(e) => handleDragStart(e)}
-        handleDrop={(e) => handleDrop(e)}
-        dragStart={dragStart}
-        drop={drop}
-        waterGarden={waterGarden}
-        closeModals={closeModals}
-        bullDoze={bullDoze}
-        setBullDoze={setBullDoze}
-        filterGarden={filterGarden}
-        setFilterGarden={setFilterGarden}
-        toggleModal={toggleModal}
-        lastUpdate={lastUpdate}
-        setLastUpdate={setLastUpdate}
-      />
-    );
-  });
+const Grid = ({ garden, updateCell, resync, openCellId, setOpenCellId, showUnavailable, notice, clearNotice, confirmClear, onConfirmClear, onCancelClear }: GridProps) => {
+  const byLocation = useMemo(() => new Map(garden.map(cell => [cell.location_id, cell])), [garden]);
 
   return (
-    <section id='grid'>
-      {cells}
-      {popUp && <ConfirmModal setCloseModals={setCloseModals} fullClear={fullClear} reset={reset} setBullDoze={setBullDoze} setFilterGarden={setFilterGarden} setAlert={setAlert} />}
-      {modal && <Modal alert={alert} toggleModal={toggleModal} />}
+    <section id='grid' className={openCellId ? 'disable-hover' : ''}>
+      {cellIDs.map(({ id }) => (
+        <Cell
+          key={id}
+          id={id}
+          cell={byLocation.get(id) ?? emptyCell(id)}
+          isOpen={openCellId === id}
+          onOpen={() => setOpenCellId(id)}
+          onClose={() => setOpenCellId(null)}
+          updateCell={updateCell}
+          resync={resync}
+          showUnavailable={showUnavailable}
+        />
+      ))}
+      {confirmClear && <ConfirmModal fullClear={confirmClear === 'all'} onConfirm={onConfirmClear} onCancel={onCancelClear} />}
+      {notice && <Modal alert={notice === 'cleared'} toggleModal={clearNotice} />}
     </section>
   );
 }

@@ -1,5 +1,3 @@
-import { CellContents } from "./components/Cell/Cell"
-
 // Base URL for the Backyarder API. In development and production this is the
 // same-origin path /api/v1: the CRA dev server proxies it to localhost:9292
 // (package.json "proxy") and Vercel rewrites it to Render (vercel.json), so
@@ -125,14 +123,25 @@ const WATERING_MAP: WateringType = {
   'Frequent': 3
 }
 
-const patchCellContents = ({plant}: CellContents, id: string, status: keyof StatusType, watering: keyof WateringType) => {
+// What a cell needs to know about the thing placed in it. A sidebar card, a
+// search result and a garden cell all satisfy this.
+export type PlacedPlant = {
+  name?: string | null
+  content_type?: string | null
+  image?: string | null
+  plant_id?: number | null
+  watering?: keyof WateringType | null
+}
+
+const patchCellContents = (plant: PlacedPlant, id: string, status: keyof StatusType, watering?: keyof WateringType | null) => {
   return jsonRequest('/cell', 'PATCH', {
     name: plant.name,
     content_type: plant.content_type,
     location_id: id,
     image: plant.image,
-    status: STATUS_MAP[`${status}`],
-    watering: WATERING_MAP[`${watering}`],
+    status: STATUS_MAP[status],
+    // Unknown watering is left out so the backend can look it up.
+    watering: watering ? WATERING_MAP[watering] : undefined,
     plant_id: plant.plant_id
   })
 }
@@ -152,13 +161,8 @@ const patchDisabledOrRemoved = (id: string, status: keyof StatusType) => {
 // Records a watering; the response carries the new next_water_at.
 const waterCell = (id: string) => jsonRequest('/cell', 'PATCH', { action: 'water', location_id: id })
 
-const deleteContents = (path: string, setter: Function, alert: Function) => {
-  return request(`/${path}`, { method: 'DELETE' })
-    .then(() => {
-      setter(true);
-      alert(true);
-    })
-}
+// 'all' empties every cell; 'garden' empties only placed (unplanted) ones.
+const deleteContents = (path: 'all' | 'garden'): Promise<null> => request(`/${path}`, { method: 'DELETE' })
 
 export { getPlantList, getGarden, searchPlants, getPlantDetails, patchCellContents, patchDisabledOrRemoved, waterCell, deleteContents,
   getMe, signup, login, logout, updateMe, forgotPassword, resetPassword, getAlerts, getWishlist, addToWishlist, removeFromWishlist }
