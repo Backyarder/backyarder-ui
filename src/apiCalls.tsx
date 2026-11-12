@@ -1,11 +1,21 @@
 import { CellContents } from "./components/Cell/Cell"
 
-// Base URL for the Backyarder API. Set REACT_APP_API_URL (e.g. in .env.development)
-// (.env.development / .env.production); falls back to a local backend on 9292.
+// Base URL for the Backyarder API. In development and production this is the
+// same-origin path /api/v1: the CRA dev server proxies it to localhost:9292
+// (package.json "proxy") and Vercel rewrites it to Render (vercel.json), so
+// the session cookie is always first-party. Falls back to a local backend.
 const BASE_URL = process.env.REACT_APP_API_URL ?? 'http://localhost:9292/api/v1'
 
-// The backend answers 502/503 with { error: "<human readable message>" } when
-// the plant database is unavailable or its daily budget is spent; surface that.
+export class ApiError extends Error {
+  status: number
+  constructor(status: number, message: string) {
+    super(message)
+    this.status = status
+  }
+}
+
+// The backend answers errors with { error: "<human readable message>" }
+// (401 not logged in, 422 validation, 502/503 plant database); surface that.
 const handleError = async (res: Response) => {
     if(!res.ok) {
       let message = `HTTP Error: ${res.status} -- Please try again later`
@@ -13,36 +23,61 @@ const handleError = async (res: Response) => {
         const body = await res.json()
         if (body && typeof body.error === 'string') message = body.error
       } catch {}
-      throw new Error(message)
+      if (res.status === 401) window.dispatchEvent(new Event('backyarder:unauthorized'))
+      throw new ApiError(res.status, message)
     }
-    return res.json()
+    // DELETE routes answer with an empty body; treat that as null, not a JSON error.
+    return res.text().then(text => text ? JSON.parse(text) : null)
   }
 
-const getPlantList = () => {
-    return fetch(`${BASE_URL}/plants`, {
-      // cache: 'force-cache',
-    })
-      .then(res => handleError(res))
+const request = (path: string, init: RequestInit = {}) => {
+  return fetch(`${BASE_URL}${path}`, { credentials: 'include', ...init }).then(handleError)
 }
 
-const getGarden = () => {
-    return fetch(`${BASE_URL}/garden`)
-      .then(res => handleError(res))
-}
-
-const searchPlants = (searchterm: string) => {
-  return fetch(`${BASE_URL}/search/${searchterm}`, {
-    // cache: 'force-cache'
+const jsonRequest = (path: string, method: string, body?: object) => {
+  return request(path, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: body === undefined ? undefined : JSON.stringify(body)
   })
-    .then(res => handleError(res))
 }
 
-const getPlantDetails = (id: string | undefined) => {
-  return fetch(`${BASE_URL}/plants/${id}`, {
-    cache: 'force-cache'
-  })
-    .then(res => handleError(res))
+// --- accounts ---------------------------------------------------------------
+
+export type User = {
+  id: string
+  email: string
+  zip_code: string | null
+  hardiness_zone: string | null
 }
+
+const toUser = (payload: any): User => ({ id: payload.data.id, ...payload.data.attributes })
+
+const getMe = (): Promise<User> => request('/auth/me').then(toUser)
+const signup = (email: string, password: string, zip_code?: string): Promise<User> =>
+  jsonRequest('/auth/signup', 'POST', { email, password, zip_code }).then(toUser)
+const login = (email: string, password: string): Promise<User> =>
+  jsonRequest('/auth/login', 'POST', { email, password }).then(toUser)
+const logout = (): Promise<null> => request('/auth/logout', { method: 'DELETE' })
+const updateMe = (changes: { zip_code?: string }): Promise<User> =>
+  jsonRequest('/auth/me', 'PATCH', changes).then(toUser)
+
+// --- wishlist ---------------------------------------------------------------
+
+const getWishlist = (): Promise<number[]> =>
+  request('/wishlist').then(data => data.data.map((item: any) => item.attributes.plant_id as number))
+const addToWishlist = (plant_id: number) => jsonRequest('/wishlist', 'POST', { plant_id })
+const removeFromWishlist = (plant_id: number) => request(`/wishlist/${plant_id}`, { method: 'DELETE' })
+
+// --- plants -----------------------------------------------------------------
+
+const getPlantList = () => request('/plants')
+
+const getGarden = () => request('/garden')
+
+const searchPlants = (searchterm: string) => request(`/search/${searchterm}`)
+
+const getPlantDetails = (id: string | undefined) => request(`/plants/${id}`, { cache: 'force-cache' })
 
 export type StatusType = {
   'empty': number
@@ -73,58 +108,39 @@ const WATERING_MAP: WateringType = {
 }
 
 const patchCellContents = ({plant}: CellContents, id: string, status: keyof StatusType, watering: keyof WateringType) => {
-  return fetch(`${BASE_URL}/cell`, {
-            method: 'PATCH',
-            body: JSON.stringify({
-              name: plant.name,
-              content_type: plant.content_type,
-              location_id: id,
-              image: plant.image,
-              status: STATUS_MAP[`${status}`],
-              watering: WATERING_MAP[`${watering}`],
-              plant_id: plant.plant_id
-            }),
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-          .then(res => handleError(res))
-          // .then(data => setter(data.data.attributes["updated_at"]))
+  return jsonRequest('/cell', 'PATCH', {
+    name: plant.name,
+    content_type: plant.content_type,
+    location_id: id,
+    image: plant.image,
+    status: STATUS_MAP[`${status}`],
+    watering: WATERING_MAP[`${watering}`],
+    plant_id: plant.plant_id
+  })
 }
 
 const patchDisabledOrRemoved = (id: string, status: keyof StatusType) => {
-  return fetch(`${BASE_URL}/cell`, {
-            method: 'PATCH',
-            body: JSON.stringify({
-              name: null,
-              content_type: null,
-              location_id: id,
-              image: null,
-              status: STATUS_MAP[`${status}`],
-              watering: 'None',
-              plant_id: null
-            }),
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-          .then(res => handleError(res))
+  return jsonRequest('/cell', 'PATCH', {
+    name: null,
+    content_type: null,
+    location_id: id,
+    image: null,
+    status: STATUS_MAP[`${status}`],
+    watering: 'None',
+    plant_id: null
+  })
 }
 
+// Records a watering; the response carries the new next_water_at.
+const waterCell = (id: string) => jsonRequest('/cell', 'PATCH', { action: 'water', location_id: id })
+
 const deleteContents = (path: string, setter: Function, alert: Function) => {
-  return fetch(`${BASE_URL}/${path}`, {
-    method: 'DELETE'
-  })
-    .then(res => {
-      if (!res.ok) {
-        throw new Error('Unable to clear garden');
-      }
+  return request(`/${path}`, { method: 'DELETE' })
+    .then(() => {
       setter(true);
       alert(true);
     })
-    .catch(err => {
-      handleError(err)
-    })
 }
 
-export { getPlantList, getGarden, searchPlants, getPlantDetails, patchCellContents, patchDisabledOrRemoved, deleteContents }
+export { getPlantList, getGarden, searchPlants, getPlantDetails, patchCellContents, patchDisabledOrRemoved, waterCell, deleteContents,
+  getMe, signup, login, logout, updateMe, getWishlist, addToWishlist, removeFromWishlist }

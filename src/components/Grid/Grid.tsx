@@ -42,6 +42,10 @@ export type CellKeys = {
   watering: keyof WateringType
   status: string | number | null | undefined;
   updated_at: string | undefined;
+  planted_at?: string | null;
+  last_watered_at?: string | null;
+  next_water_at?: string | null;
+  needs_water?: boolean;
 }
 
 const Grid = ({ popUp, closeModals, setCloseModals, fullClear, reset, alert, setAlert, modal, setModal, garden, setGarden, waterGarden, bullDoze, setBullDoze, filterGarden, setFilterGarden, lastUpdate, setLastUpdate }: CombinedProps) => {

@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDrop, useDrag, DragPreviewImage } from 'react-dnd';
 import { GardenKeys, lastUpdateType } from '../Main/Main';
 import { CellKeys, GridProps } from '../Grid/Grid';
 import CellActions from '../CellActions/CellActions';
-import { patchCellContents, patchDisabledOrRemoved, StatusType, WateringType } from '../../apiCalls';
+import { patchCellContents, patchDisabledOrRemoved, waterCell, StatusType, WateringType } from '../../apiCalls';
 import './Cell.scss'
 
 interface GridCell extends GridProps {
@@ -19,11 +19,8 @@ export interface CellContents {
   plant: CellKeys;
 }
 
-const WATERING_SCHEDULE = {
-  'Minimum': 1 / (24),           // 1hr
-  'Average': 1 / (24 * 60),      // 1min
-  'Frequent': 1 / (24 * 60 * 60) // 1sec
-}
+// setTimeout overflows past ~24.8 days; clamp and re-check on the next mount.
+const MAX_TIMEOUT_MS = 2 ** 31 - 1
 
 const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, drop, waterGarden, closeModals, bullDoze, setBullDoze, filterGarden, setFilterGarden, toggleModal, lastUpdate, setLastUpdate }: GridCell) => {
   // eslint-disable-next-line
@@ -40,6 +37,34 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
   const [needsUpdate, setNeedsUpdate] = useState<(keyof StatusType)>();
   const [shouldRender, setShouldRender] = useState<boolean>(false);
   const [enableHoverEffect, setEnableHoverEffect] = useState(true);
+  const wateringTimer = useRef<ReturnType<typeof setTimeout> | undefined>();
+
+  // Flip the alert on at next_water_at (from the server); nothing is
+  // scheduled when the cell is not on a watering schedule.
+  const scheduleWatering = (nextWaterAt: string | null | undefined) => {
+    clearTimeout(wateringTimer.current);
+    if (!nextWaterAt) return;
+    const delay = new Date(nextWaterAt).getTime() - Date.now();
+    if (delay <= 0) {
+      setNeedsWatering(true);
+      return;
+    }
+    wateringTimer.current = setTimeout(() => setNeedsWatering(true), Math.min(delay, MAX_TIMEOUT_MS));
+  }
+
+  // Apply a PATCH /cell response: the server owns the care fields (the rest
+  // of the cell is what we just sent it, so it stays as the client has it).
+  const applyServerCell = (data: any) => {
+    const attrs = data?.data?.attributes as CellKeys | undefined;
+    if (!attrs) return;
+    const care = { planted_at: attrs.planted_at, last_watered_at: attrs.last_watered_at, next_water_at: attrs.next_water_at, needs_water: attrs.needs_water };
+    setNeedsWatering(!!care.needs_water);
+    scheduleWatering(care.next_water_at);
+    setCellContents(prev => prev ? { plant: { ...prev.plant, ...care } } : prev);
+    setGarden((prevState: GardenKeys) => prevState.map(cell => cell.location_id === id ? { ...cell, ...care } : cell));
+  }
+
+  useEffect(() => () => clearTimeout(wateringTimer.current), []);
 
   useEffect(() => {
     if (garden) {
@@ -62,24 +87,13 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
         let updateValue = convertTime(lastUpdate[foundCell.location_id].updatedAt) > convertTime(foundCell.updated_at) ? lastUpdate[foundCell.location_id].updatedAt : foundCell.updated_at;
         handleUpdate(foundCell.location_id, updateValue);
       }
+      if (foundCell?.status === 'locked') {
+        setNeedsWatering(!!foundCell.needs_water);
+        scheduleWatering(foundCell.next_water_at);
+      }
     }
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    if (isPlanted && cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None' && typeof cellContents.plant.updated_at !== 'undefined') {
-      let now = Date.now() + (new Date().getTimezoneOffset() * 60 * 1000);
-      let lastUpdateAdjusted = convertTime(lastUpdate[cellContents.plant.location_id].updatedAt);
-      let interval = WATERING_SCHEDULE[cellContents?.plant.watering] * 24 * 60 * 60 * 1000;
-      if ((now - lastUpdateAdjusted) >= interval) {
-        setNeedsWatering(true);
-      }
-      setTimeout(() => {
-        setNeedsWatering(true);
-      }, Math.abs(interval - (now-lastUpdateAdjusted)));
-    }
-    // eslint-disable-next-line
-  }, [cellContents, isPlanted])
 
   useEffect(() => {
     handleWatered()
@@ -89,6 +103,7 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
   useEffect(() => {
     if (cellContents && needsUpdate) {
       patchCellContents(cellContents, id, needsUpdate, cellContents.plant.watering)
+        .then(applyServerCell)
         .catch((err) => {
           handleApiError(err);
         });
@@ -131,8 +146,7 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
   useEffect(() => {
     if (shouldRender && isPlanted && cellContents) {
       handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.content_type, cellContents.plant.plant_id, 'locked', cellContents.plant.watering, handleTime());
-      setNeedsWatering(false);
-      handleWatered();
+      // The PATCH to 'locked' records the planting as a watering; its response resets the alert.
     } else if (shouldRender && isPopulated && cellContents) {
       handleGarden(id, cellContents.plant.image, cellContents.plant.name, cellContents.plant.content_type, cellContents.plant.plant_id, 'placed', cellContents.plant.watering, handleTime());
     } else if (shouldRender && !isPopulated) {
@@ -259,16 +273,11 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
   }
 
   const handleWatered = async () => {
-    if (isPlanted && cellContents && cellContents.plant.watering && cellContents.plant.watering !== 'None') {
+    if (isPlanted && cellContents && cellContents.plant.content_type === 'Plant' && cellContents.plant.watering && cellContents.plant.watering !== 'None') {
       try {
-        await patchCellContents(cellContents, id, 'placed', cellContents.plant.watering)
-        await patchCellContents(cellContents, id, 'locked', cellContents.plant.watering)
+        const data = await waterCell(id);
         handleUpdate(cellContents.plant.location_id, handleTime());
-        setNeedsWatering(false);
-        let interval = WATERING_SCHEDULE[cellContents.plant.watering] * 24 * 60 * 60 * 1000;
-        setTimeout(() => {
-          setNeedsWatering(true);
-        }, interval);
+        applyServerCell(data);
       } catch (err) {
           handleApiError(err as string)
       }
@@ -282,6 +291,7 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
     handleNeedsUpdating('empty');
     setShouldRender(true);
     setNeedsWatering(false);
+    clearTimeout(wateringTimer.current);
   }
 
   const handleCloseModal = () => {

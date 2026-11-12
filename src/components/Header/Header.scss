@@ -36,8 +36,9 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100px;
-    width: 100px;
+    min-height: 100px;
+    width: 140px;
+    padding: 6px 0;
     background-color: #f4f4f4;
     border: solid 2px #786961;
     border-radius: 10px;
@@ -66,4 +67,14 @@ header {
     text-align: center;
     text-decoration: none;
     color: #af2268;
+}
+
+.user-email {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: x-small;
+    color: #786961 !important;
+    cursor: default !important;
 }

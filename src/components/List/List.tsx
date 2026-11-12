@@ -8,10 +8,10 @@ import './List.scss';
 interface ListProps {
   garden: GardenKeys | undefined;
   wishlist: WishlistType[];
-  setWishlist: Function;
+  toggleWishlist: (plantId: number | undefined) => void;
 }
 
-const List = ({ garden, wishlist, setWishlist }: ListProps) => {
+const List = ({ garden, wishlist, toggleWishlist }: ListProps) => {
   const [isWishlistView, setIsWishlistView] = useState<boolean>(false);
 
   const findQuantity = (array: GardenKeys | undefined, id: number | undefined): number | undefined => {
@@ -28,16 +28,6 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
 
   const toggleView = (): void => {
     setIsWishlistView(!isWishlistView);
-  }
-
-  const handleWishlist = (id: number | undefined): void => {
-    setWishlist((prevState: WishlistType[]) => {
-      if (prevState.some(item => item.plant_id === id)) {
-        return prevState.filter(item => item.plant_id !== id);
-      } else {
-        return [...prevState, { plant_id: id }]
-      }
-    });
   }
 
   const uniquePlants = (garden || []).reduce((array: GardenKeys, plant: CellKeys) => {
@@ -72,7 +62,7 @@ const List = ({ garden, wishlist, setWishlist }: ListProps) => {
     return (
       <div key={plant['plant_id']} className='placed-element' >
         <div className='plant-info-container' >
-          <img className='wishlist-checkbox' src={`${process.env.PUBLIC_URL}/images/checked_${wishlist.some(item => item.plant_id === plant.plant_id)}.png`} onClick={() => handleWishlist(plant.plant_id)} alt={`wishlist checkbox ${plant.plant_id}`} />
+          <img className='wishlist-checkbox' src={`${process.env.PUBLIC_URL}/images/checked_${plant.plant_id !== undefined && wishlist.includes(plant.plant_id)}.png`} onClick={() => toggleWishlist(plant.plant_id)} alt={`wishlist checkbox ${plant.plant_id}`} />
           <img src={plantImageSrc(plant.image)} onError={onImageError} className='placed-image' alt={plant.name} />
           <p className='plant-list-name' >{plant.name?.toUpperCase()}</p>
         </div>
