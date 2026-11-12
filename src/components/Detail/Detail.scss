@@ -71,3 +71,10 @@
 #details-home-button{
   height: 1.3em
 }
+.companions-section {
+  margin: 1em 0;
+
+  p { margin: 0.3em 0; }
+  .companions-likes strong { color: #6f9a12; }
+  .companions-avoid strong { color: #af2268; }
+}

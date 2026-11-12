@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { plantImageSrc, onImageError } from '../../imageFallback'
+import { CompanionHint } from '../../companions'
 import './CellActions.scss'
 
 interface CellProps {
@@ -8,6 +9,7 @@ interface CellProps {
     contentType: string | undefined
     plantId: number | undefined
     isPlanted: boolean
+    companions?: CompanionHint | null
     onPlant: () => void
     onWater: () => void
     onRemove: () => void
@@ -15,7 +17,7 @@ interface CellProps {
 }
 
 // The popup over a populated cell. Every button closes it; some also act.
-const CellActions = ({ image, name, contentType, plantId, isPlanted, onPlant, onWater, onRemove, onClose }: CellProps) => {
+const CellActions = ({ image, name, contentType, plantId, isPlanted, companions, onPlant, onWater, onRemove, onClose }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -34,6 +36,13 @@ const CellActions = ({ image, name, contentType, plantId, isPlanted, onPlant, on
         <div className='cell-info'>
             <img className='card-image' src={plantImageSrc(image)} onError={onImageError} alt={`${name}`} />
             <p className='plant-name'>{name?.toUpperCase()}</p>
+            {companions && (companions.likes.length > 0 || companions.avoid.length > 0) && (
+                <p className='companion-hint'>
+                    {companions.likes.length > 0 && <span className='likes'>Likes {companions.likes.slice(0, 4).join(', ')}</span>}
+                    {companions.likes.length > 0 && companions.avoid.length > 0 && ' · '}
+                    {companions.avoid.length > 0 && <span className='avoid'>Avoid {companions.avoid.slice(0, 3).join(', ')}</span>}
+                </p>
+            )}
             <div className='cell-actions'>
                 {isPlanted
                     ? contentType === "Plant" && <button className='cell-button water-button' onClick={handleClick}>

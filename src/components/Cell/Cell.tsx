@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDrop, useDrag, DragPreviewImage } from 'react-dnd';
-import { CellKeys, CellChanges } from '../Grid/Grid';
+import { CellKeys, CellChanges, DragHover } from '../Grid/Grid';
+import { Relation, companionsFor } from '../../companions';
 import CellActions from '../CellActions/CellActions';
 import { patchCellContents, patchDisabledOrRemoved, waterCell, PlacedPlant } from '../../apiCalls';
 import { FALLBACK_IMAGE } from '../../imageFallback';
@@ -17,6 +18,8 @@ interface CellProps {
   updateCell: (locationId: string, changes: CellChanges) => void;
   resync: () => void;              // reload the garden after a failed request
   showUnavailable: () => void;     // "Sorry! Cell is unavailable for planting."
+  companion: Relation | null;      // tint as a good/bad neighbour of the cell in focus
+  onDragHover: (hover: DragHover) => void;
 }
 
 export type DragItem = { plant: PlacedPlant; fromCell?: string };
@@ -36,7 +39,7 @@ const careFrom = (data: any): CellChanges => {
   return { planted_at: attrs.planted_at, last_watered_at: attrs.last_watered_at, next_water_at: attrs.next_water_at, needs_water: attrs.needs_water };
 }
 
-const Cell = ({ id, cell, isOpen, onOpen, onClose, updateCell, resync, showUnavailable }: CellProps) => {
+const Cell = ({ id, cell, isOpen, onOpen, onClose, updateCell, resync, showUnavailable, companion, onDragHover }: CellProps) => {
   const isDisabled = cell.status === 'disabled';
   const isPlanted = cell.status === 'locked';
   const isPopulated = !!cell.name && (cell.status === 'placed' || cell.status === 'locked');
@@ -109,15 +112,23 @@ const Cell = ({ id, cell, isOpen, onOpen, onClose, updateCell, resync, showUnava
 
   // --- drag and drop ----------------------------------------------------------
 
-  const [{ isOver }, dropRef] = useDrop<DragItem, { location_id: string }, { isOver: boolean }>(() => ({
+  const [{ isOver, draggedName }, dropRef] = useDrop<DragItem, { location_id: string }, { isOver: boolean; draggedName: string | null | undefined }>(() => ({
     accept: 'plant',
     canDrop: () => !isDisabled && !isPlanted,
     drop: (item) => {
       if (item.fromCell !== id) place(item.plant);
       return { location_id: id };
     },
-    collect: (monitor) => ({ isOver: monitor.isOver() })
+    collect: (monitor) => ({ isOver: monitor.isOver(), draggedName: monitor.isOver() ? monitor.getItem()?.plant?.name : undefined })
   }), [id, isDisabled, isPlanted, cell]);
+
+  // Tell the grid which cell a dragged plant is over, for companion hints.
+  useEffect(() => {
+    if (isOver) {
+      onDragHover({ id, plantName: draggedName });
+      return () => onDragHover(null);
+    }
+  }, [isOver, draggedName, id, onDragHover]);
 
   const [{ isDragging }, dragRef, preview] = useDrag<DragItem, { location_id: string }, { isDragging: boolean }>(() => ({
     type: 'plant',
@@ -164,7 +175,8 @@ const Cell = ({ id, cell, isOpen, onOpen, onClose, updateCell, resync, showUnava
     'cell',
     isDisabled ? 'disabled' : '',
     needsWatering ? 'watering-alert' : '',
-    isOpen ? 'disable-scale' : ''
+    isOpen ? 'disable-scale' : '',
+    companion ? `companion-${companion}` : ''
   ].filter(Boolean).join(' ');
 
   // One <div> for every state so the DOM node survives a cell filling or
@@ -193,6 +205,7 @@ const Cell = ({ id, cell, isOpen, onOpen, onClose, updateCell, resync, showUnava
             contentType={cell.content_type}
             plantId={cell.plant_id}
             isPlanted={isPlanted}
+            companions={companionsFor(cell.name)}
             onPlant={plant}
             onWater={water}
             onRemove={remove}

@@ -1,9 +1,10 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import Cell from '../Cell/Cell';
 import Modal from '../Modal/Modal';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import { cellIDs } from './cellIDs';
 import { WateringType } from '../../apiCalls';
+import { Relation, relation, neighbourIds } from '../../companions';
 import './Grid.scss';
 
 // One garden cell as the server describes it. The grid is the source of
@@ -46,8 +47,26 @@ const emptyCell = (location_id: string): CellKeys => ({
   watering: undefined, status: 'empty', updated_at: undefined
 });
 
+// A cell being hovered with a dragged plant: where, and what plant.
+export type DragHover = { id: string; plantName: string | null | undefined } | null;
+
 const Grid = ({ garden, updateCell, resync, openCellId, setOpenCellId, showUnavailable, notice, clearNotice, confirmClear, onConfirmClear, onCancelClear }: GridProps) => {
   const byLocation = useMemo(() => new Map(garden.map(cell => [cell.location_id, cell])), [garden]);
+  const [dragHover, setDragHover] = useState<DragHover>(null);
+
+  // Companion planting hints: tint the neighbours of the cell in focus (its
+  // popup is open, or a plant is being dragged over it) green or red.
+  const companionHighlights = useMemo(() => {
+    const focusId = dragHover?.id ?? openCellId;
+    const plantName = dragHover ? dragHover.plantName : byLocation.get(openCellId ?? '')?.name;
+    const map = new Map<string, Relation>();
+    if (!focusId || !plantName) return map;
+    neighbourIds(focusId).forEach(id => {
+      const rel = relation(plantName, byLocation.get(id)?.name);
+      if (rel) map.set(id, rel);
+    });
+    return map;
+  }, [dragHover, openCellId, byLocation]);
 
   return (
     <section id='grid' className={openCellId ? 'disable-hover' : ''}>
@@ -62,6 +81,8 @@ const Grid = ({ garden, updateCell, resync, openCellId, setOpenCellId, showUnava
           updateCell={updateCell}
           resync={resync}
           showUnavailable={showUnavailable}
+          companion={companionHighlights.get(id) ?? null}
+          onDragHover={setDragHover}
         />
       ))}
       {confirmClear && <ConfirmModal fullClear={confirmClear === 'all'} onConfirm={onConfirmClear} onCancel={onCancelClear} />}
