@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getPlantDetails } from "../../apiCalls"
+import { companionsFor } from '../../companions'
 
 type PlantDetailsType = {
     id: number,
@@ -117,6 +118,17 @@ const Detail = () => {
                                 )
                             })}
                         </div>
+                        {(() => {
+                            const companions = companionsFor(plantDetails.name)
+                            if (!companions || (companions.likes.length === 0 && companions.avoid.length === 0)) return null
+                            return (
+                                <div className='companions-section'>
+                                    <h2 className="header">Companion Planting</h2>
+                                    {companions.likes.length > 0 && <p className='companions-likes'><strong>Grows well next to:</strong> {companions.likes.join(', ')}.</p>}
+                                    {companions.avoid.length > 0 && <p className='companions-avoid'><strong>Keep away from:</strong> {companions.avoid.join(', ')}.</p>}
+                                </div>
+                            )
+                        })()}
                         <div className='more-info-section'>
                             <h2 className="header">More Information</h2>
                             <InfoItem data={plantDetails["attracts"]} name="Attracts Wildlife" />

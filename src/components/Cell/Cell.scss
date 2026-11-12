@@ -110,3 +110,12 @@
 .hidden {
   visibility: hidden;
 }
+
+// Companion planting: neighbours of the cell in focus
+.cell.companion-good:not(.disabled) {
+  box-shadow: 0 0 0 4px #9EC924, 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+}
+
+.cell.companion-bad:not(.disabled) {
+  box-shadow: 0 0 0 4px #af2268, 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+}

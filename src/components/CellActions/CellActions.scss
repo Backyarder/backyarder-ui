@@ -70,3 +70,14 @@
     visibility: visible;
     opacity: 1;
 }
+
+.companion-hint {
+    margin: 0 8px 6px;
+    font-size: x-small;
+    font-family: 'Arial';
+    text-align: center;
+    color: #786961;
+
+    .likes { color: #6f9a12; }
+    .avoid { color: #af2268; }
+}
