@@ -33,6 +33,14 @@
     flex-shrink: 0;
   }
 
+  &.quiet {
+    background-color: #f1f6e4;
+    border-color: #9EC924;
+    padding: 6px 14px;
+  }
+
+  .alert-quiet { font-size: medium; }
+  .alert-quiet .material-symbols-rounded { color: #9EC924; }
   .alert-water .material-symbols-rounded { color: #2b8fd6; }
   .alert-frost .material-symbols-rounded { color: #5aa9e6; }
   .alert-hint { color: gray; font-size: medium; }

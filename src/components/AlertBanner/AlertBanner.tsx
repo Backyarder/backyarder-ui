@@ -16,6 +16,17 @@ const weekday = (iso: string): string => {
 
 const dismissKey = (date: string | undefined) => `backyarder:alerts-dismissed:${date ?? 'none'}`
 
+const shortDate = (iso: string): string =>
+  new Date(iso).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })
+
+// The soonest upcoming watering among planted plants, or null.
+const nextWatering = (garden: GardenKeys | undefined) => {
+  const upcoming = (garden ?? [])
+    .filter(cell => cell.status === 'locked' && cell.name && cell.next_water_at)
+    .sort((a, b) => (a.next_water_at! < b.next_water_at! ? -1 : 1))
+  return upcoming[0] ?? null
+}
+
 // What needs attention today, shown above the garden. Dismissable until the
 // next day (per browser).
 const AlertBanner = ({ garden, alerts }: Props) => {
@@ -27,8 +38,12 @@ const AlertBanner = ({ garden, alerts }: Props) => {
   const frost = alerts?.frost ?? null
   const rain = alerts?.rain_covers_watering && due.length > 0
   const needsZip = alerts !== undefined && !alerts.weather_available && !alerts.zip_code
+  const quiet = due.length === 0 && !frost && !needsZip
+  const next = nextWatering(garden)
+  const planted = (garden ?? []).some(cell => cell.status === 'locked' && cell.name)
 
-  if (dismissed || (due.length === 0 && !frost && !needsZip)) return null
+  // Nothing loaded yet, or no plants and no weather: nothing to say.
+  if (dismissed || (quiet && !planted && !alerts?.weather_available)) return null
 
   const dismiss = () => {
     setDismissed(true)
@@ -38,8 +53,20 @@ const AlertBanner = ({ garden, alerts }: Props) => {
   const dueNames = due.map(cell => `${cell.name} (${cell.location_id})`).join(', ')
 
   return (
-    <aside id='alert-banner' role='status'>
+    <aside id='alert-banner' className={quiet ? 'quiet' : ''} role='status'>
       <ul>
+        {quiet && (
+          <li className='alert-quiet'>
+            <span className='material-symbols-rounded'>check_circle</span>
+            <span>
+              <strong>All clear.</strong>
+              {planted
+                ? (next ? ` Next watering: ${next.name} (${next.location_id}) on ${shortDate(next.next_water_at!)}.` : ' Nothing is on a watering schedule.')
+                : ' Plant something and watering reminders will show up here.'}
+              {alerts?.weather_available && ` Rain in the last two days: ${alerts.recent_rain_in} in. No frost in the next three days.`}
+            </span>
+          </li>
+        )}
         {due.length > 0 && (
           <li className='alert-water'>
             <span className='material-symbols-rounded'>water_drop</span>
