@@ -3,8 +3,25 @@ describe('Alerts banner', () => {
     cy.intercept('GET', '**/api/v1/plants', { fixture: 'onload-plants.json' })
   })
 
-  it('stays hidden when nothing needs attention', () => {
-    cy.intercept('GET', '**/api/v1/garden', { fixture: 'onload-grid.json' })
+  it('shows an all-clear line with the next watering and the weather when nothing is due', () => {
+    cy.fixture('onload-grid.json').then(grid => {
+      const planted = grid.data.find((c: any) => c.attributes.status === 'locked' && c.attributes.name)
+      planted.attributes.next_water_at = '2026-11-17T19:00:00Z'
+      cy.intercept('GET', '**/api/v1/garden', grid)
+      cy.visit('http://localhost:3000/')
+      cy.get('#alert-banner').should('have.class', 'quiet')
+      cy.get('#alert-banner .alert-quiet').should('contain', 'All clear')
+        .and('contain', 'Next watering:').and('contain', `${planted.attributes.name} (${planted.attributes.location_id})`)
+        .and('contain', 'Nov 17')
+        .and('contain', 'Rain in the last two days:').and('contain', '0 in')
+        .and('contain', 'No frost in the next three days')
+      cy.get('#alert-banner .alert-water').should('not.exist')
+    })
+  })
+
+  it('stays hidden before anything has loaded', () => {
+    cy.intercept('GET', '**/api/v1/garden', { data: [] })
+    cy.intercept('GET', '**/api/v1/alerts', { statusCode: 500, body: {} })
     cy.visit('http://localhost:3000/')
     cy.get('#grid').should('exist')
     cy.get('#alert-banner').should('not.exist')
