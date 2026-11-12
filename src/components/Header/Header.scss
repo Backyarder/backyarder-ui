@@ -78,3 +78,25 @@ header {
     color: #786961 !important;
     cursor: default !important;
 }
+
+.logging-out {
+    cursor: wait !important;
+    opacity: 0.7;
+
+    &::after {
+        content: '';
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin-left: 6px;
+        vertical-align: middle;
+        border: 2px solid #af2268;
+        border-right-color: transparent;
+        border-radius: 50%;
+        animation: logout-spin 0.8s linear infinite;
+    }
+}
+
+@keyframes logout-spin {
+    to { transform: rotate(360deg); }
+}

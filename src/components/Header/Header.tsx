@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useAuth } from '../../auth/AuthContext'
 import './Header.scss'
 
@@ -7,6 +8,7 @@ const Header = () => {
     const { user, logout } = useAuth()
     const navigate = useNavigate()
     const [open, setOpen] = useState<boolean>(false)
+    const [loggingOut, setLoggingOut] = useState<boolean>(false)
 
     const toggleFocus = (): void => setOpen(current => !current)
 
@@ -21,7 +23,16 @@ const Header = () => {
     }, [open])
 
     const handleLogout = () => {
-        logout().then(() => navigate('/login'))
+        if (loggingOut) return
+        setLoggingOut(true)
+        toast.promise(logout(), {
+            pending: 'Logging out...',
+            success: 'Logged out. See you next time!',
+            error: 'Logged out here, but the server could not be reached. It may still remember this session.'
+        }, { position: 'bottom-center' })
+            .catch(() => null)
+            .finally(() => setLoggingOut(false))
+        navigate('/login')
     }
 
     return (
@@ -37,7 +48,9 @@ const Header = () => {
                         <Link to='/settings'>
                             <p>SETTINGS</p>
                         </Link>
-                        <p id='logout' onClick={handleLogout}>LOGOUT</p>
+                        <p id='logout' className={loggingOut ? 'logging-out' : ''} aria-busy={loggingOut} onClick={handleLogout}>
+                            {loggingOut ? 'LOGGING OUT' : 'LOGOUT'}
+                        </p>
                     </div>
                 </>}
             </div>
