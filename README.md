@@ -63,6 +63,7 @@ The user can reset their garden and start fresh.<br>
 - Copy the SSH key in order to clone your forked repository down into your local device.
 - `cd` into the cloned directory.
 - Run `npm install` to install project dependencies.
+- The app talks to the backend at `REACT_APP_API_URL`: `.env.development` points at a local backend on port 9292 and `.env.production` at the Render deployment. To develop against production data, run `REACT_APP_API_URL=https://backyarder-be-ch5a.onrender.com/api/v1 npm start`.
 - Run `npm start` in the terminal to see the HTML page
   - `Control + C` is the command to stop running the local server.
 
@@ -89,4 +90,4 @@ The user can reset their garden and start fresh.<br>
 ## FUTURE EXTENSIONS
 - The user should be able to input their location and be shown what hardiness zone they are in.
 - The user should be able to customize the dimensions of their garden grid.
-- The user should be able to log in and have multiple plots to manage
+- The user should be able to log in and have multiple plots to manage (in progress: backend PR Backyarder/backyarder-be#78)

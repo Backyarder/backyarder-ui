@@ -1,12 +1,12 @@
 describe('Handle 500 level errors', () => {
   it('Getting plants for sidebar', () => {
-    cy.intercept('GET', `https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants`, (req) => {
+    cy.intercept('GET', `**/api/v1/plants`, (req) => {
       req.reply({
         status: 500
       })
     })
 
-    cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
+    cy.intercept('GET', '**/api/v1/garden', {
       statusCode: 200,
       fixture: 'onload-grid.json'
     })
@@ -16,18 +16,18 @@ describe('Handle 500 level errors', () => {
   })
 
   it('Getting plants details', () => {
-    cy.intercept('GET', `https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants/2692`, (req) => {
+    cy.intercept('GET', `**/api/v1/plants/2692`, (req) => {
       req.reply({
         status: 500
       })
     })
 
-    cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants', {
+    cy.intercept('GET', '**/api/v1/plants', {
       statusCode: 200,
       fixture: 'onload-plants.json'
     })
 
-    cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
+    cy.intercept('GET', '**/api/v1/garden', {
       statusCode: 200,
       fixture: 'onload-grid.json'
     })
@@ -41,13 +41,13 @@ describe('Handle 500 level errors', () => {
   })
 
   it('Getting grid', () => {
-    cy.intercept('GET', `https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden`, (req) => {
+    cy.intercept('GET', `**/api/v1/garden`, (req) => {
       req.reply({
         status: 500
       })
     })
 
-    cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants', {
+    cy.intercept('GET', '**/api/v1/plants', {
       statusCode: 200,
       fixture: 'onload-plants.json'
     })
@@ -59,18 +59,18 @@ describe('Handle 500 level errors', () => {
   })
 
   it('Searching plant', () => {
-    cy.intercept('GET', `https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/search/apple`, (req) => {
+    cy.intercept('GET', `**/api/v1/search/apple`, (req) => {
       req.reply({
         status: 500
       })
     })
 
-    cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/plants', {
+    cy.intercept('GET', '**/api/v1/plants', {
       statusCode: 200,
       fixture: 'onload-plants.json'
     })
 
-    cy.intercept('GET', 'https://backyarder-be-47454958a7d2.herokuapp.com/api/v1/garden', {
+    cy.intercept('GET', '**/api/v1/garden', {
       statusCode: 200,
       fixture: 'onload-grid.json'
     })
