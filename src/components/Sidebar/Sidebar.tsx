@@ -82,7 +82,7 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
         cards = plantList.map((plant: PlantData) => {
             const plantImage = plant.attributes.image
                 ? plant.attributes.image
-                : `${process.env.PUBLIC_URL}/images/plant-fallback.png`
+                : `/images/plant-fallback.png`
             plant.attributes.image = plantImage
             return <Card plant={plant.attributes} showUnavailable={showUnavailable} key={plant.attributes.plant_id} />
         })
@@ -128,7 +128,7 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
         return (
             <div className="loading">
                 <p>Gathering plants from our nursery...</p>
-                <img className="loading-img" src={`${process.env.PUBLIC_URL}/images/plant.png`} alt='small plant' />
+                <img className="loading-img" src={`/images/plant.png`} alt='small plant' />
                 <p>This may take a few moments.</p>
             </div>
         )

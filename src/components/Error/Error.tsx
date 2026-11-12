@@ -5,7 +5,7 @@ const Error = () => {
   return (
     <div className='error'>
       <p>Ooops! There are no plants here!</p>
-      <img className="error-img" src={`${process.env.PUBLIC_URL}/images/plant.png`} alt='small plant' />
+      <img className="error-img" src={`/images/plant.png`} alt='small plant' />
       <NavLink className='home-button' to='/'>Go back to your garden</NavLink>
     </div>
   );

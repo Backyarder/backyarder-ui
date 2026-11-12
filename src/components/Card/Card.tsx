@@ -41,7 +41,7 @@ const Card = ({ plant, showUnavailable }: CombinedCardProps) => {
 
   const plantImage = plant.image
     ? plant.image
-    : `${process.env.PUBLIC_URL}/images/plant-fallback.png`
+    : `/images/plant-fallback.png`
 
   const type: string = plant.type
 
@@ -58,7 +58,7 @@ const Card = ({ plant, showUnavailable }: CombinedCardProps) => {
   return (
     <>
       {!isDragging && (
-        <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/${plant.content_type === 'Plant' ? 'plant' : 'umbrella'}.png`} />
+        <DragPreviewImage connect={preview} src={`/images/${plant.content_type === 'Plant' ? 'plant' : 'umbrella'}.png`} />
       )}
       <NavLink to={`/plants/${plant.plant_id}`} className='card' style={draggedCardStyle} ref={dragRef}>
         <img className='card-image' src={plantImageSrc(plantImage)} onError={onImageError} alt={`${plant.name}`} />

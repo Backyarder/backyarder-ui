@@ -69,7 +69,7 @@ const List = ({ garden, wishlist, toggleWishlist }: ListProps) => {
     return (
       <div key={plant['plant_id']} className='placed-element' >
         <div className='plant-info-container' >
-          <img className='wishlist-checkbox' src={`${process.env.PUBLIC_URL}/images/checked_${plant.plant_id !== undefined && wishlist.includes(plant.plant_id)}.png`} onClick={() => toggleWishlist(plant.plant_id)} alt={`wishlist checkbox ${plant.plant_id}`} />
+          <img className='wishlist-checkbox' src={`/images/checked_${plant.plant_id !== undefined && wishlist.includes(plant.plant_id)}.png`} onClick={() => toggleWishlist(plant.plant_id)} alt={`wishlist checkbox ${plant.plant_id}`} />
           <img src={plantImageSrc(plant.image)} onError={onImageError} className='placed-image' alt={plant.name} />
           <p className='plant-list-name' >{plant.name?.toUpperCase()}</p>
         </div>

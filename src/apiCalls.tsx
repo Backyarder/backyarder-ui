@@ -1,8 +1,8 @@
 // Base URL for the Backyarder API. In development and production this is the
-// same-origin path /api/v1: the CRA dev server proxies it to localhost:9292
-// (package.json "proxy") and Vercel rewrites it to Render (vercel.json), so
-// the session cookie is always first-party. Falls back to a local backend.
-const BASE_URL = process.env.REACT_APP_API_URL ?? 'http://localhost:9292/api/v1'
+// same-origin path /api/v1: the Vite dev server proxies it to localhost:9292
+// (vite.config.ts) and Vercel rewrites it to Render (vercel.json), so the
+// session cookie is always first-party. Falls back to a local backend.
+const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:9292/api/v1'
 
 export class ApiError extends Error {
   status: number
