@@ -1,5 +1,10 @@
 {
+  "framework": "vite",
+  "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/api/v1/:path*", "destination": "https://backyarder-be-ch5a.onrender.com/api/v1/:path*" }
+    {
+      "source": "/api/v1/:path*",
+      "destination": "https://backyarder-be-ch5a.onrender.com/api/v1/:path*"
+    }
   ]
 }

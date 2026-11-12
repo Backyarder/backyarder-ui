@@ -10,7 +10,7 @@ echo "== build"
 CI=true npm run build
 
 echo "== cypress"
-BROWSER=none PORT=3000 npm start > /tmp/backyarder-ui-devserver.log 2>&1 &
+npm start > /tmp/backyarder-ui-devserver.log 2>&1 &
 DEV_PID=$!
 trap 'kill $DEV_PID 2>/dev/null || true' EXIT
 for _ in $(seq 1 60); do curl -s -o /dev/null http://localhost:3000 && break; sleep 2; done

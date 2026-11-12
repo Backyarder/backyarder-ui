@@ -172,7 +172,7 @@ const Cell = ({ id, cell, isOpen, onOpen, onClose, updateCell, resync, showUnava
   return (
     <>
       {isPopulated && !isDragging && (
-        <DragPreviewImage connect={preview} src={`${process.env.PUBLIC_URL}/images/${isPlant ? 'plant' : 'umbrella'}.png`} />
+        <DragPreviewImage connect={preview} src={`/images/${isPlant ? 'plant' : 'umbrella'}.png`} />
       )}
       <div
         id={id}

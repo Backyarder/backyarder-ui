@@ -39,7 +39,7 @@ const Header = () => {
         <header>
             <div className='relative-container'>
                 <Link to='/' id='home'>
-                    <img className="header-logo" src={`${process.env.PUBLIC_URL}/images/logo.png`} alt='backyarder logo'/>
+                    <img className="header-logo" src={`/images/logo.png`} alt='backyarder logo'/>
                 </Link>
                 {user && <>
                     <span id='userIcon' className="material-symbols-rounded" title={user.email} onClick={toggleFocus}>account_circle</span>
