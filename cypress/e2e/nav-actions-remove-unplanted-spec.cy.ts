@@ -26,7 +26,7 @@ describe('Nav Actions: Remove Unplanted Items', () => {
       .get('.pop-up-button').first().click()
       .wait('@remove-unplanted').then(() => {
         cy.get('.modal-button').click()
-        .get('#grid').children().first().should('have.css', 'background-image', 'url("https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/thumbnail/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg")')
+        .get('#grid').children().first().should('have.css', 'background-image', 'url("http://localhost:3000/images/plants/274.jpg")')
         .get('#grid').children().last().should('have.css', 'background-color', 'rgb(120, 105, 97)');
       });
     });

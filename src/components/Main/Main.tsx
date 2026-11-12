@@ -3,7 +3,8 @@ import Grid, { CellKeys } from '../Grid/Grid';
 import Nav from '../Nav/Nav';
 import List from '../List/List';
 import { useEffect, useState } from 'react';
-import { getGarden, getWishlist, addToWishlist, removeFromWishlist } from '../../apiCalls';
+import { getGarden, getWishlist, addToWishlist, removeFromWishlist, getAlerts, Alerts } from '../../apiCalls';
+import AlertBanner from '../AlertBanner/AlertBanner';
 import './Main.scss';
 
 export type GardenKeys = CellKeys[];
@@ -41,6 +42,7 @@ const Main = () => {
   const [apiError, setApiError] = useState<string>('');
   const [lastUpdate, setLastUpdate] = useState<lastUpdateType>({});
   const [wishlist, setWishlist] = useState<WishlistType[]>([]);
+  const [alerts, setAlerts] = useState<Alerts | undefined>();
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -71,6 +73,10 @@ const Main = () => {
     getWishlist()
       .then(setWishlist)
       .catch(() => setWishlist([]))
+    // Weather for the banner; the banner itself is optional, so failures are silent.
+    getAlerts()
+      .then(setAlerts)
+      .catch(() => undefined)
   }, []);
 
   // Optimistic toggle; the server copy is restored if the call fails.
@@ -126,6 +132,8 @@ const Main = () => {
           <p>There was an error on our end, please try again later</p>
         </div>
       ) : (
+        <>
+        {isDesktop && isGardenView && <AlertBanner garden={garden} alerts={alerts} />}
         <main>
           {isDesktop ?
             <>
@@ -142,6 +150,7 @@ const Main = () => {
               </div>
           }
         </main>
+        </>
       )}
     </>
   );

@@ -22,4 +22,5 @@ import './commands'
 beforeEach(() => {
   cy.intercept('GET', '**/api/v1/auth/me', { fixture: 'me.json' }).as('me')
   cy.intercept('GET', '**/api/v1/wishlist', { data: [] }).as('wishlist')
+  cy.intercept('GET', '**/api/v1/alerts', { fixture: 'alerts-quiet.json' }).as('alerts')
 })

@@ -4,6 +4,7 @@ import { GardenKeys, lastUpdateType } from '../Main/Main';
 import { CellKeys, GridProps } from '../Grid/Grid';
 import CellActions from '../CellActions/CellActions';
 import { patchCellContents, patchDisabledOrRemoved, waterCell, StatusType, WateringType } from '../../apiCalls';
+import { FALLBACK_IMAGE } from '../../imageFallback';
 import './Cell.scss'
 
 interface GridCell extends GridProps {
@@ -38,6 +39,19 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
   const [shouldRender, setShouldRender] = useState<boolean>(false);
   const [enableHoverEffect, setEnableHoverEffect] = useState(true);
   const wateringTimer = useRef<ReturnType<typeof setTimeout> | undefined>();
+  const [imageBroken, setImageBroken] = useState<boolean>(false);
+
+  // background-image has no onerror, so probe the URL and fall back to the
+  // line drawing when it is dead (expired CDN link, missing snapshot).
+  const imageUrl = cellContents?.plant.image;
+  useEffect(() => {
+    setImageBroken(false);
+    if (!imageUrl) return;
+    const probe = new Image();
+    probe.onerror = () => setImageBroken(true);
+    probe.src = imageUrl;
+    return () => { probe.onerror = null; };
+  }, [imageUrl]);
 
   // Flip the alert on at next_water_at (from the server); nothing is
   // scheduled when the cell is not on a watering schedule.
@@ -343,7 +357,7 @@ const Cell = ({ id, garden, setGarden, handleDragStart, handleDrop, dragStart, d
                         : isPlanted ? 'solid #786961 3px' : 'solid #f4f4f4 3px'
 
   const divStyle = !isDisabled && {
-    backgroundImage: `url(${cellContents?.plant.image})`,
+    backgroundImage: cellContents ? `url(${imageBroken || !imageUrl ? FALLBACK_IMAGE : imageUrl})` : undefined,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     border: `${borderStyle}`

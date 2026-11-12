@@ -381,7 +381,7 @@
       "id": "131",
       "type": "cell",
       "attributes": {
-        "image": "https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/thumbnail/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg",
+        "image": "/images/plants/274.jpg",
         "name": "coneflower",
         "content_type": "Plant",
         "location_id": "D1",
@@ -420,7 +420,7 @@
       "id": "101",
       "type": "cell",
       "attributes": {
-        "image": "https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/thumbnail/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg",
+        "image": "/images/plants/274.jpg",
         "name": "coneflower",
         "content_type": "Plant",
         "location_id": "A1",
@@ -615,7 +615,7 @@
       "id": "111",
       "type": "cell",
       "attributes": {
-        "image": "https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/thumbnail/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg",
+        "image": "/images/plants/274.jpg",
         "name": "coneflower",
         "content_type": "Plant",
         "location_id": "B1",
@@ -628,7 +628,7 @@
       "id": "132",
       "type": "cell",
       "attributes": {
-        "image": "https://perenual.com/storage/species_image/2699_echinops_ritro/regular/52315581367_1406967d9d_b.jpg",
+        "image": "/images/plants/274.jpg",
         "name": "small globe thistle",
         "content_type": "Plant",
         "location_id": "D2",
@@ -1239,7 +1239,7 @@
       "id": "121",
       "type": "cell",
       "attributes": {
-        "image": "https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/thumbnail/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg",
+        "image": "/images/plants/274.jpg",
         "name": "coneflower",
         "content_type": "Plant",
         "location_id": "C1",
@@ -1265,7 +1265,7 @@
       "id": "102",
       "type": "cell",
       "attributes": {
-        "image": "https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/thumbnail/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg",
+        "image": "/images/plants/274.jpg",
         "name": "coneflower",
         "content_type": "Plant",
         "location_id": "A2",
@@ -1278,7 +1278,7 @@
       "id": "112",
       "type": "cell",
       "attributes": {
-        "image": "https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/thumbnail/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg",
+        "image": "/images/plants/274.jpg",
         "name": "coneflower",
         "content_type": "Plant",
         "location_id": "B2",
@@ -1291,7 +1291,7 @@
       "id": "122",
       "type": "cell",
       "attributes": {
-        "image": "https://perenual.com/storage/species_image/2692_echinacea_tomato_soup/thumbnail/red-orange-echinacea-echinacea-cone-flower-medicinal.jpg",
+        "image": "/images/plants/274.jpg",
         "name": "coneflower",
         "content_type": "Plant",
         "location_id": "C2",

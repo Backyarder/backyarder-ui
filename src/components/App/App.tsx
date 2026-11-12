@@ -6,6 +6,7 @@ import Main from '../Main/Main'
 import Detail from '../Detail/Detail'
 import Settings from '../Settings/Settings'
 import Login from '../Login/Login'
+import ResetPassword from '../ResetPassword/ResetPassword'
 import Error from '../Error/Error'
 import { Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '../../auth/AuthContext'
@@ -18,6 +19,7 @@ const App = () => {
         <Header />
         <Routes>
           <Route path='/login' element={<Login />} />
+          <Route path='/reset' element={<ResetPassword />} />
           <Route path='/' element={<RequireAuth><Main /></RequireAuth>} />
           <Route path='/plants/:id' element={<RequireAuth><Detail /></RequireAuth>} />
           <Route path='/settings' element={<RequireAuth><Settings /></RequireAuth>} />
