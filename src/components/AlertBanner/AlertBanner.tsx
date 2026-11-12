@@ -58,12 +58,15 @@ const AlertBanner = ({ garden, alerts }: Props) => {
         {quiet && (
           <li className='alert-quiet'>
             <span className='material-symbols-rounded'>check_circle</span>
-            <span>
-              <strong>All clear.</strong>
-              {planted
-                ? (next ? ` Next watering: ${next.name} (${next.location_id}) on ${shortDate(next.next_water_at!)}.` : ' Nothing is on a watering schedule.')
-                : ' Plant something and watering reminders will show up here.'}
-              {alerts?.weather_available && ` Rain in the last two days: ${alerts.recent_rain_in} in. No frost in the next three days.`}
+            <span className='segments'>
+              <span className='seg'><strong>All clear</strong></span>
+              <span className='seg'>
+                {planted
+                  ? (next ? <>Next watering: <strong>{next.name} ({next.location_id})</strong> on {shortDate(next.next_water_at!)}</> : 'Nothing is on a watering schedule')
+                  : 'Plant something and watering reminders will show up here'}
+              </span>
+              {alerts?.weather_available && <span className='seg'>Rain in the last two days: <strong>{alerts.recent_rain_in} in</strong></span>}
+              {alerts?.weather_available && <span className='seg'>No frost in the next three days</span>}
             </span>
           </li>
         )}

@@ -1,17 +1,26 @@
+// A centred pill above the garden; grows into a rounded card when there are
+// several warnings. Width follows the content, capped at the garden's width.
 #alert-banner {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  width: calc(100% - 2em);
-  max-width: 1400px;
-  margin: 1em 1em 0;
-  padding: 10px 14px;
-  background-color: #fff8e6;
-  border: solid 2px #F8D568;
-  border-radius: 10px;
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.15);
-  color: #786961;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(1100px, calc(100% - 2em));
+  margin: 12px auto 0;
+  padding: 8px 8px 8px 16px;
+  background-color: #fff;
+  border: 1px solid #f0c94f;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  color: #5c4f49;
+  font-size: 15px;
+  line-height: 1.4;
+
+  &.quiet {
+    border-color: #cfe39a;
+    border-radius: 999px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
 
   ul {
     margin: 0;
@@ -20,38 +29,64 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    min-width: 0;
   }
 
   li {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: large;
+    gap: 10px;
+  }
+
+  strong {
+    color: #3f3430;
   }
 
   .material-symbols-rounded {
     flex-shrink: 0;
+    font-size: 22px;
   }
 
-  &.quiet {
-    background-color: #f1f6e4;
-    border-color: #9EC924;
-    padding: 6px 14px;
-  }
-
-  .alert-quiet { font-size: medium; }
-  .alert-quiet .material-symbols-rounded { color: #9EC924; }
+  .alert-quiet .material-symbols-rounded { color: #8ab51c; }
   .alert-water .material-symbols-rounded { color: #2b8fd6; }
   .alert-frost .material-symbols-rounded { color: #5aa9e6; }
-  .alert-hint { color: gray; font-size: medium; }
+  .alert-hint { color: #8a7f79; }
   .alert-hint a { color: #af2268; }
+
+  .alert-quiet strong:first-child { color: #6f9a12; }
+
+  // "All clear · Next watering … · Rain …" with soft dot separators
+  .segments {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+
+  .seg + .seg::before {
+    content: '·';
+    margin: 0 10px;
+    color: #beab95;
+  }
 }
 
 .alert-dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
   border: none;
+  border-radius: 50%;
   background: none;
-  color: #786961;
+  color: #a39891;
   cursor: pointer;
   padding: 0;
-  line-height: 1;
+
+  .material-symbols-rounded { font-size: 18px; }
+
+  &:hover {
+    background-color: #f1ece6;
+    color: #5c4f49;
+  }
 }
