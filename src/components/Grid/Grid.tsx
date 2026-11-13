@@ -69,7 +69,7 @@ const Grid = ({ garden, updateCell, resync, openCellId, setOpenCellId, showUnava
   }, [dragHover, openCellId, byLocation]);
 
   return (
-    <section id='grid' className={openCellId ? 'disable-hover' : ''}>
+    <section id='grid'>
       {cellIDs.map(({ id }) => (
         <Cell
           key={id}
@@ -77,7 +77,6 @@ const Grid = ({ garden, updateCell, resync, openCellId, setOpenCellId, showUnava
           cell={byLocation.get(id) ?? emptyCell(id)}
           isOpen={openCellId === id}
           onOpen={() => setOpenCellId(id)}
-          onClose={() => setOpenCellId(null)}
           updateCell={updateCell}
           resync={resync}
           showUnavailable={showUnavailable}

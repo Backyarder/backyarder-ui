@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDrop, useDrag, DragPreviewImage } from 'react-dnd';
 import { CellKeys, CellChanges, DragHover } from '../Grid/Grid';
-import { Relation, companionsFor } from '../../companions';
-import CellActions from '../CellActions/CellActions';
+import { Relation } from '../../companions';
 import { patchCellContents, patchDisabledOrRemoved, waterCell, PlacedPlant } from '../../apiCalls';
 import { FALLBACK_IMAGE } from '../../imageFallback';
 import './Cell.scss'
@@ -12,15 +11,32 @@ import './Cell.scss'
 interface CellProps {
   id: string;
   cell: CellKeys;
-  isOpen: boolean;                 // the actions popup is showing for this cell
+  isOpen: boolean;                 // this cell is selected (its panel shows beside the grid)
   onOpen: () => void;
-  onClose: () => void;
   updateCell: (locationId: string, changes: CellChanges) => void;
   resync: () => void;              // reload the garden after a failed request
   showUnavailable: () => void;     // "Sorry! Cell is unavailable for planting."
   companion: Relation | null;      // tint as a good/bad neighbour of the cell in focus
   onDragHover: (hover: DragHover) => void;
 }
+
+export type CellActionHandlers = {
+  place: (plant: PlacedPlant) => void;
+  plant: () => void;
+  water: () => void;
+  remove: () => void;
+  toggleDisabled: () => void;
+};
+
+// Derived facts about a cell record, shared by the grid cell and the side panel.
+export const cellFacts = (cell: CellKeys) => {
+  const isDisabled = cell.status === 'disabled';
+  const isPlanted = cell.status === 'locked';
+  const isPopulated = !!cell.name && (cell.status === 'placed' || cell.status === 'locked');
+  const isPlant = cell.content_type === 'Plant';
+  const onWateringSchedule = isPlanted && isPlant && !!cell.watering && cell.watering !== 'None';
+  return { isDisabled, isPlanted, isPopulated, isPlant, onWateringSchedule };
+};
 
 export type DragItem = { plant: PlacedPlant; fromCell?: string };
 
@@ -39,15 +55,53 @@ const careFrom = (data: any): CellChanges => {
   return { planted_at: attrs.planted_at, last_watered_at: attrs.last_watered_at, next_water_at: attrs.next_water_at, needs_water: attrs.needs_water };
 }
 
-const Cell = ({ id, cell, isOpen, onOpen, onClose, updateCell, resync, showUnavailable, companion, onDragHover }: CellProps) => {
-  const isDisabled = cell.status === 'disabled';
-  const isPlanted = cell.status === 'locked';
-  const isPopulated = !!cell.name && (cell.status === 'placed' || cell.status === 'locked');
-  const isPlant = cell.content_type === 'Plant';
-  const onWateringSchedule = isPlanted && isPlant && !!cell.watering && cell.watering !== 'None';
+// Every change a cell can make: update the grid first, then tell the server.
+// Used by the grid cell (drop, click) and by the side panel (buttons).
+export const useCellActions = (id: string, cell: CellKeys, updateCell: (locationId: string, changes: CellChanges) => void, resync: () => void, afterWater?: () => void): CellActionHandlers => {
+  const { isDisabled, onWateringSchedule } = cellFacts(cell);
+  const apply = (changes: CellChanges) => updateCell(id, changes);
+
+  const place = (plant: PlacedPlant) => {
+    const placed: CellChanges = {
+      image: plant.image ?? undefined, name: plant.name ?? undefined, content_type: plant.content_type ?? undefined,
+      plant_id: plant.plant_id ?? undefined, watering: plant.watering ?? undefined,
+      status: 'placed', planted_at: null, last_watered_at: null, next_water_at: null, needs_water: false
+    };
+    apply(placed);
+    patchCellContents(placed, id, 'placed', placed.watering).then(data => apply(careFrom(data))).catch(resync);
+  };
+
+  const plant = () => {
+    apply({ status: 'locked', needs_water: false });
+    patchCellContents(cell, id, 'locked', cell.watering).then(data => apply(careFrom(data))).catch(resync);
+  };
+
+  const water = () => {
+    if (!onWateringSchedule) return;
+    afterWater?.();
+    apply({ needs_water: false });
+    waterCell(id).then(data => apply(careFrom(data))).catch(resync);
+  };
+
+  const remove = () => {
+    apply(EMPTIED);
+    patchDisabledOrRemoved(id, 'empty').catch(resync);
+  };
+
+  const toggleDisabled = () => {
+    const next = isDisabled ? 'empty' : 'disabled';
+    apply({ ...EMPTIED, status: next });
+    patchDisabledOrRemoved(id, next).catch(resync);
+  };
+
+  return { place, plant, water, remove, toggleDisabled };
+};
+
+const Cell = ({ id, cell, isOpen, onOpen, updateCell, resync, showUnavailable, companion, onDragHover }: CellProps) => {
+  const { isDisabled, isPlanted, isPopulated, isPlant } = cellFacts(cell);
+  const [dueByTimer, setDueByTimer] = useState<boolean>(false);
 
   // Flip the alert on when next_water_at passes while the page is open.
-  const [dueByTimer, setDueByTimer] = useState<boolean>(false);
   useEffect(() => {
     setDueByTimer(false);
     if (!isPlanted || !cell.next_water_at) return;
@@ -73,42 +127,7 @@ const Cell = ({ id, cell, isOpen, onOpen, onClose, updateCell, resync, showUnava
     return () => { probe.onerror = null; };
   }, [cell.image]);
 
-  // --- actions: change the grid first, then tell the server -----------------
-
-  const apply = (changes: CellChanges) => updateCell(id, changes);
-
-  const place = (plant: PlacedPlant) => {
-    const placed: CellChanges = {
-      image: plant.image ?? undefined, name: plant.name ?? undefined, content_type: plant.content_type ?? undefined,
-      plant_id: plant.plant_id ?? undefined, watering: plant.watering ?? undefined,
-      status: 'placed', planted_at: null, last_watered_at: null, next_water_at: null, needs_water: false
-    };
-    apply(placed);
-    patchCellContents(placed, id, 'placed', placed.watering).then(data => apply(careFrom(data))).catch(resync);
-  }
-
-  const plant = () => {
-    apply({ status: 'locked', needs_water: false });
-    patchCellContents(cell, id, 'locked', cell.watering).then(data => apply(careFrom(data))).catch(resync);
-  }
-
-  const water = () => {
-    if (!onWateringSchedule) return;
-    setDueByTimer(false);
-    apply({ needs_water: false });
-    waterCell(id).then(data => apply(careFrom(data))).catch(resync);
-  }
-
-  const remove = () => {
-    apply(EMPTIED);
-    patchDisabledOrRemoved(id, 'empty').catch(resync);
-  }
-
-  const toggleDisabled = () => {
-    const next = isDisabled ? 'empty' : 'disabled';
-    apply({ ...EMPTIED, status: next });
-    patchDisabledOrRemoved(id, next).catch(resync);
-  }
+  const { place, remove, toggleDisabled } = useCellActions(id, cell, updateCell, resync, () => setDueByTimer(false));
 
   // --- drag and drop ----------------------------------------------------------
 
@@ -175,7 +194,7 @@ const Cell = ({ id, cell, isOpen, onOpen, onClose, updateCell, resync, showUnava
     'cell',
     isDisabled ? 'disabled' : '',
     needsWatering ? 'watering-alert' : '',
-    isOpen ? 'disable-scale' : '',
+    isOpen ? 'selected' : '',
     companion ? `companion-${companion}` : ''
   ].filter(Boolean).join(' ');
 
@@ -198,20 +217,6 @@ const Cell = ({ id, cell, isOpen, onOpen, onClose, updateCell, resync, showUnava
         }}
       >
         {isPopulated && <span className={`cell-tooltip-text ${isOpen ? 'hidden' : ''}`}>{`${cell.name}`}</span>}
-        {isPopulated && isOpen && <div className='cell-modal'>
-          <CellActions
-            image={cell.image}
-            name={cell.name}
-            contentType={cell.content_type}
-            plantId={cell.plant_id}
-            isPlanted={isPlanted}
-            companions={companionsFor(cell.name)}
-            onPlant={plant}
-            onWater={water}
-            onRemove={remove}
-            onClose={onClose}
-          />
-        </div>}
       </div>
     </>
   );

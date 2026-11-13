@@ -70,6 +70,9 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
         setLoadingPlants(false)
     }
 
+    // KITCHEN and DECOR are short local lists: filter them as you type.
+    const matchesFilter = (name: string | undefined) => !searchTerm.trim() || (name ?? '').toLowerCase().includes(searchTerm.trim().toLowerCase())
+
     let cards;
 
 
@@ -81,8 +84,10 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
     }
     else if (plantList.length && (activeTab === 'plants' || activeTab === 'kitchen')) {
         // Stock ornamentals and search results on PLANTS; the built-in
-        // vegetables, herbs and companion flowers on KITCHEN.
-        const shown = plantList.filter(plant => (plant.attributes.collection === 'kitchen') === (activeTab === 'kitchen'))
+        // vegetables, herbs and companion flowers on KITCHEN (filtered as you type).
+        const shown = plantList
+            .filter(plant => (plant.attributes.collection === 'kitchen') === (activeTab === 'kitchen'))
+            .filter(plant => activeTab === 'plants' || matchesFilter(plant.attributes.name))
         cards = shown.map((plant: PlantData) => {
             const plantImage = plant.attributes.image
                 ? plant.attributes.image
@@ -91,7 +96,7 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
             return <Card plant={plant.attributes} showUnavailable={showUnavailable} key={plant.attributes.plant_id} />
         })
     } else if (decorList.length && activeTab === 'decor') {
-        cards = decorList.map((item: DecorData) => {
+        cards = decorList.filter(item => matchesFilter(item.attributes.name)).map((item: DecorData) => {
             return <Card plant={item.attributes} showUnavailable={showUnavailable} key={nanoid()} />
         })
     } else {
@@ -161,19 +166,19 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
                     deck
                     </span>DECOR</button>
             </div>
-            {activeTab === 'plants' && <div className="search">
+            <div className="search">
                 <input
                     className="search-bar"
                     type="text"
-                    placeholder="Search... "
+                    placeholder={activeTab === 'plants' ? 'Search the nursery... ' : activeTab === 'kitchen' ? 'Filter kitchen plants... ' : 'Filter decor... '}
                     value={searchTerm}
                     onChange={handleSearchChange}
-                    onKeyDown={handleKeyPress}
+                    onKeyDown={activeTab === 'plants' ? handleKeyPress : undefined}
                 />
-                <button className="submit-search" onClick={searchForPlants}><span className="material-symbols-rounded">
+                {activeTab === 'plants' && <button className="submit-search" onClick={searchForPlants}><span className="material-symbols-rounded">
                     search
-                </span></button>
-            </div>}
+                </span></button>}
+            </div>
             <div className="search-results" >
                 {loadingPlants ? loading() : cards}
             </div>

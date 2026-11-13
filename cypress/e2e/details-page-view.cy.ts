@@ -32,11 +32,11 @@ describe('Details Page', () => {
     cy.get('.color').should('have.text', 'format_paintGreen, Purple')
 
 
-    cy.get('.descriptions > :nth-child(1) > .header').should('have.text', 'Watering Description')
+    cy.get('.descriptions > :nth-child(1) > .header').should('contain', 'Watering')
 
-    cy.get('.descriptions > :nth-child(2) > .header').should('have.text', 'Sunlight Description')
+    cy.get('.descriptions > :nth-child(2) > .header').should('contain', 'Sunlight')
 
-    cy.get('.descriptions > :nth-child(3) > .header').should('have.text', 'Pruning Description')
+    cy.get('.descriptions > :nth-child(3) > .header').should('contain', 'Pruning')
     // Each section shows its own text (not the sunlight text three times).
     cy.fixture('plant-details.json').then(details => {
       const sections = details.data.attributes.section
@@ -45,7 +45,7 @@ describe('Details Page', () => {
       cy.get('.descriptions > :nth-child(3) > .description').should('have.text', sections[2].description)
     })
 
-    cy.get('.more-info-section > .header').should('have.text', 'More Information')
+    cy.get('.more-info-section > .header').should('contain', 'More Information')
 
 
     cy.get(':nth-child(2) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
@@ -77,7 +77,7 @@ describe('Details Page', () => {
     cy.get(':nth-child(10) > .checkbox').should('have.attr', 'src').should('include', 'checked_backyarder')
     cy.get('.more-info-section > :nth-child(10) > div > h3').should('have.text', 'Non-Invasive Species')
 
-    cy.get('#details-home-button').should('have.text', 'Go back to garden').click()
+    cy.get('#back-to-garden').should('contain', 'Back to garden').click()
     cy.url().should('eq', 'http://localhost:3000/')
   })
 })

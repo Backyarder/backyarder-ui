@@ -3,6 +3,7 @@ import Grid, { CellKeys, CellChanges, ClearScope, Notice } from '../Grid/Grid';
 import Nav from '../Nav/Nav';
 import List from '../List/List';
 import AlertBanner from '../AlertBanner/AlertBanner';
+import SelectedCellPanel from '../CellActions/SelectedCellPanel';
 import { useCallback, useEffect, useState } from 'react';
 import { getGarden, getWishlist, addToWishlist, removeFromWishlist, getAlerts, Alerts, deleteContents, waterCell } from '../../apiCalls';
 import './Main.scss';
@@ -144,6 +145,9 @@ const Main = () => {
                 : <List garden={garden} wishlist={wishlist} toggleWishlist={toggleWishlist} />
               }
               <Nav
+                panel={isGardenView && openCellId && garden.find(c => c.location_id === openCellId)?.name
+                  ? <SelectedCellPanel cell={garden.find(c => c.location_id === openCellId)!} updateCell={updateCell} resync={loadGarden} onClose={() => setOpenCellId(null)} />
+                  : null}
                 reset={() => setConfirmClear(null)}
                 onWaterGarden={waterGarden}
                 handleFullClear={() => askToClear('all')}

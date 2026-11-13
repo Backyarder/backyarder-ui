@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import './Nav.scss';
 
 type NavProps = {
@@ -8,9 +8,10 @@ type NavProps = {
   handlePartialClear: () => void;
   isGardenView: boolean;
   setIsGardenView: (isGardenView: boolean) => void;
+  panel?: ReactNode;   // the selected cell's panel, shown above the buttons
 }
 
-const Nav = ({ reset, onWaterGarden, handleFullClear, handlePartialClear, isGardenView, setIsGardenView }: NavProps) => {
+const Nav = ({ reset, onWaterGarden, handleFullClear, handlePartialClear, isGardenView, setIsGardenView, panel }: NavProps) => {
   const [className, setClassName] = useState<string>('key');
 
 
@@ -33,6 +34,7 @@ const Nav = ({ reset, onWaterGarden, handleFullClear, handlePartialClear, isGard
 
   return (
     <nav>
+      {panel}
       <button
         className='nav-button'
         style={{

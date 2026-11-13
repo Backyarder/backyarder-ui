@@ -1,4 +1,5 @@
 header {
+    position: relative;
     display: flex;
     justify-content: center;
     background-color: #f4f4f4;
@@ -99,4 +100,25 @@ header {
 
 @keyframes logout-spin {
     to { transform: rotate(360deg); }
+}
+
+.back-link {
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 14px 8px 10px;
+    border-radius: 999px;
+    background-color: #fff;
+    border: 1px solid #d8cdbf;
+    color: #786961;
+    text-decoration: none;
+    font-size: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    .material-symbols-rounded { font-size: 20px; }
+    &:hover { background-color: #f1ece6; color: #3f3430; }
 }
