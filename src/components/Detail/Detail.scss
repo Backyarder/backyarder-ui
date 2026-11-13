@@ -1,80 +1,253 @@
-.detail-page{
-  color: #F4F4F4;
-  background: #BEAB96;
+// Plant details: a hero card, then care cards beside a side column.
+.detail-page {
+  width: min(1200px, calc(100% - 2em));
+  margin: 0.5em auto 2em;
+  color: #3f3430;
 }
 
-.header-container{
+.top-of-page {
   display: flex;
-  justify-content: space-between;
+  gap: 1.5em;
+  padding: 1.5em;
+  background: #fff;
+  border-radius: 1.2em;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-.top-of-page{
-  display: flex;
-  border: 1em solid #BEAB96;
-  justify-content: space-between;
-  height: 280px;
+.hero-image {
+  flex: 0 0 300px;
+  height: 260px;
+  border-radius: 1em;
+  overflow: hidden;
+  background: #f1f6e4;
+  box-shadow: inset 0 0 0 1px #e3eccb;
+
+  .plant-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &.is-icon .plant-img {
+    object-fit: contain;
+    padding: 1.2em;
+    box-sizing: border-box;
+  }
 }
 
-.plant-img{
-  width: 30%;
-  object-fit: cover;
-  border-radius: 0.8em;
-}
-
-.at-a-glance{
-  background: #F4F4F4;
-  color: #483C3C;
-  border-radius: 0.8em;
-  width: 67.2%;
-  padding: 0.4em;
+.at-a-glance {
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 1em;
 }
 
-.common{
-  color: #AF2268;
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1em;
 }
 
-.header{
-  background: #F4F4F4;
-  color: #AF2268;
+.names {
+  min-width: 0;
+}
+
+.common {
+  margin: 0;
+  font-size: 2.4em;
+  line-height: 1.05;
+  color: #af2268;
+  letter-spacing: 0.02em;
+}
+
+.scientific {
+  margin: 0.2em 0 0;
+  font-size: 1.15em;
+  font-weight: normal;
+  font-style: italic;
+  color: #786961;
+}
+
+.type-badge {
+  flex-shrink: 0;
+  padding: 0.35em 0.9em;
+  border-radius: 999px;
+  background: #f1f6e4;
+  border: 1px solid #cfe39a;
+  color: #6f9a12;
+  font-size: 0.95em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+// Six facts as soft chips
+.quick-glance-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6em 1.2em;
+
+  .detail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6em;
+    margin: 0;
+  }
+
+  p {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    margin: 0;
+    padding: 0.45em 0.9em 0.45em 0.7em;
+    border-radius: 999px;
+    background: #f7f4ef;
+    border: 1px solid #e6ddd1;
+    color: #3f3430;
+    font-size: 1em;
+  }
+
+  .detail-icon {
+    font-size: 20px;
+    color: #af2268;
+    margin: 0;
+  }
+
+  .sun .detail-icon { color: #e0a800; }
+  .water .detail-icon { color: #2b8fd6; }
+  .location .detail-icon { color: #6f9a12; }
+}
+
+.descriptions-and-more-info {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(280px, 2fr);
+  gap: 1.5em;
+  margin-top: 1.5em;
+  align-items: start;
+}
+
+.descriptions {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0 0 0.5em;
+  font-size: 1.3em;
+  color: #af2268;
+
+  .material-symbols-rounded { font-size: 24px; }
+}
+
+.description {
+  padding: 1.2em 1.4em;
+  background: #fff;
   border-radius: 1em;
-  padding: 0.35em;
+  border-left: 6px solid #beab95;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  p.description {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    background: none;
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
+    font-size: 1.02em;
+    line-height: 1.6;
+    color: #4d433d;
+  }
+
+  &.care-watering { border-left-color: #2b8fd6; .header .material-symbols-rounded { color: #2b8fd6; } }
+  &.care-sunlight { border-left-color: #e0a800; .header .material-symbols-rounded { color: #e0a800; } }
+  &.care-pruning { border-left-color: #6f9a12; .header .material-symbols-rounded { color: #6f9a12; } }
 }
 
-.descriptions-and-more-info{
+.side-column {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  gap: 1em;
 }
 
-.descriptions{
-  width: 60%;
+.companions-section, .more-info-section {
+  padding: 1.2em 1.4em;
+  background: #fff;
+  border-radius: 1em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-.quick-glance-details{
-  display: flex;
-}
-
-.detail-icon{
-  margin: 0.2em
-}
-
-.type-and-color{
-  text-align: right;
-}
-
-.detail{
-  margin-right: 2em
-}
-
-#details-home-button{
-  height: 1.3em
-}
 .companions-section {
-  margin: 1em 0;
+  strong {
+    display: block;
+    margin: 0.6em 0 0.4em;
+    font-size: 0.85em;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
 
-  p { margin: 0.3em 0; }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding: 0.3em 0.8em;
+    border-radius: 999px;
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
+    font-size: 0.9em;
+  }
+
   .companions-likes strong { color: #6f9a12; }
+  .companions-likes li { background: #f1f6e4; color: #4f7210; border: 1px solid #cfe39a; }
   .companions-avoid strong { color: #af2268; }
+  .companions-avoid li { background: #fbe9ef; color: #8f0d4e; border: 1px solid #f0bfd0; }
+}
+
+.more-info-section .more-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  padding: 0.5em 0;
+  border-top: 1px solid #f0ebe4;
+
+  &:first-of-type { border-top: none; }
+
+  h3 {
+    margin: 0;
+    font-size: 1em;
+    color: #3f3430;
+  }
+
+  p {
+    margin: 0.1em 0 0;
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
+    font-size: 0.9em;
+    color: #786961;
+  }
+}
+
+.details-loading {
+  margin: 3em auto;
+  text-align: center;
+  color: #786961;
+}
+
+@media (max-width: 1000px) {
+  .top-of-page { flex-direction: column; }
+  .hero-image { flex-basis: auto; width: 100%; }
+  .descriptions-and-more-info { grid-template-columns: 1fr; }
 }

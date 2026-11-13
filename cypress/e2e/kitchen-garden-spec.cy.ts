@@ -15,8 +15,11 @@ describe('Kitchen garden tab', () => {
   it('keeps the kitchen plants off the PLANTS tab and shows them on KITCHEN', () => {
     cy.get('#plants > :nth-child(3)').children().should('have.length', 30)
     cy.get('.kitchen-tab').click()
-    cy.get('.search').should('not.exist')
+    cy.get('.search-bar').should('have.attr', 'placeholder').and('contain', 'Filter kitchen')
     cy.get('.card').should('have.length', 2)
+    cy.get('.search-bar').type('bas')
+    cy.get('.card').should('have.length', 1).and('contain', 'BASIL')
+    cy.get('.search-bar').clear()
     cy.get('.card').first().should('contain', 'TOMATO')
     cy.get('.card').first().find('img').should('have.attr', 'src', '/images/kitchen/tomato.svg')
     cy.get('.plants-tab').click()

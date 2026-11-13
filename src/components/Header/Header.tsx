@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useAuth } from '../../auth/AuthContext'
 import './Header.scss'
@@ -7,6 +7,8 @@ import './Header.scss'
 const Header = () => {
     const { user, logout } = useAuth()
     const navigate = useNavigate()
+    const { pathname } = useLocation()
+    const showBack = !!user && pathname !== '/' && pathname !== '/login' && pathname !== '/reset'
     const [open, setOpen] = useState<boolean>(false)
     const [loggingOut, setLoggingOut] = useState<boolean>(false)
 
@@ -37,6 +39,11 @@ const Header = () => {
 
     return (
         <header>
+            {showBack && (
+                <Link to='/' id='back-to-garden' className='back-link'>
+                    <span className='material-symbols-rounded'>arrow_back</span>Back to garden
+                </Link>
+            )}
             <div className='relative-container'>
                 <Link to='/' id='home'>
                     <img className="header-logo" src={`/images/logo.png`} alt='backyarder logo'/>

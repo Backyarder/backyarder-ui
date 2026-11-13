@@ -4,11 +4,13 @@ import { CompanionHint } from '../../companions'
 import './CellActions.scss'
 
 interface CellProps {
+    locationId: string
     image: string | undefined
     name: string | undefined
     contentType: string | undefined
     plantId: number | undefined
     isPlanted: boolean
+    needsWater?: boolean
     companions?: CompanionHint | null
     onPlant: () => void
     onWater: () => void
@@ -16,8 +18,9 @@ interface CellProps {
     onClose: () => void
 }
 
-// The popup over a populated cell. Every button closes it; some also act.
-const CellActions = ({ image, name, contentType, plantId, isPlanted, companions, onPlant, onWater, onRemove, onClose }: CellProps) => {
+// The panel for the selected cell, shown beside the grid (never over it, so
+// the companion rings around the cell stay visible). Every button closes it.
+const CellActions = ({ locationId, image, name, contentType, plantId, isPlanted, needsWater, companions, onPlant, onWater, onRemove, onClose }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -33,9 +36,12 @@ const CellActions = ({ image, name, contentType, plantId, isPlanted, companions,
     }
 
     return (
-        <div className='cell-info'>
+        <div className='cell-info' data-cell={locationId}>
             <img className='card-image' src={plantImageSrc(image)} onError={onImageError} alt={`${name}`} />
-            <p className='plant-name'>{name?.toUpperCase()}</p>
+            <p className='plant-name'>
+                {name?.toUpperCase()}
+                <span className='cell-location'>{locationId}{isPlanted ? (needsWater ? ' · needs water' : ' · planted') : ' · not planted yet'}</span>
+            </p>
             {companions && (companions.likes.length > 0 || companions.avoid.length > 0) && (
                 <p className='companion-hint'>
                     {companions.likes.length > 0 && <span className='likes'>Likes {companions.likes.slice(0, 4).join(', ')}</span>}

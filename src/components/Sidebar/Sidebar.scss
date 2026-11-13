@@ -36,10 +36,19 @@
   flex: 1 1 0;
   min-width: 0;
   height: 2.5em;
-  padding: 0.5em 0.3em;
+  padding: 0.4em 0.2em;
   color: #483C3C;
-  font-size: 0.95em;
+  font-size: 0.85em;
+  letter-spacing: 0.02em;
   white-space: nowrap;
+
+  .material-symbols-rounded { font-size: 20px; }
+}
+
+// On laptop widths the sidebar is narrow: drop the icons, keep the words.
+@media (max-width: 1360px) {
+  .sidebar-tab { font-size: 0.8em; }
+  .sidebar-tab .material-symbols-rounded { display: none; }
 }
 
 .search {

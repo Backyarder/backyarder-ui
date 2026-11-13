@@ -1,24 +1,43 @@
-.cell-info, .cell-actions, .cell-button, .card-image, .icon {
-    z-index: 3;
-}
-
 .cell-info {
-    position: absolute;
-    bottom: 110%;
-    left: -270%;
-    background-color: #f4f4f4;
-    margin-top: 0.8em;
     display: flex;
     flex-direction: column;
-    border-radius: 1em;
+    width: 100%;
+    margin-bottom: 0.8em;
     padding: 10px;
-    min-width: 200px;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    border: 2px solid #af2268;
+    border-radius: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
+}
+
+.cell-info .card-image {
+    width: 100%;
+    height: 7.5em;
+    object-fit: cover;
+    border-radius: 0.8em;
+    background-color: #f1f6e4;
+}
+
+.cell-info .plant-name {
+    display: flex;
+    flex-direction: column;
+    margin: 0.4em 0.2em 0.2em;
+    font-size: 1.2em;
+    color: #af2268;
+}
+
+.cell-location {
+    font-size: 0.7em;
+    color: #786961;
+    letter-spacing: 0.05em;
 }
 
 .cell-actions {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .cell-button {
@@ -29,18 +48,11 @@
     border: none;
     font-weight: bold;
     border-radius: 5em;
-    pointer-events: auto;
     display: flex;
     align-items: center;
-    padding: 0.4em;
-    margin: .5em;
+    padding: 0.35em;
+    margin: .2em;
     text-decoration: none;
-}
-
-.card-image {
-    height: 7em;
-    object-fit: cover;
-    border-radius: 1em;
 }
 
 .icon {
@@ -64,6 +76,7 @@
     white-space: nowrap;
     opacity: 0;
     transition: opacity 0.3s ease;
+    z-index: 5;
 }
 
 .cell-button:hover .cell-action-tooltip-text {
@@ -72,10 +85,9 @@
 }
 
 .companion-hint {
-    margin: 0 8px 6px;
-    font-size: x-small;
+    margin: 0 4px 6px;
+    font-size: small;
     font-family: 'Arial';
-    text-align: center;
     color: #786961;
 
     .likes { color: #6f9a12; }

@@ -32,8 +32,11 @@
   width: 100%;
 }
 
-.disable-hover {
-  pointer-events: none;
+// The selected cell (its panel shows beside the grid)
+.cell.selected:not(.disabled) {
+  outline: 3px solid #af2268;
+  outline-offset: 2px;
+  z-index: 21;
 }
 
 .watering-alert {
@@ -103,9 +106,6 @@
   }
 }
 
-.disable-scale {
-  z-index: 30;
-}
 
 .hidden {
   visibility: hidden;
