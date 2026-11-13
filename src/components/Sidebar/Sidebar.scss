@@ -22,22 +22,24 @@
   margin: 0.2em;
   margin-bottom: 1em;
   display: flex;
-  justify-content: space-around
+  gap: 0.3em;
 }
 
+// Three tabs share the sidebar width equally.
 .sidebar-tab{
   border: none;
   border-radius: 10px;
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
+  gap: 0.25em;
+  flex: 1 1 0;
+  min-width: 0;
   height: 2.5em;
-  width: 10em;
-  padding: 0.7em;
+  padding: 0.5em 0.3em;
   color: #483C3C;
-  font-size: 1.1em;
-  display: flex;
-  justify-content: space-around;
+  font-size: 0.95em;
+  white-space: nowrap;
 }
 
 .search {

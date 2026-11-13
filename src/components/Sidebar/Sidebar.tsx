@@ -28,6 +28,7 @@ export interface PlantAttributes {
     sunlight?: string[]
     type: string
     content_type: string
+    collection?: string | null   // "kitchen" for the built-in kitchen garden set
 }
 
 export interface DecorAttributes {
@@ -78,8 +79,11 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
     else if (!plantList || !decorList) {
         cards = <p className="loading">It looks like our nursery is not operating correctly, please try again later</p>
     }
-    else if (plantList.length && activeTab === 'plants') {
-        cards = plantList.map((plant: PlantData) => {
+    else if (plantList.length && (activeTab === 'plants' || activeTab === 'kitchen')) {
+        // Stock ornamentals and search results on PLANTS; the built-in
+        // vegetables, herbs and companion flowers on KITCHEN.
+        const shown = plantList.filter(plant => (plant.attributes.collection === 'kitchen') === (activeTab === 'kitchen'))
+        cards = shown.map((plant: PlantData) => {
             const plantImage = plant.attributes.image
                 ? plant.attributes.image
                 : `/images/plant-fallback.png`
@@ -143,6 +147,12 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
                 }}><span className="material-symbols-rounded">
                 potted_plant
                 </span>PLANTS</button>
+                <button className="kitchen-tab sidebar-tab" onClick={() => { setActiveTab('kitchen') }} style={{
+                    backgroundColor: (activeTab !== 'kitchen') ? '#beab95' : '#f4f4f4',
+                      cursor: (activeTab === 'kitchen') ? 'auto' : 'pointer'
+                }}><span className="material-symbols-rounded">
+                nutrition
+                </span>KITCHEN</button>
                 <button className="decor-tab sidebar-tab" onClick={() => { setActiveTab('decor') }}
                     style={{
                         backgroundColor: (activeTab !== 'decor') ? '#beab95' : '#f4f4f4',

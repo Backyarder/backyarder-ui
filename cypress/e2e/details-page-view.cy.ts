@@ -33,13 +33,17 @@ describe('Details Page', () => {
 
 
     cy.get('.descriptions > :nth-child(1) > .header').should('have.text', 'Watering Description')
-    cy.get('.descriptions > :nth-child(1) > .description').should('have.text', `Coneflower (Echinacea 'Tomato Soup') plants perform best in full sun, meaning they need 6 to 8 hours of direct sunlight per day. During the summer months, they should receive most of that sun in the morning, with afternoon shade providing relief from the heat; this will prevent the flowers from wilting during the hottest part of the day. In the winter, the sun may not provide as much heat, therefore the cone flower may benefit from more afternoon sun.`)
 
     cy.get('.descriptions > :nth-child(2) > .header').should('have.text', 'Sunlight Description')
-    cy.get('.descriptions > :nth-child(2) > .description').should('have.text', `Coneflower (Echinacea 'Tomato Soup') plants perform best in full sun, meaning they need 6 to 8 hours of direct sunlight per day. During the summer months, they should receive most of that sun in the morning, with afternoon shade providing relief from the heat; this will prevent the flowers from wilting during the hottest part of the day. In the winter, the sun may not provide as much heat, therefore the cone flower may benefit from more afternoon sun.`)
 
     cy.get('.descriptions > :nth-child(3) > .header').should('have.text', 'Pruning Description')
-    cy.get('.descriptions > :nth-child(3) > .description').should('have.text', `Coneflower (Echinacea 'Tomato Soup') plants perform best in full sun, meaning they need 6 to 8 hours of direct sunlight per day. During the summer months, they should receive most of that sun in the morning, with afternoon shade providing relief from the heat; this will prevent the flowers from wilting during the hottest part of the day. In the winter, the sun may not provide as much heat, therefore the cone flower may benefit from more afternoon sun.`)
+    // Each section shows its own text (not the sunlight text three times).
+    cy.fixture('plant-details.json').then(details => {
+      const sections = details.data.attributes.section
+      cy.get('.descriptions > :nth-child(1) > .description').should('have.text', sections[0].description)
+      cy.get('.descriptions > :nth-child(2) > .description').should('have.text', sections[1].description)
+      cy.get('.descriptions > :nth-child(3) > .description').should('have.text', sections[2].description)
+    })
 
     cy.get('.more-info-section > .header').should('have.text', 'More Information')
 

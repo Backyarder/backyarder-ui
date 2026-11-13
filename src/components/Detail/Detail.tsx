@@ -113,7 +113,7 @@ const Detail = () => {
                                 return (
                                     <div className='description' key={i}>
                                         <h2 className='header'>{plant.type.charAt(0).toUpperCase() + plant.type.slice(1) + " Description"}</h2>
-                                        <p className="description">{plantDetails.section[1].description}</p>
+                                        <p className="description">{plant.description}</p>
                                     </div>
                                 )
                             })}
