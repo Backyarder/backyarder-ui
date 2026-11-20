@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid'
 import Card from "../Card/Card"
 import CategoryPicker, { Category } from "./CategoryPicker"
 import './Sidebar.scss'
-import { getPlantList, searchPlants } from "../../apiCalls"
+import { getPlantList, searchPlants, getStats } from "../../apiCalls"
 import decorData from '../../decor_data.json'
 import { useAuth } from "../../auth/AuthContext"
 import { zoneFit } from "../../zones"
@@ -44,12 +44,20 @@ interface SideBarProps {
     showUnavailable: () => void;
 }
 
+const NURSERY_DOWN = 'It looks like our nursery is not operating correctly, please try again later'
+
 const Sidebar = ({ showUnavailable }: SideBarProps) => {
+    // Everything /plants returns: the 30 Perenual stock plants plus every
+    // built-in collection. Searches never replace it.
     const [plantList, setPlantList] = useState<PlantData[]>([])
+    // Nursery search results (all categories), or null when not searching.
+    const [searchResults, setSearchResults] = useState<PlantData[] | null>(null)
+    const [searchableCount, setSearchableCount] = useState<number | null>(null)
     const [decorList, setDecorList] = useState<DecorData[]>([])
     // eslint-disable-next-line
     const [apiError, setApiError] = useState<string>('')
-    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [searchTerm, setSearchTerm] = useState<string>('');   // Nursery search box
+    const [filterTerm, setFilterTerm] = useState<string>('');   // filter box on the other categories
     const [loadingPlants, setLoadingPlants] = useState<boolean>(true)
     const [activeTab, setActiveTab] = useState<string>('plants')
     const { user } = useAuth()
@@ -83,6 +91,10 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
                 handleApiError(err)
             })
         getDecorList()
+        // How many plants the Nursery search covers, for the placeholder.
+        getStats()
+            .then(stats => setSearchableCount(stats?.plant_data?.plants_searchable ?? null))
+            .catch(() => setSearchableCount(null))
     }, [])
 
     const handleApiError = (error: unknown) => {
@@ -90,13 +102,14 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
         setLoadingPlants(false)
     }
 
-    // KITCHEN and DECOR are short local lists: filter them as you type.
-    const matchesFilter = (name: string | undefined) => !searchTerm.trim() || (name ?? '').toLowerCase().includes(searchTerm.trim().toLowerCase())
+    // The built-in categories and DECOR are local lists: filter them as you type.
+    const matchesFilter = (name: string | undefined) => !filterTerm.trim() || (name ?? '').toLowerCase().includes(filterTerm.trim().toLowerCase())
 
-    // Counts per category for the picker (PLANTS = nursery and search results).
+    // Counts per category for the picker. Nursery has no count: it is a
+    // search over thousands of plants, not a fixed list.
     const countIn = (id: string) => (plantList ?? []).filter(plant => (plant.attributes.collection ?? 'plants') === id).length
     const categories: Category[] = [
-        { id: 'plants', label: 'Nursery', icon: 'potted_plant', count: countIn('plants') },
+        { id: 'plants', label: 'Nursery', icon: 'potted_plant' },
         { id: 'kitchen', label: 'Kitchen garden', icon: 'nutrition', count: countIn('kitchen') },
         { id: 'flowers', label: 'Flowers', icon: 'local_florist', count: countIn('flowers') },
         { id: 'trees', label: 'Trees & shrubs', icon: 'park', count: countIn('trees') },
@@ -113,14 +126,14 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
         cards = <p className="loading">{apiError}</p>
     }
     else if (!plantList || !decorList) {
-        cards = <p className="loading">It looks like our nursery is not operating correctly, please try again later</p>
+        cards = <p className="loading">{NURSERY_DOWN}</p>
     }
     else if (plantList.length && ['plants', 'kitchen', 'flowers', 'trees', 'succulents', 'indoor'].includes(activeTab)) {
-        // Perenual plants and search results on PLANTS; each built-in
-        // collection on its own tab (filtered as you type).
-        const inTab = plantList
-            .filter(plant => (plant.attributes.collection ?? 'plants') === activeTab)
-            .filter(plant => activeTab === 'plants' || matchesFilter(plant.attributes.name))
+        // Nursery: search results from every category, or the stock plants
+        // when not searching. Other categories: their full list, filtered.
+        const inTab = activeTab === 'plants'
+            ? (searchResults ?? plantList.filter(plant => !plant.attributes.collection))
+            : plantList.filter(plant => plant.attributes.collection === activeTab).filter(plant => matchesFilter(plant.attributes.name))
         const shown = zoneOnly && zoneFilterApplies ? inTab.filter(plant => !outsideZone(plant)) : inTab
         hiddenByZone = inTab.length - shown.length
         cards = shown.map((plant: PlantData) => {
@@ -128,8 +141,11 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
                 ? plant.attributes.image
                 : `/images/plant-fallback.png`
             plant.attributes.image = plantImage
-            return <Card plant={plant.attributes} showUnavailable={showUnavailable} key={plant.attributes.plant_id} />
+            return <Card plant={plant.attributes} showUnavailable={showUnavailable} showCategory={activeTab === 'plants' && searchResults !== null} key={plant.attributes.plant_id} />
         })
+        if (shown.length === 0) {
+            cards = <p className="loading">Hmmm... there are no plants in our nursery matching your search.</p>
+        }
     } else if (decorList.length && activeTab === 'decor') {
         cards = decorList.filter(item => matchesFilter(item.attributes.name)).map((item: DecorData) => {
             return <Card plant={item.attributes} showUnavailable={showUnavailable} key={nanoid()} />
@@ -139,7 +155,12 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
     }
 
     const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
+        if (activeTab === 'plants') {
+            setSearchTerm(event.target.value);
+            if (event.target.value.trim() === '') setSearchResults(null) // cleared: back to the stock list
+        } else {
+            setFilterTerm(event.target.value);
+        }
     };
 
     const handleKeyPress = (event: React.KeyboardEvent) => {
@@ -148,25 +169,30 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
         }
     };
 
+    // Searches every plant (built-ins, the Perenual catalogue) and shows the
+    // results on Nursery; the other categories keep their full lists.
     const searchForPlants = () => {
-        setLoadingPlants(true)
         setApiError('')
-        if (searchTerm.length) {
-            searchPlants(searchTerm.toLowerCase())
-                .then(data => setPlantList(data.data))
-                .then(() => setLoadingPlants(false))
-                .catch((err) => {
-                    handleApiError(err)
-                })
-        } else {
-            getPlantList()
-                .then(data => setPlantList(data.data))
-                .then(() => setLoadingPlants(false))
-                .catch((err) => {
-                    handleApiError(err)
-                })
+        if (!searchTerm.trim()) {
+            setSearchResults(null)
+            return
         }
+        setLoadingPlants(true)
+        searchPlants(searchTerm.trim().toLowerCase())
+            .then(data => {
+                // A response without a plant list means the search itself failed.
+                if (!Array.isArray(data?.data)) throw new Error(NURSERY_DOWN)
+                setSearchResults(data.data)
+            })
+            .then(() => setLoadingPlants(false))
+            .catch(() => {
+                handleApiError(new Error(NURSERY_DOWN))
+            })
     }
+
+    const searchPlaceholder = activeTab === 'plants'
+        ? (searchableCount ? `Search all ${(Math.floor(searchableCount / 100) * 100).toLocaleString()}+ plants... ` : 'Search all plants... ')
+        : `Filter ${categories.find(c => c.id === activeTab)?.label.toLowerCase() ?? activeTab}... `
 
     const loading = (): JSX.Element => {
         return (
@@ -185,8 +211,8 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
                 <input
                     className="search-bar"
                     type="text"
-                    placeholder={activeTab === 'plants' ? 'Search the nursery... ' : `Filter ${activeTab}... `}
-                    value={searchTerm}
+                    placeholder={searchPlaceholder}
+                    value={activeTab === 'plants' ? searchTerm : filterTerm}
                     onChange={handleSearchChange}
                     onKeyDown={activeTab === 'plants' ? handleKeyPress : undefined}
                 />

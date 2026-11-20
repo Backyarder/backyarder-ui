@@ -13,11 +13,16 @@ export interface CardProps {
 
 interface AdditionalCardProps {
   showUnavailable: () => void; // dropped on a cell that cannot take it
+  showCategory?: boolean;      // tag the card with its category (Nursery search results)
+}
+
+const CATEGORY_LABELS: Record<string, string> = {
+  kitchen: 'Kitchen garden', flowers: 'Flowers', trees: 'Trees & shrubs', succulents: 'Succulents & cacti', indoor: 'Houseplant'
 }
 
 type CombinedCardProps = CardProps & AdditionalCardProps;
 
-const Card = ({ plant, showUnavailable }: CombinedCardProps) => {
+const Card = ({ plant, showUnavailable, showCategory }: CombinedCardProps) => {
   const { user } = useAuth()
   const fit = zoneFit(plant.hardiness, user?.hardiness_zone, plant.collection)
   const [{ isDragging }, dragRef, preview] = useDrag({
@@ -67,6 +72,7 @@ const Card = ({ plant, showUnavailable }: CombinedCardProps) => {
       <NavLink to={`/plants/${plant.plant_id}`} className='card' style={draggedCardStyle} ref={dragRef}>
         <img className='card-image' src={plantImageSrc(plantImage)} onError={onImageError} alt={`${plant.name}`} />
         <p className='plant-name'>{plant?.name?.toUpperCase()}</p>
+        {showCategory && <span className='card-category'>{CATEGORY_LABELS[plant.collection ?? ''] ?? 'Nursery'}</span>}
         <div className='card-icons-container'>
           <div className='card-icons'>
             <div className="material-symbols-rounded card-icon">

@@ -76,3 +76,14 @@
   color: #b2603a;
   .zone-range { text-decoration: line-through; text-decoration-thickness: 1px; }
 }
+
+.card-category {
+  align-self: flex-start;
+  margin: 0 0.1em 0.2em;
+  padding: 0.05em 0.6em;
+  border-radius: 999px;
+  background: #ebe3d8;
+  color: #786961;
+  font-size: 0.75em;
+  letter-spacing: 0.03em;
+}
