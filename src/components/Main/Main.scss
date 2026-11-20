@@ -32,7 +32,16 @@ main {
   transition: opacity 0.35s ease, transform 0.35s ease;
 
   &.ready { opacity: 1; transform: none; }
-  main { align-self: stretch; }
+}
+
+// The grid sits in a fixed square slot so the sidebar and buttons stay put
+// whatever the plot's size; smaller plots sit at the top, centred.
+.grid-slot {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: calc(100vh - 244px);
+  flex-shrink: 0;
 }
 
 // The banner's space is kept while the weather loads, so the grid doesn't jump.

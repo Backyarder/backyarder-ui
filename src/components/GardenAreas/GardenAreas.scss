@@ -117,8 +117,7 @@
   animation: area-spin 0.9s linear infinite;
 }
 
-.area-add.busy, .area-add:disabled {
-  cursor: progress;
+.area-add.open {
   color: #483C3C;
   border-style: solid;
   border-color: #cfe39a;
@@ -196,4 +195,137 @@
     > .material-symbols-rounded:first-child { color: #6f9a12; }
   }
   .area-check { font-size: 18px; color: #6f9a12; min-width: 18px; }
+}
+
+// "Add plot" form
+.plot-form {
+  position: absolute;
+  z-index: 46;
+  top: calc(100% - 4px);
+  width: 300px;
+  padding: 14px 16px 12px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  animation: area-menu-in 0.14s ease-out;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  h3 { margin: 0; font-size: 1.05em; color: #3f3430; }
+}
+
+.plot-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  > span:first-child { font-size: 0.75em; letter-spacing: 0.05em; text-transform: uppercase; color: #a08f80; }
+
+  input, select {
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid #e0d6c9;
+    border-radius: 10px;
+    background: #fbf9f6;
+    font: inherit;
+    color: #3f3430;
+    &:focus { outline: none; border-color: #6f9a12; background: #fff; }
+  }
+}
+
+.plot-custom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: -4px;
+
+  label { display: flex; align-items: center; gap: 6px; color: #786961; font-size: 0.9em; }
+  input {
+    width: 58px;
+    height: 34px;
+    padding: 0 8px;
+    border: 1px solid #e0d6c9;
+    border-radius: 10px;
+    font: inherit;
+    &:focus { outline: none; border-color: #6f9a12; }
+  }
+  .plot-times { color: #a08f80; }
+}
+
+.plot-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 12px;
+  background: #f6f1ea;
+}
+
+.plot-preview-grid {
+  display: grid;
+  gap: 2px;
+  max-width: 100%;
+  max-height: 96px;
+  height: 96px;
+  padding: 4px;
+  border-radius: 6px;
+  background: #beab95;
+
+  span { background: #f4f4f4; border-radius: 2px; min-width: 0; min-height: 0; }
+}
+
+.plot-preview-caption { font-size: 0.8em; color: #786961; }
+
+.plot-where {
+  display: flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: #efe8df;
+
+  button {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 30px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    font: inherit;
+    font-size: 0.9em;
+    color: #786961;
+    cursor: pointer;
+    .material-symbols-rounded { font-size: 18px; }
+    &.on { background: #fff; color: #3f3430; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12); }
+    &.on:first-child .material-symbols-rounded { color: #e0a100; }
+    &.on:last-child .material-symbols-rounded { color: #6f9a12; }
+  }
+}
+
+.plot-hint { color: #8a7a6e; font-size: 0.8em; }
+.plot-error { margin: 0; color: #b2603a; font-size: 0.85em; }
+
+.plot-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 14px;
+    border: none;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 0.92em;
+    cursor: pointer;
+    &:disabled { cursor: progress; }
+  }
+  .plot-cancel { background: transparent; color: #786961; &:hover:not(:disabled) { background: #f4f1ec; } }
+  .plot-create { background: #6f9a12; color: #fff; &:hover:not(:disabled) { background: #5f850f; } .area-spinner { color: #fff; } }
 }

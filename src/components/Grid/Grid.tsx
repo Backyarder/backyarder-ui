@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Cell from '../Cell/Cell';
 import Modal from '../Modal/Modal';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
-import { cellIDs } from './cellIDs';
+import { plotCellIds, DEFAULT_SIZE } from './plotCells';
 import { WateringType } from '../../apiCalls';
 import { Relation, relation, neighbourIds } from '../../companions';
 import './Grid.scss';
@@ -40,6 +40,8 @@ interface GridProps {
   confirmClear: ClearScope | null;
   onConfirmClear: () => void;
   onCancelClear: () => void;
+  rows?: number;   // plot size; 10 x 10 by default
+  cols?: number;
 }
 
 const emptyCell = (location_id: string): CellKeys => ({
@@ -50,7 +52,8 @@ const emptyCell = (location_id: string): CellKeys => ({
 // A cell being hovered with a dragged plant: where, and what plant.
 export type DragHover = { id: string; plantName: string | null | undefined } | null;
 
-const Grid = ({ garden, updateCell, resync, openCellId, setOpenCellId, showUnavailable, notice, clearNotice, confirmClear, onConfirmClear, onCancelClear }: GridProps) => {
+const Grid = ({ garden, updateCell, resync, openCellId, setOpenCellId, showUnavailable, notice, clearNotice, confirmClear, onConfirmClear, onCancelClear, rows = DEFAULT_SIZE, cols = DEFAULT_SIZE }: GridProps) => {
+  const ids = useMemo(() => plotCellIds(rows, cols), [rows, cols]);
   const byLocation = useMemo(() => new Map(garden.map(cell => [cell.location_id, cell])), [garden]);
   const [dragHover, setDragHover] = useState<DragHover>(null);
 
@@ -61,16 +64,18 @@ const Grid = ({ garden, updateCell, resync, openCellId, setOpenCellId, showUnava
     const plantName = dragHover ? dragHover.plantName : byLocation.get(openCellId ?? '')?.name;
     const map = new Map<string, Relation>();
     if (!focusId || !plantName) return map;
-    neighbourIds(focusId).forEach(id => {
+    neighbourIds(focusId, rows, cols).forEach(id => {
       const rel = relation(plantName, byLocation.get(id)?.name);
       if (rel) map.set(id, rel);
     });
     return map;
-  }, [dragHover, openCellId, byLocation]);
+  }, [dragHover, openCellId, byLocation, rows, cols]);
 
   return (
-    <section id='grid'>
-      {cellIDs.map(({ id }) => (
+    // Cells stay square: the longer side fills the space, and small plots
+    // don't get giant cells (sized as if at least 6 across).
+    <section id='grid' style={{ '--rows': rows, '--cols': cols, '--n': Math.max(rows, cols, 6) } as React.CSSProperties}>
+      {ids.map(id => (
         <Cell
           key={id}
           id={id}

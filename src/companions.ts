@@ -97,14 +97,15 @@ export const companionsFor = (name: string | null | undefined): CompanionHint | 
   return { label: entry.label, likes: labels(entry.good), avoid: labels(entry.bad) }
 }
 
-// The eight cells around a grid position such as "B3" (rows A-J, columns 1-10).
-export const neighbourIds = (id: string): string[] => {
+// The (up to) eight cells around a position such as "B3" in a plot of the
+// given size (10 x 10 unless told otherwise).
+export const neighbourIds = (id: string, rows = 10, cols = 10): string[] => {
   const row = id.charCodeAt(0) - 'A'.charCodeAt(0)
   const col = parseInt(id.slice(1), 10) - 1
   const ids: string[] = []
   for (let r = row - 1; r <= row + 1; r++) {
     for (let c = col - 1; c <= col + 1; c++) {
-      if ((r === row && c === col) || r < 0 || r > 9 || c < 0 || c > 9) continue
+      if ((r === row && c === col) || r < 0 || r >= rows || c < 0 || c >= cols) continue
       ids.push(String.fromCharCode('A'.charCodeAt(0) + r) + (c + 1))
     }
   }

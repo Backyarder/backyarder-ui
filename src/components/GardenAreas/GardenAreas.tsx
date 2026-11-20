@@ -1,13 +1,14 @@
 import { KeyboardEvent, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { GardenArea } from '../../apiCalls'
+import { GardenArea, NewPlot } from '../../apiCalls'
 import ConfirmModal from '../ConfirmModal/ConfirmModal'
+import NewPlotForm from './NewPlotForm'
 import './GardenAreas.scss'
 
 type Props = {
   areas: GardenArea[]
   activeId: number | null
   onSelect: (id: number) => void
-  onAdd: () => Promise<GardenArea | void>
+  onAdd: (plot: NewPlot) => Promise<GardenArea>
   onRename: (id: number, name: string) => Promise<void>
   onSetIndoor: (id: number, indoor: boolean) => Promise<void>
   onDelete: (id: number) => Promise<void>
@@ -17,13 +18,16 @@ const MAX_NAME = 40
 
 // A row of named garden plots above the grid. Click another plot to open it.
 // Click the open plot to get its menu: rename, outdoor or indoor, delete.
-// Adding and deleting show a spinner until the server answers.
+// "Add plot" opens a form for the name, size and indoors/outdoors. Adding
+// and deleting show a spinner until the server answers.
 const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, onDelete }: Props) => {
   const [editingId, setEditingId] = useState<number | null>(null)
   const [draft, setDraft] = useState<string>('')
   const [error, setError] = useState<string>('')
   const [confirmDelete, setConfirmDelete] = useState<GardenArea | null>(null)
-  const [adding, setAdding] = useState<boolean>(false)
+  const [formOpen, setFormOpen] = useState<boolean>(false)
+  const [formLeft, setFormLeft] = useState<number>(0)
+  const addRef = useRef<HTMLButtonElement>(null)
   const [deletingId, setDeletingId] = useState<number | null>(null)
   const [savingKind, setSavingKind] = useState<boolean>(false)
   const [menuOpen, setMenuOpen] = useState<boolean>(false)
@@ -91,15 +95,19 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
     if (e.key === 'Escape') { setEditingId(null); setError('') }
   }
 
-  const add = () => {
-    if (adding) return
+  const toggleForm = () => {
+    setMenuOpen(false)
     setError('')
-    setAdding(true)
-    onAdd()
-      .then(area => { if (area) startRename(area) })
-      .catch((err: Error) => setError(err.message))
-      .finally(() => setAdding(false))
+    if (!formOpen && addRef.current && barRef.current) {
+      const button = addRef.current.getBoundingClientRect()
+      const bar = barRef.current.getBoundingClientRect()
+      setFormLeft(Math.max(0, button.left - bar.left))
+    }
+    setFormOpen(open => !open)
   }
+
+  // The form shows its own spinner and errors; it closes once the plot exists.
+  const create = (plot: NewPlot) => onAdd(plot).then(() => setFormOpen(false))
 
   const remove = (area: GardenArea) => {
     setConfirmDelete(null)
@@ -172,10 +180,8 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
           )
         })}
         <li>
-          <button type='button' className={`area-add ${adding ? 'busy' : ''}`} onClick={add} disabled={adding} aria-busy={adding}>
-            {adding
-              ? <><span className='material-symbols-rounded area-spinner' aria-hidden='true'>progress_activity</span>Adding plot…</>
-              : <><span className='material-symbols-rounded'>add</span>Add plot</>}
+          <button type='button' ref={addRef} className={`area-add ${formOpen ? 'open' : ''}`} onClick={toggleForm} aria-expanded={formOpen}>
+            <span className='material-symbols-rounded'>add</span>Add plot
           </button>
         </li>
       </ul>
@@ -221,6 +227,8 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
           )}
         </div>
       )}
+
+      {formOpen && <NewPlotForm onCreate={create} onCancel={() => setFormOpen(false)} style={{ left: formLeft }} />}
 
       {error && <p className='area-error' role='alert'>{error}</p>}
 
