@@ -1,9 +1,12 @@
 import { useState, useEffect, ChangeEvent } from "react"
 import { nanoid } from 'nanoid'
 import Card from "../Card/Card"
+import CategoryPicker, { Category } from "./CategoryPicker"
 import './Sidebar.scss'
 import { getPlantList, searchPlants } from "../../apiCalls"
 import decorData from '../../decor_data.json'
+import { useAuth } from "../../auth/AuthContext"
+import { zoneFit } from "../../zones"
 
 interface PlantData {
     id: number
@@ -49,6 +52,23 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [loadingPlants, setLoadingPlants] = useState<boolean>(true)
     const [activeTab, setActiveTab] = useState<string>('plants')
+    const { user } = useAuth()
+    const userZone = user?.hardiness_zone ?? null
+    // Hide plants that can't survive the user's winters; off by default, remembered per browser.
+    const [zoneOnly, setZoneOnly] = useState<boolean>(() => {
+        try { return localStorage.getItem('backyarder:zone-filter') === '1' } catch { return false }
+    })
+    const toggleZoneOnly = () => {
+        setZoneOnly(prev => {
+            try { localStorage.setItem('backyarder:zone-filter', prev ? '0' : '1') } catch {}
+            return !prev
+        })
+    }
+    const zoneFilterApplies = !!userZone && ['plants', 'kitchen', 'flowers', 'trees', 'succulents'].includes(activeTab)
+    const outsideZone = (plant: PlantData) => {
+        const fit = zoneFit(plant.attributes.hardiness, userZone, plant.attributes.collection)
+        return fit === 'too-cold' || fit === 'too-warm'
+    }
 
     const getDecorList = () => {
         //this is a placeholder for what will become the api call for the decor list
@@ -73,7 +93,20 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
     // KITCHEN and DECOR are short local lists: filter them as you type.
     const matchesFilter = (name: string | undefined) => !searchTerm.trim() || (name ?? '').toLowerCase().includes(searchTerm.trim().toLowerCase())
 
+    // Counts per category for the picker (PLANTS = nursery and search results).
+    const countIn = (id: string) => (plantList ?? []).filter(plant => (plant.attributes.collection ?? 'plants') === id).length
+    const categories: Category[] = [
+        { id: 'plants', label: 'Nursery', icon: 'potted_plant', count: countIn('plants') },
+        { id: 'kitchen', label: 'Kitchen garden', icon: 'nutrition', count: countIn('kitchen') },
+        { id: 'flowers', label: 'Flowers', icon: 'local_florist', count: countIn('flowers') },
+        { id: 'trees', label: 'Trees & shrubs', icon: 'park', count: countIn('trees') },
+        { id: 'succulents', label: 'Succulents & cacti', icon: 'psychiatry', count: countIn('succulents') },
+        { id: 'indoor', label: 'Houseplants', icon: 'chair', count: countIn('indoor') },
+        { id: 'decor', label: 'Decor', icon: 'deck', count: (decorList ?? []).length },
+    ]
+
     let cards;
+    let hiddenByZone = 0;
 
 
     if (apiError) {
@@ -85,9 +118,11 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
     else if (plantList.length && ['plants', 'kitchen', 'flowers', 'trees', 'succulents', 'indoor'].includes(activeTab)) {
         // Perenual plants and search results on PLANTS; each built-in
         // collection on its own tab (filtered as you type).
-        const shown = plantList
+        const inTab = plantList
             .filter(plant => (plant.attributes.collection ?? 'plants') === activeTab)
             .filter(plant => activeTab === 'plants' || matchesFilter(plant.attributes.name))
+        const shown = zoneOnly && zoneFilterApplies ? inTab.filter(plant => !outsideZone(plant)) : inTab
+        hiddenByZone = inTab.length - shown.length
         cards = shown.map((plant: PlantData) => {
             const plantImage = plant.attributes.image
                 ? plant.attributes.image
@@ -145,51 +180,7 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
 
     return (
         <section id='plants'>
-            <div className="sidebar-nav">
-                <button className="plants-tab sidebar-tab" onClick={() => { setActiveTab('plants') }} style={{
-                    backgroundColor: (activeTab !== 'plants') ? '#beab95' : '#f4f4f4',
-                      cursor: (activeTab === 'plants') ? 'auto' : 'pointer'
-                }}><span className="material-symbols-rounded">
-                potted_plant
-                </span>PLANTS</button>
-                <button className="kitchen-tab sidebar-tab" onClick={() => { setActiveTab('kitchen') }} style={{
-                    backgroundColor: (activeTab !== 'kitchen') ? '#beab95' : '#f4f4f4',
-                      cursor: (activeTab === 'kitchen') ? 'auto' : 'pointer'
-                }}><span className="material-symbols-rounded">
-                nutrition
-                </span>KITCHEN</button>
-                <button className="flowers-tab sidebar-tab" onClick={() => { setActiveTab('flowers') }} style={{
-                    backgroundColor: (activeTab !== 'flowers') ? '#beab95' : '#f4f4f4',
-                      cursor: (activeTab === 'flowers') ? 'auto' : 'pointer'
-                }}><span className="material-symbols-rounded">
-                local_florist
-                </span>FLOWERS</button>
-                <button className="trees-tab sidebar-tab" onClick={() => { setActiveTab('trees') }} style={{
-                    backgroundColor: (activeTab !== 'trees') ? '#beab95' : '#f4f4f4',
-                      cursor: (activeTab === 'trees') ? 'auto' : 'pointer'
-                }}><span className="material-symbols-rounded">
-                park
-                </span>TREES</button>
-                <button className="succulents-tab sidebar-tab" onClick={() => { setActiveTab('succulents') }} style={{
-                    backgroundColor: (activeTab !== 'succulents') ? '#beab95' : '#f4f4f4',
-                      cursor: (activeTab === 'succulents') ? 'auto' : 'pointer'
-                }}><span className="material-symbols-rounded">
-                psychiatry
-                </span>SUCCULENTS</button>
-                <button className="indoor-tab sidebar-tab" onClick={() => { setActiveTab('indoor') }} style={{
-                    backgroundColor: (activeTab !== 'indoor') ? '#beab95' : '#f4f4f4',
-                      cursor: (activeTab === 'indoor') ? 'auto' : 'pointer'
-                }}><span className="material-symbols-rounded">
-                potted_plant
-                </span>INDOOR</button>
-                <button className="decor-tab sidebar-tab" onClick={() => { setActiveTab('decor') }}
-                    style={{
-                        backgroundColor: (activeTab !== 'decor') ? '#beab95' : '#f4f4f4',
-                        cursor: (activeTab === 'decor') ? 'auto' : 'pointer'
-                    }}><span className="material-symbols-rounded">
-                    deck
-                    </span>DECOR</button>
-            </div>
+            <CategoryPicker categories={categories} active={activeTab} onChange={setActiveTab} />
             <div className="search">
                 <input
                     className="search-bar"
@@ -203,6 +194,13 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
                     search
                 </span></button>}
             </div>
+            {zoneFilterApplies && (
+                <label className="zone-toggle">
+                    <input type="checkbox" checked={zoneOnly} onChange={toggleZoneOnly} />
+                    <span>Only plants for zone {userZone}</span>
+                    {zoneOnly && hiddenByZone > 0 && <span className="zone-hidden">{hiddenByZone} hidden</span>}
+                </label>
+            )}
             <div className="search-results" >
                 {loadingPlants ? loading() : cards}
             </div>

@@ -36,7 +36,7 @@ const AlertBanner = ({ garden, alerts }: Props) => {
 
   const due = (garden ?? []).filter(cell => cell.needs_water && cell.name)
   const frost = alerts?.frost ?? null
-  const rain = alerts?.rain_covers_watering && due.length > 0
+  const rainDay = alerts?.rain_watered_on ? weekday(alerts.rain_watered_on) : null
   const needsZip = alerts !== undefined && !alerts.weather_available && !alerts.zip_code
   const quiet = due.length === 0 && !frost && !needsZip
   const next = nextWatering(garden)
@@ -65,7 +65,8 @@ const AlertBanner = ({ garden, alerts }: Props) => {
                   ? (next ? <>Next watering: <strong>{next.name} ({next.location_id})</strong> on {shortDate(next.next_water_at!)}</> : 'Nothing is on a watering schedule')
                   : 'Plant something and watering reminders will show up here'}
               </span>
-              {alerts?.weather_available && <span className='seg'>Rain in the last two days: <strong>{alerts.recent_rain_in} in</strong></span>}
+              {rainDay && <span className='seg'>Rain on <strong>{rainDay}</strong> counted as a watering</span>}
+              {alerts?.weather_available && !rainDay && <span className='seg'>Rain in the last two days: <strong>{alerts.recent_rain_in} in</strong></span>}
               {alerts?.weather_available && <span className='seg'>No frost in the next three days</span>}
             </span>
           </li>
@@ -75,7 +76,7 @@ const AlertBanner = ({ garden, alerts }: Props) => {
             <span className='material-symbols-rounded'>water_drop</span>
             <span>
               <strong>{due.length === 1 ? '1 plant needs water' : `${due.length} plants need water`}:</strong> {dueNames}.
-              {rain && ` It rained ${alerts?.recent_rain_in} in over the last two days, so you can probably skip it.`}
+              {rainDay && ` Rain on ${rainDay} already counted for your other outdoor plants.`}
             </span>
           </li>
         )}

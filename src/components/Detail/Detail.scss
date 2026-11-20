@@ -251,3 +251,17 @@
   .hero-image { flex-basis: auto; width: 100%; }
   .descriptions-and-more-info { grid-template-columns: 1fr; }
 }
+
+.quick-glance-details .zone-note {
+  margin-left: 0.4em;
+  padding-left: 0.5em;
+  border-left: 1px solid #e6ddd1;
+  font-size: 0.9em;
+}
+.quick-glance-details .zone-fits .zone-note { color: #6f9a12; }
+.quick-glance-details .zone-too-cold, .quick-glance-details .zone-too-warm {
+  border-color: #f0c9b5;
+  background: #fdf1eb;
+  .zone-note { color: #b2603a; }
+  .detail-icon { color: #b2603a; }
+}

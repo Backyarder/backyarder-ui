@@ -3,6 +3,7 @@
   "needs_water": [],
   "recent_rain_in": 0.6,
   "rain_covers_watering": true,
+  "rain_watered_on": "2026-11-11",
   "frost": { "date": "2026-11-14", "low_f": 31.5 },
   "weather_available": true,
   "zip_code": "30501"

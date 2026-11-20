@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getPlantDetails } from "../../apiCalls"
 import { companionsFor } from '../../companions'
+import { useAuth } from '../../auth/AuthContext'
+import { zoneFit, zoneFitText } from '../../zones'
 
 type PlantDetailsType = {
     id: number,
@@ -39,6 +41,7 @@ type PlantDetailsType = {
 const Detail = () => {
 
     const { id } = useParams()
+    const { user } = useAuth()
 
     const [plantDetails, setPlantDetails] = useState<PlantDetailsType | undefined>()
     // eslint-disable-next-line
@@ -102,7 +105,7 @@ const Detail = () => {
                                 </div>
                                 <div className="detail">
                                     <p className="water"><span className="material-symbols-rounded detail-icon">water_drop</span>{plantDetails.watering}</p>
-                                    <p className="location"><span className="material-symbols-rounded detail-icon">location_on</span>Zone {determineHardinessString(plantDetails.hardiness)}</p>
+                                    <p className={`location zone-${zoneFit(plantDetails.hardiness, user?.hardiness_zone, (plantDetails as any).collection)}`} title={zoneFitText(zoneFit(plantDetails.hardiness, user?.hardiness_zone, (plantDetails as any).collection), user?.hardiness_zone)}><span className="material-symbols-rounded detail-icon">location_on</span>Zone {determineHardinessString(plantDetails.hardiness)}{user?.hardiness_zone && zoneFit(plantDetails.hardiness, user.hardiness_zone) !== 'unknown' && <span className='zone-note'>{zoneFitText(zoneFit(plantDetails.hardiness, user.hardiness_zone), user.hardiness_zone)}</span>}</p>
                                 </div>
                                 <div className="detail">
                                     <p className="type"><span className="material-symbols-rounded detail-icon">

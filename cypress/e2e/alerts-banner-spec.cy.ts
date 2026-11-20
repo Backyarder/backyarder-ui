@@ -35,7 +35,7 @@ describe('Alerts banner', () => {
       cy.intercept('GET', '**/api/v1/alerts', { fixture: 'alerts-frost-rain.json' })
       cy.visit('http://localhost:3000/')
       cy.get('#alert-banner').should('be.visible')
-      cy.get('#alert-banner .alert-water').should('contain', '1 plant needs water').and('contain', `${planted.attributes.name} (${planted.attributes.location_id})`).and('contain', 'rained 0.6 in')
+      cy.get('#alert-banner .alert-water').should('contain', '1 plant needs water').and('contain', `${planted.attributes.name} (${planted.attributes.location_id})`).and('contain', 'Rain on Wednesday already counted')
       cy.get('#alert-banner .alert-frost').should('contain', 'Frost warning').and('contain', '31.5°F').and('contain', 'Saturday')
       cy.get('#alert-banner .alert-dismiss').click()
       cy.get('#alert-banner').should('not.exist')
