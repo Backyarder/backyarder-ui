@@ -46,6 +46,12 @@ const Main = () => {
   const [areas, setAreas] = useState<GardenArea[]>([]);
   const [activeAreaId, setActiveAreaId] = useState<number | null>(null);
   const gardenRequest = useRef<number>(0);   // ignore a slow response for an area we've left
+  // First load: show the page once plots and the grid are in, plus the
+  // weather (or a short wait for it), so things don't pop in one by one.
+  const [firstLoadDone, setFirstLoadDone] = useState<boolean>(false);
+  const [alertsSettled, setAlertsSettled] = useState<boolean>(false);
+  const [waitedForWeather, setWaitedForWeather] = useState<boolean>(false);
+  const [slowLoad, setSlowLoad] = useState<boolean>(false);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -87,15 +93,22 @@ const Main = () => {
         if (first) return openArea(first.id);
         return loadGarden();
       })
-      .catch(() => loadGarden());
+      .catch(() => loadGarden())
+      .finally(() => setFirstLoadDone(true));
     getWishlist()
       .then(setWishlist)
       .catch(() => setWishlist([]));
     // Weather for the banner; the banner itself is optional, so failures are silent.
     getAlerts()
       .then(setAlerts)
-      .catch(() => undefined);
+      .catch(() => undefined)
+      .finally(() => setAlertsSettled(true));
+    const weatherCap = window.setTimeout(() => setWaitedForWeather(true), 1200);
+    const slow = window.setTimeout(() => setSlowLoad(true), 700);
+    return () => { window.clearTimeout(weatherCap); window.clearTimeout(slow) };
   }, [loadGarden, openArea]);
+
+  const ready = firstLoadDone && (alertsSettled || waitedForWeather);
 
   const updateCell = useCallback((locationId: string, changes: CellChanges) => {
     setGarden(prev => prev.map(cell => cell.location_id === locationId ? { ...cell, ...changes } : cell));
@@ -136,12 +149,11 @@ const Main = () => {
   const renameArea = (id: number, name: string): Promise<void> =>
     updateGardenArea(id, { name }).then(setAreas);
 
-  const setAreaIndoor = (id: number, indoor: boolean) => {
-    setAreas(prev => prev.map(a => a.id === id ? { ...a, indoor } : a));
+  // The menu waits for the server before showing the new choice.
+  const setAreaIndoor = (id: number, indoor: boolean): Promise<void> =>
     updateGardenArea(id, { indoor })
       .then(list => { setAreas(list); loadGarden(); getAlerts().then(setAlerts).catch(() => undefined) })
-      .catch(refreshAreas);
-  }
+      .catch((err: Error) => { refreshAreas(); throw err; });
 
   // Resolves once the plot is gone (and the next one is loaded); rejects
   // with the server's message so the plot bar can show it.
@@ -185,7 +197,20 @@ const Main = () => {
         </div>
       ) : (
         <>
-        {isDesktop && isGardenView && <AlertBanner garden={garden} alerts={alerts} area={activeArea} otherAreas={areas.filter(a => a.id !== activeAreaId)} />}
+        {!ready && slowLoad && (
+          <div className='garden-loading' role='status'>
+            <span className='material-symbols-rounded garden-loading-spinner' aria-hidden='true'>progress_activity</span>
+            Loading your garden…
+          </div>
+        )}
+        <div className={`garden-page ${ready ? 'ready' : ''}`} aria-busy={!ready}>
+        {isDesktop && isGardenView && (
+          <div className='banner-slot'>
+            {alerts !== undefined || alertsSettled
+              ? <AlertBanner garden={garden} alerts={alerts} area={activeArea} otherAreas={areas.filter(a => a.id !== activeAreaId)} />
+              : <div className='banner-placeholder' aria-hidden='true' />}
+          </div>
+        )}
         {isDesktop && areas.length > 0 && (
           <GardenAreas
             areas={areas}
@@ -235,6 +260,7 @@ const Main = () => {
               </div>
           }
         </main>
+        </div>
         </>
       )}
     </>

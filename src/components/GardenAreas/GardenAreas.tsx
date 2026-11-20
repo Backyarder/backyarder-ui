@@ -1,4 +1,4 @@
-import { KeyboardEvent, useEffect, useRef, useState } from 'react'
+import { KeyboardEvent, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { GardenArea } from '../../apiCalls'
 import ConfirmModal from '../ConfirmModal/ConfirmModal'
 import './GardenAreas.scss'
@@ -9,16 +9,15 @@ type Props = {
   onSelect: (id: number) => void
   onAdd: () => Promise<GardenArea | void>
   onRename: (id: number, name: string) => Promise<void>
-  onSetIndoor: (id: number, indoor: boolean) => void
+  onSetIndoor: (id: number, indoor: boolean) => Promise<void>
   onDelete: (id: number) => Promise<void>
 }
 
 const MAX_NAME = 40
 
-// A row of named garden plots above the grid. The open one can be renamed
-// (click its name or the pencil), switched between outdoor and indoor, or
-// deleted; "Add plot" makes a new one and starts naming it. Adding and
-// deleting show a spinner until the server answers.
+// A row of named garden plots above the grid. Click another plot to open it.
+// Click the open plot to get its menu: rename, outdoor or indoor, delete.
+// Adding and deleting show a spinner until the server answers.
 const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, onDelete }: Props) => {
   const [editingId, setEditingId] = useState<number | null>(null)
   const [draft, setDraft] = useState<string>('')
@@ -26,14 +25,47 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
   const [confirmDelete, setConfirmDelete] = useState<GardenArea | null>(null)
   const [adding, setAdding] = useState<boolean>(false)
   const [deletingId, setDeletingId] = useState<number | null>(null)
+  const [savingKind, setSavingKind] = useState<boolean>(false)
+  const [menuOpen, setMenuOpen] = useState<boolean>(false)
+  const [menuLeft, setMenuLeft] = useState<number>(0)
   const inputRef = useRef<HTMLInputElement>(null)
+  const barRef = useRef<HTMLDivElement>(null)
+  const activeRef = useRef<HTMLButtonElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
   const active = areas.find(a => a.id === activeId) ?? null
 
   useEffect(() => {
     if (editingId !== null) inputRef.current?.select()
   }, [editingId])
 
+  // The menu hangs under the open plot's pill (outside the scrolling row,
+  // so it isn't clipped).
+  useLayoutEffect(() => {
+    if (!menuOpen || !activeRef.current || !barRef.current) return
+    const pill = activeRef.current.getBoundingClientRect()
+    const bar = barRef.current.getBoundingClientRect()
+    setMenuLeft(pill.left - bar.left)
+  }, [menuOpen, activeId, areas])
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as Node
+      if (!menuRef.current?.contains(target) && !activeRef.current?.contains(target)) setMenuOpen(false)
+    }
+    const onKey = (e: globalThis.KeyboardEvent) => { if (e.key === 'Escape') setMenuOpen(false) }
+    document.addEventListener('mousedown', onClick)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onClick)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [menuOpen])
+
+  useEffect(() => { setMenuOpen(false) }, [activeId])
+
   const startRename = (area: GardenArea) => {
+    setMenuOpen(false)
     setError('')
     setDraft(area.name)
     setEditingId(area.id)
@@ -78,8 +110,18 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
       .finally(() => setDeletingId(null))
   }
 
+  const chooseKind = (indoor: boolean) => {
+    if (!active || active.indoor === indoor || savingKind) return
+    setSavingKind(true)
+    setError('')
+    onSetIndoor(active.id, indoor)
+      .then(() => setMenuOpen(false))
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setSavingKind(false))
+  }
+
   return (
-    <div id='garden-areas' role='navigation' aria-label='Garden plots'>
+    <div id='garden-areas' ref={barRef} role='navigation' aria-label='Garden plots'>
       <ul className='area-tabs'>
         {areas.map(area => {
           const isActive = area.id === activeId
@@ -108,10 +150,13 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
               ) : (
                 <button
                   type='button'
-                  className={`area-tab ${isActive ? 'active' : ''}`}
+                  ref={isActive ? activeRef : undefined}
+                  className={`area-tab ${isActive ? 'active' : ''} ${isActive && menuOpen ? 'menu-open' : ''}`}
                   aria-current={isActive ? 'page' : undefined}
-                  title={isActive ? 'Click to rename' : `Open ${area.name}`}
-                  onClick={() => (isActive ? startRename(area) : onSelect(area.id))}
+                  aria-haspopup={isActive ? 'menu' : undefined}
+                  aria-expanded={isActive ? menuOpen : undefined}
+                  title={isActive ? `${area.name} settings` : `Open ${area.name}`}
+                  onClick={() => (isActive ? setMenuOpen(o => !o) : onSelect(area.id))}
                 >
                   <span className='material-symbols-rounded area-icon'>{icon}</span>
                   <span className='area-name'>{area.name}</span>
@@ -120,7 +165,7 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
                       <span className='material-symbols-rounded'>water_drop</span>{area.needs_water_count}
                     </span>
                   )}
-                  {isActive && <span className='material-symbols-rounded area-edit'>edit</span>}
+                  {isActive && <span className='material-symbols-rounded area-chevron'>expand_more</span>}
                 </button>
               )}
             </li>
@@ -135,22 +180,44 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
         </li>
       </ul>
 
-      {active && (
-        <div className='area-settings'>
-          <div className='area-kind' role='radiogroup' aria-label={`${active.name} is`}>
-            <button type='button' role='radio' aria-checked={!active.indoor} className={!active.indoor ? 'on' : ''}
-              title='Outdoors: rain counts as watering, frost warnings apply' onClick={() => active.indoor && onSetIndoor(active.id, false)}>
-              <span className='material-symbols-rounded'>wb_sunny</span>Outdoor
-            </button>
-            <button type='button' role='radio' aria-checked={active.indoor} className={active.indoor ? 'on' : ''}
-              title='Indoors: no rain credit and no frost warnings' onClick={() => !active.indoor && onSetIndoor(active.id, true)}>
-              <span className='material-symbols-rounded'>home</span>Indoor
-            </button>
+      {menuOpen && active && (
+        <div className='area-menu' ref={menuRef} role='menu' style={{ left: menuLeft }}>
+          <button type='button' role='menuitem' className='area-menu-item' onClick={() => startRename(active)}>
+            <span className='material-symbols-rounded'>edit</span>Rename
+          </button>
+
+          <p className='area-menu-label'>Where is this plot?</p>
+          <div role='radiogroup' aria-label={`Where is ${active.name}?`}>
+            {[
+              { indoor: false, icon: 'wb_sunny', title: 'Outdoors', detail: 'Rain counts as watering. Frost warnings apply.' },
+              { indoor: true, icon: 'home', title: 'Indoors', detail: 'No rain credit or frost warnings.' },
+            ].map(kind => {
+              const chosen = active.indoor === kind.indoor
+              return (
+                <button key={kind.title} type='button' role='radio' aria-checked={chosen}
+                  className={`area-menu-item area-kind-option ${chosen ? 'chosen' : ''}`}
+                  disabled={savingKind} onClick={() => chooseKind(kind.indoor)}>
+                  <span className='material-symbols-rounded'>{kind.icon}</span>
+                  <span className='area-kind-text'>
+                    <strong>{kind.title}</strong>
+                    <small>{kind.detail}</small>
+                  </span>
+                  <span className='material-symbols-rounded area-check' aria-hidden='true'>
+                    {savingKind && !chosen ? '' : chosen ? 'check' : ''}
+                  </span>
+                </button>
+              )
+            })}
           </div>
+
           {areas.length > 1 && (
-            <button type='button' className='area-delete' disabled={deletingId !== null} title={`Delete ${active.name}`} aria-label={`Delete ${active.name}`} onClick={() => setConfirmDelete(active)}>
-              <span className='material-symbols-rounded'>delete</span>
-            </button>
+            <>
+              <hr />
+              <button type='button' role='menuitem' className='area-menu-item danger'
+                disabled={deletingId !== null} onClick={() => { setMenuOpen(false); setConfirmDelete(active) }}>
+                <span className='material-symbols-rounded'>delete</span>Delete plot
+              </button>
+            </>
           )}
         </div>
       )}
