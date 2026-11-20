@@ -35,3 +35,18 @@
 //     }
 //   }
 // }
+// Pick a sidebar plant category (the picker replaced the old tab row).
+Cypress.Commands.add('chooseCategory', (id: string) => {
+  cy.get('.category-picker').click()
+  cy.get(`.category-option.${id}-tab`).click()
+})
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      chooseCategory(id: string): Chainable<void>
+    }
+  }
+}
+
+export {}

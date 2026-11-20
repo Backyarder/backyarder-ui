@@ -18,43 +18,8 @@
   padding-right: 0.3em;
 }
 
-.sidebar-nav {
-  margin: 0.2em;
-  margin-bottom: 1em;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3em;
-}
 
-// Seven tabs: four on the first row, three on the second.
-.sidebar-nav .sidebar-tab { flex: 1 1 22%; }
-.sidebar-nav .succulents-tab, .sidebar-nav .indoor-tab, .sidebar-nav .decor-tab { flex-basis: 30%; }
 
-// Three tabs share the sidebar width equally.
-.sidebar-tab{
-  border: none;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.25em;
-  flex: 1 1 0;
-  min-width: 0;
-  height: 2.5em;
-  padding: 0.4em 0.2em;
-  color: #483C3C;
-  font-size: 0.85em;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-
-  .material-symbols-rounded { font-size: 20px; }
-}
-
-// On laptop widths the sidebar is narrow: drop the icons, keep the words.
-@media (max-width: 1360px) {
-  .sidebar-tab { font-size: 0.8em; }
-  .sidebar-tab .material-symbols-rounded { display: none; }
-}
 
 .search {
   display: flex;

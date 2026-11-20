@@ -14,7 +14,7 @@ describe('Hardiness zone fit', () => {
   })
 
   it('marks each card against the zone and can hide the ones that will not survive', () => {
-    cy.get('.trees-tab').click()
+    cy.chooseCategory('trees')
     cy.get('.card').should('have.length', 3)
     cy.contains('.card', 'RED MAPLE').find('.zone-fits').should('exist')
     cy.contains('.card', 'MANGO').find('.zone-too-cold').should('exist')
@@ -25,7 +25,7 @@ describe('Hardiness zone fit', () => {
     cy.get('.zone-hidden').should('contain', '2 hidden')
 
     cy.reload()
-    cy.get('.trees-tab').click()
+    cy.chooseCategory('trees')
     cy.get('.zone-toggle input').should('be.checked')
     cy.get('.card').should('have.length', 1)
     cy.get('.zone-toggle input').uncheck()
@@ -33,7 +33,7 @@ describe('Hardiness zone fit', () => {
   })
 
   it('shows no zone toggle on the INDOOR tab', () => {
-    cy.get('.indoor-tab').click()
+    cy.chooseCategory('indoor')
     cy.get('.zone-toggle').should('not.exist')
   })
 })

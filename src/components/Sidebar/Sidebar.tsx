@@ -1,6 +1,7 @@
 import { useState, useEffect, ChangeEvent } from "react"
 import { nanoid } from 'nanoid'
 import Card from "../Card/Card"
+import CategoryPicker, { Category } from "./CategoryPicker"
 import './Sidebar.scss'
 import { getPlantList, searchPlants } from "../../apiCalls"
 import decorData from '../../decor_data.json'
@@ -92,6 +93,18 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
     // KITCHEN and DECOR are short local lists: filter them as you type.
     const matchesFilter = (name: string | undefined) => !searchTerm.trim() || (name ?? '').toLowerCase().includes(searchTerm.trim().toLowerCase())
 
+    // Counts per category for the picker (PLANTS = nursery and search results).
+    const countIn = (id: string) => (plantList ?? []).filter(plant => (plant.attributes.collection ?? 'plants') === id).length
+    const categories: Category[] = [
+        { id: 'plants', label: 'Nursery', icon: 'potted_plant', count: countIn('plants') },
+        { id: 'kitchen', label: 'Kitchen garden', icon: 'nutrition', count: countIn('kitchen') },
+        { id: 'flowers', label: 'Flowers', icon: 'local_florist', count: countIn('flowers') },
+        { id: 'trees', label: 'Trees & shrubs', icon: 'park', count: countIn('trees') },
+        { id: 'succulents', label: 'Succulents & cacti', icon: 'psychiatry', count: countIn('succulents') },
+        { id: 'indoor', label: 'Houseplants', icon: 'chair', count: countIn('indoor') },
+        { id: 'decor', label: 'Decor', icon: 'deck', count: (decorList ?? []).length },
+    ]
+
     let cards;
     let hiddenByZone = 0;
 
@@ -167,51 +180,7 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
 
     return (
         <section id='plants'>
-            <div className="sidebar-nav">
-                <button className="plants-tab sidebar-tab" onClick={() => { setActiveTab('plants') }} style={{
-                    backgroundColor: (activeTab !== 'plants') ? '#beab95' : '#f4f4f4',
-                      cursor: (activeTab === 'plants') ? 'auto' : 'pointer'
-                }}><span className="material-symbols-rounded">
-                potted_plant
-                </span>PLANTS</button>
-                <button className="kitchen-tab sidebar-tab" onClick={() => { setActiveTab('kitchen') }} style={{
-                    backgroundColor: (activeTab !== 'kitchen') ? '#beab95' : '#f4f4f4',
-                      cursor: (activeTab === 'kitchen') ? 'auto' : 'pointer'
-                }}><span className="material-symbols-rounded">
-                nutrition
-                </span>KITCHEN</button>
-                <button className="flowers-tab sidebar-tab" onClick={() => { setActiveTab('flowers') }} style={{
-                    backgroundColor: (activeTab !== 'flowers') ? '#beab95' : '#f4f4f4',
-                      cursor: (activeTab === 'flowers') ? 'auto' : 'pointer'
-                }}><span className="material-symbols-rounded">
-                local_florist
-                </span>FLOWERS</button>
-                <button className="trees-tab sidebar-tab" onClick={() => { setActiveTab('trees') }} style={{
-                    backgroundColor: (activeTab !== 'trees') ? '#beab95' : '#f4f4f4',
-                      cursor: (activeTab === 'trees') ? 'auto' : 'pointer'
-                }}><span className="material-symbols-rounded">
-                park
-                </span>TREES</button>
-                <button className="succulents-tab sidebar-tab" onClick={() => { setActiveTab('succulents') }} style={{
-                    backgroundColor: (activeTab !== 'succulents') ? '#beab95' : '#f4f4f4',
-                      cursor: (activeTab === 'succulents') ? 'auto' : 'pointer'
-                }}><span className="material-symbols-rounded">
-                psychiatry
-                </span>SUCCULENTS</button>
-                <button className="indoor-tab sidebar-tab" onClick={() => { setActiveTab('indoor') }} style={{
-                    backgroundColor: (activeTab !== 'indoor') ? '#beab95' : '#f4f4f4',
-                      cursor: (activeTab === 'indoor') ? 'auto' : 'pointer'
-                }}><span className="material-symbols-rounded">
-                potted_plant
-                </span>INDOOR</button>
-                <button className="decor-tab sidebar-tab" onClick={() => { setActiveTab('decor') }}
-                    style={{
-                        backgroundColor: (activeTab !== 'decor') ? '#beab95' : '#f4f4f4',
-                        cursor: (activeTab === 'decor') ? 'auto' : 'pointer'
-                    }}><span className="material-symbols-rounded">
-                    deck
-                    </span>DECOR</button>
-            </div>
+            <CategoryPicker categories={categories} active={activeTab} onChange={setActiveTab} />
             <div className="search">
                 <input
                     className="search-bar"
