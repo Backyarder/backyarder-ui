@@ -7,6 +7,7 @@ import { getPlantDetails } from "../../apiCalls"
 import { companionsFor } from '../../companions'
 import { useAuth } from '../../auth/AuthContext'
 import { zoneFit, zoneFitText } from '../../zones'
+import { plantImageSrc, onImageError } from '../../imageFallback'
 
 type PlantDetailsType = {
     id: number,
@@ -35,7 +36,16 @@ type PlantDetailsType = {
     poisonous_to_pets: boolean,
     drought_tolerant: boolean,
     invasive: boolean,
-    indoor: boolean
+    indoor: boolean,
+    image_credit?: ImageCredit | null
+}
+
+// Attribution for a Wikimedia Commons photo (built-in plants).
+type ImageCredit = {
+    author: string,
+    license: string,
+    license_url: string,
+    source_url: string
 }
 
 const Detail = () => {
@@ -87,9 +97,18 @@ const Detail = () => {
                 plantDetails ?
                 <div className='detail-page'>
                     <section className="top-of-page">
-                        <div className={`hero-image ${isIcon(plantDetails.image) ? 'is-icon' : ''}`}>
-                            <img className="plant-img" src={plantDetails.image ? plantDetails.image : `/images/plant-fallback.png`} alt={`A ${plantDetails["name"]}`} />
-                        </div>
+                        <figure className='hero-figure'>
+                            <div className={`hero-image ${isIcon(plantDetails.image) ? 'is-icon' : ''}`}>
+                                <img className="plant-img" src={plantImageSrc(plantDetails.image)} onError={onImageError} alt={`A ${plantDetails["name"]}`} />
+                            </div>
+                            {plantDetails.image_credit && (
+                                <figcaption className='image-credit'>
+                                    Photo: <a href={plantDetails.image_credit.source_url} target='_blank' rel='noreferrer'>{plantDetails.image_credit.author}</a>
+                                    {', '}<a href={plantDetails.image_credit.license_url} target='_blank' rel='noreferrer'>{plantDetails.image_credit.license}</a>
+                                    {', Wikimedia Commons'}
+                                </figcaption>
+                            )}
+                        </figure>
                         <div className='at-a-glance'>
                             <div className="header-container">
                                 <div className="names">

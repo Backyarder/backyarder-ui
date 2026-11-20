@@ -22,6 +22,7 @@ describe('Details Page', () => {
     cy.url().should('eq', 'http://localhost:3000/plants/2692')
 
     cy.get('.plant-img').should('be.visible')
+    cy.get('.image-credit').should('not.exist') // only built-in plants carry a Commons photo credit
     cy.get('.common').should('have.text', 'CONEFLOWER')
     cy.get('.scientific').should('have.text', `Echinacea 'Tomato Soup'`)
     cy.get('.sun').should('have.text', 'sunnyFull sun, Part shade')
