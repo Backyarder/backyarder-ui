@@ -1,0 +1,156 @@
+// Garden area tabs: a single row under the alert banner, matching the
+// sidebar's warm palette.
+#garden-areas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 44px;
+  margin: 10px 1em 0;
+  padding: 0 0.2em;
+  color: #483C3C;
+  position: relative;
+  align-self: stretch;           // the app column centres its children
+  box-sizing: border-box;
+}
+
+.area-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+.area-tab, .area-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.95em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.area-tab {
+  background: #e9e0d4;
+  color: #5c4f49;
+
+  &:hover { background: #ded2c3; }
+  .area-icon { font-size: 19px; color: #786961; }
+  .area-name { max-width: 16em; overflow: hidden; text-overflow: ellipsis; }
+
+  &.active {
+    background: #fff;
+    color: #3f3430;
+    font-weight: bolder;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    cursor: text;
+    .area-icon { color: #6f9a12; }
+  }
+
+  .area-edit { font-size: 16px; color: #b3a596; }
+  &.active:hover .area-edit { color: #786961; }
+
+  &.editing { padding-right: 6px; }
+}
+
+.area-name-input {
+  width: 12em;
+  border: none;
+  border-bottom: 2px solid #6f9a12;
+  background: transparent;
+  font: inherit;
+  color: #3f3430;
+  &:focus { outline: none; }
+}
+
+.area-due {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  padding: 0 6px 0 3px;
+  border-radius: 999px;
+  background: #e1f1fb;
+  color: #1f78b4;
+  font-size: 0.8em;
+  font-weight: bold;
+  .material-symbols-rounded { font-size: 15px; }
+}
+
+.area-add {
+  background: transparent;
+  color: #786961;
+  border: 1.5px dashed #c8b9a6;
+  .material-symbols-rounded { font-size: 18px; }
+  &:hover { background: #f1ebe3; color: #483C3C; }
+}
+
+.area-settings {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding-left: 12px;
+  border-left: 1px solid #e0d6c9;
+}
+
+.area-kind {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: #e9e0d4;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 28px;
+    padding: 0 10px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: #786961;
+    font: inherit;
+    font-size: 0.85em;
+    cursor: pointer;
+    .material-symbols-rounded { font-size: 17px; }
+
+    &.on { background: #fff; color: #3f3430; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12); cursor: default; }
+    &.on:first-child .material-symbols-rounded { color: #e0a100; }
+    &.on:last-child .material-symbols-rounded { color: #6f9a12; }
+  }
+}
+
+.area-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #a08f80;
+  cursor: pointer;
+  &:hover { background: #f6e3dc; color: #b2603a; }
+}
+
+.area-error {
+  position: absolute;
+  top: 100%;
+  left: 1em;
+  margin: 2px 0 0;
+  font-size: 0.85em;
+  color: #b2603a;
+}

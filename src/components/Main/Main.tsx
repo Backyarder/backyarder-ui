@@ -4,8 +4,10 @@ import Nav from '../Nav/Nav';
 import List from '../List/List';
 import AlertBanner from '../AlertBanner/AlertBanner';
 import SelectedCellPanel from '../CellActions/SelectedCellPanel';
-import { useCallback, useEffect, useState } from 'react';
-import { getGarden, getWishlist, addToWishlist, removeFromWishlist, getAlerts, Alerts, deleteContents, waterCell } from '../../apiCalls';
+import GardenAreas from '../GardenAreas/GardenAreas';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { getGarden, getWishlist, addToWishlist, removeFromWishlist, getAlerts, Alerts, deleteContents, waterCell,
+  GardenArea, getGardenAreas, createGardenArea, updateGardenArea, deleteGardenArea, setActiveGardenId } from '../../apiCalls';
 import './Main.scss';
 
 export type GardenKeys = CellKeys[];
@@ -17,6 +19,11 @@ type GetGardenKeys = {
 }
 
 export type WishlistType = number; // plant_id
+
+const AREA_KEY = 'backyarder:garden-area';
+const savedAreaId = (): number | null => {
+  try { const v = localStorage.getItem(AREA_KEY); return v ? Number(v) : null } catch { return null }
+};
 
 // Everything a cell forgets when it is emptied.
 const EMPTIED: CellChanges = {
@@ -36,6 +43,9 @@ const Main = () => {
   const [confirmClear, setConfirmClear] = useState<ClearScope | null>(null);
   const [wishlist, setWishlist] = useState<WishlistType[]>([]);
   const [alerts, setAlerts] = useState<Alerts | undefined>();
+  const [areas, setAreas] = useState<GardenArea[]>([]);
+  const [activeAreaId, setActiveAreaId] = useState<number | null>(null);
+  const gardenRequest = useRef<number>(0);   // ignore a slow response for an area we've left
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -49,13 +59,35 @@ const Main = () => {
   }, []);
 
   const loadGarden = useCallback(() => {
+    const ticket = ++gardenRequest.current;
     return getGarden()
-      .then(data => setGarden(data.data.map((cell: GetGardenKeys) => cell.attributes)))
+      .then(data => { if (ticket === gardenRequest.current) setGarden(data.data.map((cell: GetGardenKeys) => cell.attributes)) })
       .catch((err: Error) => setApiError(err));
   }, []);
 
+  // Counts on the area tabs (plants due) come from the server.
+  const refreshAreas = useCallback(() => getGardenAreas().then(setAreas).catch(() => undefined), []);
+
+  const openArea = useCallback((id: number) => {
+    setActiveGardenId(id);
+    setActiveAreaId(id);
+    setOpenCellId(null);
+    setConfirmClear(null);
+    try { localStorage.setItem(AREA_KEY, String(id)) } catch {}
+    return loadGarden();
+  }, [loadGarden]);
+
   useEffect(() => {
-    loadGarden();
+    // Areas first so the grid opens on the one you used last.
+    getGardenAreas()
+      .then(list => {
+        setAreas(list);
+        const saved = savedAreaId();
+        const first = list.find(a => a.id === saved) ?? list[0];
+        if (first) return openArea(first.id);
+        return loadGarden();
+      })
+      .catch(() => loadGarden());
     getWishlist()
       .then(setWishlist)
       .catch(() => setWishlist([]));
@@ -63,7 +95,7 @@ const Main = () => {
     getAlerts()
       .then(setAlerts)
       .catch(() => undefined);
-  }, [loadGarden]);
+  }, [loadGarden, openArea]);
 
   const updateCell = useCallback((locationId: string, changes: CellChanges) => {
     setGarden(prev => prev.map(cell => cell.location_id === locationId ? { ...cell, ...changes } : cell));
@@ -91,7 +123,37 @@ const Main = () => {
           })
           .catch(loadGarden);
       });
+    window.setTimeout(refreshAreas, 1500);
   }
+
+  const addArea = (): Promise<GardenArea> =>
+    createGardenArea('New area').then(area => {
+      setAreas(prev => [...prev, area]);
+      openArea(area.id);
+      return area;
+    });
+
+  const renameArea = (id: number, name: string): Promise<void> =>
+    updateGardenArea(id, { name }).then(setAreas);
+
+  const setAreaIndoor = (id: number, indoor: boolean) => {
+    setAreas(prev => prev.map(a => a.id === id ? { ...a, indoor } : a));
+    updateGardenArea(id, { indoor })
+      .then(list => { setAreas(list); loadGarden(); getAlerts().then(setAlerts).catch(() => undefined) })
+      .catch(refreshAreas);
+  }
+
+  const removeArea = (id: number) => {
+    deleteGardenArea(id)
+      .then(list => {
+        setAreas(list);
+        if (id === activeAreaId && list[0]) openArea(list[0].id);
+        getAlerts().then(setAlerts).catch(() => undefined);
+      })
+      .catch(refreshAreas);
+  }
+
+  const activeArea = areas.find(a => a.id === activeAreaId) ?? null;
 
   const askToClear = (scope: ClearScope) => {
     setOpenCellId(null);
@@ -122,7 +184,18 @@ const Main = () => {
         </div>
       ) : (
         <>
-        {isDesktop && isGardenView && <AlertBanner garden={garden} alerts={alerts} />}
+        {isDesktop && isGardenView && <AlertBanner garden={garden} alerts={alerts} area={activeArea} otherAreas={areas.filter(a => a.id !== activeAreaId)} />}
+        {isDesktop && areas.length > 0 && (
+          <GardenAreas
+            areas={areas}
+            activeId={activeAreaId}
+            onSelect={openArea}
+            onAdd={addArea}
+            onRename={renameArea}
+            onSetIndoor={setAreaIndoor}
+            onDelete={removeArea}
+          />
+        )}
         <main>
           {isDesktop ?
             <>

@@ -68,7 +68,7 @@ const resetPassword = (token: string, password: string): Promise<User> =>
 
 export type Alerts = {
   date: string
-  needs_water: { location_id: string; name: string | null; plant_id: number | null; watering: string | null; next_water_at: string | null }[]
+  needs_water: { location_id: string; name: string | null; plant_id: number | null; watering: string | null; next_water_at: string | null; garden_id?: number; garden_name?: string }[]
   recent_rain_in: number
   rain_covers_watering: boolean
   rain_watered_on?: string | null   // a day with enough rain to count as watering outdoor plants
@@ -93,7 +93,34 @@ const removeFromWishlist = (plant_id: number) => request(`/wishlist/${plant_id}`
 // nothing changed), so an old saved copy can never hide new plants.
 const getPlantList = () => request('/plants', { cache: 'no-cache' })
 
-const getGarden = () => request('/garden')
+// The garden area the grid is showing. Cell and garden calls go to it, so
+// components that change cells don't need to know which area they are in.
+let activeGardenId: number | null = null
+export const setActiveGardenId = (id: number | null) => { activeGardenId = id }
+const areaQuery = () => activeGardenId === null ? '' : `?garden_id=${activeGardenId}`
+const withArea = <T extends object>(body: T) => activeGardenId === null ? body : { ...body, garden_id: activeGardenId }
+
+const getGarden = () => request(`/garden${areaQuery()}`)
+
+export type GardenArea = {
+  id: number
+  name: string
+  indoor: boolean
+  position: number
+  plant_count: number
+  needs_water_count: number
+}
+
+type GardenAreaResource = { id: string; type: string; attributes: Omit<GardenArea, 'id'> }
+const toArea = (resource: GardenAreaResource): GardenArea => ({ ...resource.attributes, id: Number(resource.id) })
+const toAreas = (body: { data: GardenAreaResource[] }): GardenArea[] => body.data.map(toArea)
+
+const getGardenAreas = (): Promise<GardenArea[]> => request('/gardens').then(toAreas)
+const createGardenArea = (name: string, indoor = false): Promise<GardenArea> =>
+  jsonRequest('/gardens', 'POST', { name, indoor }).then((body: { data: GardenAreaResource }) => toArea(body.data))
+const updateGardenArea = (id: number, changes: { name?: string; indoor?: boolean }): Promise<GardenArea[]> =>
+  jsonRequest(`/gardens/${id}`, 'PATCH', changes).then(toAreas)
+const deleteGardenArea = (id: number): Promise<GardenArea[]> => jsonRequest(`/gardens/${id}`, 'DELETE').then(toAreas)
 
 // Public aggregate numbers (no personal data); used for the searchable-plant count.
 const getStats = () => request('/stats', { cache: 'no-cache' })
@@ -141,7 +168,7 @@ export type PlacedPlant = {
 }
 
 const patchCellContents = (plant: PlacedPlant, id: string, status: keyof StatusType, watering?: keyof WateringType | null) => {
-  return jsonRequest('/cell', 'PATCH', {
+  return jsonRequest('/cell', 'PATCH', withArea({
     name: plant.name,
     content_type: plant.content_type,
     location_id: id,
@@ -150,11 +177,11 @@ const patchCellContents = (plant: PlacedPlant, id: string, status: keyof StatusT
     // Unknown watering is left out so the backend can look it up.
     watering: watering ? WATERING_MAP[watering] : undefined,
     plant_id: plant.plant_id
-  })
+  }))
 }
 
 const patchDisabledOrRemoved = (id: string, status: keyof StatusType) => {
-  return jsonRequest('/cell', 'PATCH', {
+  return jsonRequest('/cell', 'PATCH', withArea({
     name: null,
     content_type: null,
     location_id: id,
@@ -162,14 +189,14 @@ const patchDisabledOrRemoved = (id: string, status: keyof StatusType) => {
     status: STATUS_MAP[`${status}`],
     watering: 'None',
     plant_id: null
-  })
+  }))
 }
 
 // Records a watering; the response carries the new next_water_at.
-const waterCell = (id: string) => jsonRequest('/cell', 'PATCH', { action: 'water', location_id: id })
+const waterCell = (id: string) => jsonRequest('/cell', 'PATCH', withArea({ action: 'water', location_id: id }))
 
 // 'all' empties every cell; 'garden' empties only placed (unplanted) ones.
-const deleteContents = (path: 'all' | 'garden'): Promise<null> => request(`/${path}`, { method: 'DELETE' })
+const deleteContents = (path: 'all' | 'garden'): Promise<null> => request(`/${path}${areaQuery()}`, { method: 'DELETE' })
 
-export { getPlantList, getGarden, getStats, searchPlants, getPlantDetails, patchCellContents, patchDisabledOrRemoved, waterCell, deleteContents,
+export { getPlantList, getGarden, getGardenAreas, createGardenArea, updateGardenArea, deleteGardenArea, getStats, searchPlants, getPlantDetails, patchCellContents, patchDisabledOrRemoved, waterCell, deleteContents,
   getMe, signup, login, logout, updateMe, forgotPassword, resetPassword, getAlerts, getWishlist, addToWishlist, removeFromWishlist }
