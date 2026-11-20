@@ -12,6 +12,7 @@ type Entry = {
   keywords: string[]
   good: string[]   // ids of entries this one likes next to it
   bad: string[]    // ids of entries to keep away from
+  endsWith?: boolean  // match only when the name ends in a keyword ("shrub rose", not "rose glory bower")
 }
 
 const ENTRIES: Entry[] = [
@@ -19,7 +20,7 @@ const ENTRIES: Entry[] = [
   { id: 'basil', label: 'basil', keywords: ['basil'], good: ['tomato', 'pepper', 'oregano', 'asparagus', 'marigold'], bad: ['rue', 'sage'] },
   { id: 'carrot', label: 'carrots', keywords: ['carrot'], good: ['tomato', 'allium', 'chive', 'lettuce', 'pea', 'bean', 'rosemary', 'sage', 'radish'], bad: ['dill', 'parsnip'] },
   { id: 'allium', label: 'onions and garlic', keywords: ['onion', 'garlic', 'leek', 'shallot', 'scallion'], good: ['carrot', 'beet', 'tomato', 'lettuce', 'brassica', 'strawberry', 'chamomile'], bad: ['bean', 'pea', 'asparagus'] },
-  { id: 'chive', label: 'chives', keywords: ['chive', 'chives'], good: ['carrot', 'tomato', 'lettuce', 'brassica', 'strawberry'], bad: ['bean', 'pea'] },
+  { id: 'chive', label: 'chives', keywords: ['chive', 'chives'], good: ['carrot', 'tomato', 'lettuce', 'brassica', 'strawberry', 'rose'], bad: ['bean', 'pea'] },
   { id: 'bean', label: 'beans', keywords: ['bean', 'beans'], good: ['corn', 'squash', 'cucumber', 'carrot', 'brassica', 'potato', 'strawberry', 'radish', 'marigold', 'rosemary', 'pea'], bad: ['allium', 'chive', 'pepper', 'sunflower', 'fennel'] },
   { id: 'pea', label: 'peas', keywords: ['pea', 'peas'], good: ['carrot', 'radish', 'turnip', 'cucumber', 'corn', 'bean', 'spinach', 'lettuce', 'mint'], bad: ['allium', 'chive'] },
   { id: 'corn', label: 'corn', keywords: ['corn', 'maize'], good: ['bean', 'squash', 'cucumber', 'pea', 'melon', 'potato', 'sunflower', 'dill'], bad: ['tomato', 'celery'] },
@@ -27,9 +28,11 @@ const ENTRIES: Entry[] = [
   { id: 'cucumber', label: 'cucumbers', keywords: ['cucumber'], good: ['bean', 'pea', 'corn', 'radish', 'sunflower', 'dill', 'nasturtium', 'lettuce'], bad: ['potato', 'sage'] },
   { id: 'lettuce', label: 'lettuce', keywords: ['lettuce'], good: ['carrot', 'radish', 'strawberry', 'cucumber', 'allium', 'chive', 'beet'], bad: [] },
   { id: 'pepper', label: 'peppers', keywords: ['pepper', 'peppers', 'capsicum', 'chili', 'chilli', 'jalapeno'], good: ['basil', 'tomato', 'allium', 'carrot', 'oregano', 'marjoram', 'parsley'], bad: ['bean', 'fennel', 'brassica'] },
+  // Listed before potato so "sweet potato" does not match it; no classic pairings.
+  { id: 'sweetpotato', label: 'sweet potatoes', keywords: ['sweet potato', 'sweet potatoes'], good: [], bad: [] },
   { id: 'potato', label: 'potatoes', keywords: ['potato', 'potatoes'], good: ['bean', 'corn', 'brassica', 'horseradish', 'marigold', 'pea'], bad: ['tomato', 'cucumber', 'squash', 'sunflower'] },
-  { id: 'brassica', label: 'the cabbage family', keywords: ['cabbage', 'broccoli', 'cauliflower', 'kale', 'brussels', 'kohlrabi', 'collard', 'collards'], good: ['allium', 'chive', 'beet', 'celery', 'dill', 'chamomile', 'potato', 'rosemary', 'sage', 'thyme', 'nasturtium', 'spinach', 'mint'], bad: ['tomato', 'strawberry', 'pepper'] },
-  { id: 'beet', label: 'beets', keywords: ['beet', 'beets', 'beetroot'], good: ['allium', 'brassica', 'lettuce', 'bean'], bad: ['mustard'] },
+  { id: 'brassica', label: 'the cabbage family', keywords: ['cabbage', 'broccoli', 'cauliflower', 'kale', 'brussels', 'kohlrabi', 'collard', 'collards', 'arugula', 'bok choy'], good: ['allium', 'chive', 'beet', 'celery', 'dill', 'chamomile', 'potato', 'rosemary', 'sage', 'thyme', 'nasturtium', 'spinach', 'mint'], bad: ['tomato', 'strawberry', 'pepper'] },
+  { id: 'beet', label: 'beets', keywords: ['beet', 'beets', 'beetroot', 'chard'], good: ['allium', 'brassica', 'lettuce', 'bean'], bad: ['mustard'] },
   { id: 'radish', label: 'radishes', keywords: ['radish', 'radishes'], good: ['cucumber', 'lettuce', 'pea', 'carrot', 'bean', 'squash', 'nasturtium', 'spinach'], bad: ['hyssop'] },
   { id: 'spinach', label: 'spinach', keywords: ['spinach'], good: ['strawberry', 'pea', 'bean', 'brassica', 'radish', 'lettuce'], bad: [] },
   { id: 'strawberry', label: 'strawberries', keywords: ['strawberry', 'strawberries'], good: ['bean', 'lettuce', 'spinach', 'allium', 'borage', 'thyme'], bad: ['brassica'] },
@@ -40,7 +43,7 @@ const ENTRIES: Entry[] = [
   { id: 'fennel', label: 'fennel', keywords: ['fennel'], good: [], bad: ['tomato', 'bean', 'pepper', 'eggplant', 'cucumber', 'brassica', 'coriander'] },
   { id: 'dill', label: 'dill', keywords: ['dill'], good: ['brassica', 'cucumber', 'corn', 'lettuce', 'allium'], bad: ['carrot', 'tomato'] },
   { id: 'mint', label: 'mint', keywords: ['mint', 'spearmint'], good: ['brassica', 'tomato', 'pea'], bad: [] },
-  { id: 'rosemary', label: 'rosemary', keywords: ['rosemary'], good: ['bean', 'brassica', 'carrot', 'sage'], bad: [] },
+  { id: 'rosemary', label: 'rosemary', keywords: ['rosemary'], good: ['bean', 'brassica', 'carrot', 'sage', 'lavender'], bad: [] },
   { id: 'sage', label: 'sage', keywords: ['sage'], good: ['rosemary', 'brassica', 'carrot', 'strawberry'], bad: ['cucumber', 'basil'] },
   { id: 'thyme', label: 'thyme', keywords: ['thyme'], good: ['brassica', 'strawberry', 'eggplant', 'tomato'], bad: [] },
   { id: 'parsley', label: 'parsley', keywords: ['parsley'], good: ['tomato', 'asparagus', 'carrot', 'pepper', 'corn'], bad: [] },
@@ -57,10 +60,12 @@ const ENTRIES: Entry[] = [
   { id: 'hyssop', label: 'hyssop', keywords: ['hyssop'], good: ['brassica'], bad: ['radish'] },
   { id: 'rue', label: 'rue', keywords: ['rue'], good: [], bad: ['basil'] },
   { id: 'horseradish', label: 'horseradish', keywords: ['horseradish'], good: ['potato'], bad: [] },
+  { id: 'lavender', label: 'lavender', keywords: ['lavender'], good: ['brassica', 'rose', 'rosemary', 'sage', 'thyme'], bad: [] },
+  { id: 'rose', label: 'roses', keywords: ['rose', 'roses'], endsWith: true, good: ['allium', 'chive', 'marigold', 'lavender', 'parsley'], bad: [] },
 ]
 
 const BY_ID = new Map(ENTRIES.map(e => [e.id, e]))
-const KEYWORD_PATTERNS = ENTRIES.map(e => ({ entry: e, pattern: new RegExp(`\\b(${e.keywords.join('|')})\\b`, 'i') }))
+const KEYWORD_PATTERNS = ENTRIES.map(e => ({ entry: e, pattern: new RegExp(`\\b(${e.keywords.join('|')})${e.endsWith ? '\\s*$' : '\\b'}`, 'i') }))
 
 // The table entry for a plant's common name, or null if we know nothing about it.
 export const companionEntry = (name: string | null | undefined): Entry | null => {
