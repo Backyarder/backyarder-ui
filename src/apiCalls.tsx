@@ -87,13 +87,16 @@ const removeFromWishlist = (plant_id: number) => request(`/wishlist/${plant_id}`
 
 // --- plants -----------------------------------------------------------------
 
-const getPlantList = () => request('/plants')
+// Plant data changes whenever plants are added or corrected. 'no-cache'
+// makes the browser check with the server every time (a cheap 304 when
+// nothing changed), so an old saved copy can never hide new plants.
+const getPlantList = () => request('/plants', { cache: 'no-cache' })
 
 const getGarden = () => request('/garden')
 
-const searchPlants = (searchterm: string) => request(`/search/${searchterm}`)
+const searchPlants = (searchterm: string) => request(`/search/${searchterm}`, { cache: 'no-cache' })
 
-const getPlantDetails = (id: string | undefined) => request(`/plants/${id}`, { cache: 'force-cache' })
+const getPlantDetails = (id: string | undefined) => request(`/plants/${id}`, { cache: 'no-cache' })
 
 export type StatusType = {
   'empty': number
