@@ -198,8 +198,12 @@ const patchDisabledOrRemoved = (id: string, status: keyof StatusType) => {
 // Records a watering; the response carries the new next_water_at.
 const waterCell = (id: string) => jsonRequest('/cell', 'PATCH', withArea({ action: 'water', location_id: id }))
 
+// A custom watering interval for one cell: days (1-60), 0 = never remind,
+// null = back to the automatic plan. The response carries the new plan.
+const setCellWatering = (id: string, days: number | null) => jsonRequest('/cell', 'PATCH', withArea({ action: 'set_watering', location_id: id, days }))
+
 // 'all' empties every cell; 'garden' empties only placed (unplanted) ones.
 const deleteContents = (path: 'all' | 'garden'): Promise<null> => request(`/${path}${areaQuery()}`, { method: 'DELETE' })
 
-export { getPlantList, getGarden, getGardenAreas, createGardenArea, updateGardenArea, deleteGardenArea, getStats, searchPlants, getPlantDetails, patchCellContents, patchDisabledOrRemoved, waterCell, deleteContents,
+export { getPlantList, getGarden, getGardenAreas, createGardenArea, updateGardenArea, deleteGardenArea, getStats, searchPlants, getPlantDetails, patchCellContents, patchDisabledOrRemoved, waterCell, setCellWatering, deleteContents,
   getMe, signup, login, logout, updateMe, forgotPassword, resetPassword, getAlerts, getWishlist, addToWishlist, removeFromWishlist }

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDrop, useDrag, DragPreviewImage } from 'react-dnd';
 import { CellKeys, CellChanges, DragHover } from '../Grid/Grid';
 import { Relation } from '../../companions';
-import { patchCellContents, patchDisabledOrRemoved, waterCell, PlacedPlant } from '../../apiCalls';
+import { patchCellContents, patchDisabledOrRemoved, waterCell, setCellWatering, PlacedPlant } from '../../apiCalls';
 import { FALLBACK_IMAGE } from '../../imageFallback';
 import './Cell.scss'
 
@@ -26,6 +26,7 @@ export type CellActionHandlers = {
   water: () => void;
   remove: () => void;
   toggleDisabled: () => void;
+  setWatering: (days: number | null) => void;
 };
 
 // Derived facts about a cell record, shared by the grid cell and the side panel.
@@ -34,7 +35,9 @@ export const cellFacts = (cell: CellKeys) => {
   const isPlanted = cell.status === 'locked';
   const isPopulated = !!cell.name && (cell.status === 'placed' || cell.status === 'locked');
   const isPlant = cell.content_type === 'Plant';
-  const onWateringSchedule = isPlanted && isPlant && !!cell.watering && cell.watering !== 'None';
+  // The server's plan decides when it sent one; older backends only send the level.
+  const hasPlan = cell.watering_days !== undefined;
+  const onWateringSchedule = isPlanted && isPlant && (hasPlan ? cell.watering_days !== null : !!cell.watering && cell.watering !== 'None');
   return { isDisabled, isPlanted, isPopulated, isPlant, onWateringSchedule };
 };
 
@@ -45,14 +48,19 @@ const MAX_TIMEOUT_MS = 2 ** 31 - 1
 
 const EMPTIED: CellChanges = {
   image: undefined, name: undefined, content_type: undefined, plant_id: undefined, watering: undefined,
-  status: 'empty', planted_at: null, last_watered_at: null, next_water_at: null, needs_water: false
+  status: 'empty', planted_at: null, last_watered_at: null, next_water_at: null, needs_water: false,
+  watering_override_days: null
 }
+
+const PLAN_FIELDS = ['watering_days', 'watering_reason', 'watering_source', 'watering_auto_days', 'watering_rain_resets', 'watering_override_days'] as const
 
 // Care fields from a PATCH /cell response, when the server sent any.
 const careFrom = (data: any): CellChanges => {
   const attrs = data?.data?.attributes;
   if (!attrs) return {};
-  return { planted_at: attrs.planted_at, last_watered_at: attrs.last_watered_at, next_water_at: attrs.next_water_at, needs_water: attrs.needs_water };
+  const changes: CellChanges = { planted_at: attrs.planted_at, last_watered_at: attrs.last_watered_at, next_water_at: attrs.next_water_at, needs_water: attrs.needs_water };
+  PLAN_FIELDS.forEach(key => { if (key in attrs) (changes as any)[key] = attrs[key] });
+  return changes;
 }
 
 // Every change a cell can make: update the grid first, then tell the server.
@@ -94,7 +102,12 @@ export const useCellActions = (id: string, cell: CellKeys, updateCell: (location
     patchDisabledOrRemoved(id, next).catch(resync);
   };
 
-  return { place, plant, water, remove, toggleDisabled };
+  const setWatering = (days: number | null) => {
+    apply({ watering_override_days: days, watering_source: days === null ? 'auto' : 'custom' });
+    setCellWatering(id, days).then(data => apply(careFrom(data))).catch(resync);
+  };
+
+  return { place, plant, water, remove, toggleDisabled, setWatering };
 };
 
 const Cell = ({ id, cell, isOpen, onOpen, updateCell, resync, showUnavailable, companion, onDragHover }: CellProps) => {
