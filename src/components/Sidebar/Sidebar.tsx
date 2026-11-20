@@ -82,11 +82,11 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
     else if (!plantList || !decorList) {
         cards = <p className="loading">It looks like our nursery is not operating correctly, please try again later</p>
     }
-    else if (plantList.length && (activeTab === 'plants' || activeTab === 'kitchen')) {
-        // Stock ornamentals and search results on PLANTS; the built-in
-        // vegetables, herbs and companion flowers on KITCHEN (filtered as you type).
+    else if (plantList.length && ['plants', 'kitchen', 'flowers', 'trees'].includes(activeTab)) {
+        // Perenual plants and search results on PLANTS; each built-in
+        // collection on its own tab (filtered as you type).
         const shown = plantList
-            .filter(plant => (plant.attributes.collection === 'kitchen') === (activeTab === 'kitchen'))
+            .filter(plant => (plant.attributes.collection ?? 'plants') === activeTab)
             .filter(plant => activeTab === 'plants' || matchesFilter(plant.attributes.name))
         cards = shown.map((plant: PlantData) => {
             const plantImage = plant.attributes.image
@@ -158,6 +158,18 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
                 }}><span className="material-symbols-rounded">
                 nutrition
                 </span>KITCHEN</button>
+                <button className="flowers-tab sidebar-tab" onClick={() => { setActiveTab('flowers') }} style={{
+                    backgroundColor: (activeTab !== 'flowers') ? '#beab95' : '#f4f4f4',
+                      cursor: (activeTab === 'flowers') ? 'auto' : 'pointer'
+                }}><span className="material-symbols-rounded">
+                local_florist
+                </span>FLOWERS</button>
+                <button className="trees-tab sidebar-tab" onClick={() => { setActiveTab('trees') }} style={{
+                    backgroundColor: (activeTab !== 'trees') ? '#beab95' : '#f4f4f4',
+                      cursor: (activeTab === 'trees') ? 'auto' : 'pointer'
+                }}><span className="material-symbols-rounded">
+                park
+                </span>TREES</button>
                 <button className="decor-tab sidebar-tab" onClick={() => { setActiveTab('decor') }}
                     style={{
                         backgroundColor: (activeTab !== 'decor') ? '#beab95' : '#f4f4f4',
@@ -170,7 +182,7 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
                 <input
                     className="search-bar"
                     type="text"
-                    placeholder={activeTab === 'plants' ? 'Search the nursery... ' : activeTab === 'kitchen' ? 'Filter kitchen plants... ' : 'Filter decor... '}
+                    placeholder={activeTab === 'plants' ? 'Search the nursery... ' : `Filter ${activeTab}... `}
                     value={searchTerm}
                     onChange={handleSearchChange}
                     onKeyDown={activeTab === 'plants' ? handleKeyPress : undefined}

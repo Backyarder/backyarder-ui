@@ -1,4 +1,4 @@
-export type IconType = 'Flower' | 'flower' | 'Thistle' | 'Tree' | 'tree' | 'Fruit' | 'fruit' | "Palm or Cycad" | 'Ornamental grass' | 'Vine' | 'Deciduous shrub' | "Rush or Sedge" | 'Shrub' | "Fern" | "Epiphyte" | 'Broadleaf evergreen' | 'Herb' | 'Vegetable';
+export type IconType = 'Flower' | 'flower' | 'Thistle' | 'Tree' | 'tree' | 'Fruit' | 'fruit' | "Palm or Cycad" | 'Ornamental grass' | 'Vine' | 'Deciduous shrub' | "Rush or Sedge" | 'Shrub' | "Fern" | "Epiphyte" | 'Broadleaf evergreen' | 'Herb' | 'Vegetable' | 'Foliage' | 'Cover crop';
 
 export type SunlightType = 'Full sun' | 'full sun' | 'Part shade' | 'part shade' | 'part sun/part shade';
 
@@ -32,7 +32,9 @@ export const ICON_MAP: IconMap = {
         "Epiphyte": 'grass',
         'Broadleaf evergreen': 'park',
         'Herb': 'temp_preferences_eco',
-        'Vegetable': 'Restaurant'
+        'Vegetable': 'Restaurant',
+        'Foliage': 'grass',
+        'Cover crop': 'grass'
     },
     sunlight: {
         'Full sun': 'sunny',
