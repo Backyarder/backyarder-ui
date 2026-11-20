@@ -26,9 +26,9 @@
   gap: 0.3em;
 }
 
-// Five tabs: three on the first row, two on the second.
-.sidebar-nav .sidebar-tab { flex: 1 1 30%; }
-.sidebar-nav .trees-tab, .sidebar-nav .decor-tab { flex-basis: 45%; }
+// Seven tabs: four on the first row, three on the second.
+.sidebar-nav .sidebar-tab { flex: 1 1 22%; }
+.sidebar-nav .succulents-tab, .sidebar-nav .indoor-tab, .sidebar-nav .decor-tab { flex-basis: 30%; }
 
 // Three tabs share the sidebar width equally.
 .sidebar-tab{
