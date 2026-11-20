@@ -14,8 +14,24 @@
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-.hero-image {
+.hero-figure {
   flex: 0 0 300px;
+  margin: 0;
+  min-width: 0;
+}
+
+.image-credit {
+  margin-top: 0.4em;
+  font-size: 0.72em;
+  line-height: 1.3;
+  color: #8a7d75;
+  overflow-wrap: anywhere;
+
+  a { color: inherit; }
+}
+
+.hero-image {
+  width: 100%;
   height: 260px;
   border-radius: 1em;
   overflow: hidden;
@@ -248,7 +264,7 @@
 
 @media (max-width: 1000px) {
   .top-of-page { flex-direction: column; }
-  .hero-image { flex-basis: auto; width: 100%; }
+  .hero-figure { flex-basis: auto; width: 100%; }
   .descriptions-and-more-info { grid-template-columns: 1fr; }
 }
 
