@@ -1,9 +1,12 @@
 #grid {
   display: grid;
-  grid-template-columns: repeat(10, 10%);
+  --max: calc(100vh - 244px);
+  grid-template-columns: repeat(var(--cols, 10), 1fr);
+  grid-template-rows: repeat(var(--rows, 10), 1fr);
   background-color: #beab95;
-  height: calc(100vh - 244px);
-  width: calc(100vh - 244px);
+  height: calc(var(--max) * var(--rows, 10) / var(--n, 10));
+  width: calc(var(--max) * var(--cols, 10) / var(--n, 10));
+  transition: width 0.25s ease, height 0.25s ease;
   border-radius: 15px;
   flex-shrink: 0;
   justify-items: center;

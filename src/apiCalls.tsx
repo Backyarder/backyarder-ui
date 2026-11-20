@@ -107,6 +107,8 @@ export type GardenArea = {
   name: string
   indoor: boolean
   position: number
+  rows: number
+  cols: number
   plant_count: number
   needs_water_count: number
 }
@@ -116,8 +118,9 @@ const toArea = (resource: GardenAreaResource): GardenArea => ({ ...resource.attr
 const toAreas = (body: { data: GardenAreaResource[] }): GardenArea[] => body.data.map(toArea)
 
 const getGardenAreas = (): Promise<GardenArea[]> => request('/gardens').then(toAreas)
-const createGardenArea = (name: string, indoor = false): Promise<GardenArea> =>
-  jsonRequest('/gardens', 'POST', { name, indoor }).then((body: { data: GardenAreaResource }) => toArea(body.data))
+export type NewPlot = { name: string; indoor: boolean; rows: number; cols: number }
+const createGardenArea = (plot: NewPlot): Promise<GardenArea> =>
+  jsonRequest('/gardens', 'POST', plot).then((body: { data: GardenAreaResource }) => toArea(body.data))
 const updateGardenArea = (id: number, changes: { name?: string; indoor?: boolean }): Promise<GardenArea[]> =>
   jsonRequest(`/gardens/${id}`, 'PATCH', changes).then(toAreas)
 const deleteGardenArea = (id: number): Promise<GardenArea[]> => jsonRequest(`/gardens/${id}`, 'DELETE').then(toAreas)

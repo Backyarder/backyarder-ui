@@ -7,7 +7,7 @@ import SelectedCellPanel from '../CellActions/SelectedCellPanel';
 import GardenAreas from '../GardenAreas/GardenAreas';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getGarden, getWishlist, addToWishlist, removeFromWishlist, getAlerts, Alerts, deleteContents, waterCell,
-  GardenArea, getGardenAreas, createGardenArea, updateGardenArea, deleteGardenArea, setActiveGardenId } from '../../apiCalls';
+  GardenArea, NewPlot, getGardenAreas, createGardenArea, updateGardenArea, deleteGardenArea, setActiveGardenId } from '../../apiCalls';
 import './Main.scss';
 
 export type GardenKeys = CellKeys[];
@@ -139,11 +139,11 @@ const Main = () => {
     window.setTimeout(refreshAreas, 1500);
   }
 
-  const addArea = (): Promise<GardenArea> =>
-    createGardenArea('New plot').then(area => {
+  // Resolves once the new plot exists and its grid has loaded.
+  const addArea = (plot: NewPlot): Promise<GardenArea> =>
+    createGardenArea(plot).then(area => {
       setAreas(prev => [...prev, area]);
-      openArea(area.id);
-      return area;
+      return openArea(area.id).then(() => area);
     });
 
   const renameArea = (id: number, name: string): Promise<void> =>
@@ -228,7 +228,7 @@ const Main = () => {
               <Sidebar showUnavailable={() => setNotice('unavailable')} />
               {
                 isGardenView
-                ? <Grid
+                ? <div className='grid-slot'><Grid
                     garden={garden}
                     updateCell={updateCell}
                     resync={loadGarden}
@@ -240,7 +240,9 @@ const Main = () => {
                     confirmClear={confirmClear}
                     onConfirmClear={confirmClearGarden}
                     onCancelClear={() => setConfirmClear(null)}
-                  />
+                    rows={activeArea?.rows}
+                    cols={activeArea?.cols}
+                  /></div>
                 : <List garden={garden} wishlist={wishlist} toggleWishlist={toggleWishlist} />
               }
               <Nav
