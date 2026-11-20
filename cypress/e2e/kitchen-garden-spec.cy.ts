@@ -18,7 +18,7 @@ describe('Kitchen garden tab', () => {
 
   it('keeps the kitchen plants off the PLANTS tab and shows them on KITCHEN', () => {
     cy.get('#plants .search-results').children().should('have.length', 30)
-    cy.get('.category-picker').should('contain', 'Nursery').and('contain', '30')
+    cy.get('.category-picker').should('contain', 'Nursery').find('.category-count').should('not.exist')
     cy.get('.category-picker').click()
     cy.get('.category-option').should('have.length', 7)
     cy.get('.category-option.kitchen-tab').should('contain', 'Kitchen garden').and('contain', '2')

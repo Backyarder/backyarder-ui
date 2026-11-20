@@ -95,6 +95,9 @@ const getPlantList = () => request('/plants', { cache: 'no-cache' })
 
 const getGarden = () => request('/garden')
 
+// Public aggregate numbers (no personal data); used for the searchable-plant count.
+const getStats = () => request('/stats', { cache: 'no-cache' })
+
 const searchPlants = (searchterm: string) => request(`/search/${searchterm}`, { cache: 'no-cache' })
 
 const getPlantDetails = (id: string | undefined) => request(`/plants/${id}`, { cache: 'no-cache' })
@@ -168,5 +171,5 @@ const waterCell = (id: string) => jsonRequest('/cell', 'PATCH', { action: 'water
 // 'all' empties every cell; 'garden' empties only placed (unplanted) ones.
 const deleteContents = (path: 'all' | 'garden'): Promise<null> => request(`/${path}`, { method: 'DELETE' })
 
-export { getPlantList, getGarden, searchPlants, getPlantDetails, patchCellContents, patchDisabledOrRemoved, waterCell, deleteContents,
+export { getPlantList, getGarden, getStats, searchPlants, getPlantDetails, patchCellContents, patchDisabledOrRemoved, waterCell, deleteContents,
   getMe, signup, login, logout, updateMe, forgotPassword, resetPassword, getAlerts, getWishlist, addToWishlist, removeFromWishlist }
