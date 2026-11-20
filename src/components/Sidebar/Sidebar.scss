@@ -106,3 +106,15 @@
 .search-results::-webkit-scrollbar {
   display: none;
 }
+.zone-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0 0.3em 0.5em;
+  font-size: 0.9em;
+  color: #483C3C;
+  cursor: pointer;
+
+  input { accent-color: #6f9a12; width: 16px; height: 16px; cursor: pointer; }
+  .zone-hidden { margin-left: auto; color: #786961; font-size: 0.9em; }
+}

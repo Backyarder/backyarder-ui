@@ -69,3 +69,10 @@
     visibility: visible;
     opacity: 1;
 }
+
+// Hardiness zone fit for the signed-in user's zone
+.zone-fits { color: #6f9a12; }
+.zone-too-cold, .zone-too-warm {
+  color: #b2603a;
+  .zone-range { text-decoration: line-through; text-decoration-thickness: 1px; }
+}

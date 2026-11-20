@@ -27,7 +27,7 @@ describe('Details Page', () => {
     cy.get('.sun').should('have.text', 'sunnyFull sun, Part shade')
     cy.get('.cycle').should('have.text', 'calendar_monthHerbaceous Perennial')
     cy.get('.water').should('have.text', 'water_dropMinimum')
-    cy.get('.location').should('have.text', 'location_onZone 3 through 8')
+    cy.get('.location').should('contain', 'Zone 3 through 8').and('contain', 'Grows in your zone (8a)')
     cy.get('.type').should('have.text', 'psychiatryFlower')
     cy.get('.color').should('have.text', 'format_paintGreen, Purple')
 

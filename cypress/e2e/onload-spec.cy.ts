@@ -16,7 +16,7 @@ describe('Onload', () => {
   it('should display all required content', () => {
     cy.wait(['@onload-plants', '@onload-grid']).then(() => {
       cy.get('.header-logo').should('exist')
-      .get('#plants > :nth-child(3)').children().should('have.length', '30')
+      .get('#plants .search-results').children().should('have.length', '30')
       .get('#grid').children().should('have.length', 100)
       .get('#A1').should('have.css', 'background-image', 'url("http://localhost:3000/images/plants/274.jpg")')
       .get('nav').children().should('have.length', 6)

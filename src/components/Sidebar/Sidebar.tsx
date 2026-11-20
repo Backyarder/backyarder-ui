@@ -4,6 +4,8 @@ import Card from "../Card/Card"
 import './Sidebar.scss'
 import { getPlantList, searchPlants } from "../../apiCalls"
 import decorData from '../../decor_data.json'
+import { useAuth } from "../../auth/AuthContext"
+import { zoneFit } from "../../zones"
 
 interface PlantData {
     id: number
@@ -49,6 +51,23 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [loadingPlants, setLoadingPlants] = useState<boolean>(true)
     const [activeTab, setActiveTab] = useState<string>('plants')
+    const { user } = useAuth()
+    const userZone = user?.hardiness_zone ?? null
+    // Hide plants that can't survive the user's winters; off by default, remembered per browser.
+    const [zoneOnly, setZoneOnly] = useState<boolean>(() => {
+        try { return localStorage.getItem('backyarder:zone-filter') === '1' } catch { return false }
+    })
+    const toggleZoneOnly = () => {
+        setZoneOnly(prev => {
+            try { localStorage.setItem('backyarder:zone-filter', prev ? '0' : '1') } catch {}
+            return !prev
+        })
+    }
+    const zoneFilterApplies = !!userZone && ['plants', 'kitchen', 'flowers', 'trees', 'succulents'].includes(activeTab)
+    const outsideZone = (plant: PlantData) => {
+        const fit = zoneFit(plant.attributes.hardiness, userZone, plant.attributes.collection)
+        return fit === 'too-cold' || fit === 'too-warm'
+    }
 
     const getDecorList = () => {
         //this is a placeholder for what will become the api call for the decor list
@@ -74,6 +93,7 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
     const matchesFilter = (name: string | undefined) => !searchTerm.trim() || (name ?? '').toLowerCase().includes(searchTerm.trim().toLowerCase())
 
     let cards;
+    let hiddenByZone = 0;
 
 
     if (apiError) {
@@ -85,9 +105,11 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
     else if (plantList.length && ['plants', 'kitchen', 'flowers', 'trees', 'succulents', 'indoor'].includes(activeTab)) {
         // Perenual plants and search results on PLANTS; each built-in
         // collection on its own tab (filtered as you type).
-        const shown = plantList
+        const inTab = plantList
             .filter(plant => (plant.attributes.collection ?? 'plants') === activeTab)
             .filter(plant => activeTab === 'plants' || matchesFilter(plant.attributes.name))
+        const shown = zoneOnly && zoneFilterApplies ? inTab.filter(plant => !outsideZone(plant)) : inTab
+        hiddenByZone = inTab.length - shown.length
         cards = shown.map((plant: PlantData) => {
             const plantImage = plant.attributes.image
                 ? plant.attributes.image
@@ -203,6 +225,13 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
                     search
                 </span></button>}
             </div>
+            {zoneFilterApplies && (
+                <label className="zone-toggle">
+                    <input type="checkbox" checked={zoneOnly} onChange={toggleZoneOnly} />
+                    <span>Only plants for zone {userZone}</span>
+                    {zoneOnly && hiddenByZone > 0 && <span className="zone-hidden">{hiddenByZone} hidden</span>}
+                </label>
+            )}
             <div className="search-results" >
                 {loadingPlants ? loading() : cards}
             </div>

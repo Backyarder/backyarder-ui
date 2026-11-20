@@ -17,7 +17,7 @@ describe('Kitchen garden tab', () => {
   })
 
   it('keeps the kitchen plants off the PLANTS tab and shows them on KITCHEN', () => {
-    cy.get('#plants > :nth-child(3)').children().should('have.length', 30)
+    cy.get('#plants .search-results').children().should('have.length', 30)
     cy.get('.kitchen-tab').click()
     cy.get('.search-bar').should('have.attr', 'placeholder').and('contain', 'Filter kitchen')
     cy.get('.card').should('have.length', 2)

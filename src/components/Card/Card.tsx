@@ -3,6 +3,8 @@ import { PlantAttributes } from '../Sidebar/Sidebar'
 import { NavLink } from 'react-router-dom'
 import { ICON_MAP, DEFAULT_TYPE_ICON, IconType, SunlightType } from './plantIconMap'
 import { plantImageSrc, onImageError } from '../../imageFallback'
+import { useAuth } from '../../auth/AuthContext'
+import { zoneFit, zoneFitText } from '../../zones'
 import './Card.scss'
 
 export interface CardProps {
@@ -16,6 +18,8 @@ interface AdditionalCardProps {
 type CombinedCardProps = CardProps & AdditionalCardProps;
 
 const Card = ({ plant, showUnavailable }: CombinedCardProps) => {
+  const { user } = useAuth()
+  const fit = zoneFit(plant.hardiness, user?.hardiness_zone, plant.collection)
   const [{ isDragging }, dragRef, preview] = useDrag({
     type: 'plant',
     item: { plant },
@@ -74,12 +78,12 @@ const Card = ({ plant, showUnavailable }: CombinedCardProps) => {
               <span className="left-icon-text tooltip-text">{plant.sunlight && `${plant.sunlight[0]}`}</span>
             </div>
           </div>
-          <div className='card-icons'>
+          <div className={`card-icons zone-${fit}`}>
             {plant.hardiness && <div className="material-symbols-rounded card-icon">
               location_on
-              <span className="hardiness-text tooltip-text">hardiness zone</span>
+              <span className="hardiness-text tooltip-text">{zoneFitText(fit, user?.hardiness_zone)}</span>
             </div>}
-            <span>{hardiness}</span>
+            <span className='zone-range'>{hardiness}</span>
           </div>
         </div>
       </NavLink>

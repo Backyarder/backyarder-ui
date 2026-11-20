@@ -71,6 +71,7 @@ export type Alerts = {
   needs_water: { location_id: string; name: string | null; plant_id: number | null; watering: string | null; next_water_at: string | null }[]
   recent_rain_in: number
   rain_covers_watering: boolean
+  rain_watered_on?: string | null   // a day with enough rain to count as watering outdoor plants
   frost: { date: string; low_f: number } | null
   weather_available: boolean
   zip_code: string | null
