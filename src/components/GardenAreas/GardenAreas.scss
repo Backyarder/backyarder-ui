@@ -154,3 +154,28 @@
   font-size: 0.85em;
   color: #b2603a;
 }
+
+// Spinner for adding and deleting plots
+@keyframes area-spin { to { transform: rotate(360deg); } }
+.area-spinner {
+  font-size: 18px;
+  color: #6f9a12;
+  animation: area-spin 0.9s linear infinite;
+}
+
+.area-add.busy, .area-add:disabled {
+  cursor: progress;
+  color: #483C3C;
+  border-style: solid;
+  border-color: #cfe39a;
+  background: #f5f9ea;
+}
+
+.area-tab.deleting {
+  background: #f6e3dc;
+  color: #b2603a;
+  cursor: progress;
+  .area-spinner { color: #b2603a; }
+}
+
+.area-delete:disabled { opacity: 0.4; cursor: progress; }

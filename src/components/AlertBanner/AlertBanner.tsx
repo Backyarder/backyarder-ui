@@ -90,7 +90,7 @@ const AlertBanner = ({ garden, alerts, area, otherAreas = [] }: Props) => {
         {!quiet && due.length === 0 && elsewhere.length > 0 && (
           <li className='alert-water alert-elsewhere'>
             <span className='material-symbols-rounded'>water_drop</span>
-            <span><strong>Due in other areas:</strong> {elsewhereText}.</span>
+            <span><strong>Due in other plots:</strong> {elsewhereText}.</span>
           </li>
         )}
         {frost && (

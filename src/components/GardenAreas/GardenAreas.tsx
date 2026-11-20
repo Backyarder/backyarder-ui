@@ -10,19 +10,22 @@ type Props = {
   onAdd: () => Promise<GardenArea | void>
   onRename: (id: number, name: string) => Promise<void>
   onSetIndoor: (id: number, indoor: boolean) => void
-  onDelete: (id: number) => void
+  onDelete: (id: number) => Promise<void>
 }
 
 const MAX_NAME = 40
 
-// A row of named garden areas above the grid. The active one can be renamed
+// A row of named garden plots above the grid. The open one can be renamed
 // (click its name or the pencil), switched between outdoor and indoor, or
-// deleted; "Add area" makes a new one and starts naming it.
+// deleted; "Add plot" makes a new one and starts naming it. Adding and
+// deleting show a spinner until the server answers.
 const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, onDelete }: Props) => {
   const [editingId, setEditingId] = useState<number | null>(null)
   const [draft, setDraft] = useState<string>('')
   const [error, setError] = useState<string>('')
   const [confirmDelete, setConfirmDelete] = useState<GardenArea | null>(null)
+  const [adding, setAdding] = useState<boolean>(false)
+  const [deletingId, setDeletingId] = useState<number | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const active = areas.find(a => a.id === activeId) ?? null
 
@@ -41,7 +44,7 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
     const id = editingId
     const name = draft.trim()
     const current = areas.find(a => a.id === id)
-    if (!name) { setError('Give this area a name.'); return }
+    if (!name) { setError('Give this plot a name.'); return }
     setEditingId(null)
     if (current && name === current.name) return
     onRename(id, name).catch((err: Error) => {
@@ -57,24 +60,44 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
   }
 
   const add = () => {
-    onAdd().then(area => { if (area) startRename(area) }).catch((err: Error) => setError(err.message))
+    if (adding) return
+    setError('')
+    setAdding(true)
+    onAdd()
+      .then(area => { if (area) startRename(area) })
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setAdding(false))
+  }
+
+  const remove = (area: GardenArea) => {
+    setConfirmDelete(null)
+    setError('')
+    setDeletingId(area.id)
+    onDelete(area.id)
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setDeletingId(null))
   }
 
   return (
-    <div id='garden-areas' role='navigation' aria-label='Garden areas'>
+    <div id='garden-areas' role='navigation' aria-label='Garden plots'>
       <ul className='area-tabs'>
         {areas.map(area => {
           const isActive = area.id === activeId
           const icon = area.indoor ? 'home' : 'yard'
           return (
             <li key={area.id}>
-              {isActive && editingId === area.id ? (
+              {deletingId === area.id ? (
+                <span className='area-tab deleting' aria-busy='true'>
+                  <span className='material-symbols-rounded area-spinner' aria-hidden='true'>progress_activity</span>
+                  <span className='area-name'>Deleting {area.name}…</span>
+                </span>
+              ) : isActive && editingId === area.id ? (
                 <span className='area-tab active editing'>
                   <span className='material-symbols-rounded area-icon'>{icon}</span>
                   <input
                     ref={inputRef}
                     className='area-name-input'
-                    aria-label='Area name'
+                    aria-label='Plot name'
                     value={draft}
                     maxLength={MAX_NAME}
                     onChange={e => setDraft(e.target.value)}
@@ -104,8 +127,10 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
           )
         })}
         <li>
-          <button type='button' className='area-add' onClick={add}>
-            <span className='material-symbols-rounded'>add</span>Add area
+          <button type='button' className={`area-add ${adding ? 'busy' : ''}`} onClick={add} disabled={adding} aria-busy={adding}>
+            {adding
+              ? <><span className='material-symbols-rounded area-spinner' aria-hidden='true'>progress_activity</span>Adding plot…</>
+              : <><span className='material-symbols-rounded'>add</span>Add plot</>}
           </button>
         </li>
       </ul>
@@ -123,7 +148,7 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
             </button>
           </div>
           {areas.length > 1 && (
-            <button type='button' className='area-delete' title={`Delete ${active.name}`} aria-label={`Delete ${active.name}`} onClick={() => setConfirmDelete(active)}>
+            <button type='button' className='area-delete' disabled={deletingId !== null} title={`Delete ${active.name}`} aria-label={`Delete ${active.name}`} onClick={() => setConfirmDelete(active)}>
               <span className='material-symbols-rounded'>delete</span>
             </button>
           )}
@@ -134,8 +159,8 @@ const GardenAreas = ({ areas, activeId, onSelect, onAdd, onRename, onSetIndoor, 
 
       {confirmDelete && (
         <ConfirmModal
-          message={`Delete "${confirmDelete.name}" and everything in it? This cannot be undone.`}
-          onConfirm={() => { onDelete(confirmDelete.id); setConfirmDelete(null) }}
+          message={`Delete the plot "${confirmDelete.name}" and everything in it? This cannot be undone.`}
+          onConfirm={() => remove(confirmDelete)}
           onCancel={() => setConfirmDelete(null)}
         />
       )}

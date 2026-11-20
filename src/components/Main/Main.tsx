@@ -127,7 +127,7 @@ const Main = () => {
   }
 
   const addArea = (): Promise<GardenArea> =>
-    createGardenArea('New area').then(area => {
+    createGardenArea('New plot').then(area => {
       setAreas(prev => [...prev, area]);
       openArea(area.id);
       return area;
@@ -143,15 +143,16 @@ const Main = () => {
       .catch(refreshAreas);
   }
 
-  const removeArea = (id: number) => {
+  // Resolves once the plot is gone (and the next one is loaded); rejects
+  // with the server's message so the plot bar can show it.
+  const removeArea = (id: number): Promise<void> =>
     deleteGardenArea(id)
       .then(list => {
         setAreas(list);
-        if (id === activeAreaId && list[0]) openArea(list[0].id);
         getAlerts().then(setAlerts).catch(() => undefined);
+        if (id === activeAreaId && list[0]) return openArea(list[0].id).then(() => undefined);
       })
-      .catch(refreshAreas);
-  }
+      .catch((err: Error) => { refreshAreas(); throw err; });
 
   const activeArea = areas.find(a => a.id === activeAreaId) ?? null;
 
