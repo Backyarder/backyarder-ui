@@ -93,3 +93,43 @@
     .likes { color: #6f9a12; }
     .avoid { color: #af2268; }
 }
+
+.watering-schedule {
+    margin: 0.2em 0.2em 0.4em;
+    font-size: 0.8em;
+    color: #483C3C;
+}
+
+.watering-plan {
+    display: flex;
+    gap: 0.3em;
+    align-items: flex-start;
+    margin: 0 0 0.3em;
+    line-height: 1.3;
+}
+
+.watering-plan .material-symbols-rounded {
+    font-size: 1.2em;
+    color: #3a7bd5;
+}
+
+.watering-reason {
+    color: #786961;
+}
+
+.watering-override {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    color: #786961;
+}
+
+.watering-override select {
+    font: inherit;
+    padding: 0.15em 0.3em;
+    border: 1px solid #c9bfb8;
+    border-radius: 0.4em;
+    background: #fff;
+    color: #483C3C;
+    max-width: 100%;
+}

@@ -22,6 +22,13 @@ export type CellKeys = {
   last_watered_at?: string | null;
   next_water_at?: string | null;
   needs_water?: boolean;
+  // Watering plan from the server (absent from older backends).
+  watering_days?: number | null;          // null = no reminders
+  watering_reason?: string | null;
+  watering_source?: 'auto' | 'custom' | null;
+  watering_auto_days?: number | null;
+  watering_rain_resets?: boolean | null;
+  watering_override_days?: number | null; // null = automatic, 0 = never
 }
 
 export type CellChanges = Partial<CellKeys>;

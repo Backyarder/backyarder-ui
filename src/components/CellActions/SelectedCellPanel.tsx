@@ -2,6 +2,7 @@ import { CellKeys, CellChanges } from '../Grid/Grid'
 import { useCellActions, cellFacts } from '../Cell/Cell'
 import { companionsFor } from '../../companions'
 import CellActions from './CellActions'
+import WateringSchedule from './WateringSchedule'
 
 type Props = {
   cell: CellKeys
@@ -12,8 +13,8 @@ type Props = {
 
 // Wires the selected cell's record to the actions panel beside the grid.
 const SelectedCellPanel = ({ cell, updateCell, resync, onClose }: Props) => {
-  const { plant, water, remove } = useCellActions(cell.location_id, cell, updateCell, resync)
-  const { isPlanted } = cellFacts(cell)
+  const { plant, water, remove, setWatering } = useCellActions(cell.location_id, cell, updateCell, resync)
+  const { isPlanted, isPlant } = cellFacts(cell)
   return (
     <CellActions
       locationId={cell.location_id}
@@ -28,7 +29,9 @@ const SelectedCellPanel = ({ cell, updateCell, resync, onClose }: Props) => {
       onWater={water}
       onRemove={remove}
       onClose={onClose}
-    />
+    >
+      {isPlanted && isPlant && <WateringSchedule cell={cell} onChange={setWatering} />}
+    </CellActions>
   )
 }
 

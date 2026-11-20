@@ -16,11 +16,12 @@ interface CellProps {
     onWater: () => void
     onRemove: () => void
     onClose: () => void
+    children?: React.ReactNode   // extra details under the name (the watering plan)
 }
 
 // The panel for the selected cell, shown beside the grid (never over it, so
 // the companion rings around the cell stay visible). Every button closes it.
-const CellActions = ({ locationId, image, name, contentType, plantId, isPlanted, needsWater, companions, onPlant, onWater, onRemove, onClose }: CellProps) => {
+const CellActions = ({ locationId, image, name, contentType, plantId, isPlanted, needsWater, companions, onPlant, onWater, onRemove, onClose, children }: CellProps) => {
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -49,6 +50,7 @@ const CellActions = ({ locationId, image, name, contentType, plantId, isPlanted,
                     {companions.avoid.length > 0 && <span className='avoid'>Avoid {companions.avoid.slice(0, 3).join(', ')}</span>}
                 </p>
             )}
+            {children}
             <div className='cell-actions'>
                 {isPlanted
                     ? contentType === "Plant" && <button className='cell-button water-button' onClick={handleClick}>
