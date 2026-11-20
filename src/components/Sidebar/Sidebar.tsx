@@ -82,7 +82,7 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
     else if (!plantList || !decorList) {
         cards = <p className="loading">It looks like our nursery is not operating correctly, please try again later</p>
     }
-    else if (plantList.length && ['plants', 'kitchen', 'flowers', 'trees'].includes(activeTab)) {
+    else if (plantList.length && ['plants', 'kitchen', 'flowers', 'trees', 'succulents', 'indoor'].includes(activeTab)) {
         // Perenual plants and search results on PLANTS; each built-in
         // collection on its own tab (filtered as you type).
         const shown = plantList
@@ -170,6 +170,18 @@ const Sidebar = ({ showUnavailable }: SideBarProps) => {
                 }}><span className="material-symbols-rounded">
                 park
                 </span>TREES</button>
+                <button className="succulents-tab sidebar-tab" onClick={() => { setActiveTab('succulents') }} style={{
+                    backgroundColor: (activeTab !== 'succulents') ? '#beab95' : '#f4f4f4',
+                      cursor: (activeTab === 'succulents') ? 'auto' : 'pointer'
+                }}><span className="material-symbols-rounded">
+                psychiatry
+                </span>SUCCULENTS</button>
+                <button className="indoor-tab sidebar-tab" onClick={() => { setActiveTab('indoor') }} style={{
+                    backgroundColor: (activeTab !== 'indoor') ? '#beab95' : '#f4f4f4',
+                      cursor: (activeTab === 'indoor') ? 'auto' : 'pointer'
+                }}><span className="material-symbols-rounded">
+                potted_plant
+                </span>INDOOR</button>
                 <button className="decor-tab sidebar-tab" onClick={() => { setActiveTab('decor') }}
                     style={{
                         backgroundColor: (activeTab !== 'decor') ? '#beab95' : '#f4f4f4',

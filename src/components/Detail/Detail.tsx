@@ -72,7 +72,7 @@ const Detail = () => {
     const sectionMeta: Record<string, { title: string; icon: string }> = {
         watering: { title: 'Watering', icon: 'water_drop' },
         sunlight: { title: 'Sunlight', icon: 'sunny' },
-        pruning: { title: 'Pruning & harvest', icon: 'content_cut' }
+        pruning: { title: 'Pruning & care', icon: 'content_cut' }
     }
     const isIcon = (src: string | undefined) => !!src && src.endsWith('.svg')
 
