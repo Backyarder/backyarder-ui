@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Alerts } from '../../apiCalls'
+import { Alerts, GardenArea } from '../../apiCalls'
 import { GardenKeys } from '../Main/Main'
 import './AlertBanner.scss'
 
 type Props = {
   garden: GardenKeys | undefined   // the live grid: plants due for water come from here
   alerts: Alerts | undefined       // weather (rain, frost) from GET /alerts
+  area?: GardenArea | null         // the area on screen; indoors skips rain and frost
+  otherAreas?: GardenArea[]        // for "also due in ..."
 }
 
 const weekday = (iso: string): string => {
@@ -29,16 +31,19 @@ const nextWatering = (garden: GardenKeys | undefined) => {
 
 // What needs attention today, shown above the garden. Dismissable until the
 // next day (per browser).
-const AlertBanner = ({ garden, alerts }: Props) => {
+const AlertBanner = ({ garden, alerts, area, otherAreas = [] }: Props) => {
   const [dismissed, setDismissed] = useState<boolean>(() => {
     try { return sessionStorage.getItem(dismissKey(alerts?.date)) === '1' } catch { return false }
   })
 
   const due = (garden ?? []).filter(cell => cell.needs_water && cell.name)
-  const frost = alerts?.frost ?? null
-  const rainDay = alerts?.rain_watered_on ? weekday(alerts.rain_watered_on) : null
-  const needsZip = alerts !== undefined && !alerts.weather_available && !alerts.zip_code
+  const indoor = !!area?.indoor
+  const frost = indoor ? null : (alerts?.frost ?? null)
+  const rainDay = !indoor && alerts?.rain_watered_on ? weekday(alerts.rain_watered_on) : null
+  const needsZip = !indoor && alerts !== undefined && !alerts.weather_available && !alerts.zip_code
   const quiet = due.length === 0 && !frost && !needsZip
+  const elsewhere = otherAreas.filter(a => a.needs_water_count > 0)
+  const elsewhereText = elsewhere.map(a => `${a.needs_water_count} in ${a.name}`).join(', ')
   const next = nextWatering(garden)
   const planted = (garden ?? []).some(cell => cell.status === 'locked' && cell.name)
 
@@ -66,8 +71,9 @@ const AlertBanner = ({ garden, alerts }: Props) => {
                   : 'Plant something and watering reminders will show up here'}
               </span>
               {rainDay && <span className='seg'>Rain on <strong>{rainDay}</strong> counted as a watering</span>}
-              {alerts?.weather_available && !rainDay && <span className='seg'>Rain in the last two days: <strong>{alerts.recent_rain_in} in</strong></span>}
-              {alerts?.weather_available && <span className='seg'>No frost in the next three days</span>}
+              {elsewhere.length > 0 && <span className='seg alert-elsewhere'>Also due: <strong>{elsewhereText}</strong></span>}
+              {!indoor && alerts?.weather_available && !rainDay && <span className='seg'>Rain in the last two days: <strong>{alerts.recent_rain_in} in</strong></span>}
+              {!indoor && alerts?.weather_available && <span className='seg'>No frost in the next three days</span>}
             </span>
           </li>
         )}
@@ -77,7 +83,14 @@ const AlertBanner = ({ garden, alerts }: Props) => {
             <span>
               <strong>{due.length === 1 ? '1 plant needs water' : `${due.length} plants need water`}:</strong> {dueNames}.
               {rainDay && ` Rain on ${rainDay} already counted for your other outdoor plants.`}
+              {elsewhere.length > 0 && <span className='alert-elsewhere'> Also due: {elsewhereText}.</span>}
             </span>
+          </li>
+        )}
+        {!quiet && due.length === 0 && elsewhere.length > 0 && (
+          <li className='alert-water alert-elsewhere'>
+            <span className='material-symbols-rounded'>water_drop</span>
+            <span><strong>Due in other plots:</strong> {elsewhereText}.</span>
           </li>
         )}
         {frost && (

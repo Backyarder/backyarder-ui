@@ -1,0 +1,199 @@
+// Garden area tabs: a single row under the alert banner, matching the
+// sidebar's warm palette.
+#garden-areas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 50px;
+  margin: 6px 1em 4px;
+  padding: 0 0.2em;
+  color: #483C3C;
+  position: relative;
+  align-self: stretch;           // the app column centres its children
+  box-sizing: border-box;
+}
+
+.area-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 6px 6px 8px;     // keeps the pills' shadows inside the scroll box
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+.area-tab, .area-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.95em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.area-tab {
+  background: #e9e0d4;
+  color: #5c4f49;
+
+  &:hover { background: #ded2c3; }
+  .area-icon { font-size: 19px; color: #786961; }
+  .area-name { max-width: 16em; overflow: hidden; text-overflow: ellipsis; }
+
+  &.active {
+    background: #fff;
+    color: #3f3430;
+    font-weight: bolder;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    .area-icon { color: #6f9a12; }
+  }
+
+  .area-chevron { font-size: 18px; color: #a08f80; margin-right: -4px; transition: transform 0.15s ease; }
+  &.active:hover .area-chevron { color: #786961; }
+  &.menu-open .area-chevron { transform: rotate(180deg); }
+
+  &.editing { padding-right: 6px; }
+}
+
+.area-name-input {
+  width: 12em;
+  border: none;
+  border-bottom: 2px solid #6f9a12;
+  background: transparent;
+  font: inherit;
+  color: #3f3430;
+  &:focus { outline: none; }
+}
+
+.area-due {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  padding: 0 6px 0 3px;
+  border-radius: 999px;
+  background: #e1f1fb;
+  color: #1f78b4;
+  font-size: 0.8em;
+  font-weight: bold;
+  .material-symbols-rounded { font-size: 15px; }
+}
+
+.area-add {
+  background: transparent;
+  color: #786961;
+  border: 1.5px dashed #c8b9a6;
+  .material-symbols-rounded { font-size: 18px; }
+  &:hover { background: #f1ebe3; color: #483C3C; }
+}
+
+
+
+
+.area-error {
+  position: absolute;
+  top: 100%;
+  left: 1em;
+  margin: 2px 0 0;
+  font-size: 0.85em;
+  color: #b2603a;
+}
+
+// Spinner for adding and deleting plots
+@keyframes area-spin { to { transform: rotate(360deg); } }
+.area-spinner {
+  font-size: 18px;
+  color: #6f9a12;
+  animation: area-spin 0.9s linear infinite;
+}
+
+.area-add.busy, .area-add:disabled {
+  cursor: progress;
+  color: #483C3C;
+  border-style: solid;
+  border-color: #cfe39a;
+  background: #f5f9ea;
+}
+
+.area-tab.deleting {
+  background: #f6e3dc;
+  color: #b2603a;
+  cursor: progress;
+  .area-spinner { color: #b2603a; }
+}
+
+
+// Settings for the open plot, under its pill.
+.area-menu {
+  position: absolute;
+  z-index: 45;
+  top: calc(100% - 4px);
+  width: 270px;
+  padding: 6px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  animation: area-menu-in 0.14s ease-out;
+
+  hr { border: none; border-top: 1px solid #efe8df; margin: 6px 4px; }
+}
+
+@keyframes area-menu-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.area-menu-label {
+  margin: 8px 10px 4px;
+  font-size: 0.75em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #a08f80;
+}
+
+.area-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  font: inherit;
+  font-size: 0.95em;
+  color: #483C3C;
+  text-align: left;
+  cursor: pointer;
+
+  > .material-symbols-rounded { font-size: 20px; color: #786961; }
+  &:hover:not(:disabled) { background: #f4f1ec; }
+  &:disabled { cursor: progress; opacity: 0.6; }
+
+  &.danger { color: #b2603a; > .material-symbols-rounded { color: #b2603a; } }
+  &.danger:hover:not(:disabled) { background: #fbeee8; }
+}
+
+.area-kind-option {
+  align-items: flex-start;
+  .area-kind-text { display: flex; flex-direction: column; gap: 1px; flex: 1; }
+  small { color: #8a7a6e; font-size: 0.82em; line-height: 1.3; }
+  > .material-symbols-rounded:first-child { margin-top: 1px; }
+
+  &.chosen {
+    background: #f1f6e4;
+    cursor: default;
+    > .material-symbols-rounded:first-child { color: #6f9a12; }
+  }
+  .area-check { font-size: 18px; color: #6f9a12; min-width: 18px; }
+}

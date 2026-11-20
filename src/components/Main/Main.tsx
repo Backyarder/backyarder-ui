@@ -4,8 +4,10 @@ import Nav from '../Nav/Nav';
 import List from '../List/List';
 import AlertBanner from '../AlertBanner/AlertBanner';
 import SelectedCellPanel from '../CellActions/SelectedCellPanel';
-import { useCallback, useEffect, useState } from 'react';
-import { getGarden, getWishlist, addToWishlist, removeFromWishlist, getAlerts, Alerts, deleteContents, waterCell } from '../../apiCalls';
+import GardenAreas from '../GardenAreas/GardenAreas';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { getGarden, getWishlist, addToWishlist, removeFromWishlist, getAlerts, Alerts, deleteContents, waterCell,
+  GardenArea, getGardenAreas, createGardenArea, updateGardenArea, deleteGardenArea, setActiveGardenId } from '../../apiCalls';
 import './Main.scss';
 
 export type GardenKeys = CellKeys[];
@@ -17,6 +19,11 @@ type GetGardenKeys = {
 }
 
 export type WishlistType = number; // plant_id
+
+const AREA_KEY = 'backyarder:garden-area';
+const savedAreaId = (): number | null => {
+  try { const v = localStorage.getItem(AREA_KEY); return v ? Number(v) : null } catch { return null }
+};
 
 // Everything a cell forgets when it is emptied.
 const EMPTIED: CellChanges = {
@@ -36,6 +43,15 @@ const Main = () => {
   const [confirmClear, setConfirmClear] = useState<ClearScope | null>(null);
   const [wishlist, setWishlist] = useState<WishlistType[]>([]);
   const [alerts, setAlerts] = useState<Alerts | undefined>();
+  const [areas, setAreas] = useState<GardenArea[]>([]);
+  const [activeAreaId, setActiveAreaId] = useState<number | null>(null);
+  const gardenRequest = useRef<number>(0);   // ignore a slow response for an area we've left
+  // First load: show the page once plots and the grid are in, plus the
+  // weather (or a short wait for it), so things don't pop in one by one.
+  const [firstLoadDone, setFirstLoadDone] = useState<boolean>(false);
+  const [alertsSettled, setAlertsSettled] = useState<boolean>(false);
+  const [waitedForWeather, setWaitedForWeather] = useState<boolean>(false);
+  const [slowLoad, setSlowLoad] = useState<boolean>(false);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -49,21 +65,50 @@ const Main = () => {
   }, []);
 
   const loadGarden = useCallback(() => {
+    const ticket = ++gardenRequest.current;
     return getGarden()
-      .then(data => setGarden(data.data.map((cell: GetGardenKeys) => cell.attributes)))
+      .then(data => { if (ticket === gardenRequest.current) setGarden(data.data.map((cell: GetGardenKeys) => cell.attributes)) })
       .catch((err: Error) => setApiError(err));
   }, []);
 
+  // Counts on the area tabs (plants due) come from the server.
+  const refreshAreas = useCallback(() => getGardenAreas().then(setAreas).catch(() => undefined), []);
+
+  const openArea = useCallback((id: number) => {
+    setActiveGardenId(id);
+    setActiveAreaId(id);
+    setOpenCellId(null);
+    setConfirmClear(null);
+    try { localStorage.setItem(AREA_KEY, String(id)) } catch {}
+    return loadGarden();
+  }, [loadGarden]);
+
   useEffect(() => {
-    loadGarden();
+    // Areas first so the grid opens on the one you used last.
+    getGardenAreas()
+      .then(list => {
+        setAreas(list);
+        const saved = savedAreaId();
+        const first = list.find(a => a.id === saved) ?? list[0];
+        if (first) return openArea(first.id);
+        return loadGarden();
+      })
+      .catch(() => loadGarden())
+      .finally(() => setFirstLoadDone(true));
     getWishlist()
       .then(setWishlist)
       .catch(() => setWishlist([]));
     // Weather for the banner; the banner itself is optional, so failures are silent.
     getAlerts()
       .then(setAlerts)
-      .catch(() => undefined);
-  }, [loadGarden]);
+      .catch(() => undefined)
+      .finally(() => setAlertsSettled(true));
+    const weatherCap = window.setTimeout(() => setWaitedForWeather(true), 1200);
+    const slow = window.setTimeout(() => setSlowLoad(true), 700);
+    return () => { window.clearTimeout(weatherCap); window.clearTimeout(slow) };
+  }, [loadGarden, openArea]);
+
+  const ready = firstLoadDone && (alertsSettled || waitedForWeather);
 
   const updateCell = useCallback((locationId: string, changes: CellChanges) => {
     setGarden(prev => prev.map(cell => cell.location_id === locationId ? { ...cell, ...changes } : cell));
@@ -91,7 +136,37 @@ const Main = () => {
           })
           .catch(loadGarden);
       });
+    window.setTimeout(refreshAreas, 1500);
   }
+
+  const addArea = (): Promise<GardenArea> =>
+    createGardenArea('New plot').then(area => {
+      setAreas(prev => [...prev, area]);
+      openArea(area.id);
+      return area;
+    });
+
+  const renameArea = (id: number, name: string): Promise<void> =>
+    updateGardenArea(id, { name }).then(setAreas);
+
+  // The menu waits for the server before showing the new choice.
+  const setAreaIndoor = (id: number, indoor: boolean): Promise<void> =>
+    updateGardenArea(id, { indoor })
+      .then(list => { setAreas(list); loadGarden(); getAlerts().then(setAlerts).catch(() => undefined) })
+      .catch((err: Error) => { refreshAreas(); throw err; });
+
+  // Resolves once the plot is gone (and the next one is loaded); rejects
+  // with the server's message so the plot bar can show it.
+  const removeArea = (id: number): Promise<void> =>
+    deleteGardenArea(id)
+      .then(list => {
+        setAreas(list);
+        getAlerts().then(setAlerts).catch(() => undefined);
+        if (id === activeAreaId && list[0]) return openArea(list[0].id).then(() => undefined);
+      })
+      .catch((err: Error) => { refreshAreas(); throw err; });
+
+  const activeArea = areas.find(a => a.id === activeAreaId) ?? null;
 
   const askToClear = (scope: ClearScope) => {
     setOpenCellId(null);
@@ -122,7 +197,31 @@ const Main = () => {
         </div>
       ) : (
         <>
-        {isDesktop && isGardenView && <AlertBanner garden={garden} alerts={alerts} />}
+        {!ready && slowLoad && (
+          <div className='garden-loading' role='status'>
+            <span className='material-symbols-rounded garden-loading-spinner' aria-hidden='true'>progress_activity</span>
+            Loading your garden…
+          </div>
+        )}
+        <div className={`garden-page ${ready ? 'ready' : ''}`} aria-busy={!ready}>
+        {isDesktop && isGardenView && (
+          <div className='banner-slot'>
+            {alerts !== undefined || alertsSettled
+              ? <AlertBanner garden={garden} alerts={alerts} area={activeArea} otherAreas={areas.filter(a => a.id !== activeAreaId)} />
+              : <div className='banner-placeholder' aria-hidden='true' />}
+          </div>
+        )}
+        {isDesktop && areas.length > 0 && (
+          <GardenAreas
+            areas={areas}
+            activeId={activeAreaId}
+            onSelect={openArea}
+            onAdd={addArea}
+            onRename={renameArea}
+            onSetIndoor={setAreaIndoor}
+            onDelete={removeArea}
+          />
+        )}
         <main>
           {isDesktop ?
             <>
@@ -161,6 +260,7 @@ const Main = () => {
               </div>
           }
         </main>
+        </div>
         </>
       )}
     </>
